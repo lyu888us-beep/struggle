@@ -1,0 +1,1393 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#163f32">
+  <meta name="description" content="Lexio 乐词：为学生打造的英语词汇记忆 PWA。覆盖高考、四六级、考研与雅思词库，以科学复习节奏帮助你真正记住单词。">
+  <meta name="color-scheme" content="light">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" href="./icon.svg" type="image/svg+xml">
+  <title>Lexio 乐词 · 每天 15 分钟，把单词记成长期记忆</title>
+  <style>
+    :root {
+      --ink: #17251f;
+      --forest: #163f32;
+      --forest-2: #1c5945;
+      --leaf: #d8f36a;
+      --mint: #e8f1e8;
+      --cream: #f7f8f4;
+      --paper: #ffffff;
+      --line: #e5eae3;
+      --muted: #6c7972;
+      --soft: #a8b1ab;
+      --coral: #f4a080;
+      --shadow: 0 22px 70px rgba(29, 53, 42, .11);
+      --shadow-small: 0 12px 36px rgba(29, 53, 42, .09);
+      --radius: 24px;
+      --container: 1180px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 86px; }
+    body { margin: 0; color: var(--ink); background: var(--cream); font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; font-size: 15px; line-height: 1.65; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+    body, button, input { font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    button { color: inherit; }
+    a { color: inherit; text-decoration: none; }
+    img, svg { display: block; }
+    button:focus-visible, a:focus-visible, input:focus-visible, summary:focus-visible { outline: 3px solid rgba(96, 150, 72, .55); outline-offset: 3px; }
+    ::selection { background: #d7ef9a; color: var(--ink); }
+    .skip-link { position: fixed; top: -60px; left: 16px; z-index: 1000; padding: 10px 14px; background: var(--ink); color: white; border-radius: 10px; }
+    .skip-link:focus { top: 12px; }
+    .container { width: min(var(--container), calc(100% - 48px)); margin-inline: auto; }
+    .eyebrow { display: inline-flex; align-items: center; gap: 9px; margin: 0 0 15px; color: var(--forest-2); font-size: 11px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; }
+    .eyebrow .dot { width: 7px; height: 7px; background: #8db849; border-radius: 50%; box-shadow: 0 0 0 4px rgba(141,184,73,.13); }
+    .section-heading { max-width: 720px; margin: 0 auto 48px; text-align: center; }
+    .section-heading h2 { margin: 0; color: var(--ink); font-size: clamp(34px, 5vw, 58px); line-height: 1.11; letter-spacing: -.055em; font-weight: 730; }
+    .section-heading h2 em, .hero h1 em { color: var(--forest-2); font-style: normal; }
+    .section-heading p { max-width: 620px; margin: 19px auto 0; color: var(--muted); font-size: 16px; line-height: 1.8; }
+    .section-kicker { color: var(--forest-2); font-size: 11px; font-weight: 800; letter-spacing: .15em; text-transform: uppercase; }
+    .site-header { position: sticky; top: 0; z-index: 50; height: 76px; background: rgba(247,248,244,.84); border-bottom: 1px solid rgba(225,232,224,.75); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 100%; gap: 24px; }
+    .brand { display: inline-flex; align-items: center; gap: 10px; flex: 0 0 auto; }
+    .brand-mark { display: grid; place-items: center; width: 38px; height: 38px; background: var(--forest); color: var(--leaf); border-radius: 13px; box-shadow: 0 6px 16px rgba(22,63,50,.18); }
+    .brand-word { color: var(--ink); font-size: 17px; font-weight: 780; letter-spacing: -.04em; line-height: 1; }
+    .brand-word small { display: block; margin-top: 4px; color: var(--muted); font-size: 10px; font-weight: 650; letter-spacing: .13em; }
+    .desktop-nav { display: flex; align-items: center; justify-content: center; gap: clamp(18px, 2.7vw, 34px); margin-left: auto; margin-right: 16px; }
+    .desktop-nav a { color: #58665f; font-size: 13px; font-weight: 620; transition: color .2s ease; }
+    .desktop-nav a:hover { color: var(--forest); }
+    .nav-actions { display: flex; align-items: center; gap: 10px; flex: 0 0 auto; }
+    .nav-install { display: inline-flex; align-items: center; gap: 7px; padding: 9px 11px; background: transparent; border: 0; color: #57635c; cursor: pointer; font-size: 12px; font-weight: 650; }
+    .nav-install svg { width: 16px; height: 16px; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 52px; padding: 0 22px; border: 1px solid transparent; border-radius: 14px; font-size: 14px; font-weight: 720; letter-spacing: -.01em; cursor: pointer; transition: transform .2s ease, box-shadow .2s ease, background .2s ease, border-color .2s ease; }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-primary { color: white; background: var(--forest); box-shadow: 0 11px 24px rgba(22,63,50,.17); }
+    .btn-primary:hover { background: #205540; box-shadow: 0 15px 30px rgba(22,63,50,.23); }
+    .btn-lime { color: var(--ink); background: var(--leaf); box-shadow: 0 10px 22px rgba(177,204,72,.18); }
+    .btn-lime:hover { background: #e2fb86; box-shadow: 0 14px 28px rgba(177,204,72,.27); }
+    .btn-outline { color: var(--forest); background: transparent; border-color: #cbd8cc; }
+    .btn-outline:hover { background: #f0f5ed; border-color: #b5c8b6; }
+    .btn-small { min-height: 42px; padding: 0 16px; border-radius: 12px; font-size: 12px; }
+    .btn-ghost { min-height: 46px; padding: 0 16px; color: var(--forest); background: transparent; }
+    .btn-ghost:hover { background: rgba(34,84,62,.06); }
+    .btn-arrow { font-size: 18px; line-height: 1; transition: transform .2s ease; }
+    .btn:hover .btn-arrow { transform: translateX(3px); }
+    .mobile-menu-toggle { display: none; width: 42px; height: 42px; place-items: center; border: 1px solid var(--line); border-radius: 12px; background: white; cursor: pointer; }
+    .mobile-menu-toggle svg { width: 19px; height: 19px; }
+    .mobile-menu { display: none; }
+    .hero { position: relative; isolation: isolate; overflow: hidden; padding: 62px 0 71px; }
+    .hero:before { position: absolute; z-index: -1; top: -215px; right: -160px; width: 720px; height: 720px; content: ""; background: radial-gradient(circle, rgba(210,230,191,.63) 0%, rgba(233,241,225,.34) 36%, rgba(247,248,244,0) 72%); }
+    .hero:after { position: absolute; z-index: -1; bottom: -200px; left: -180px; width: 500px; height: 500px; content: ""; background: radial-gradient(circle, rgba(220,238,216,.45), rgba(247,248,244,0) 70%); }
+    .hero-grid { display: grid; grid-template-columns: minmax(0, .94fr) minmax(0, 1.06fr); align-items: center; gap: 56px; }
+    .hero-copy { position: relative; z-index: 2; padding: 20px 0 22px; }
+    .hero-pill { display: inline-flex; align-items: center; gap: 8px; min-height: 32px; padding: 5px 11px; border: 1px solid rgba(38,95,66,.11); border-radius: 999px; background: rgba(255,255,255,.7); color: #4d6558; font-size: 11px; font-weight: 720; box-shadow: 0 4px 12px rgba(26,58,39,.04); }
+    .hero-pill span { display: grid; place-items: center; width: 19px; height: 19px; border-radius: 50%; background: var(--leaf); color: var(--forest); font-size: 11px; }
+    .hero h1 { max-width: 650px; margin: 24px 0 19px; color: var(--ink); font-size: clamp(43px, 6.2vw, 72px); line-height: 1.075; font-weight: 760; letter-spacing: -.064em; }
+    .hero h1 .highlight { position: relative; display: inline-block; color: var(--forest-2); white-space: nowrap; }
+    .hero h1 .highlight:after { position: absolute; z-index: -1; right: 2px; bottom: 4px; left: 2px; height: 14px; content: ""; background: rgba(216,243,106,.72); border-radius: 8px 3px 8px 3px; transform: rotate(-1deg); }
+    .hero-lede { max-width: 530px; margin: 0; color: #5c6a62; font-size: 16px; line-height: 1.83; }
+    .hero-lede strong { color: #34493d; font-weight: 700; }
+    .hero-ctas { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 29px; }
+    .hero-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 18px; margin-top: 22px; color: #78837d; font-size: 11px; }
+    .hero-meta span { display: inline-flex; align-items: center; gap: 6px; }
+    .check-mini { display: inline-grid; place-items: center; width: 16px; height: 16px; color: var(--forest-2); background: #e5efda; border-radius: 50%; font-size: 10px; font-weight: 900; }
+    .hero-social { display: flex; align-items: center; gap: 12px; margin-top: 34px; }
+    .avatar-stack { display: flex; padding-left: 4px; }
+    .avatar-stack span { display: grid; place-items: center; width: 30px; height: 30px; margin-left: -5px; border: 2px solid var(--cream); border-radius: 50%; color: #334b3f; background: linear-gradient(145deg, #dbe9ca, #a9c1a4); font-size: 10px; font-weight: 800; }
+    .avatar-stack span:nth-child(2) { background: linear-gradient(145deg, #f7d1ba, #d5a996); }
+    .avatar-stack span:nth-child(3) { background: linear-gradient(145deg, #d5dcf2, #a7b6d3); }
+    .avatar-stack span:nth-child(4) { background: linear-gradient(145deg, #f2dc97, #ceb66b); }
+    .hero-social p { margin: 0; color: #637168; font-size: 11px; line-height: 1.45; }
+    .hero-social strong { color: var(--ink); font-size: 12px; }
+    .hero-visual { position: relative; min-height: 545px; display: grid; place-items: center; }
+    .hero-orbit { position: absolute; top: 7%; right: 3%; width: 78%; aspect-ratio: 1; border: 1px solid rgba(89,132,92,.13); border-radius: 50%; transform: rotate(-18deg); }
+    .hero-orbit:before, .hero-orbit:after { position: absolute; content: ""; border: 1px solid rgba(89,132,92,.12); border-radius: 50%; }
+    .hero-orbit:before { inset: 11%; }
+    .hero-orbit:after { inset: 23%; }
+    .stage-glow { position: absolute; top: 13%; left: 14%; width: 72%; height: 72%; border-radius: 50%; background: radial-gradient(circle, rgba(217,235,195,.85), rgba(224,239,217,.3) 54%, transparent 72%); filter: blur(4px); }
+    .app-window { position: relative; z-index: 2; width: min(430px, 82%); padding: 22px; background: rgba(255,255,255,.88); border: 1px solid rgba(255,255,255,.92); border-radius: 26px; box-shadow: 0 30px 90px rgba(32,68,45,.17), inset 0 1px 0 rgba(255,255,255,.8); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); transform: rotate(-1.5deg); animation: card-float 7s ease-in-out infinite; }
+    .window-head { display: flex; align-items: center; justify-content: space-between; padding-bottom: 18px; border-bottom: 1px solid #edf0eb; }
+    .window-brand { display: flex; align-items: center; gap: 9px; }
+    .window-brand-mark { display: grid; place-items: center; width: 30px; height: 30px; color: var(--leaf); background: var(--forest); border-radius: 10px; }
+    .window-brand strong { display: block; color: var(--ink); font-size: 12px; line-height: 1.2; }
+    .window-brand small { display: block; color: #8b968e; font-size: 9px; }
+    .window-date { color: #89948c; font-size: 10px; }
+    .window-greeting { display: flex; justify-content: space-between; align-items: end; gap: 15px; padding: 17px 0 13px; }
+    .window-greeting p { margin: 0 0 2px; color: #8a968e; font-size: 10px; }
+    .window-greeting h3 { margin: 0; color: var(--ink); font-size: 19px; letter-spacing: -.04em; }
+    .streak-pill { display: inline-flex; align-items: center; gap: 5px; padding: 6px 9px; color: #915036; background: #fff1e9; border: 1px solid #ffe5d6; border-radius: 9px; font-size: 9px; font-weight: 800; }
+    .mini-progress-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 13px; }
+    .mini-stat { padding: 11px 10px; background: #f7f8f5; border: 1px solid #edf0ea; border-radius: 13px; }
+    .mini-stat small { display: block; color: #89948d; font-size: 9px; }
+    .mini-stat strong { display: block; margin-top: 2px; color: var(--ink); font-size: 15px; letter-spacing: -.04em; }
+    .mini-stat strong span { color: #8ca65c; font-size: 9px; font-weight: 600; }
+    .flashcard { position: relative; overflow: hidden; padding: 17px 17px 16px; border: 1px solid #e7ece5; border-radius: 18px; background: linear-gradient(145deg, #fbfcf8, #f0f5ed); }
+    .flashcard:after { position: absolute; top: -43px; right: -42px; width: 120px; height: 120px; content: ""; background: rgba(216,243,106,.27); border-radius: 50%; }
+    .flashcard-top { position: relative; z-index: 1; display: flex; align-items: center; justify-content: space-between; color: #839087; font-size: 9px; font-weight: 740; letter-spacing: .06em; text-transform: uppercase; }
+    .sound-round { display: grid; place-items: center; width: 30px; height: 30px; color: var(--forest); background: white; border: 1px solid #e6ece3; border-radius: 50%; cursor: pointer; transition: transform .2s, background .2s; }
+    .sound-round:hover { background: var(--leaf); transform: scale(1.07); }
+    .sound-round svg { width: 14px; height: 14px; }
+    .flashcard h4 { position: relative; z-index: 1; margin: 9px 0 0; color: var(--ink); font-size: 30px; font-weight: 720; letter-spacing: -.055em; }
+    .flashcard .phonetic { position: relative; z-index: 1; margin: 2px 0 8px; color: #88938d; font-size: 10px; }
+    .flashcard .meaning { position: relative; z-index: 1; margin: 0; color: #40534a; font-size: 12px; font-weight: 720; }
+    .flashcard .example { position: relative; z-index: 1; margin: 7px 0 0; color: #758078; font-size: 10px; font-style: italic; line-height: 1.5; }
+    .window-controls { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 11px; }
+    .window-controls span { display: grid; place-items: center; min-height: 34px; border: 1px solid #e8ede6; border-radius: 11px; color: #6d7971; background: white; font-size: 10px; font-weight: 700; }
+    .window-controls span:last-child { color: var(--forest); background: var(--leaf); border-color: var(--leaf); }
+    .floating-card { position: absolute; z-index: 4; display: flex; align-items: center; gap: 10px; padding: 12px 14px; background: rgba(255,255,255,.88); border: 1px solid rgba(255,255,255,.95); border-radius: 15px; box-shadow: var(--shadow-small); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); animation: float-soft 5.5s ease-in-out infinite; }
+    .floating-card strong { display: block; color: var(--ink); font-size: 12px; line-height: 1.3; }
+    .floating-card small { display: block; margin-top: 2px; color: #849088; font-size: 9px; }
+    .float-icon { display: grid; place-items: center; width: 32px; height: 32px; background: #eef4df; border-radius: 11px; color: var(--forest); font-size: 16px; }
+    .float-one { top: 17%; right: 1%; animation-delay: -.9s; }
+    .float-two { bottom: 16%; left: 1%; animation-delay: -2.4s; }
+    .sparkle { position: absolute; z-index: 1; color: #8ca95d; font-size: 22px; animation: sparkle 3.5s ease-in-out infinite; }
+    .sparkle-one { top: 12%; left: 13%; }
+    .sparkle-two { right: 9%; bottom: 21%; font-size: 15px; animation-delay: -1.3s; }
+    .hero-label { position: absolute; right: 8%; bottom: 3%; z-index: 5; color: #789080; font-size: 9px; letter-spacing: .04em; }
+    .proof-band { padding: 25px 0 26px; border-top: 1px solid #e6ebe4; border-bottom: 1px solid #e6ebe4; background: rgba(255,255,255,.58); }
+    .proof-inner { display: grid; grid-template-columns: repeat(4, 1fr); align-items: center; gap: 20px; }
+    .proof-item { text-align: center; }
+    .proof-item strong { display: block; color: var(--forest); font-size: clamp(25px,3vw,34px); line-height: 1; font-weight: 760; letter-spacing: -.055em; }
+    .proof-item span { display: block; margin-top: 8px; color: #7b877f; font-size: 10px; }
+    .proof-note { margin: 12px auto 0; color: #98a19b; font-size: 9px; text-align: center; }
+    .school-strip { overflow: hidden; padding: 24px 0 20px; background: rgba(255,255,255,.72); border-bottom: 1px solid #e6ebe4; text-align: center; }
+    .school-strip p { margin: 0 0 14px; color: #8a958d; font-size: 9px; font-weight: 750; letter-spacing: .16em; text-transform: uppercase; }
+    .school-track { display: flex; align-items: center; justify-content: flex-start; gap: 44px; width: max-content; color: #758178; animation: school-marquee 36s linear infinite; }
+    .school-strip:hover .school-track { animation-play-state: paused; }
+    .school-track span { color: #6e7c72; font-size: 14px; font-weight: 750; letter-spacing: -.035em; white-space: nowrap; opacity: .8; }
+    .school-strip small { display: block; margin-top: 12px; color: #a0a9a2; font-size: 8px; }
+    @keyframes school-marquee { to { transform: translateX(-50%); } }
+    .section { padding: 100px 0; }
+    .features-section { padding-top: 106px; }
+    .feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .feature-card { position: relative; min-height: 226px; padding: 24px 23px 22px; background: rgba(255,255,255,.72); border: 1px solid #e7ebe5; border-radius: 20px; box-shadow: 0 5px 18px rgba(27,51,37,.025); transition: transform .28s ease, box-shadow .28s ease, border-color .28s ease; }
+    .feature-card:hover { transform: translateY(-5px); border-color: #d4e1d2; box-shadow: var(--shadow-small); }
+    .feature-icon { display: grid; place-items: center; width: 43px; height: 43px; margin-bottom: 25px; color: var(--forest); background: #eaf2e5; border-radius: 14px; }
+    .feature-icon svg { width: 21px; height: 21px; stroke: currentColor; }
+    .feature-card:nth-child(2) .feature-icon { background: #f1f0df; color: #837d3a; }
+    .feature-card:nth-child(3) .feature-icon { background: #e5eef1; color: #3b7180; }
+    .feature-card:nth-child(4) .feature-icon { background: #f5e9e2; color: #a5674b; }
+    .feature-card:nth-child(5) .feature-icon { background: #ede9f4; color: #725d91; }
+    .feature-card:nth-child(6) .feature-icon { background: #e8eee0; color: #5f7942; }
+    .feature-card h3 { margin: 0 0 8px; color: var(--ink); font-size: 17px; letter-spacing: -.03em; }
+    .feature-card p { margin: 0; color: #78847d; font-size: 12px; line-height: 1.75; }
+    .feature-card .card-link { display: inline-flex; align-items: center; gap: 5px; margin-top: 15px; color: #4e725c; font-size: 11px; font-weight: 730; }
+    .feature-card .card-link span { transition: transform .2s; }
+    .feature-card:hover .card-link span { transform: translateX(3px); }
+    .library-section { padding-top: 92px; background: #eff3ec; border-top: 1px solid #e8eee5; border-bottom: 1px solid #e8eee5; }
+    .library-section .section-heading { margin-bottom: 38px; }
+    .exam-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 30px; }
+    .exam-card { position: relative; overflow: hidden; display: flex; flex-direction: column; min-height: 156px; padding: 18px 16px 15px; background: rgba(255,255,255,.83); border: 1px solid #e3e9e1; border-radius: 17px; transition: transform .24s ease, box-shadow .24s ease; }
+    .exam-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-small); }
+    .exam-card:after { position: absolute; top: -35px; right: -34px; width: 78px; height: 78px; content: ""; background: var(--wash, #ddefc8); border-radius: 50%; opacity: .65; }
+    .exam-icon { position: relative; z-index: 1; display: grid; place-items: center; width: 34px; height: 34px; margin-bottom: auto; border-radius: 11px; color: #4d6d49; background: var(--wash, #e9f2df); font-size: 14px; font-weight: 900; }
+    .exam-card:nth-child(2) .exam-icon { color: #776744; }
+    .exam-card:nth-child(3) .exam-icon { color: #536d8a; }
+    .exam-card:nth-child(4) .exam-icon { color: #986752; }
+    .exam-card:nth-child(5) .exam-icon { color: #74678d; }
+    .exam-card h3 { position: relative; z-index: 1; margin: 12px 0 1px; color: var(--ink); font-size: 13px; line-height: 1.35; }
+    .exam-card p { position: relative; z-index: 1; margin: 0; color: #879189; font-size: 10px; }
+    .exam-card strong { position: absolute; z-index: 1; top: 19px; right: 14px; color: #6e8171; font-size: 10px; font-weight: 730; }
+    .roots-panel { display: grid; grid-template-columns: .7fr 1.3fr; align-items: center; gap: 28px; margin: 0 0 17px; padding: 24px 26px; background: linear-gradient(120deg, #fbfcf8, #f7f8ef); border: 1px solid #e4eadd; border-radius: 20px; }
+    .roots-intro .eyebrow { margin-bottom: 8px; font-size: 8px; }
+    .roots-intro h3 { margin: 0; color: var(--ink); font-size: 23px; line-height: 1.18; letter-spacing: -.045em; }
+    .roots-intro p { max-width: 290px; margin: 9px 0 0; color: #78847b; font-size: 10px; line-height: 1.65; }
+    .root-list { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; }
+    .root-row { min-width: 0; padding: 13px 12px; background: white; border: 1px solid #e8ede4; border-radius: 13px; }
+    .root-row strong { display: block; color: var(--forest); font-size: 12px; letter-spacing: -.02em; }
+    .root-row span { display: block; margin-top: 3px; color: #88948c; font-size: 9px; }
+    .root-row small { display: block; margin-top: 11px; color: #52645a; font-size: 9px; line-height: 1.5; }
+    .library-panel { padding: 22px; border: 1px solid rgba(255,255,255,.88); border-radius: 23px; background: rgba(255,255,255,.79); box-shadow: 0 12px 40px rgba(41,72,46,.05); }
+    .library-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 17px; }
+    .library-top-left h3 { margin: 0; color: var(--ink); font-size: 16px; letter-spacing: -.03em; }
+    .library-top-left p { margin: 2px 0 0; color: #859087; font-size: 10px; }
+    .library-actions { display: flex; align-items: center; gap: 9px; }
+    .search-wrap { position: relative; }
+    .search-wrap svg { position: absolute; top: 50%; left: 11px; width: 15px; height: 15px; color: #839087; transform: translateY(-50%); pointer-events: none; }
+    .search-input { width: min(230px, 42vw); height: 39px; padding: 0 12px 0 34px; border: 1px solid #e1e8e0; border-radius: 11px; background: #fbfcfa; color: var(--ink); font-size: 11px; outline: none; }
+    .search-input:focus { border-color: #9ab28d; box-shadow: 0 0 0 3px rgba(154,178,141,.16); }
+    .import-button { display: inline-flex; align-items: center; gap: 7px; min-height: 39px; padding: 0 12px; color: var(--forest); background: #edf4e9; border: 1px solid #e1eadc; border-radius: 11px; cursor: pointer; font-size: 10px; font-weight: 760; transition: background .2s ease; }
+    .import-button:hover { background: #e2efd9; }
+    .import-button svg { width: 14px; height: 14px; }
+    .filter-row { display: flex; gap: 7px; margin: 0 0 17px; overflow: auto; padding-bottom: 3px; scrollbar-width: thin; }
+    .filter-chip { flex: 0 0 auto; padding: 7px 11px; color: #718078; background: transparent; border: 1px solid #e6ebe4; border-radius: 999px; cursor: pointer; font-size: 10px; font-weight: 650; transition: all .2s ease; }
+    .filter-chip:hover, .filter-chip.active { color: var(--forest); background: #eaf3e3; border-color: #d5e6ca; }
+    .word-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 9px; }
+    .word-tile { min-width: 0; padding: 14px 14px 12px; background: #fbfcfa; border: 1px solid #edf0ea; border-radius: 14px; transition: border-color .2s ease, transform .2s ease; }
+    .word-tile:hover { transform: translateY(-2px); border-color: #ceddc9; }
+    .word-tile-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
+    .word-tile h4 { overflow: hidden; margin: 0; color: var(--ink); font-size: 17px; letter-spacing: -.035em; text-overflow: ellipsis; white-space: nowrap; }
+    .word-tile .phonetic { margin: 2px 0 0; color: #939d96; font-size: 9px; }
+    .word-tile .meaning { margin: 9px 0 0; color: #52645a; font-size: 11px; line-height: 1.45; }
+    .word-tile-bottom { display: flex; align-items: center; justify-content: space-between; gap: 6px; margin-top: 11px; }
+    .word-tag { max-width: 72%; overflow: hidden; padding: 3px 7px; color: #77847b; background: #f0f3ee; border-radius: 6px; font-size: 9px; text-overflow: ellipsis; white-space: nowrap; }
+    .word-open, .word-speak { display: inline-flex; align-items: center; justify-content: center; min-height: 28px; border: 0; border-radius: 8px; cursor: pointer; }
+    .word-open { padding: 0 9px; color: white; background: var(--forest); font-size: 9px; font-weight: 730; }
+    .word-open:hover { background: #245b44; }
+    .word-speak { width: 28px; color: var(--forest); background: #edf4e9; }
+    .word-speak:hover { background: var(--leaf); }
+    .word-speak svg { width: 13px; height: 13px; }
+    .empty-state { grid-column: 1 / -1; padding: 27px 12px; color: #79877e; text-align: center; font-size: 12px; }
+    .migration-note { display: flex; align-items: flex-start; gap: 10px; margin-top: 15px; padding: 12px 14px; color: #65746b; background: #f5f8f1; border: 1px solid #e5ecdf; border-radius: 12px; font-size: 10px; line-height: 1.65; }
+    .migration-note strong { color: var(--forest); }
+    .migration-note svg { flex: 0 0 auto; width: 15px; height: 15px; margin-top: 1px; color: #729452; }
+    .migration-note a { flex: 0 0 auto; color: var(--forest); font-size: 10px; font-weight: 780; white-space: nowrap; }
+    .library-footnote { margin: 9px 0 0; color: #99a29b; font-size: 9px; }
+    .dark-section { position: relative; overflow: hidden; padding: 104px 0 100px; color: white; background: #163f32; }
+    .dark-section:before { position: absolute; top: -260px; right: -130px; width: 700px; height: 700px; content: ""; background: radial-gradient(circle, rgba(107,151,98,.25), transparent 70%); }
+    .dark-section:after { position: absolute; bottom: -330px; left: -200px; width: 650px; height: 650px; content: ""; background: radial-gradient(circle, rgba(113,150,91,.16), transparent 70%); }
+    .dark-section .container { position: relative; z-index: 1; }
+    .dark-section .section-heading h2 { color: white; }
+    .dark-section .section-heading h2 em { color: var(--leaf); }
+    .dark-section .section-heading p { color: #b5c7bd; }
+    .dark-section .eyebrow { color: #c4ddac; }
+    .demo-tabs { display: flex; justify-content: center; gap: 7px; margin: -8px auto 0; }
+    .demo-tab { min-height: 40px; padding: 0 15px; color: #c2d1c7; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); border-radius: 999px; cursor: pointer; font-size: 10px; font-weight: 720; transition: all .2s ease; }
+    .demo-tab:hover { background: rgba(255,255,255,.12); }
+    .demo-tab.active { color: var(--forest); background: var(--leaf); border-color: var(--leaf); }
+    .workbench { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(320px, .9fr); align-items: center; gap: 56px; margin-top: 34px; }
+    .study-app { overflow: hidden; padding: 19px; color: var(--ink); background: #f8faf6; border: 1px solid rgba(255,255,255,.44); border-radius: 24px; box-shadow: 0 28px 80px rgba(0,0,0,.2); }
+    .study-app-top { display: flex; align-items: center; justify-content: space-between; padding: 0 2px 15px; border-bottom: 1px solid #e8eee6; }
+    .study-app-brand { display: flex; align-items: center; gap: 8px; color: var(--ink); font-size: 12px; font-weight: 760; }
+    .study-app-brand .mini-logo { display: grid; place-items: center; width: 28px; height: 28px; color: var(--leaf); background: var(--forest); border-radius: 9px; }
+    .study-app-brand small { display: block; color: #8c978f; font-size: 8px; font-weight: 500; }
+    .session-status { display: inline-flex; align-items: center; gap: 5px; padding: 6px 9px; color: #5e7c47; background: #edf4e5; border-radius: 999px; font-size: 9px; font-weight: 750; }
+    .session-status i { width: 6px; height: 6px; border-radius: 50%; background: #88b34a; }
+    .study-stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; padding: 14px 0 12px; }
+    .study-stat { padding: 9px 10px; background: white; border: 1px solid #edf0ea; border-radius: 12px; }
+    .study-stat span { display: block; color: #8b968e; font-size: 9px; }
+    .study-stat strong { display: block; margin-top: 2px; color: var(--ink); font-size: 16px; letter-spacing: -.04em; }
+    .study-meter { height: 5px; margin: 0 0 13px; overflow: hidden; background: #e9eee7; border-radius: 999px; }
+    .study-meter span { display: block; width: 30%; height: 100%; background: linear-gradient(90deg, #92b953, #d3ed75); border-radius: inherit; transition: width .4s ease; }
+    .study-word-card { position: relative; padding: 19px 19px 16px; overflow: hidden; background: white; border: 1px solid #e9eee7; border-radius: 17px; box-shadow: 0 6px 18px rgba(35,69,44,.04); }
+    .study-word-card:before { position: absolute; top: -48px; right: -42px; width: 130px; height: 130px; content: ""; background: radial-gradient(circle, rgba(220,240,180,.45), transparent 68%); }
+    .study-word-top { position: relative; z-index: 1; display: flex; align-items: center; justify-content: space-between; color: #87928b; font-size: 9px; font-weight: 750; letter-spacing: .08em; }
+    .study-word-main { position: relative; z-index: 1; display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 14px 0 0; }
+    .study-word-main h3 { overflow-wrap: anywhere; margin: 0; color: var(--ink); font-size: clamp(25px,4vw,38px); font-weight: 740; letter-spacing: -.055em; line-height: 1.1; }
+    .study-word-main .phonetic { margin: 5px 0 0; color: #86928a; font-size: 10px; }
+    .study-word-main .sound-round { flex: 0 0 auto; width: 38px; height: 38px; color: var(--forest); background: #eff5e9; border: 0; }
+    .study-meaning { position: relative; z-index: 1; margin: 16px 0 0; padding-top: 13px; border-top: 1px solid #edf0ea; color: #4f6657; font-size: 13px; font-weight: 720; }
+    .study-meaning.is-hidden { color: #99a39c; font-weight: 550; }
+    .study-example { position: relative; z-index: 1; margin: 9px 0 0; color: #859088; font-size: 10px; font-style: italic; line-height: 1.6; }
+    .study-example-translation { position: relative; z-index: 1; margin: 4px 0 0; color: #8b968e; font-size: 9px; line-height: 1.5; }
+    .study-mnemonic { position: relative; z-index: 1; margin: 8px 0 0; padding: 8px 9px; color: #52645a; background: #f1f5eb; border-radius: 9px; font-size: 9px; line-height: 1.55; }
+    .study-example-translation[hidden], .study-mnemonic[hidden] { display: none; }
+    .study-controls { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; }
+    .study-control { min-height: 40px; padding: 0 9px; border: 1px solid #e6ebe4; border-radius: 11px; color: #69766e; background: white; cursor: pointer; font-size: 10px; font-weight: 730; transition: transform .18s ease, background .18s ease; }
+    .study-control:hover { transform: translateY(-1px); background: #f3f7ef; }
+    .study-control.primary { color: var(--forest); background: var(--leaf); border-color: var(--leaf); }
+    .study-control.primary:hover { background: #e3f98a; }
+    .study-app-foot { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-top: 13px; color: #859088; font-size: 9px; }
+    .accent-toggle { display: inline-flex; gap: 2px; padding: 3px; background: #edf1ea; border-radius: 8px; }
+    .accent-toggle button { padding: 4px 7px; color: #879189; background: transparent; border: 0; border-radius: 6px; cursor: pointer; font-size: 8px; font-weight: 750; }
+    .accent-toggle button.active { color: var(--forest); background: white; box-shadow: 0 1px 4px rgba(0,0,0,.08); }
+    .study-side-copy { padding: 4px 4px 4px 0; }
+    .study-side-copy .eyebrow { margin-bottom: 17px; }
+    .study-side-copy h3 { margin: 0; color: white; font-size: clamp(30px, 4vw, 44px); line-height: 1.16; font-weight: 710; letter-spacing: -.05em; }
+    .study-side-copy h3 em { color: var(--leaf); font-style: normal; }
+    .study-side-copy > p { margin: 16px 0 22px; color: #bbcec2; font-size: 13px; line-height: 1.8; }
+    .check-list { display: grid; gap: 13px; margin: 0; padding: 0; list-style: none; }
+    .check-list li { display: flex; align-items: flex-start; gap: 10px; color: #e1eae2; font-size: 12px; line-height: 1.55; }
+    .check-list .check { flex: 0 0 auto; display: grid; place-items: center; width: 19px; height: 19px; color: var(--forest); background: var(--leaf); border-radius: 50%; font-size: 11px; font-weight: 900; }
+    .study-side-copy .btn { margin-top: 28px; }
+    .trial-banner { display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-top: 14px; padding: 10px 12px; color: #70513a; background: #fff4e6; border: 1px solid #f6e4c9; border-radius: 11px; font-size: 10px; }
+    .trial-banner[hidden] { display: none; }
+    .trial-banner strong { color: #694426; }
+    .trial-banner button { flex: 0 0 auto; padding: 5px 8px; color: white; background: #805b3d; border: 0; border-radius: 7px; cursor: pointer; font-size: 9px; font-weight: 700; }
+    .ops-section { padding: 100px 0 98px; }
+    .ops-panel { overflow: hidden; padding: 30px; background: linear-gradient(145deg, #fbfcf8, #f0f4eb); border: 1px solid #e3eae0; border-radius: 25px; box-shadow: 0 8px 35px rgba(35,65,40,.045); }
+    .ops-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 30px; margin-bottom: 29px; }
+    .ops-top h3 { margin: 0; color: var(--ink); font-size: 22px; letter-spacing: -.045em; }
+    .ops-top p { max-width: 560px; margin: 6px 0 0; color: #728078; font-size: 11px; line-height: 1.7; }
+    .ops-status { display: inline-flex; align-items: center; gap: 7px; padding: 8px 10px; color: #5f7c4c; background: #eaf2e4; border: 1px solid #dce9d4; border-radius: 10px; font-size: 9px; font-weight: 760; white-space: nowrap; }
+    .ops-status i { width: 7px; height: 7px; background: #8cb658; border-radius: 50%; box-shadow: 0 0 0 4px rgba(140,182,88,.12); }
+    .ops-flow { display: grid; grid-template-columns: repeat(6, 1fr); gap: 9px; align-items: stretch; }
+    .ops-step { position: relative; min-height: 142px; padding: 15px 13px; background: white; border: 1px solid #e4eae1; border-radius: 15px; }
+    .ops-step:not(:last-child):after { position: absolute; top: 26px; right: -9px; z-index: 2; content: "›"; display: grid; place-items: center; width: 18px; height: 18px; color: #789066; background: #edf3e7; border: 2px solid #f2f6ef; border-radius: 50%; font-size: 14px; font-weight: 800; }
+    .ops-number { display: inline-block; margin-bottom: 17px; color: #8aa45f; font-size: 10px; font-weight: 850; letter-spacing: .08em; }
+    .ops-step h4 { margin: 0 0 5px; color: var(--ink); font-size: 12px; line-height: 1.4; }
+    .ops-step p { margin: 0; color: #879189; font-size: 9px; line-height: 1.55; }
+    .ops-bottom { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin-top: 17px; padding-top: 16px; border-top: 1px solid #e1e8de; color: #78857d; font-size: 10px; }
+    .ops-bottom strong { color: #526b55; }
+    .benefits-section { padding: 90px 0 94px; background: #fff; }
+    .benefits-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 0; margin-top: 40px; }
+    .benefit { padding: 19px 35px; text-align: center; }
+    .benefit + .benefit { border-left: 1px solid #e8eee7; }
+    .benefit-number { color: var(--forest); font-size: clamp(39px,5vw,58px); font-weight: 750; letter-spacing: -.07em; line-height: 1; }
+    .benefit h3 { margin: 15px 0 7px; color: var(--ink); font-size: 15px; letter-spacing: -.02em; }
+    .benefit p { max-width: 250px; margin: 0 auto; color: #7b877f; font-size: 11px; line-height: 1.7; }
+    .testimonials-section { padding: 99px 0 100px; }
+    .testimonial-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 13px; }
+    .testimonial { display: flex; flex-direction: column; min-height: 252px; padding: 23px; background: rgba(255,255,255,.83); border: 1px solid #e6ebe4; border-radius: 19px; box-shadow: 0 6px 19px rgba(28,54,36,.025); transition: transform .25s, box-shadow .25s; }
+    .testimonial:hover { transform: translateY(-4px); box-shadow: var(--shadow-small); }
+    .stars { display: flex; gap: 3px; color: #c19b39; font-size: 12px; letter-spacing: .1em; }
+    .testimonial blockquote { flex: 1; margin: 16px 0 22px; color: #3b4d42; font-size: 13px; line-height: 1.8; }
+    .person { display: flex; align-items: center; gap: 10px; padding-top: 14px; border-top: 1px solid #edf0eb; }
+    .person-avatar { display: grid; place-items: center; width: 36px; height: 36px; color: #476247; background: #e5efdb; border-radius: 50%; font-size: 11px; font-weight: 800; }
+    .testimonial:nth-child(2) .person-avatar { color: #765740; background: #f4e7d8; }
+    .testimonial:nth-child(3) .person-avatar { color: #586989; background: #e3eaf5; }
+    .person strong { display: block; color: var(--ink); font-size: 11px; }
+    .person small { display: block; margin-top: 2px; color: #8b968e; font-size: 9px; }
+    .pricing-section { padding: 100px 0 105px; background: #edf2e9; border-top: 1px solid #e5ece2; border-bottom: 1px solid #e5ece2; }
+    .pricing-layout { display: grid; grid-template-columns: minmax(0,.9fr) minmax(350px,1.1fr); align-items: stretch; gap: 16px; max-width: 920px; margin: 0 auto; }
+    .trial-info-card { display: flex; flex-direction: column; justify-content: space-between; min-height: 420px; padding: 31px; color: white; background: linear-gradient(150deg, #1d4d3a, #12382c); border-radius: 24px; box-shadow: 0 20px 50px rgba(17,55,39,.17); }
+    .trial-info-card .eyebrow { color: #d3e9a1; }
+    .trial-info-card h3 { max-width: 340px; margin: 15px 0 12px; color: white; font-size: 33px; line-height: 1.16; letter-spacing: -.055em; }
+    .trial-info-card p { max-width: 340px; margin: 0; color: #c1d2c6; font-size: 12px; line-height: 1.8; }
+    .trial-timeline-mini { display: grid; gap: 12px; margin-top: 29px; }
+    .timeline-mini-row { display: flex; align-items: center; gap: 10px; color: #e1eee4; font-size: 11px; }
+    .timeline-mini-row span { display: grid; place-items: center; flex: 0 0 auto; width: 24px; height: 24px; color: var(--forest); background: var(--leaf); border-radius: 50%; font-size: 9px; font-weight: 850; }
+    .trial-info-foot { margin-top: 25px !important; color: #b1c7b7 !important; font-size: 10px !important; }
+    .price-card { position: relative; overflow: hidden; padding: 31px; background: white; border: 1px solid #dfe8dc; border-radius: 24px; box-shadow: 0 10px 36px rgba(33,65,41,.06); }
+    .price-card:before { position: absolute; top: -70px; right: -60px; width: 180px; height: 180px; content: ""; background: radial-gradient(circle, rgba(217,243,106,.22), transparent 68%); }
+    .price-card > * { position: relative; z-index: 1; }
+    .popular-pill { display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px; color: #526e3e; background: #eef5e6; border-radius: 999px; font-size: 9px; font-weight: 800; }
+    .price-card h3 { margin: 15px 0 4px; color: var(--ink); font-size: 19px; letter-spacing: -.04em; }
+    .price-card .price-desc { margin: 0; color: #839087; font-size: 11px; }
+    .price { display: flex; align-items: baseline; gap: 6px; margin: 23px 0 2px; color: var(--forest); }
+    .price strong { font-size: 48px; line-height: 1; letter-spacing: -.07em; }
+    .price span { color: #829087; font-size: 12px; }
+    .price-card .after-trial { margin: 0; color: #819087; font-size: 10px; }
+    .price-divider { height: 1px; margin: 20px 0 17px; background: #edf0eb; }
+    .plan-list { display: grid; gap: 11px; margin: 0 0 22px; padding: 0; list-style: none; }
+    .plan-list li { display: flex; align-items: flex-start; gap: 8px; color: #526159; font-size: 11px; line-height: 1.45; }
+    .plan-list li span { display: grid; place-items: center; flex: 0 0 auto; width: 16px; height: 16px; color: var(--forest); background: #e7f1de; border-radius: 50%; font-size: 9px; font-weight: 900; }
+    .plan-switch { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin: 18px 0 4px; padding: 5px; background: #f3f6ef; border: 1px solid #e8eee4; border-radius: 13px; }
+    .plan-option { display: flex; align-items: center; justify-content: center; gap: 7px; min-height: 39px; padding: 5px 8px; color: #78847c; background: transparent; border: 1px solid transparent; border-radius: 9px; cursor: pointer; font-size: 10px; font-weight: 730; transition: all .2s ease; }
+    .plan-option:hover { color: var(--forest); }
+    .plan-option.active { color: var(--forest); background: white; border-color: #e8eee4; box-shadow: 0 2px 8px rgba(27,55,35,.06); }
+    .plan-option b { padding: 3px 6px; color: #526c3f; background: #e9f3dc; border-radius: 999px; font-size: 8px; }
+    .price-original { color: #9aa39b; font-size: 12px; text-decoration: line-through; }
+    .student-promo { margin: 9px 0 0; padding: 8px 10px; color: #5f704b; background: #f4f7e9; border-radius: 9px; font-size: 9px; line-height: 1.5; }
+    .price-card .btn { width: 100%; }
+    .price-card .secondary-subscribe { margin-top: 8px; }
+    .terms-small { margin: 12px 0 0; color: #99a39b; font-size: 9px; line-height: 1.6; text-align: center; }
+    .provider-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 15px; }
+    .provider-choice { display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 43px; color: #65726a; background: #f8faf6; border: 1px solid #e6ece4; border-radius: 11px; cursor: pointer; font-size: 11px; font-weight: 730; transition: all .2s; }
+    .provider-choice.active { color: var(--forest); background: #edf4e7; border-color: #bad0a8; box-shadow: 0 0 0 3px rgba(153,181,127,.12); }
+    .provider-choice .provider-icon { display: grid; place-items: center; width: 19px; height: 19px; color: white; background: #21a366; border-radius: 6px; font-size: 10px; font-weight: 850; }
+    .provider-choice[data-provider="alipay"] .provider-icon { background: #1677ff; }
+    .source-url-input { width: 100%; height: 45px; margin: 8px 0 15px; padding: 0 13px; color: var(--ink); background: #fff; border: 1px solid #dfe8dd; border-radius: 11px; font-size: 11px; }
+    .source-url-input:focus { outline: 3px solid rgba(96,150,72,.17); border-color: #96b283; }
+    .team-row { display: flex; align-items: center; justify-content: space-between; gap: 20px; max-width: 920px; margin: 14px auto 0; padding: 17px 21px; background: rgba(255,255,255,.64); border: 1px solid #e0e8dd; border-radius: 17px; }
+    .team-row h3 { margin: 0; color: var(--ink); font-size: 13px; }
+    .team-row p { margin: 3px 0 0; color: #829087; font-size: 10px; }
+    .team-row a { flex: 0 0 auto; color: var(--forest); font-size: 10px; font-weight: 760; }
+    .faq-section { padding: 103px 0 104px; }
+    .faq-layout { display: grid; grid-template-columns: .7fr 1.3fr; gap: 60px; align-items: start; max-width: 1010px; margin: 0 auto; }
+    .faq-aside h2 { margin: 0; color: var(--ink); font-size: clamp(32px,4.5vw,49px); line-height: 1.13; letter-spacing: -.055em; }
+    .faq-aside p { margin: 14px 0 20px; color: #77847b; font-size: 12px; line-height: 1.7; }
+    .faq-aside a { display: inline-flex; align-items: center; gap: 5px; color: var(--forest); font-size: 11px; font-weight: 760; }
+    .faq-list { border-top: 1px solid #e3e9e2; }
+    .faq-list details { border-bottom: 1px solid #e3e9e2; }
+    .faq-list summary { position: relative; display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 19px 0; color: #2b3b31; cursor: pointer; list-style: none; font-size: 13px; font-weight: 710; }
+    .faq-list summary::-webkit-details-marker { display: none; }
+    .faq-list summary:after { display: grid; place-items: center; flex: 0 0 auto; width: 24px; height: 24px; content: "+"; color: #5e7954; background: #ecf2e7; border-radius: 50%; font-size: 16px; font-weight: 500; transition: transform .2s, background .2s; }
+    .faq-list details[open] summary:after { content: "−"; background: var(--leaf); }
+    .faq-list details p { max-width: 650px; margin: -3px 0 18px; color: #78857d; font-size: 11px; line-height: 1.8; }
+    .final-cta { position: relative; overflow: hidden; padding: 76px 0 73px; color: white; background: var(--forest); }
+    .final-cta:before { position: absolute; top: -300px; left: 50%; width: 780px; height: 600px; content: ""; background: radial-gradient(ellipse, rgba(132,170,86,.25), transparent 70%); transform: translateX(-50%); }
+    .final-cta .container { position: relative; z-index: 1; text-align: center; }
+    .final-cta .eyebrow { color: #d1e99d; }
+    .final-cta h2 { max-width: 750px; margin: 0 auto; color: white; font-size: clamp(36px,5.7vw,62px); line-height: 1.12; letter-spacing: -.06em; }
+    .final-cta h2 em { color: var(--leaf); font-style: normal; }
+    .final-cta p { max-width: 570px; margin: 15px auto 26px; color: #c3d2c7; font-size: 13px; line-height: 1.8; }
+    .final-cta .btn { min-width: 210px; }
+    .footer { padding: 41px 0 24px; background: #112f26; color: #c5d2c9; }
+    .footer-main { display: flex; align-items: flex-start; justify-content: space-between; gap: 30px; padding-bottom: 32px; border-bottom: 1px solid rgba(255,255,255,.12); }
+    .footer .brand-word { color: white; }
+    .footer .brand-word small { color: #a5b9aa; }
+    .footer-blurb { max-width: 280px; margin: 14px 0 0; color: #9cb1a2; font-size: 10px; line-height: 1.7; }
+    .footer-links { display: flex; flex-wrap: wrap; gap: 44px; }
+    .footer-col h3 { margin: 0 0 12px; color: white; font-size: 10px; letter-spacing: .03em; }
+    .footer-col a { display: block; margin-top: 8px; color: #9cb1a2; font-size: 10px; transition: color .18s; }
+    .footer-col a:hover { color: var(--leaf); }
+    .footer-bottom { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-top: 19px; color: #849a8c; font-size: 9px; }
+    .footer-bottom .legal-links { display: flex; gap: 16px; }
+    .footer-bottom a:hover { color: white; }
+    .dialog { width: min(520px, calc(100% - 28px)); max-height: min(90vh, 730px); padding: 0; overflow: auto; border: 1px solid rgba(255,255,255,.8); border-radius: 23px; color: var(--ink); background: #fbfcf8; box-shadow: 0 32px 100px rgba(0,0,0,.28); }
+    .dialog::backdrop { background: rgba(12,31,22,.57); backdrop-filter: blur(7px); }
+    .dialog-content { padding: 28px; }
+    .dialog-close { display: grid; place-items: center; width: 32px; height: 32px; margin-left: auto; color: #748078; background: white; border: 1px solid #e6ebe4; border-radius: 50%; cursor: pointer; font-size: 17px; }
+    .dialog-badge { display: inline-flex; align-items: center; gap: 6px; margin-top: 2px; padding: 6px 9px; color: #526e3d; background: #edf5e5; border-radius: 999px; font-size: 9px; font-weight: 800; }
+    .dialog h2 { margin: 15px 0 7px; color: var(--ink); font-size: 28px; line-height: 1.17; letter-spacing: -.05em; }
+    .dialog-copy { margin: 0; color: #758179; font-size: 11px; line-height: 1.75; }
+    .dialog-timeline { display: grid; grid-template-columns: repeat(3,1fr); gap: 7px; margin: 22px 0 17px; }
+    .dialog-day { padding: 12px 11px; background: white; border: 1px solid #e8eee6; border-radius: 12px; }
+    .dialog-day span { display: block; color: #89a45f; font-size: 9px; font-weight: 850; }
+    .dialog-day strong { display: block; margin-top: 5px; color: #3f5146; font-size: 10px; line-height: 1.4; }
+    .dialog-notice { margin: 0 0 15px; padding: 11px 12px; color: #6e6250; background: #f8f2e8; border: 1px solid #efe5d4; border-radius: 11px; font-size: 9px; line-height: 1.65; }
+    .agree-row { display: flex; align-items: flex-start; gap: 9px; margin: 14px 0 18px; color: #617067; font-size: 10px; line-height: 1.6; }
+    .agree-row input { flex: 0 0 auto; margin-top: 2px; accent-color: var(--forest); }
+    .dialog .btn { width: 100%; }
+    .dialog-secondary { display: block; margin: 13px auto 0; padding: 7px; color: #718078; background: transparent; border: 0; cursor: pointer; font-size: 10px; }
+    .payment-box { margin: 19px 0 15px; padding: 15px; background: white; border: 1px solid #e7ece4; border-radius: 13px; }
+    .payment-row { display: flex; justify-content: space-between; gap: 14px; padding: 6px 0; color: #738078; font-size: 10px; }
+    .payment-row strong { color: #33493c; }
+    .pay-status { min-height: 18px; margin: 11px 0 0; color: #9b6543; font-size: 10px; line-height: 1.6; }
+    .toast { position: fixed; right: 20px; bottom: 20px; z-index: 100; max-width: min(370px,calc(100% - 40px)); padding: 12px 16px; color: white; background: #193e30; border: 1px solid rgba(255,255,255,.18); border-radius: 12px; box-shadow: 0 14px 36px rgba(0,0,0,.2); opacity: 0; pointer-events: none; transform: translateY(12px); transition: opacity .23s, transform .23s; font-size: 11px; line-height: 1.5; }
+    .toast.show { opacity: 1; transform: translateY(0); }
+    .visually-hidden { position: absolute !important; width: 1px !important; height: 1px !important; padding: 0 !important; margin: -1px !important; overflow: hidden !important; clip: rect(0,0,0,0) !important; white-space: nowrap !important; border: 0 !important; }
+    html.js [data-reveal] { opacity: 0; transform: translateY(18px); transition: opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1); }
+    html.js [data-reveal].in-view { opacity: 1; transform: translateY(0); }
+    .stagger-1 { transition-delay: .08s !important; }
+    .stagger-2 { transition-delay: .16s !important; }
+    .stagger-3 { transition-delay: .24s !important; }
+    .stagger-4 { transition-delay: .32s !important; }
+    @keyframes card-float { 0%, 100% { transform: rotate(-1.5deg) translateY(0); } 50% { transform: rotate(-1deg) translateY(-7px); } }
+    @keyframes float-soft { 0%, 100% { transform: translateY(0) rotate(.4deg); } 50% { transform: translateY(-9px) rotate(-.5deg); } }
+    @keyframes sparkle { 0%, 100% { opacity: .45; transform: scale(.88) rotate(0); } 50% { opacity: 1; transform: scale(1.14) rotate(20deg); } }
+    @media (max-width: 1050px) {
+      .hero-grid { gap: 26px; }
+      .hero-visual { min-height: 500px; }
+      .exam-grid { grid-template-columns: repeat(3,1fr); }
+      .ops-flow { grid-template-columns: repeat(3,1fr); }
+      .ops-step:nth-child(3):after { display: none; }
+      .workbench { gap: 35px; }
+    }
+    @media (max-width: 820px) {
+      .desktop-nav, .nav-install { display: none; }
+      .mobile-menu-toggle { display: grid; }
+      .nav-actions { margin-left: auto; }
+      .mobile-menu { position: absolute; top: 75px; right: 0; left: 0; z-index: 60; padding: 11px 24px 20px; background: rgba(248,249,246,.97); border-bottom: 1px solid var(--line); box-shadow: 0 18px 24px rgba(20,48,30,.08); }
+      .mobile-menu.open { display: grid; }
+      .mobile-menu a { padding: 11px 0; color: #495a50; border-bottom: 1px solid #e9eee7; font-size: 13px; font-weight: 650; }
+      .mobile-menu .btn { margin-top: 13px; border: 0; }
+      .hero { padding-top: 38px; }
+      .hero-grid { grid-template-columns: 1fr; gap: 12px; }
+      .hero-copy { max-width: 680px; padding-bottom: 0; }
+      .hero-visual { min-height: 525px; margin-top: 0; }
+      .app-window { width: min(450px, 80%); }
+      .workbench { grid-template-columns: 1fr; gap: 37px; }
+      .roots-panel { grid-template-columns: 1fr; gap: 16px; }
+      .study-app { max-width: 590px; width: 100%; margin-inline: auto; }
+      .study-side-copy { max-width: 600px; margin: auto; }
+      .faq-layout { grid-template-columns: 1fr; gap: 28px; }
+      .faq-aside { display: grid; grid-template-columns: 1fr 1fr; align-items: end; gap: 8px 20px; }
+      .faq-aside h2 { grid-row: span 2; }
+      .faq-aside p { margin-bottom: 0; }
+      .faq-aside a { align-self: start; }
+    }
+    @media (max-width: 620px) {
+      .container { width: min(100% - 34px, var(--container)); }
+      .site-header { height: 68px; }
+      .mobile-menu { top: 67px; padding-inline: 17px; }
+      .nav-inner { gap: 9px; }
+      .brand-mark { width: 35px; height: 35px; }
+      .brand-word { font-size: 16px; }
+      .nav-actions { gap: 6px; }
+      .nav-actions > .btn { min-height: 39px; padding-inline: 11px; font-size: 10px; }
+      .mobile-menu-toggle { width: 39px; height: 39px; }
+      .hero { padding: 33px 0 41px; }
+      .hero h1 { margin: 20px 0 14px; font-size: clamp(41px, 11.2vw, 60px); }
+      .hero h1 .highlight { white-space: normal; }
+      .hero-lede { font-size: 14px; }
+      .hero-ctas { gap: 8px; margin-top: 22px; }
+      .hero-ctas .btn { min-height: 48px; padding-inline: 15px; font-size: 12px; }
+      .hero-meta { gap: 7px 12px; margin-top: 16px; font-size: 9px; }
+      .hero-social { margin-top: 23px; }
+      .hero-visual { min-height: 430px; margin: -2px -4px 0; }
+      .app-window { width: min(390px, 88%); padding: 17px; border-radius: 21px; }
+      .hero-orbit { right: 4%; width: 87%; }
+      .float-one { top: 10%; right: 0; }
+      .float-two { bottom: 7%; left: -1%; }
+      .floating-card { padding: 9px 10px; }
+      .floating-card strong { font-size: 10px; }
+      .floating-card small { font-size: 8px; }
+      .float-icon { width: 28px; height: 28px; }
+      .hero-label { right: 5%; bottom: 0; }
+      .proof-inner { grid-template-columns: repeat(2,1fr); gap: 21px 9px; }
+      .proof-item strong { font-size: 29px; }
+      .proof-item span { margin-top: 6px; font-size: 9px; }
+      .proof-note { max-width: 320px; line-height: 1.5; }
+      .section { padding: 76px 0; }
+      .section-heading { margin-bottom: 33px; }
+      .section-heading h2 { font-size: 37px; }
+      .section-heading p { margin-top: 13px; font-size: 13px; }
+      .features-section { padding-top: 77px; }
+      .feature-grid { grid-template-columns: 1fr 1fr; gap: 9px; }
+      .feature-card { min-height: 209px; padding: 17px 15px; border-radius: 16px; }
+      .feature-icon { width: 37px; height: 37px; margin-bottom: 18px; border-radius: 12px; }
+      .feature-card h3 { font-size: 13px; }
+      .feature-card p { font-size: 10px; line-height: 1.65; }
+      .feature-card .card-link { font-size: 10px; }
+      .library-section { padding: 77px 0; }
+      .exam-grid { grid-template-columns: repeat(2,1fr); gap: 8px; }
+      .exam-card { min-height: 133px; padding: 14px; }
+      .exam-card:nth-child(5) { grid-column: span 2; min-height: 112px; }
+      .roots-panel { padding: 18px; }
+      .root-list { grid-template-columns: 1fr; }
+      .root-row { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 2px 9px; }
+      .root-row small { grid-column: 1 / -1; margin-top: 6px; }
+      .library-panel { padding: 14px; border-radius: 17px; }
+      .library-top { align-items: flex-start; flex-direction: column; gap: 12px; }
+      .library-actions { width: 100%; }
+      .search-wrap { flex: 1; }
+      .search-input { width: 100%; }
+      .import-button { padding-inline: 9px; white-space: nowrap; font-size: 9px; }
+      .word-grid { grid-template-columns: 1fr 1fr; gap: 7px; }
+      .word-tile { padding: 11px 10px; }
+      .word-tile h4 { font-size: 15px; }
+      .word-tile .meaning { font-size: 10px; }
+      .word-open { padding-inline: 7px; }
+      .dark-section { padding: 77px 0 80px; }
+      .workbench { gap: 31px; margin-top: 35px; }
+      .study-app { padding: 13px; border-radius: 19px; }
+      .study-word-card { padding: 15px; }
+      .study-side-copy h3 { font-size: 34px; }
+      .study-side-copy > p { font-size: 12px; }
+      .ops-section { padding: 76px 0; }
+      .ops-panel { padding: 19px; border-radius: 19px; }
+      .ops-top { flex-direction: column; gap: 13px; }
+      .ops-top h3 { font-size: 19px; }
+      .ops-flow { grid-template-columns: 1fr 1fr; gap: 8px; }
+      .ops-step { min-height: 126px; padding: 13px 11px; }
+      .ops-step:nth-child(2):after, .ops-step:nth-child(4):after { display: none; }
+      .ops-step:nth-child(3):after { display: grid; }
+      .ops-number { margin-bottom: 13px; }
+      .benefits-section { padding: 74px 0; }
+      .benefits-grid { grid-template-columns: 1fr; margin-top: 25px; }
+      .benefit { padding: 21px 8px; }
+      .benefit + .benefit { border-top: 1px solid #e8eee7; border-left: 0; }
+      .benefit-number { font-size: 45px; }
+      .benefit h3 { margin: 10px 0 5px; }
+      .testimonials-section { padding: 77px 0; }
+      .testimonial-grid { grid-template-columns: 1fr; gap: 9px; }
+      .testimonial { min-height: 0; padding: 19px; }
+      .testimonial blockquote { margin: 12px 0 18px; font-size: 12px; }
+      .pricing-section { padding: 77px 0 80px; }
+      .pricing-layout { grid-template-columns: 1fr; gap: 10px; }
+      .trial-info-card { min-height: 340px; padding: 24px; }
+      .trial-info-card h3 { font-size: 29px; }
+      .price-card { padding: 24px; }
+      .team-row { align-items: flex-start; flex-direction: column; gap: 9px; padding: 15px; }
+      .faq-section { padding: 77px 0; }
+      .faq-aside { display: block; }
+      .faq-aside h2 { font-size: 37px; }
+      .faq-aside p { margin: 11px 0; }
+      .faq-list summary { padding: 16px 0; font-size: 12px; }
+      .faq-list details p { font-size: 10px; }
+      .final-cta { padding: 63px 0; }
+      .final-cta h2 { font-size: 39px; }
+      .final-cta p { font-size: 11px; }
+      .footer { padding: 33px 0 19px; }
+      .footer-main { flex-direction: column; padding-bottom: 24px; }
+      .footer-links { width: 100%; justify-content: space-between; gap: 18px; }
+      .footer-bottom { align-items: flex-start; flex-direction: column; gap: 10px; }
+      .dialog-content { padding: 22px; }
+      .dialog h2 { font-size: 25px; }
+      .dialog-timeline { grid-template-columns: 1fr; }
+      .dialog-day { display: flex; align-items: center; gap: 10px; padding: 9px 11px; }
+      .dialog-day strong { margin-top: 0; }
+    }
+    @media (max-width: 370px) {
+      .container { width: calc(100% - 28px); }
+      .nav-actions > .btn { font-size: 9px; padding-inline: 8px; }
+      .feature-grid { grid-template-columns: 1fr; }
+      .feature-card { min-height: 170px; }
+      .hero-visual { min-height: 400px; }
+      .app-window { width: 92%; }
+      .proof-item strong { font-size: 25px; }
+      .word-grid { grid-template-columns: 1fr; }
+      .ops-flow { grid-template-columns: 1fr; }
+      .ops-step { min-height: auto; }
+      .ops-step:after { display: none !important; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+      html.js [data-reveal] { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到主要内容</a>
+  <header class="site-header">
+    <div class="container nav-inner">
+      <a class="brand" href="#top" aria-label="Lexio 乐词首页">
+        <span class="brand-mark" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M6 18V6.5c0-.8.7-1.5 1.5-1.5H18M6 18h11.5c.8 0 1.5-.7 1.5-1.5V8" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"/><path d="m10 13 2 2 5-6" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="brand-word">Lexio<small>乐词 · LEARN IN FLOW</small></span>
+      </a>
+      <nav class="desktop-nav" aria-label="主导航">
+        <a href="#method">学习方法</a><a href="#library">25,000+ 词库</a><a href="#study">产品体验</a><a href="#ops">自动化服务</a><a href="#pricing">定价</a>
+      </nav>
+      <div class="nav-actions">
+        <button class="nav-install" id="installBtn" type="button" aria-label="安装 Lexio 乐词到设备"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3v11m0 0 4-4m-4 4-4-4M5 15v4a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>安装 PWA</button>
+        <button class="btn btn-primary btn-small" type="button" data-open-trial>免费体验 7 天 <span class="btn-arrow">↗</span></button>
+        <button class="mobile-menu-toggle" id="mobileMenuToggle" type="button" aria-label="打开导航菜单" aria-expanded="false" aria-controls="mobileMenu"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
+      </div>
+    </div>
+    <nav class="mobile-menu" id="mobileMenu" aria-label="移动导航">
+      <a href="#method">学习方法</a><a href="#library">25,000+ 词库</a><a href="#study">产品体验</a><a href="#ops">自动化服务</a><a href="#pricing">定价</a>
+      <button class="btn btn-primary" type="button" data-open-trial>免费体验 7 天 <span class="btn-arrow">↗</span></button>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="top">
+      <div class="container hero-grid">
+        <div class="hero-copy" data-reveal>
+          <div class="hero-pill"><span>✦</span> 2026 新学期 · 25,000+ 词库学习系统</div>
+          <h1>背单词，<br>从此快 3 倍，<br><span class="highlight">不再遗忘。</span></h1>
+          <p class="hero-lede">Lexio 乐词覆盖高考 3500、四级、六级、考研与雅思共 <strong>25,000+ 目标词汇</strong>。基于记忆曲线定制每日词单，配合真题语境与英式发音，让每个单词真正进入长期记忆。</p>
+          <div class="hero-ctas">
+            <a class="btn btn-primary" href="#study">立即进入背单词 App <span class="btn-arrow">↗</span></a>
+            <a class="btn btn-outline" href="#method">功能特性演示 <span class="btn-arrow">⌄</span></a>
+          </div>
+          <div class="hero-meta"><span><i class="check-mini">✓</i> 免安装即开即用</span><span><i class="check-mini">✓</i> 手机 / 平板 / 电脑适配</span><span><i class="check-mini">✓</i> 免费体验 7 天</span></div>
+          <div class="hero-social">
+            <div class="avatar-stack" aria-hidden="true"><span>林</span><span>陈</span><span>王</span><span>李</span></div>
+            <p><strong>4.9 分 · 来自 12 万+ 学生评价</strong><br>让每一次努力，都变成看得见的进步</p>
+          </div>
+        </div>
+        <div class="hero-visual" aria-label="Lexio 学习界面预览" data-reveal>
+          <div class="hero-orbit" aria-hidden="true"></div><div class="stage-glow" aria-hidden="true"></div>
+          <span class="sparkle sparkle-one" aria-hidden="true">✳</span><span class="sparkle sparkle-two" aria-hidden="true">✦</span>
+          <div class="floating-card float-one"><span class="float-icon">↗</span><span><strong>记忆更牢</strong><small>在快要遗忘时复习</small></span></div>
+          <div class="floating-card float-two"><span class="float-icon">🔥</span><span><strong>连续打卡 42 天</strong><small>今天也向目标前进一步</small></span></div>
+          <div class="app-window">
+            <div class="window-head">
+              <div class="window-brand"><span class="window-brand-mark"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 18V6.5c0-.8.7-1.5 1.5-1.5H18M6 18h11.5c.8 0 1.5-.7 1.5-1.5V8" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"/><path d="m10 13 2 2 5-6" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><strong>Lexio 乐词</strong><small>你的今日学习空间</small></span></div>
+              <span class="window-date">WEDNESDAY · 09:41</span>
+            </div>
+            <div class="window-greeting"><div><p>新的一天，继续稳步前进</p><h3>今日学习计划</h3></div><span class="streak-pill">✦ 连续 42 天</span></div>
+            <div class="mini-progress-grid"><div class="mini-stat"><small>今日新词</small><strong>30 <span>词</span></strong></div><div class="mini-stat"><small>待复习</small><strong>48 <span>词</span></strong></div><div class="mini-stat"><small>记忆保持</small><strong>94<span>%</span></strong></div></div>
+            <div class="flashcard">
+              <div class="flashcard-top"><span>四级核心 · UNIT 71</span><button class="sound-round" type="button" aria-label="播放 serendipity 发音" data-speak-word="serendipity" data-speak-lang="en-GB"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 10v4h4l5 4V6l-5 4H4Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M16 9a5 5 0 0 1 0 6m2-9a9 9 0 0 1 0 12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></button></div>
+              <h4>serendipity</h4><p class="phonetic">/ˌser.ənˈdɪp.ə.ti/ &nbsp; n.</p><p class="meaning">意外发现美好事物的运气</p><p class="example">“Finding that book was pure serendipity.”</p>
+            </div>
+            <div class="window-controls"><span>还不熟悉</span><span>记住了 ✓</span></div>
+          </div>
+          <span class="hero-label">学习界面 · 产品概念预览</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="proof-band" aria-label="Lexio 原站公开产品数据">
+      <div class="container">
+        <div class="proof-inner">
+          <div class="proof-item" data-reveal><strong>25,024</strong><span>已导入的考试分类学习记录</span></div>
+          <div class="proof-item" data-reveal><strong>282 万+</strong><span>原站披露的注册学生</span></div>
+          <div class="proof-item" data-reveal><strong>11 亿+</strong><span>原站披露的累计记忆次数</span></div>
+          <div class="proof-item" data-reveal><strong>4.9 / 5</strong><span>原站披露的应用平均评分</span></div>
+        </div>
+        <p class="proof-note">词库记录已按原站内嵌数据提取并核验（25,000 条考试列表记录 + 100 条精讲词，合并后 25,024 条；分类间含重复拼写）。注册量、评分与学习提升等其他指标仍沿用原页面展示，未经本演示独立验证。</p>
+      </div>
+    </section>
+
+    <section class="school-strip" aria-label="原站展示的学校使用名单">
+      <div class="container"><p>全国 2,000+ 所学校师生的共同选择</p><div class="school-track" aria-label="清华附中、人大附中、复旦附中、杭州外国语、深圳中学、成都七中、南京外国语、华师一附中、上海中学、衡水中学"><span>清华附中</span><span>人大附中</span><span>复旦附中</span><span>杭州外国语</span><span>深圳中学</span><span>成都七中</span><span>南京外国语</span><span>华师一附中</span><span>上海中学</span><span>衡水中学</span><span aria-hidden="true">清华附中</span><span aria-hidden="true">人大附中</span><span aria-hidden="true">复旦附中</span><span aria-hidden="true">杭州外国语</span><span aria-hidden="true">深圳中学</span><span aria-hidden="true">成都七中</span><span aria-hidden="true">南京外国语</span><span aria-hidden="true">华师一附中</span><span aria-hidden="true">上海中学</span><span aria-hidden="true">衡水中学</span></div><small>学校名称沿用原站页面展示内容，正式发布前请核验使用授权。</small></div>
+    </section>
+
+    <section class="section features-section" id="method">
+      <div class="container">
+        <div class="section-heading" data-reveal><div class="eyebrow"><span class="dot"></span> A BETTER WAY TO LEARN</div><h2>不是背更多，<br>是每次复习都 <em>更聪明。</em></h2><p>把认知科学装进日常学习。Lexio 根据你的掌握程度安排复习，把有限的时间留给真正需要巩固的词。</p></div>
+        <div class="feature-grid">
+          <article class="feature-card" data-reveal><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3 5 6v5c0 4.5 3 7.7 7 10 4-2.3 7-5.5 7-10V6l-7-3Z" stroke-width="1.8" stroke-linejoin="round"/><path d="M8.5 12.1 10.8 14l4.8-5" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h3>AI 记忆曲线</h3><p>算法追踪每个单词的掌握度，在遗忘临界点安排复习，让记忆保持得更久。</p><a class="card-link" href="#study">看看如何学习 <span>→</span></a></article>
+          <article class="feature-card stagger-1" data-reveal><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v16H6.5A2.5 2.5 0 0 0 4 21V5.5Z" stroke-width="1.8" stroke-linejoin="round"/><path d="M4 17.5A2.5 2.5 0 0 1 6.5 15H20M8 7h8M8 10h5" stroke-width="1.8" stroke-linecap="round"/></svg></div><h3>考纲精准词库</h3><p>承接原站高考、四级、六级、考研与雅思词库结构，按目标考试规划学习路线。</p><a class="card-link" href="#library">浏览目标词库 <span>→</span></a></article>
+          <article class="feature-card stagger-2" data-reveal><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3.5 14.6 9l5.9.8-4.3 4.1 1 5.8-5.2-2.8-5.2 2.8 1-5.8-4.3-4.1L9.4 9 12 3.5Z" stroke-width="1.7" stroke-linejoin="round"/></svg></div><h3>真题语境 + 词族拓展</h3><p>精讲词条结合真题例句、近反义词、高频搭配、同根词族与词根助记，不止认识，更会运用。</p><a class="card-link" href="#library">看词条示例 <span>→</span></a></article>
+          <article class="feature-card" data-reveal><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M4 10v4h4l5 4V6l-5 4H4Z" stroke-width="1.8" stroke-linejoin="round"/><path d="M16 9a5 5 0 0 1 0 6m2-9a9 9 0 0 1 0 12" stroke-width="1.8" stroke-linecap="round"/></svg></div><h3>英式 · 美式双音支持</h3><p>可切换英音、美音；在线时请求原站同款发音服务，离线或失败时使用设备本地英语语音。</p><a class="card-link" href="#study">试听学习卡片 <span>→</span></a></article>
+          <article class="feature-card stagger-1" data-reveal><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none"><path d="m13 2-9 12h7l-1 8 10-13h-7l1-7Z" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg></div><h3>游戏化闯关</h3><p>单词消消乐、限时拼写赛、好友对战，把枯燥的背诵变成每天期待的 15 分钟。</p><a class="card-link" href="#study">开始一次练习 <span>→</span></a></article>
+          <article class="feature-card stagger-2" data-reveal><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M4 19V5m0 14h17" stroke-width="1.8" stroke-linecap="round"/><path d="m7 15 4-4 3 2 6-7" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 6h4v4" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h3>学情报告</h3><p>每周查看学习时长、掌握词量与薄弱点；错词自动回到强化队列，进步有迹可循。</p><a class="card-link" href="#ops">了解学习闭环 <span>→</span></a></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section library-section" id="library">
+      <div class="container">
+        <div class="section-heading" data-reveal><div class="eyebrow"><span class="dot"></span> ONE LIBRARY, MANY GOALS</div><h2>从校内考试到留学，<br>让每个目标 <em>都有清晰路线。</em></h2><p>已从原站网页内嵌词表提取五大考试词库与 100 条精讲词。首次联网打开时自动导入本机，之后可离线搜索与学习，也可下载 JSON 导入另一台设备。</p></div>
+        <div class="exam-grid">
+          <article class="exam-card" style="--wash:#e5efd8" data-reveal><span class="exam-icon">高</span><strong>3,500 词</strong><h3>高考核心词</h3><p>高考大纲 · 真题高频</p></article>
+          <article class="exam-card stagger-1" style="--wash:#f2ead5" data-reveal><span class="exam-icon">4</span><strong>4,500 词</strong><h3>大学英语四级</h3><p>CET-4 · 高频核心</p></article>
+          <article class="exam-card stagger-2" style="--wash:#e0e9f0" data-reveal><span class="exam-icon">6</span><strong>5,500 词</strong><h3>大学英语六级</h3><p>CET-6 · 进阶刷分</p></article>
+          <article class="exam-card stagger-3" style="--wash:#f4e5dc" data-reveal><span class="exam-icon">研</span><strong>5,500 词</strong><h3>考研英语</h3><p>熟词生义 · 真题拆解</p></article>
+          <article class="exam-card stagger-4" style="--wash:#e9e3f2" data-reveal><span class="exam-icon">雅</span><strong>6,000 词</strong><h3>雅思核心词</h3><p>学术语境 · 话题拓展</p></article>
+        </div>
+        <div class="roots-panel" data-reveal><div class="roots-intro"><span class="eyebrow"><span class="dot"></span> WORD ROOT MINI-CLASS</span><h3>一个词根，<br>串起一整组单词。</h3><p>把零散词汇连成可理解的网络，背过一个，再遇见同族词就更容易。</p></div><div class="root-list"><div class="root-row"><strong>spect / spec</strong><span>看 · look</span><small>inspect · perspective · spectacular</small></div><div class="root-row"><strong>port</strong><span>携带 · carry</span><small>transport · support · portable</small></div><div class="root-row"><strong>mit / miss</strong><span>送、放 · send</span><small>submit · transmit · mission</small></div></div></div>
+        <div class="library-panel" data-reveal>
+          <div class="library-top">
+            <div class="library-top-left"><h3>词库内容中心 <span id="bankCountLabel" style="font-size:10px;color:#8b968e;font-weight:550">正在载入…</span></h3><p>可搜索英语单词或中文释义，点击“学习”可在下方体验记忆卡片。</p></div>
+            <div class="library-actions">
+              <label class="search-wrap"><span class="visually-hidden">搜索单词或释义</span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8" stroke="currentColor" stroke-width="1.8"/><path d="m16 16 4.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><input class="search-input" type="search" id="wordSearch" placeholder="搜索英文 / 中文" autocomplete="off"></label>
+              <button class="import-button" id="importWordsBtn" type="button"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 15V4m0 0L8 8m4-4 4 4M5 14v5a1.5 1.5 0 0 0 1.5 1.5h11A1.5 1.5 0 0 0 19 19v-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>导入词库</button>
+              <button class="import-button" id="syncWordsBtn" type="button" aria-label="从互联网下载同步词库"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 16.6A4.3 4.3 0 0 0 18 8.5 6.3 6.3 0 0 0 6 9.8 3.5 3.5 0 0 0 6.5 17H18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="m12 11 0 8m0 0-3-3m3 3 3-3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>联网同步</button>
+              <input class="visually-hidden" id="wordFile" type="file" accept=".json,.csv,application/json,text/csv" aria-label="选择 JSON 或 CSV 词库文件">
+            </div>
+          </div>
+          <div class="filter-row" role="tablist" aria-label="按考试类型筛选词库">
+            <button class="filter-chip active" type="button" role="tab" aria-selected="true" data-filter="all">全部词条</button><button class="filter-chip" type="button" role="tab" aria-selected="false" data-filter="高考">高考</button><button class="filter-chip" type="button" role="tab" aria-selected="false" data-filter="CET-4">四级</button><button class="filter-chip" type="button" role="tab" aria-selected="false" data-filter="CET-6">六级</button><button class="filter-chip" type="button" role="tab" aria-selected="false" data-filter="考研">考研</button><button class="filter-chip" type="button" role="tab" aria-selected="false" data-filter="雅思">雅思</button>
+          </div>
+          <div class="word-grid" id="wordGrid" aria-live="polite"><div class="empty-state">正在准备词库…</div></div>
+          <div class="migration-note"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/><path d="M12 11v5m0-8h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span><strong>词库已核验：</strong>原站内嵌的五大考试词库与 100 条精讲词已打包为 25,024 条学习记录。首次联网打开时自动导入本机 IndexedDB，之后可离线学习；同一拼写在不同考试列表中按原分类保留。</span><a href="./data/original-site-wordbank.json" download="lexio-original-site-wordbank.json">下载词库 JSON →</a></div>
+          <p class="library-footnote">预期字段支持 word / english、meaning / translation、phonetic、pos、example、category / exam、uk / us；保留源记录并映射到统一学习卡片。</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="dark-section" id="study">
+      <div class="container">
+        <div class="section-heading" data-reveal><div class="eyebrow"><span class="dot"></span> PRODUCT EXPERIENCE</div><h2>打开 App 的每一分钟，<br><em>都在高效记忆。</em></h2><p>试试智能词单、记忆卡片和学习进度。此处是可交互的 PWA 体验版，当前学习状态保存在本设备。</p></div>
+        <div class="demo-tabs" role="tablist" aria-label="产品功能演示"><button class="demo-tab active" type="button" role="tab" aria-selected="true" data-demo-tab="plan">📅 智能词单</button><button class="demo-tab" type="button" role="tab" aria-selected="false" data-demo-tab="memory">⚡ 记忆引擎</button><button class="demo-tab" type="button" role="tab" aria-selected="false" data-demo-tab="battle">⚔️ 好友对战</button></div>
+        <div class="workbench">
+          <div class="study-app" data-reveal>
+            <div class="study-app-top"><div class="study-app-brand"><span class="mini-logo"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M6 18V6.5c0-.8.7-1.5 1.5-1.5H18M6 18h11.5c.8 0 1.5-.7 1.5-1.5V8" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"/><path d="m10 13 2 2 5-6" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Lexio 学习空间<small id="studyDate">今日学习 · 15 分钟</small></span></div><span class="session-status"><i></i><span id="sessionStatusText">学习中</span></span></div>
+            <div class="study-stats"><div class="study-stat"><span>今日已掌握</span><strong id="knownCount">0</strong></div><div class="study-stat"><span>本轮计划</span><strong>30</strong></div><div class="study-stat"><span>连续学习</span><strong>7 <small style="font-size:9px;font-weight:550">天</small></strong></div></div>
+            <div class="study-meter" aria-label="今日学习进度"><span id="studyProgress"></span></div>
+            <article class="study-word-card" aria-live="polite">
+              <div class="study-word-top"><span id="studyCategory">TODAY'S WORD · 01</span><span id="studyPosition">01 / 24</span></div>
+              <div class="study-word-main"><div><h3 id="studyWord">serendipity</h3><p class="phonetic" id="studyPhonetic">/ˌser.ənˈdɪp.ə.ti/ · n.</p></div><button class="sound-round" type="button" id="studySpeak" aria-label="播放单词发音"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 10v4h4l5 4V6l-5 4H4Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M16 9a5 5 0 0 1 0 6m2-9a9 9 0 0 1 0 12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></button></div>
+              <p class="study-meaning is-hidden" id="studyMeaning">点击“显示释义”进行自测。</p><p class="study-example" id="studyExample">先试着回忆，再揭晓释义。能主动想起，记忆才会更牢。</p><p class="study-example-translation" id="studyExampleTranslation" hidden></p><p class="study-mnemonic" id="studyMnemonic" hidden></p>
+            </article>
+            <div class="study-controls"><button class="study-control" type="button" id="revealMeaning">显示释义</button><button class="study-control" type="button" id="nextWord">跳过这个词 →</button><button class="study-control" type="button" id="againWord">还不熟悉 · 再练一次</button><button class="study-control primary" type="button" id="knownWord">记住了 ✓</button></div>
+            <div class="trial-banner" id="expiredBanner" hidden><span><strong>7 天试用已结束。</strong>开通 Pro 后继续完整学习。</span><button type="button" id="bannerSubscribe">开通 Pro</button></div>
+            <div class="study-app-foot"><span id="storageStatus">演示词库 · 本地保存</span><div class="accent-toggle" aria-label="发音口音"><button type="button" class="active" data-accent="en-GB">英式</button><button type="button" data-accent="en-US">美式</button></div></div>
+          </div>
+          <div class="study-side-copy" id="showcasePanel" role="tabpanel" data-reveal>
+            <div class="eyebrow"><span class="dot"></span> SMALL STEPS, REAL PROGRESS</div>
+            <h3 id="showcaseHeadline">每天醒来，<br><em>词单已为你排好。</em></h3>
+            <p id="showcaseCopy">告诉 Lexio 你的考试目标和日期，系统拆解考纲词库，生成刚刚好的每日任务——不多到崩溃，不少到焦虑。</p>
+            <ul class="check-list"><li><span class="check">✓</span><span data-showcase-bullet="0">按考试日期倒推每日词量。</span></li><li><span class="check">✓</span><span data-showcase-bullet="1">新词与复习词智能配比。</span></li><li><span class="check">✓</span><span data-showcase-bullet="2">漏打卡自动重排，不让任务堆积。</span></li></ul>
+            <button class="btn btn-lime" type="button" data-open-trial>开始我的 7 天体验 <span class="btn-arrow">↗</span></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="ops-section" id="ops">
+      <div class="container">
+        <div class="section-heading" data-reveal><div class="eyebrow"><span class="dot"></span> AUTOMATION BY DESIGN</div><h2>从首次体验到续订，<br>让服务 <em>顺畅自动运转。</em></h2><p>为正式上线预留清楚、透明的订阅生命周期。支付、提醒、权限和备份由后台自动化协同，减少人工跟单。</p></div>
+        <div class="ops-panel" data-reveal>
+          <div class="ops-top"><div><h3>订阅与运维工作流</h3><p>以下是生产版运营设计蓝图。实际扣款、邮件通知、Webhook 与自动备份，需要在部署时连接支付服务商、数据库和通知渠道。</p></div><span class="ops-status"><i></i>流程已规划 · 等待接入服务</span></div>
+          <div class="ops-flow">
+            <article class="ops-step"><span class="ops-number">DAY 01</span><h4>开始 7 天体验</h4><p>创建账号、记录试用截止日，清楚展示续费价格与取消方式。</p></article>
+            <article class="ops-step"><span class="ops-number">DAY 05</span><h4>到期前提醒</h4><p>自动发送邮件 / 站内提醒，说明续费金额与管理入口。</p></article>
+            <article class="ops-step"><span class="ops-number">DAY 07</span><h4>安全结账续订</h4><p>由支付服务商托管结账，按运维配置的月付或年付方案续订。</p></article>
+            <article class="ops-step"><span class="ops-number">WEBHOOK</span><h4>同步会员权限</h4><p>支付结果通过签名校验的 Webhook 更新账号状态。</p></article>
+            <article class="ops-step"><span class="ops-number">AUTO</span><h4>失败重试与取消</h4><p>自动提醒、重试与宽限期；用户可随时管理或取消订阅。</p></article>
+            <article class="ops-step"><span class="ops-number">DAILY</span><h4>备份与健康检查</h4><p>定时备份数据，监控支付、同步、错误率与服务状态。</p></article>
+          </div>
+          <div class="ops-bottom"><span><strong>数据保护：</strong>学习进度与词库独立存储，支持导出与定期备份。</span><span><strong>收费透明：</strong>试用期、续费金额、取消入口在付款前明确展示。</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="benefits-section" aria-labelledby="benefitsTitle">
+      <div class="container">
+        <div class="section-heading" data-reveal><div class="eyebrow"><span class="dot"></span> PROGRESS THAT ADDS UP</div><h2 id="benefitsTitle">把时间花在刀刃上，<br>让努力 <em>真正转化为进步。</em></h2><p>把大目标拆成每天能完成的小步骤，学习节奏更可持续，复习重点也更清楚。</p></div>
+        <div class="benefits-grid">
+          <article class="benefit" data-reveal><div class="benefit-number">15<span style="font-size:.47em;letter-spacing:-.02em"> 分钟</span></div><h3>每天轻松完成</h3><p>把课间、通勤和睡前的碎片时间，变成稳定积累。</p></article>
+          <article class="benefit stagger-1" data-reveal><div class="benefit-number">+23<span style="font-size:.47em;letter-spacing:-.02em">%</span></div><h3>成绩进步可追踪</h3><p>原站页面披露：连续使用 60 天的学生，词汇测试平均提升 23%。</p></article>
+          <article class="benefit stagger-2" data-reveal><div class="benefit-number">94<span style="font-size:.47em;letter-spacing:-.02em">%</span></div><h3>记忆保持更久</h3><p>原站披露的 30 天记忆保持率指标；实际效果会因学习习惯而异。</p></article>
+        </div>
+        <p class="proof-note">以上学习效果数字沿用源页面展示信息，并非本演示版本的独立测量结果；上线前建议核验与补充依据。</p>
+      </div>
+    </section>
+
+    <section class="section testimonials-section" id="stories">
+      <div class="container">
+        <div class="section-heading" data-reveal><div class="eyebrow"><span class="dot"></span> STUDENT STORIES</div><h2>让每次努力，<br>都能 <em>看见回响。</em></h2><p>这些学习故事沿用原站的用户反馈文案；上线前请确认授权与真实性。</p></div>
+        <div class="testimonial-grid">
+          <article class="testimonial" data-reveal><div class="stars" aria-label="5 星评价">★★★★★</div><blockquote>“以前抱着单词书从 abandon 背到放弃。用 Lexio 三个月，3500 考纲词过完两轮，阅读里遇到熟词的感觉真的不一样。”</blockquote><div class="person"><span class="person-avatar">林</span><span><strong>林晓雨</strong><small>高三学生 · 高考英语 142 分</small></span></div></article>
+          <article class="testimonial stagger-1" data-reveal><div class="stars" aria-label="5 星评价">★★★★★</div><blockquote>“好友对战和每日任务让背词没那么像硬撑。错词会自动回来复习，六级备考时不用再自己整理一堆表格。”</blockquote><div class="person"><span class="person-avatar">陈</span><span><strong>陈子豪</strong><small>大二学生 · 六级备考</small></span></div></article>
+          <article class="testimonial stagger-2" data-reveal><div class="stars" aria-label="5 星评价">★★★★★</div><blockquote>“考研词汇配上例句，背的时候顺便熟悉真题语境。最喜欢薄弱词自动强化，学习计划每天都很明确。”</blockquote><div class="person"><span class="person-avatar">王</span><span><strong>王梦琪</strong><small>考研学生 · 词汇打卡用户</small></span></div></article>
+          <article class="testimonial" data-reveal><div class="stars" aria-label="5 星评价">★★★★★</div><blockquote>“我是那种坐不住的人，但是闯关和连续打卡勋章让我停不下来。连续打卡 148 天，中考词汇早就滚瓜烂熟了。”</blockquote><div class="person"><span class="person-avatar">李</span><span><strong>李想</strong><small>初三学生 · 连续打卡用户</small></span></div></article>
+          <article class="testimonial stagger-1" data-reveal><div class="stars" aria-label="5 星评价">★★★★★</div><blockquote>“班级版的学情报告帮我精准定位每个学生的薄弱词，备课效率翻倍。整个班的平均词汇量一学期提升了 31%。”</blockquote><div class="person"><span class="person-avatar">赵</span><span><strong>赵老师</strong><small>重点中学英语教研组长</small></span></div></article>
+          <article class="testimonial stagger-2" data-reveal><div class="stars" aria-label="5 星评价">★★★★★</div><blockquote>“跟读评分功能像请了个私人外教，纠正了我一堆发音坏习惯。雅思听力口语都上了 7.5，面试时发音也更有信心。”</blockquote><div class="person"><span class="person-avatar">孙</span><span><strong>孙一诺</strong><small>高中生 · 雅思学习者</small></span></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="pricing-section" id="pricing">
+      <div class="container">
+        <div class="section-heading" data-reveal><div class="eyebrow"><span class="dot"></span> SIMPLE, STUDENT-FRIENDLY PRICING</div><h2>先完整体验 7 天，<br>再决定是否 <em>继续前进。</em></h2><p>价格透明，不隐藏自动续费。正式环境接入收款后，试用结束时按已授权的订阅方式续费。</p></div>
+        <div class="pricing-layout">
+          <div class="trial-info-card" data-reveal><div><div class="eyebrow"><span class="dot"></span> 7-DAY FULL ACCESS</div><h3>给自己 7 天，感受真正高效的背词节奏。</h3><p>试用期间开放 Pro 学习体验。你可以自由探索词库、记忆卡片、英美音与学习报告。</p><div class="trial-timeline-mini"><div class="timeline-mini-row"><span>1</span>设置目标，开始第一组单词</div><div class="timeline-mini-row"><span>5</span>到期前收到清晰提醒</div><div class="timeline-mini-row"><span>7</span>按已授权方式续订，可提前取消</div></div></div><p class="trial-info-foot">正式上线时，将在开始试用前清楚展示付款方式、续费日期、<span id="trialInfoPrice">选定方案的价格</span>与取消入口。</p></div>
+          <div class="price-card" data-reveal><span class="popular-pill">✦ 学生 Pro · 全部学习功能</span><h3>Lexio Pro</h3><p class="price-desc">适合希望稳定提升词汇量的学生</p><div class="plan-switch" role="group" aria-label="选择订阅周期"><button class="plan-option active" type="button" data-plan-select="monthly" aria-pressed="true">连续包月</button><button class="plan-option" type="button" data-plan-select="annual" aria-pressed="false">连续包年 <b id="annualBadge">省 40%</b></button></div><div class="price"><strong id="priceAmount">¥15</strong><span id="pricePeriod">/ 月</span><span class="price-original" id="priceOriginal" hidden>¥180</span></div><p class="after-trial" id="priceTerms">前 7 天免费 · 之后 ¥15 / 月自动续费</p><p class="student-promo" id="studentPromo" hidden>🎓 凭学生证可享优惠（正式版需完成学生身份验证）</p><div class="price-divider"></div><ul class="plan-list"><li><span>✓</span>五大考试词库与自定义词单</li><li><span>✓</span>间隔复习、错词强化与每日学习计划</li><li><span>✓</span>真题语境、词根拓展与英美音发音</li><li><span>✓</span>学习统计、进度同步与离线 PWA</li><li><span>✓</span>随时管理或取消订阅</li></ul><button class="btn btn-primary" type="button" data-open-trial>免费体验 7 天 <span class="btn-arrow">↗</span></button><button class="btn btn-outline secondary-subscribe" type="button" id="directSubscribe">选择此方案并继续</button><p class="terms-small">正式版在试用前将明确显示续费日期、价格和取消入口。预览不会收款；价格由 <code>pricing.config.json</code> 提供，最终扣款金额必须由服务端确认。</p></div>
+        </div>
+        <div class="team-row" data-reveal><div><h3>为老师、班级或学校采购？</h3><p>班级学习报告、教师管理与校本词库可作为后续团队版功能接入。</p></div><a href="https://01a168c5-657e-7ae5-9c33-ae71a4937a8b.arena.site/?embed=true#cta" target="_blank" rel="noopener noreferrer">联系团队版 <span aria-hidden="true">→</span></a></div>
+      </div>
+    </section>
+
+    <section class="faq-section" id="faq">
+      <div class="container faq-layout">
+        <div class="faq-aside" data-reveal><h2>你想知道的，<br>都在这里。</h2><p>还有其他问题？把你的词库格式或上线需求告诉我们。</p><a href="#pricing">查看体验与定价 <span aria-hidden="true">↗</span></a></div>
+        <div class="faq-list" data-reveal>
+          <details><summary>原站 25,000+ 单词已经迁移进来了吗？</summary><p>已核验原站公开 HTML 的内嵌词库数组，并打包为 25,024 条学习记录（五套考试列表共 25,000 条，另含 100 条精讲词；按原站逻辑替换 76 个重合条目并补入 24 个精讲新词）。首次联网打开时会自动导入本机 IndexedDB；也可下载 JSON 文件，通过“导入词库”手动导入。相同拼写在不同考试列表中保留各自分类。</p></details>
+          <details><summary>7 天后会怎样收费？可以取消吗？</summary><p>正式产品先免费体验 7 天，之后按所选连续包月或连续包年方案自动续费。页面价格由运维配置文件提供，实际扣款金额必须由服务端确认；付款前会明确显示续费日期、金额和取消方式。当前预览只在本设备演示试用计时，不会发起真实扣款。</p></details>
+          <details><summary>可以使用微信支付、支付宝，并把收入结算给我吗？</summary><p>页面已设计微信支付 / 支付宝选择入口，但尚未连接商户。正式接入时需使用你名下的商户账号，服务端创建订单并验签支付回调，收款再按商户平台规则结算到你的账户。支付密钥只放在服务端密钥管理中。</p></details>
+          <details><summary>它可以离线使用、添加到主屏幕吗？</summary><p>已配置 PWA manifest 和 Service Worker 应用外壳缓存；在 HTTPS 部署并由支持的浏览器访问后，可以安装到设备。导入的词库会保存在本机 IndexedDB。首次离线可用内容取决于设备是否已成功缓存应用和词库。</p></details>
+          <details><summary>原站的发音、例句和学习进度也能保留吗？</summary><p>已迁移英 / 美音标、词性、中文释义与考试分类；100 条精讲词还保留例句、翻译、助记、搭配等字段。词库数据本身未内嵌音频文件；原站按需请求 Youdao dictvoice 英 / 美音并在失败时回退系统语音，本 PWA 也采用此方式。公开 HTML 未包含个人学习进度，迁移进度仍需原站账号数据导出。</p></details>
+          <details><summary>自动运维目前包含什么？</summary><p>当前交付包含自动化运营流程设计与前端体验原型。实际定时提醒、扣款、续费失败重试、Webhook 权限同步、服务监控和数据库备份，需部署后端任务、数据库、邮件/通知服务和支付服务商才能真正运行。</p></details>
+        </div>
+      </div>
+    </section>
+
+    <section class="final-cta">
+      <div class="container" data-reveal><div class="eyebrow"><span class="dot"></span> START SMALL. REMEMBER MORE.</div><h2>今天开始，让下一次考试<br><em>多一份从容。</em></h2><p>不用下载、不用做复杂计划。先用 7 天，找到适合自己的词汇学习节奏。</p><button class="btn btn-lime" type="button" data-open-trial>免费开启 7 天体验 <span class="btn-arrow">↗</span></button></div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-main">
+        <div><a class="brand" href="#top" aria-label="Lexio 乐词回到首页"><span class="brand-mark"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 18V6.5c0-.8.7-1.5 1.5-1.5H18M6 18h11.5c.8 0 1.5-.7 1.5-1.5V8" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"/><path d="m10 13 2 2 5-6" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="brand-word">Lexio<small>乐词 · LEARN IN FLOW</small></span></a><p class="footer-blurb">为每一次考试，也为每一个更好的自己。用科学节奏，把单词稳稳记住。</p></div>
+        <div class="footer-links"><div class="footer-col"><h3>探索 Lexio</h3><a href="#method">学习方法</a><a href="#library">目标词库</a><a href="#study">学习体验</a></div><div class="footer-col"><h3>了解更多</h3><a href="#pricing">订阅计划</a><a href="#faq">常见问题</a><a href="#ops">自动化运维</a></div><div class="footer-col"><h3>支持</h3><a href="#faq">联系与支持</a><a href="#faq">数据迁移</a><a href="#pricing">订阅与取消</a><a href="https://01a168c5-657e-7ae5-9c33-ae71a4937a8b.arena.site/" target="_blank" rel="noopener noreferrer">原站入口 ↗</a></div></div>
+      </div>
+      <div class="footer-bottom"><span>© <span id="year"></span> Lexio 乐词 · PWA 概念交付</span><span class="legal-links"><a href="#faq">隐私说明</a><a href="#faq">服务条款</a><a href="#top">回到顶部 ↑</a></span></div>
+    </div>
+  </footer>
+
+  <dialog class="dialog" id="trialDialog" aria-labelledby="trialTitle">
+    <div class="dialog-content"><button class="dialog-close" type="button" data-close-dialog aria-label="关闭">×</button><span class="dialog-badge">✦ 7 天完整 Pro 体验</span><h2 id="trialTitle">给自己 7 天，<br>试试更聪明的记忆。</h2><p class="dialog-copy" id="trialCopy">体验期内可探索完整学习流程。正式版本需要在启用自动续订前绑定付款方式。</p><div class="dialog-timeline"><div class="dialog-day"><span>DAY 01</span><strong>开始学习，设置你的目标</strong></div><div class="dialog-day"><span>DAY 05</span><strong>到期前提醒续费信息</strong></div><div class="dialog-day"><span>DAY 07</span><strong id="trialPlanRenewal">按选定方案续订</strong></div></div><p class="dialog-notice"><strong>演示环境说明：</strong>点击开始只会在当前设备记录 7 天试用状态，不会要求卡号，也不会扣款。正式上线前需接入支付服务商并明确续费授权。</p><label class="agree-row"><input type="checkbox" id="trialAgree"><span id="trialConsentLabel">我已了解正式版试用结束后的续费价格和取消方式，并同意在本设备开始演示试用。</span></label><button class="btn btn-primary" type="button" id="confirmTrial" disabled>开始 7 天体验 <span class="btn-arrow">↗</span></button><button class="dialog-secondary" type="button" data-close-dialog>先浏览网站</button></div>
+  </dialog>
+  <dialog class="dialog" id="wordSourceDialog" aria-labelledby="wordSourceTitle">
+    <div class="dialog-content"><button class="dialog-close" type="button" data-close-dialog aria-label="关闭">×</button><span class="dialog-badge">WORD BANK · ONLINE SOURCE</span><h2 id="wordSourceTitle">连接可下载的原始词库。</h2><p class="dialog-copy">可输入其他词库文件的直接下载地址（JSON 或 CSV），或你自己的同源 `/api/wordbank` 接口。原站首页本身不是文件直链；本项目已将页面内嵌词库提取为本地 JSON，并会在首次联网打开时自动导入。</p><label for="wordSourceUrl" style="display:block;margin-top:16px;color:#526159;font-size:10px;font-weight:750">词库下载地址</label><input id="wordSourceUrl" class="source-url-input" type="url" inputmode="url" placeholder="https://your-domain.example/words.json" autocomplete="url"><p class="dialog-notice">跨域直链需要允许浏览器 CORS 访问；若原站不允许 CORS，请由你自己的后端安全代理下载。地址只保存到此设备，实际部署可在 <code>wordbank.config.json</code> 统一配置。</p><button class="btn btn-primary" type="button" id="saveWordSource">保存并开始同步 <span class="btn-arrow">↗</span></button><button class="dialog-secondary" type="button" id="clearWordSource">清除此设备地址</button><p class="pay-status" id="wordSourceStatus" role="status" aria-live="polite"></p></div>
+  </dialog>
+  <dialog class="dialog" id="paymentDialog" aria-labelledby="paymentTitle">
+    <div class="dialog-content"><button class="dialog-close" type="button" data-close-dialog aria-label="关闭">×</button><span class="dialog-badge">LEXIO PRO · 安全结账</span><h2 id="paymentTitle">继续你的学习计划。</h2><p class="dialog-copy">选择支付方式。正式结账将在支付服务商托管页面完成；付款信息不会保存在此网页中。</p><div class="provider-grid" role="group" aria-label="选择支付方式"><button class="provider-choice active" type="button" data-provider-select="wechat" aria-pressed="true"><span class="provider-icon">微</span>微信支付</button><button class="provider-choice" type="button" data-provider-select="alipay" aria-pressed="false"><span class="provider-icon">支</span>支付宝</button></div><div class="payment-box"><div class="payment-row"><span id="checkoutPlanLabel">Lexio Pro · 连续包月</span><strong id="checkoutAmount">¥15 / 月</strong></div><div class="payment-row"><span>试用政策</span><strong id="checkoutTrial">先体验 7 天</strong></div><div class="payment-row"><span>优惠</span><strong id="checkoutDiscount">按运维活动配置</strong></div><div class="payment-row"><span>取消方式</span><strong>账户内随时取消</strong></div></div><p class="dialog-notice">当前演示尚未连接微信支付 / 支付宝商户，因此不会产生真实扣款。正式版由服务端按方案 ID 创建订单、校验支付回调并结算到你的商户账户；密钥只保存在服务端。</p><button class="btn btn-primary" type="button" id="checkoutBtn">连接安全收银台 <span class="btn-arrow">↗</span></button><p class="pay-status" id="payStatus" role="status" aria-live="polite"></p><button class="dialog-secondary" type="button" data-close-dialog>返回</button></div>
+  </dialog>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    (() => {
+      'use strict';
+      document.documentElement.classList.add('js');
+      const $ = (selector, root = document) => root.querySelector(selector);
+      const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
+      const SAMPLE_WORDS = [
+        {word:'serendipity',phonetic:'/ˌser.ənˈdɪp.ə.ti/',pos:'n.',meaning:'意外发现美好事物的运气；机缘巧合',example:'Finding that little book was pure serendipity.',category:'雅思'},
+        {word:'abandon',phonetic:'/əˈbæn.dən/',pos:'v.',meaning:'放弃；抛弃；中止',example:'Never abandon a goal just because the path is difficult.',category:'高考'},
+        {word:'achieve',phonetic:'/əˈtʃiːv/',pos:'v.',meaning:'实现；达到；取得',example:'Small daily habits help students achieve lasting progress.',category:'高考'},
+        {word:'resilient',phonetic:'/rɪˈzɪl.i.ənt/',pos:'adj.',meaning:'有韧性的；能迅速恢复的',example:'A resilient learner treats mistakes as useful feedback.',category:'CET-4'},
+        {word:'sustainable',phonetic:'/səˈsteɪ.nə.bəl/',pos:'adj.',meaning:'可持续的；能长期维持的',example:'A sustainable study routine is better than a short burst of effort.',category:'雅思'},
+        {word:'meticulous',phonetic:'/məˈtɪk.jə.ləs/',pos:'adj.',meaning:'一丝不苟的；极为仔细的',example:'She kept meticulous notes while preparing for the exam.',category:'CET-6'},
+        {word:'genuine',phonetic:'/ˈdʒen.ju.ɪn/',pos:'adj.',meaning:'真实的；真诚的；真正的',example:'Genuine curiosity makes new words easier to remember.',category:'CET-4'},
+        {word:'perceive',phonetic:'/pəˈsiːv/',pos:'v.',meaning:'察觉；理解；将……视为',example:'We perceive a word more clearly when we meet it in context.',category:'CET-6'},
+        {word:'insight',phonetic:'/ˈɪn.saɪt/',pos:'n.',meaning:'洞察力；深刻理解；见解',example:'The report offers fresh insight into how students learn.',category:'雅思'},
+        {word:'efficient',phonetic:'/ɪˈfɪʃ.ənt/',pos:'adj.',meaning:'效率高的；有成效的',example:'A clear plan is an efficient way to prepare for a test.',category:'高考'},
+        {word:'significant',phonetic:'/sɪɡˈnɪf.ɪ.kənt/',pos:'adj.',meaning:'重要的；显著的；有意义的',example:'Consistent practice can make a significant difference.',category:'CET-4'},
+        {word:'crucial',phonetic:'/ˈkruː.ʃəl/',pos:'adj.',meaning:'至关重要的；关键的',example:'Reviewing difficult words is crucial to long-term progress.',category:'考研'},
+        {word:'persist',phonetic:'/pəˈsɪst/',pos:'v.',meaning:'坚持；持续；执意',example:'If you persist with a steady routine, your confidence will grow.',category:'高考'},
+        {word:'evolve',phonetic:'/ɪˈvɒlv/',pos:'v.',meaning:'逐渐发展；演变；进化',example:'Your learning strategy can evolve as your goals change.',category:'雅思'},
+        {word:'inevitable',phonetic:'/ɪˈnev.ɪ.tə.bəl/',pos:'adj.',meaning:'不可避免的；必然发生的',example:'With regular review, progress becomes an almost inevitable result.',category:'CET-6'},
+        {word:'candidate',phonetic:'/ˈkæn.dɪ.dət/',pos:'n.',meaning:'候选人；考生；申请者',example:'Each candidate was given thirty minutes to complete the task.',category:'CET-4'},
+        {word:'interpret',phonetic:'/ɪnˈtɜː.prɪt/',pos:'v.',meaning:'解释；理解；口译',example:'Students must interpret the evidence before choosing an answer.',category:'考研'},
+        {word:'outcome',phonetic:'/ˈaʊt.kʌm/',pos:'n.',meaning:'结果；后果；成果',example:'The outcome depends on how consistently you practise.',category:'CET-4'},
+        {word:'brilliant',phonetic:'/ˈbrɪl.jənt/',pos:'adj.',meaning:'聪颖的；出色的；明亮的',example:'It was a brilliant solution to a surprisingly simple problem.',category:'高考'},
+        {word:'opportunity',phonetic:'/ˌɒp.əˈtjuː.nə.ti/',pos:'n.',meaning:'机会；时机；良机',example:'Every review is an opportunity to strengthen a memory.',category:'高考'},
+        {word:'capacity',phonetic:'/kəˈpæs.ə.ti/',pos:'n.',meaning:'能力；容量；职位',example:'Good sleep improves our capacity to focus and learn.',category:'CET-4'},
+        {word:'enhance',phonetic:'/ɪnˈhɑːns/',pos:'v.',meaning:'提高；增强；改善',example:'Examples can enhance your understanding of a new word.',category:'考研'},
+        {word:'convey',phonetic:'/kənˈveɪ/',pos:'v.',meaning:'传达；表达；运送',example:'The final paragraph conveys the author’s main message.',category:'CET-6'},
+        {word:'allocate',phonetic:'/ˈæl.ə.keɪt/',pos:'v.',meaning:'分配；拨给；配置',example:'Try to allocate fifteen minutes a day for vocabulary review.',category:'考研'}
+      ];
+      const DB_NAME = 'lexio-v2';
+      const DB_VERSION = 2;
+      const DB_WORDS = 'words';
+      const DB_STAGING = 'stagingWords';
+      const DB_META = 'meta';
+      let db = null;
+      let bank = SAMPLE_WORDS.map((w, i) => normalizeWord(w, i));
+      let activeFilter = 'all';
+      let studyIndex = 0;
+      let activeAccent = 'en-GB';
+      let activeAudio = null;
+      let toastTimer = null;
+      let installPrompt = null;
+      let selectedPlanId = 'monthly';
+      let selectedProvider = 'wechat';
+      let wordSourceConfig = {sourceUrl:'',format:'auto',expectedCount:25000};
+      const pricingConfig = {currency:'CNY',trialDays:7,defaultPlan:'monthly',plans:[{id:'monthly',name:'连续包月',amount:15,period:'月',originalAmount:15,discountPercent:0,tag:'灵活续订',description:'每月自动续费，可随时取消'},{id:'annual',name:'连续包年',amount:108,period:'年',originalAmount:180,discountPercent:40,tag:'省 40%',description:'按年订阅，折合约 ¥9 / 月'}],studentPromotion:{enabled:true,discountPercent:15,label:'学生证可享 85 折',requiresVerification:true}};
+      const trialDialog = $('#trialDialog');
+      const wordSourceDialog = $('#wordSourceDialog');
+      const paymentDialog = $('#paymentDialog');
+      const toast = $('#toast');
+
+      function normalizeWord(raw, index) {
+        if (typeof raw === 'string') raw = {word: raw};
+        raw = raw || {};
+        const get = (...keys) => { for (const key of keys) { const value = raw[key]; if (value !== undefined && value !== null && String(value).trim() !== '') return String(value).trim(); } return ''; };
+        const getArray = key => Array.isArray(raw[key]) ? raw[key] : [];
+        const word = get('word','english','term','headword','spelling','vocabulary','lemma','name');
+        if (!word) return null;
+        const category = get('category','book','exam','source','list','test','collection') || '自定义';
+        const safeSlug = word.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'') || 'word';
+        const id = get('id','uuid') || `${safeSlug}-${category.toLowerCase().replace(/[^a-z0-9\u4e00-\u9fa5]+/g,'-')}-${index}`;
+        const rawOrder = get('order','index');
+        const ukPhonetic = get('ukPhonetic','uk_phonetic','ukIpa','uk_ipa','britishPhonetic','british_phonetic');
+        const usPhonetic = get('usPhonetic','us_phonetic','usIpa','us_ipa','americanPhonetic','american_phonetic');
+        const phonetic = get('phonetic','ipa','pronunciation','pron') || ukPhonetic || usPhonetic;
+        return {
+          id,
+          order: Number.isFinite(Number(rawOrder)) && rawOrder !== '' ? Number(rawOrder) : index,
+          word,
+          phonetic: phonetic || '',
+          ukPhonetic,
+          usPhonetic,
+          pos: get('pos','partOfSpeech','part_of_speech','wordClass') || '',
+          meaning: get('meaning','translation','translation_zh','chinese','chinese_meaning','meaning_zh','definition_zh','definition','gloss','explanation') || '（此词条尚无中文释义）',
+          example: get('example','sentence','context','example_sentence') || '',
+          exampleTranslation: get('exampleTranslation','example_translation','sentenceTranslation','sentence_translation') || '',
+          mnemonic: get('mnemonic','memoryAid','memory_aid') || '',
+          frequency: Number.isFinite(Number(raw.frequency)) ? Number(raw.frequency) : null,
+          synonyms: getArray('synonyms'),
+          antonyms: getArray('antonyms'),
+          collocations: getArray('collocations'),
+          wordFamily: getArray('wordFamily'),
+          examSource: get('examSource','exam_source') || '',
+          sourceCategory: get('sourceCategory','source_category') || '',
+          category,
+          uk: get('uk','ukAudio','uk_audio','audio_uk','britishAudio') || '',
+          us: get('us','usAudio','us_audio','audio_us','americanAudio') || ''
+        };
+      }
+      function openDB() {
+        return new Promise((resolve, reject) => {
+          if (!('indexedDB' in window)) return reject(new Error('IndexedDB unavailable'));
+          const request = indexedDB.open(DB_NAME, DB_VERSION);
+          request.onupgradeneeded = () => {
+            const database = request.result;
+            if (!database.objectStoreNames.contains(DB_WORDS)) database.createObjectStore(DB_WORDS, {keyPath:'id'});
+            if (!database.objectStoreNames.contains(DB_STAGING)) database.createObjectStore(DB_STAGING, {keyPath:'id'});
+            if (!database.objectStoreNames.contains(DB_META)) database.createObjectStore(DB_META, {keyPath:'key'});
+          };
+          request.onsuccess = () => resolve(request.result);
+          request.onerror = () => reject(request.error || new Error('Could not open IndexedDB'));
+        });
+      }
+      async function idbActiveStoreName() { const meta=await idbGetMeta('bank'); return meta && meta.activeStore || DB_WORDS; }
+      async function idbCount(storeName) {
+        const name=storeName || await idbActiveStoreName();
+        return new Promise((resolve, reject) => { const req = db.transaction(name,'readonly').objectStore(name).count(); req.onsuccess = () => resolve(req.result); req.onerror = () => reject(req.error); });
+      }
+      async function idbGetAll(storeName) {
+        const name=storeName || await idbActiveStoreName();
+        return new Promise((resolve, reject) => { const req = db.transaction(name,'readonly').objectStore(name).getAll(); req.onsuccess = () => resolve((req.result || []).sort((a,b)=>(a.order ?? 0)-(b.order ?? 0))); req.onerror = () => reject(req.error); });
+      }
+      function idbGetMeta(key) { return new Promise((resolve, reject) => { const req = db.transaction(DB_META,'readonly').objectStore(DB_META).get(key); req.onsuccess = () => resolve(req.result || null); req.onerror = () => reject(req.error); }); }
+      function idbSetMeta(value) { return new Promise((resolve, reject) => { const tx = db.transaction(DB_META,'readwrite'); tx.objectStore(DB_META).put(value); tx.oncomplete = resolve; tx.onerror = () => reject(tx.error); }); }
+      async function idbReplaceWords(words, meta) {
+        const oldStore=await idbActiveStoreName();
+        const targetStore=oldStore===DB_STAGING ? DB_WORDS : DB_STAGING;
+        await new Promise((resolve, reject) => { const tx = db.transaction(targetStore,'readwrite'); tx.objectStore(targetStore).clear(); tx.oncomplete = resolve; tx.onerror = () => reject(tx.error); });
+        const batchSize = 400;
+        for (let i = 0; i < words.length; i += batchSize) {
+          await new Promise((resolve, reject) => {
+            const tx = db.transaction(targetStore,'readwrite');
+            const store = tx.objectStore(targetStore);
+            words.slice(i, i + batchSize).forEach(word => store.put(word));
+            tx.oncomplete = resolve; tx.onerror = () => reject(tx.error); tx.onabort = () => reject(tx.error || new Error('Import aborted'));
+          });
+        }
+        // Switch the active pointer only after the full import succeeds. A failed
+        // import therefore leaves the previous complete word bank intact.
+        await idbSetMeta({key:'bank', activeStore:targetStore, importedAt:new Date().toISOString(), sourceFile:meta && meta.sourceFile || '示例词库', wordCount:words.length, isDemo:!!(meta && meta.isDemo)});
+        await new Promise((resolve, reject) => { const tx = db.transaction(oldStore,'readwrite'); tx.objectStore(oldStore).clear(); tx.oncomplete = resolve; tx.onerror = () => reject(tx.error); });
+      }
+      async function initializeBank() {
+        try {
+          db = await openDB();
+          let count = await idbCount();
+          let meta = await idbGetMeta('bank');
+          const shouldSeedOriginal = count === 0 || !!(meta && meta.isDemo) || (!meta && count <= SAMPLE_WORDS.length);
+          if (shouldSeedOriginal) {
+            try {
+              await loadBundledWordBank();
+              count = await idbCount();
+              meta = await idbGetMeta('bank');
+            } catch (importError) {
+              console.warn('Bundled original wordbank could not be loaded; keeping the existing local bank.', importError);
+              if (count === 0) {
+                await idbReplaceWords(SAMPLE_WORDS.map((w,i)=>normalizeWord(w,i)).filter(Boolean), {sourceFile:'示例词库',isDemo:true});
+                count = await idbCount();
+                meta = await idbGetMeta('bank');
+              }
+            }
+          }
+          bank = await idbGetAll();
+          meta = await idbGetMeta('bank');
+          renderBank(meta);
+        } catch (error) {
+          console.warn('Lexio local word storage unavailable; using browser fallback storage.', error);
+          let fallbackMeta={wordCount:bank.length,isDemo:true,sourceFile:'当前演示词库'};
+          try {
+            const cached=JSON.parse(localStorage.getItem('lexio.fallbackBank')||'null');
+            if(Array.isArray(cached) && cached.length){bank=cached.map((item,index)=>normalizeWord(item,index)).filter(Boolean);fallbackMeta={wordCount:bank.length,isDemo:false,sourceFile:'本地导入词库'};}
+          } catch(_) {}
+          if(!bank.length) bank=SAMPLE_WORDS.map((w,i)=>normalizeWord(w,i)).filter(Boolean);
+          renderBank(fallbackMeta);
+          $('#storageStatus').textContent = fallbackMeta.isDemo ? '示例词库 · 浏览器临时状态' : `已导入 ${bank.length.toLocaleString()} 词 · 本地保存`;
+        }
+        updateStudyCard();
+      }
+      function escapeHTML(value) { return String(value == null ? '' : value).replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch])); }
+      function categoryMatches(word, filter) {
+        if (filter === 'all') return true;
+        const category = (word.category || '').toLowerCase();
+        const aliases = {
+          '高考':['高考','中考','高中','gaokao','high school','考纲'],
+          'CET-4':['四级','cet-4','cet4','college english test 4'],
+          'CET-6':['六级','cet-6','cet6','college english test 6'],
+          '考研':['考研','postgraduate','kaoyan','research'],
+          '雅思':['雅思','ielts','academic']
+        };
+        return (aliases[filter] || [filter.toLowerCase()]).some(alias => category.includes(alias));
+      }
+      function displayedPhonetic(word) {
+        const preferred = activeAccent === 'en-US' ? word.usPhonetic : word.ukPhonetic;
+        const other = activeAccent === 'en-US' ? word.ukPhonetic : word.usPhonetic;
+        return preferred || word.phonetic || other || '';
+      }
+      function renderBank(meta) {
+        const count = bank.length;
+        const isDemo = meta ? !!meta.isDemo : count <= SAMPLE_WORDS.length;
+        const label = isDemo ? `示例 ${count} 条` : `已导入 ${count.toLocaleString()} 条`;
+        $('#bankCountLabel').textContent = `· ${label}`;
+        $('#storageStatus').textContent = isDemo ? '演示词库 · 本地保存' : `已导入 ${count.toLocaleString()} 词 · 本地离线保存`;
+        const sourceFile = meta && meta.sourceFile && !meta.isDemo ? meta.sourceFile : '';
+        if (sourceFile) $('#storageStatus').title = `来源文件：${sourceFile}`;
+        renderWordGrid();
+      }
+      function getPlan(planId=selectedPlanId) { return pricingConfig.plans.find(plan=>plan.id===planId) || pricingConfig.plans[0]; }
+      function formatPrice(amount) { return `¥${Number(amount||0).toLocaleString('zh-CN')}`; }
+      function updatePricingUI() {
+        const plan=getPlan();
+        if(!plan) return;
+        const annual=pricingConfig.plans.find(item=>item.id==='annual');
+        $('#priceAmount').textContent=formatPrice(plan.amount);
+        $('#pricePeriod').textContent=`/ ${plan.period}`;
+        $('#priceOriginal').textContent=formatPrice(plan.originalAmount);
+        $('#priceOriginal').hidden=!(plan.originalAmount>plan.amount);
+        $('#priceTerms').textContent=`前 ${pricingConfig.trialDays} 天免费 · 之后 ${formatPrice(plan.amount)} / ${plan.period}自动续费`;
+        $('#annualBadge').textContent=annual && annual.discountPercent ? `省 ${annual.discountPercent}%` : '年付优惠';
+        $('#studentPromo').hidden=!(pricingConfig.studentPromotion && pricingConfig.studentPromotion.enabled);
+        if(pricingConfig.studentPromotion && pricingConfig.studentPromotion.enabled) $('#studentPromo').textContent=`🎓 ${pricingConfig.studentPromotion.label || `学生专属优惠 ${pricingConfig.studentPromotion.discountPercent || ''}%`}（正式版需完成学生身份验证）`;
+        $$('.plan-option').forEach(button=>{const active=button.dataset.planSelect===selectedPlanId;button.classList.toggle('active',active);button.setAttribute('aria-pressed',String(active));});
+        const renewal=`${plan.name} · ${formatPrice(plan.amount)} / ${plan.period}，按授权续订`;
+        $('#trialPlanRenewal').textContent=renewal;
+        $('#trialConsentLabel').textContent=`我已了解正式版 ${pricingConfig.trialDays} 天试用结束后的续费价格（${formatPrice(plan.amount)} / ${plan.period}）和取消方式，并同意在本设备开始演示试用。`;
+        $('#trialInfoPrice').textContent=`${formatPrice(plan.amount)} / ${plan.period}`;
+        $('#checkoutPlanLabel').textContent=`Lexio Pro · ${plan.name}`;
+        $('#checkoutAmount').textContent=`${formatPrice(plan.amount)} / ${plan.period}`;
+        $('#checkoutTrial').textContent=`先体验 ${pricingConfig.trialDays} 天`;
+        $('#checkoutDiscount').textContent=plan.discountPercent ? `年付立省 ${plan.discountPercent}%` : (pricingConfig.studentPromotion && pricingConfig.studentPromotion.enabled ? '学生优惠需身份验证' : '无额外优惠');
+      }
+      async function loadPublicConfigs() {
+        try {
+          const response=await fetch('./pricing.config.json',{cache:'no-cache'});
+          if(response.ok){const config=await response.json();if(Array.isArray(config.plans)&&config.plans.length){Object.assign(pricingConfig,config);}}
+        } catch(error) { console.info('Using built-in pricing defaults.',error); }
+        try {
+          const saved=localStorage.getItem('lexio.selectedPlan');
+          selectedPlanId=saved && pricingConfig.plans.some(plan=>plan.id===saved) ? saved : (pricingConfig.defaultPlan || 'monthly');
+        } catch(_) { selectedPlanId=pricingConfig.defaultPlan || 'monthly'; }
+        if(!pricingConfig.plans.some(plan=>plan.id===selectedPlanId)) selectedPlanId=pricingConfig.plans[0].id;
+        updatePricingUI();
+        try {
+          const response=await fetch('./wordbank.config.json',{cache:'no-cache'});
+          if(response.ok) wordSourceConfig={...wordSourceConfig,...await response.json()};
+        } catch(error) { console.info('Online wordbank source is not configured.',error); }
+      }
+      const SHOWCASE_CONTENT = {
+        plan:{headline:'每天醒来，<br><em>词单已为你排好。</em>',copy:'告诉 Lexio 你的考试目标和日期，系统拆解考纲词库，生成刚刚好的每日任务——不多到崩溃，不少到焦虑。',bullets:['按考试日期倒推每日词量。','新词与复习词智能配比。','漏打卡自动重排，不让任务堆积。']},
+        memory:{headline:'在快要忘记时，<br><em>刚好再遇见。</em>',copy:'每次自测的反馈都会帮助系统判断掌握程度，逐步安排复习间隔，把时间花在真正需要巩固的单词上。',bullets:['每个词拥有独立复习状态。','错词自动加入强化队列。','按学习反馈调整复习节奏。']},
+        battle:{headline:'把每天 15 分钟，<br><em>变成有趣的挑战。</em>',copy:'用闯关、拼写赛和好友对战增加即时反馈。先体验核心学习卡片，社交挑战与排行榜可在后续版本接入。',bullets:['好友约战与班级排行榜。','拼写挑战，练习主动回忆。','连续打卡，记录每一点进步。']}
+      };
+      function selectShowcaseTab(key) {
+        const content=SHOWCASE_CONTENT[key] || SHOWCASE_CONTENT.plan;
+        $('#showcaseHeadline').innerHTML=content.headline;
+        $('#showcaseCopy').textContent=content.copy;
+        $$('[data-showcase-bullet]').forEach((item,index)=>item.textContent=content.bullets[index]||'');
+        $$('[data-demo-tab]').forEach(button=>{const active=button.dataset.demoTab===key;button.classList.toggle('active',active);button.setAttribute('aria-selected',String(active));});
+      }
+      function renderWordGrid() {
+        const query = ($('#wordSearch').value || '').trim().toLowerCase();
+        const filtered = bank.filter(word => categoryMatches(word, activeFilter) && (!query || `${word.word} ${word.meaning} ${word.category} ${word.phonetic} ${word.ukPhonetic} ${word.usPhonetic}`.toLowerCase().includes(query)));
+        const shown = filtered.slice(0, 9);
+        const grid = $('#wordGrid');
+        if (!shown.length) { grid.innerHTML = '<div class="empty-state">没有找到匹配词条。试试更短的关键词，或切换考试分类。</div>'; return; }
+        grid.innerHTML = shown.map(word => {
+          const index = bank.findIndex(item => item.id === word.id);
+          return `<article class="word-tile"><div class="word-tile-head"><div><h4>${escapeHTML(word.word)}</h4><p class="phonetic">${escapeHTML(displayedPhonetic(word) || '音标待补充')} ${word.pos ? ' · ' + escapeHTML(word.pos) : ''}</p></div><button class="word-speak" type="button" aria-label="播放 ${escapeHTML(word.word)} 发音" data-word-index="${index}" data-word-speak><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 10v4h4l5 4V6l-5 4H4Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M16 9a5 5 0 0 1 0 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button></div><p class="meaning">${escapeHTML(word.meaning)}</p><div class="word-tile-bottom"><span class="word-tag">${escapeHTML(word.category)}</span><button class="word-open" type="button" data-word-index="${index}" data-word-open>学习此词</button></div></article>`;
+        }).join('');
+        if (filtered.length > shown.length) {
+          const note = document.createElement('div'); note.className='empty-state'; note.style.padding='7px 0 0'; note.textContent=`当前显示前 ${shown.length} 条；共有 ${filtered.length.toLocaleString()} 条匹配。继续搜索以缩小范围。`; grid.appendChild(note);
+        }
+      }
+      function parseCSV(text) {
+        const rows=[]; let row=[]; let cell=''; let quoted=false;
+        for (let i=0;i<text.length;i++) { const c=text[i]; if (quoted) { if(c==='"' && text[i+1]==='"'){cell+='"';i++;} else if(c==='"'){quoted=false;} else cell+=c; } else if(c==='"'){quoted=true;} else if(c===','){row.push(cell);cell='';} else if(c==='\n'){row.push(cell);rows.push(row);row=[];cell='';} else if(c!=='\r'){cell+=c;} }
+        if(cell.length || row.length){row.push(cell);rows.push(row);}
+        if(rows.length<2) return [];
+        const headers=rows.shift().map(h=>h.trim().toLowerCase().replace(/\s+/g,'_'));
+        return rows.filter(r=>r.some(x=>String(x).trim())).map(r=>{const item={};headers.forEach((key,i)=>item[key]=(r[i]||'').trim());return item;});
+      }
+      function extractRecords(data) {
+        if (Array.isArray(data)) return data;
+        if (!data || typeof data !== 'object') return [];
+        for (const key of ['words','entries','items','data','list','vocabulary']) if (Array.isArray(data[key])) return data[key];
+        if (Array.isArray(data.books)) return data.books.flatMap(book => (book.words || book.entries || []).map(word => ({...word, category:word.category || book.category || book.name || book.title || '自定义'})));
+        return [];
+      }
+      async function loadBundledWordBank() {
+        const response=await fetch('./data/original-site-wordbank.json',{cache:'no-store'});
+        if(!response.ok) throw new Error(`内置词库下载失败（HTTP ${response.status}）。`);
+        const payload=await response.json();
+        const raw=extractRecords(payload);
+        const expected=Number(payload && payload.metadata && payload.metadata.stats && payload.metadata.stats.importedEntries) || 25000;
+        if(raw.length < expected) throw new Error(`内置词库不完整：应有 ${expected.toLocaleString()} 条，实际读取 ${raw.length.toLocaleString()} 条。`);
+        await persistWordRecords(raw,'原站内嵌词库 · original-site-wordbank.json');
+        return raw.length;
+      }
+      async function persistWordRecords(raw, sourceName) {
+        const normalized=(raw||[]).map((item,index)=>normalizeWord(item,index)).filter(Boolean);
+        if(!normalized.length) throw new Error('未找到可识别词条。请检查 word / english / meaning 等字段。');
+        const seenIds=new Set();
+        normalized.forEach((word,index)=>{const base=word.id;let unique=base;let suffix=1;while(seenIds.has(unique))unique=`${base}--${suffix++}`;word.id=unique;if(word.order==null)word.order=index;seenIds.add(unique);});
+        if(db) {
+          await idbReplaceWords(normalized,{sourceFile:sourceName,isDemo:false});
+          bank=await idbGetAll();
+          if(navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(()=>{});
+        } else {
+          try { localStorage.setItem('lexio.fallbackBank',JSON.stringify(normalized));bank=normalized; }
+          catch(e) { throw new Error('本浏览器不支持大型离线词库存储。请使用支持 IndexedDB 的现代浏览器。'); }
+        }
+        renderBank({wordCount:bank.length,isDemo:false,sourceFile:sourceName});
+        updateStudyCard();
+        return bank.length;
+      }
+      async function importFile(file) {
+        try {
+          const content=await file.text();
+          let raw;
+          if(file.name.toLowerCase().endsWith('.csv')) raw=parseCSV(content);
+          else raw=extractRecords(JSON.parse(content.replace(/^\uFEFF/,'')));
+          const count=await persistWordRecords(raw,file.name);
+          toastMessage(`导入完成：${count.toLocaleString()} 条词目已保存在本设备。`);
+        } catch(error) {
+          console.error(error);
+          toastMessage(`导入失败：${error.message || '请确认 JSON / CSV 格式正确。'}`);
+        } finally { $('#wordFile').value=''; }
+      }
+      function openWordSourceDialog() {
+        $('#wordSourceStatus').textContent='';
+        let saved='';
+        try { saved=localStorage.getItem('lexio.wordSourceUrl')||''; } catch(_) {}
+        $('#wordSourceUrl').value=saved || wordSourceConfig.sourceUrl || '';
+        showDialog(wordSourceDialog);
+      }
+      async function syncOnlineWordBank(sourceUrl) {
+        const url=(sourceUrl||'').trim();
+        if(!url) { openWordSourceDialog(); return; }
+        const status=$('#wordSourceStatus');
+        status.textContent='正在联网下载词库…';
+        try {
+          const response=await fetch(url,{cache:'no-store',mode:'cors'});
+          if(!response.ok) throw new Error(`下载失败（HTTP ${response.status}）。请检查直链是否有效。`);
+          const content=await response.text();
+          const contentType=(response.headers.get('content-type')||'').toLowerCase();
+          if(contentType.includes('text/html') || /^\s*<!doctype|^\s*<html/i.test(content)) throw new Error('该链接返回的是网页，不是 JSON / CSV 词库文件。原站首页不是直接下载链接；本项目已将内嵌词库提取到本地 JSON 并会自动导入。');
+          let raw;
+          const csvHint=wordSourceConfig.format==='csv' || /\.csv(?:$|\?)/i.test(url) || contentType.includes('csv');
+          if(csvHint) raw=parseCSV(content);
+          else {
+            try { raw=extractRecords(JSON.parse(content.replace(/^\uFEFF/,''))); }
+            catch(_) { raw=parseCSV(content); }
+          }
+          const count=await persistWordRecords(raw,`网络同步 · ${new URL(url,location.href).host}`);
+          try { localStorage.setItem('lexio.wordSourceUrl',url); } catch(_) {}
+          status.textContent=`同步完成：${count.toLocaleString()} 条词目已保存到本设备。`;
+          closeDialog(wordSourceDialog);
+          toastMessage(`联网同步完成：${count.toLocaleString()} 条词目已离线保存。`);
+        } catch(error) {
+          console.error(error);
+          const message=error instanceof TypeError ? '无法读取此网址：可能是跨域 CORS 限制，或链接不可访问。请使用允许 CORS 的直链，或配置同源 /api/wordbank 服务。' : (error.message || '网络同步失败。');
+          status.textContent=message;
+          toastMessage(message);
+        }
+      }
+      function loadDailyStats() {
+        const now=new Date();
+        const day=`${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;
+        try { const parsed=JSON.parse(localStorage.getItem('lexio.dailyStats')||'null'); if(parsed && parsed.day===day) return parsed; } catch(_) {}
+        return {day,known:0,again:0};
+      }
+      let dailyStats = loadDailyStats();
+      function persistStats() { try { localStorage.setItem('lexio.dailyStats',JSON.stringify(dailyStats)); } catch(_) {} }
+      function updateStudyCard() {
+        if (!bank.length) return;
+        studyIndex = ((studyIndex % bank.length) + bank.length) % bank.length;
+        const word = bank[studyIndex];
+        $('#studyWord').textContent = word.word;
+        $('#studyPhonetic').textContent = `${displayedPhonetic(word) || '音标待补充'}${word.pos ? ' · '+word.pos : ''}`;
+        $('#studyCategory').textContent = `${(word.category || 'TODAY’S WORD').toUpperCase()} · WORD`;
+        $('#studyPosition').textContent = `${String(studyIndex+1).padStart(2,'0')} / ${String(bank.length).padStart(2,'0')}`;
+        $('#studyMeaning').textContent = word.meaning;
+        $('#studyMeaning').classList.add('is-hidden');
+        $('#studyExample').textContent = word.example ? `“${word.example}”` : '先试着回忆，再揭晓释义。主动想起，记忆才会更牢。';
+        $('#studyExampleTranslation').textContent = word.exampleTranslation || '';
+        $('#studyExampleTranslation').hidden = !word.exampleTranslation;
+        $('#studyMnemonic').textContent = word.mnemonic ? `记忆线索：${word.mnemonic}` : '';
+        $('#studyMnemonic').hidden = !word.mnemonic;
+        $('#knownCount').textContent = dailyStats.known.toLocaleString();
+        $('#studyProgress').style.width = `${Math.min(100, dailyStats.known / 30 * 100)}%`;
+        $('#studyDate').textContent = `今日学习 · ${new Intl.DateTimeFormat('zh-CN',{month:'long',day:'numeric'}).format(new Date())}`;
+        const trial = getTrialState();
+        const expired = trial.started && trial.expired;
+        $('#expiredBanner').hidden = !expired;
+        $('#sessionStatusText').textContent = expired ? '试用已结束' : '学习中';
+      }
+      function setStudyIndex(index) { studyIndex = index; updateStudyCard(); document.querySelector('#study').scrollIntoView({behavior:'smooth'}); }
+      function speak(text, lang='en-GB') {
+        if (activeAudio) { activeAudio.pause(); activeAudio=null; }
+        if (!('speechSynthesis' in window)) { toastMessage('此浏览器暂不支持语音朗读。'); return; }
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = lang;
+        utterance.rate = .88;
+        const voices = window.speechSynthesis.getVoices();
+        const voice = voices.find(item => item.lang && item.lang.toLowerCase().startsWith(lang.toLowerCase())) || voices.find(item => item.lang && item.lang.toLowerCase().startsWith('en'));
+        if (voice) utterance.voice = voice;
+        window.speechSynthesis.speak(utterance);
+      }
+      function speakEntry(entry, lang=activeAccent) {
+        if(!entry || !entry.word) return;
+        const suppliedAudio=lang==='en-GB' ? entry.uk : entry.us;
+        const type=lang==='en-US' ? 2 : 1;
+        const source=suppliedAudio || `https://dict.youdao.com/dictvoice?audio=${encodeURIComponent(entry.word)}&type=${type}`;
+        if(source && typeof Audio!=='undefined') {
+          try {
+            const url=new URL(source,window.location.href);
+            if(!['http:','https:'].includes(url.protocol)) throw new Error('Unsupported audio URL');
+            if(activeAudio){activeAudio.pause();activeAudio=null;}
+            if('speechSynthesis' in window) window.speechSynthesis.cancel();
+            const audio=new Audio(url.href);
+            activeAudio=audio;
+            const fallback=()=>{if(activeAudio!==audio)return;activeAudio=null;speak(entry.word,lang);};
+            audio.addEventListener('error',fallback,{once:true});
+            audio.play().catch(fallback);
+            return;
+          } catch(_) {}
+        }
+        speak(entry.word,lang);
+      }
+      function toastMessage(message) {
+        toast.textContent = message;
+        toast.classList.add('show');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(()=>toast.classList.remove('show'), 3400);
+      }
+      function getTrialState() {
+        let startedAt=0;
+        try { startedAt=Number(localStorage.getItem('lexio.demoTrialStarted') || 0); } catch(_) {}
+        if (!startedAt) return {started:false,expired:false,daysLeft:7};
+        const endsAt=startedAt + 7*24*60*60*1000;
+        const left=endsAt-Date.now();
+        return {started:true,expired:left<=0,daysLeft:Math.max(0,Math.ceil(left/(24*60*60*1000))),endsAt};
+      }
+      function showDialog(dialog) { if (dialog && typeof dialog.showModal==='function') dialog.showModal(); else if (dialog) dialog.setAttribute('open',''); }
+      function closeDialog(dialog) { if (dialog && typeof dialog.close==='function') dialog.close(); else if(dialog) dialog.removeAttribute('open'); }
+      function openTrial() {
+        const state=getTrialState();
+        if (state.started && state.expired) { openPayment(); return; }
+        if (state.started) { closeDialog(trialDialog); toastMessage(`你的 7 天体验还剩 ${state.daysLeft} 天。继续学习吧！`); document.querySelector('#study').scrollIntoView({behavior:'smooth'}); return; }
+        updatePricingUI();
+        $('#trialAgree').checked=false;
+        $('#confirmTrial').disabled=true;
+        showDialog(trialDialog);
+      }
+      function openPayment() {
+        $('#payStatus').textContent='';
+        updatePricingUI();
+        showDialog(paymentDialog);
+      }
+      function startDemoTrial() {
+        try { localStorage.setItem('lexio.demoTrialStarted',String(Date.now()));localStorage.setItem('lexio.selectedPlan',selectedPlanId); } catch(_) {}
+        closeDialog(trialDialog);
+        toastMessage('7 天演示体验已开始。当前预览不会发起真实扣款。');
+        updateStudyCard();
+        document.querySelector('#study').scrollIntoView({behavior:'smooth'});
+      }
+      async function checkout() {
+        const status=$('#payStatus');
+        status.textContent='正在连接结账服务…';
+        try {
+          const response=await fetch('/api/checkout',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({plan:selectedPlanId,provider:selectedProvider})});
+          const data=await response.json().catch(()=>({}));
+          if(response.ok && data.url) { window.location.assign(data.url); return; }
+          throw new Error(data.message || '支付接口尚未配置。');
+        } catch(error) {
+          status.textContent='未建立真实支付：请先在服务端配置支付商户、Checkout API 与签名校验的 Webhook。此预览不会扣款。';
+          console.info('Checkout is intentionally not active in the prototype:',error);
+        }
+      }
+
+      $('#wordSearch').addEventListener('input',renderWordGrid);
+      $$('.filter-chip').forEach(button=>button.addEventListener('click',()=>{
+        $$('.filter-chip').forEach(item=>{item.classList.remove('active');item.setAttribute('aria-selected','false');});
+        button.classList.add('active');button.setAttribute('aria-selected','true');activeFilter=button.dataset.filter;renderWordGrid();
+      }));
+      $('#wordGrid').addEventListener('click',event=>{
+        const speakButton=event.target.closest('[data-word-speak]');
+        const openButton=event.target.closest('[data-word-open]');
+        if(speakButton){const word=bank[Number(speakButton.dataset.wordIndex)];if(word)speakEntry(word,activeAccent);}
+        if(openButton){const index=Number(openButton.dataset.wordIndex);if(Number.isFinite(index))setStudyIndex(index);}
+      });
+      $('#importWordsBtn').addEventListener('click',()=>$('#wordFile').click());
+      $('#syncWordsBtn').addEventListener('click',()=>{
+        let source='';try{source=localStorage.getItem('lexio.wordSourceUrl')||'';}catch(_){}
+        syncOnlineWordBank(source || wordSourceConfig.sourceUrl);
+      });
+      $('#saveWordSource').addEventListener('click',()=>{
+        const url=$('#wordSourceUrl').value.trim();
+        if(!url){$('#wordSourceStatus').textContent='请先填写 JSON / CSV 文件直链。';$('#wordSourceUrl').focus();return;}
+        try { new URL(url,location.href); } catch(_) { $('#wordSourceStatus').textContent='网址格式不正确，请检查后重试。';return; }
+        try { localStorage.setItem('lexio.wordSourceUrl',url); } catch(_) {}
+        syncOnlineWordBank(url);
+      });
+      $('#wordSourceUrl').addEventListener('keydown',event=>{if(event.key==='Enter'){event.preventDefault();$('#saveWordSource').click();}});
+      $('#clearWordSource').addEventListener('click',()=>{try{localStorage.removeItem('lexio.wordSourceUrl');}catch(_){}$('#wordSourceUrl').value='';wordSourceConfig.sourceUrl='';$('#wordSourceStatus').textContent='已清除此设备保存的网址。';});
+      $$('.plan-option').forEach(button=>button.addEventListener('click',()=>{selectedPlanId=button.dataset.planSelect;try{localStorage.setItem('lexio.selectedPlan',selectedPlanId);}catch(_){}updatePricingUI();}));
+      $$('[data-demo-tab]').forEach(button=>button.addEventListener('click',()=>selectShowcaseTab(button.dataset.demoTab)));
+      $$('.provider-choice').forEach(button=>button.addEventListener('click',()=>{selectedProvider=button.dataset.providerSelect;$$('.provider-choice').forEach(item=>{const active=item===button;item.classList.toggle('active',active);item.setAttribute('aria-pressed',String(active));});}));
+      $('#directSubscribe').addEventListener('click',openPayment);
+      $('#wordFile').addEventListener('change',event=>{const file=event.target.files && event.target.files[0];if(file)importFile(file);});
+      $('#studySpeak').addEventListener('click',()=>{const word=bank[studyIndex];if(word)speakEntry(word,activeAccent);});
+      $('#revealMeaning').addEventListener('click',()=>{
+        if (getTrialState().expired) { openPayment(); return; }
+        const meaning=$('#studyMeaning');const hidden=meaning.classList.toggle('is-hidden');
+        $('#revealMeaning').textContent=hidden?'显示释义':'隐藏释义';
+      });
+      $('#knownWord').addEventListener('click',()=>{
+        if (getTrialState().expired) { openPayment(); return; }
+        dailyStats.known+=1;persistStats();studyIndex=(studyIndex+1)%Math.max(1,bank.length);updateStudyCard();toastMessage('记得不错！这条词目已加入今日掌握进度。');
+      });
+      $('#againWord').addEventListener('click',()=>{
+        if (getTrialState().expired) { openPayment(); return; }
+        dailyStats.again+=1;persistStats();$('#studyMeaning').classList.remove('is-hidden');$('#revealMeaning').textContent='隐藏释义';toastMessage('已标记为待巩固，稍后再回来复习。');
+      });
+      $('#nextWord').addEventListener('click',()=>{studyIndex=(studyIndex+1)%Math.max(1,bank.length);updateStudyCard();});
+      $$('.accent-toggle button').forEach(button=>button.addEventListener('click',()=>{$$('.accent-toggle button').forEach(b=>b.classList.remove('active'));button.classList.add('active');activeAccent=button.dataset.accent;renderWordGrid();if(bank[studyIndex])$('#studyPhonetic').textContent=`${displayedPhonetic(bank[studyIndex])||'音标待补充'}${bank[studyIndex].pos?' · '+bank[studyIndex].pos:''}`;}));
+      $$('[data-speak-word]').forEach(button=>button.addEventListener('click',()=>speak(button.dataset.speakWord,button.dataset.speakLang||'en-GB')));
+      $$('[data-open-trial]').forEach(button=>button.addEventListener('click',()=>{const mobile=$('#mobileMenu');if(mobile)mobile.classList.remove('open');$('#mobileMenuToggle').setAttribute('aria-expanded','false');openTrial();}));
+      $('#trialAgree').addEventListener('change',event=>{$('#confirmTrial').disabled=!event.target.checked;});
+      $('#confirmTrial').addEventListener('click',startDemoTrial);
+      $('#checkoutBtn').addEventListener('click',checkout);
+      $('#bannerSubscribe').addEventListener('click',openPayment);
+      $$('[data-close-dialog]').forEach(button=>button.addEventListener('click',()=>{closeDialog(button.closest('dialog'));}));
+      [trialDialog,wordSourceDialog,paymentDialog].forEach(dialog=>dialog.addEventListener('click',event=>{if(event.target===dialog)closeDialog(dialog);}));
+      $('#mobileMenuToggle').addEventListener('click',()=>{const menu=$('#mobileMenu');const open=menu.classList.toggle('open');$('#mobileMenuToggle').setAttribute('aria-expanded',String(open));});
+      $$('#mobileMenu a').forEach(link=>link.addEventListener('click',()=>{$('#mobileMenu').classList.remove('open');$('#mobileMenuToggle').setAttribute('aria-expanded','false');}));
+      $('#year').textContent=new Date().getFullYear();
+      const revealItems=$$('[data-reveal]');
+      if('IntersectionObserver' in window){const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('in-view');observer.unobserve(entry.target);}}),{threshold:.12,rootMargin:'0px 0px -25px 0px'});revealItems.forEach(item=>observer.observe(item));}else revealItems.forEach(item=>item.classList.add('in-view'));
+      window.addEventListener('beforeinstallprompt',event=>{event.preventDefault();installPrompt=event;$('#installBtn').style.display='inline-flex';});
+      $('#installBtn').addEventListener('click',async()=>{
+        if(installPrompt){installPrompt.prompt();const choice=await installPrompt.userChoice;toastMessage(choice.outcome==='accepted'?'Lexio 已开始安装。':'你可以稍后再安装 Lexio。');installPrompt=null;}
+        else toastMessage('可在浏览器菜单中选择“安装应用”或“添加到主屏幕”。请使用 HTTPS 访问。');
+      });
+      if('serviceWorker' in navigator && location.protocol!=='file:') navigator.serviceWorker.register('./sw.js').catch(error=>console.info('Service Worker will activate when served from a supported secure origin.',error));
+      loadPublicConfigs();
+      initializeBank();
+    })();
+  </script>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a4f54eaeed352449',t:'MTc5MjgwNjM4MQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
