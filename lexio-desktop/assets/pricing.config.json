@@ -1,0 +1,33 @@
+{
+  "currency": "CNY",
+  "trialDays": 7,
+  "defaultPlan": "monthly",
+  "plans": [
+    {
+      "id": "monthly",
+      "name": "连续包月",
+      "amount": 15,
+      "period": "月",
+      "originalAmount": 15,
+      "discountPercent": 0,
+      "tag": "灵活续订",
+      "description": "每月自动续费，可随时取消"
+    },
+    {
+      "id": "annual",
+      "name": "连续包年",
+      "amount": 108,
+      "period": "年",
+      "originalAmount": 180,
+      "discountPercent": 40,
+      "tag": "省 40%",
+      "description": "按年订阅，折合约 ¥9 / 月"
+    }
+  ],
+  "studentPromotion": {
+    "enabled": true,
+    "discountPercent": 15,
+    "label": "学生证可享 85 折",
+    "requiresVerification": true
+  }
+}

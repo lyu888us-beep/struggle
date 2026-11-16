@@ -1,0 +1,61 @@
+appId: com.lyu888us.lexio
+productName: Lexio
+copyright: © 2026 Lexio
+
+directories:
+  output: dist
+  buildResources: build
+
+files:
+  - main.js
+  - server.js
+  - package.json
+  - assets/**/*
+
+asar: true
+publish: null
+
+win:
+  icon: build/icon.png
+  artifactName: Lexio-Setup-${version}-${arch}.${ext}
+  target:
+    - nsis
+    - portable
+
+nsis:
+  oneClick: false
+  perMachine: false
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: Lexio 乐词
+  artifactName: Lexio-Setup-${version}-${arch}.${ext}
+  uninstallDisplayName: Lexio 乐词
+
+portable:
+  artifactName: Lexio-Portable-${version}-${arch}.${ext}
+
+mac:
+  category: public.app-category.education
+  target:
+    - dmg
+    - zip
+  artifactName: Lexio-${version}-${arch}.${ext}
+
+dmg:
+  title: Lexio 乐词
+
+linux:
+  icon: build/icon.png
+  category: Education
+  synopsis: 英语单词记忆单机版
+  target:
+    - AppImage
+    - deb
+  artifactName: Lexio-${version}-${arch}.${ext}
+  desktop:
+    entry:
+      Name: Lexio 乐词
+      Comment: 英语单词记忆单机版
+      Categories: Education;
+      StartupWMClass: lexio

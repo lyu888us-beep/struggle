@@ -1,0 +1,25 @@
+{
+  "name": "lexio-desktop",
+  "productName": "Lexio",
+  "version": "1.0.0",
+  "description": "Lexio 乐词 · 英语单词记忆 —— 单机桌面版（离线可用）",
+  "author": "lyu888us-beep",
+  "license": "UNLICENSED",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "smoke": "LEXIO_SMOKE=1 electron . --no-sandbox",
+    "smoke:mock": "node test/smoke.js",
+    "test": "node test/server.test.js && node test/smoke.js",
+    "server": "node server.js",
+    "dist": "electron-builder --win --linux",
+    "dist:win": "electron-builder --win",
+    "dist:mac": "electron-builder --mac",
+    "dist:linux": "electron-builder --linux",
+    "portable": "electron-builder --win portable --linux dir"
+  },
+  "devDependencies": {
+    "electron": "^33.2.0",
+    "electron-builder": "^25.1.8"
+  }
+}
