@@ -118,8 +118,19 @@ jobs:
         run: |
           mkdir -p lexio-desktop/ci-dist
           find ci-raw -type f -exec cp -f {} lexio-desktop/ci-dist/ \;
-          echo 'Collected files:'
-          ls -la lexio-desktop/ci-dist
+          cd lexio-desktop/ci-dist
+          # GitHub 单文件上限 100MB：超限文件切成 <90MB 分片传输，本地再合并
+          for f in *; do
+            case "$f" in *.part*) continue;; esac
+            size=$(stat -c%s "$f")
+            if [ "$size" -gt 95000000 ]; then
+              echo "splitting $f ($size bytes)"
+              split -b 90m -d -a 2 "$f" "$f.part"
+              rm -f "$f"
+            fi
+          done
+          echo '::notice::ci-dist contents:'
+          ls -la
 
       - name: Commit and push
         run: |
@@ -131,4 +142,7 @@ jobs:
             exit 0
           fi
           git commit -m "ci: desktop build artifacts [skip ci]"
-          git push
+          if ! git push 2>&1 | tee /tmp/push.log; then
+            echo "::error::git push failed: $(cat /tmp/push.log)"
+            exit 1
+          fi
