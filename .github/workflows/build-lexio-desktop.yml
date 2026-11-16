@@ -61,6 +61,30 @@ jobs:
             echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
 
+      - name: Surface failure annotation
+        if: failure()
+        shell: bash
+        run: |
+          if [ -f build-output.txt ]; then
+            echo "::error title=${{ matrix.os }} build failed::$(tail -c 1200 build-output.txt | tr '\n' '|')"
+          else
+            echo "::error title=${{ matrix.os }} build failed::no build-output.txt produced"
+          fi
+
+      - name: Stage build log for artifact
+        if: always()
+        shell: bash
+        run: cp -f build-output.txt "build-log-${{ matrix.os }}.txt" 2>/dev/null || true
+
+      - name: Upload build log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: log-${{ matrix.os }}
+          path: lexio-desktop/build-log-*.txt
+          if-no-files-found: warn
+          retention-days: 7
+
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
