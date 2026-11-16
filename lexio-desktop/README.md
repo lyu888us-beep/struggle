@@ -73,3 +73,5 @@ lexio-desktop/
 export NODE_EXTRA_CA_CERTS=/etc/ssl/certs/ca-certificates.crt  # 信任系统 CA
 ELECTRON_SKIP_BINARY_DOWNLOAD=1 npm install                     # 先装依赖，稍后再补运行时
 ```
+
+<!-- ci-trigger -->
