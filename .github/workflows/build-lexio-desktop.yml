@@ -7,6 +7,9 @@ on:
       - '.github/workflows/build-lexio-desktop.yml'
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   build:
     name: build (${{ matrix.os }})
@@ -39,10 +42,24 @@ jobs:
         run: npm ci
 
       - name: Build installers
-        run: npm run ${{ matrix.script }}
+        shell: bash
+        run: |
+          set -o pipefail
+          npm run ${{ matrix.script }} 2>&1 | tee build-output.txt
         env:
           # 未配置代码签名证书时跳过自动发现，避免 macOS 构建卡住
           CSC_IDENTITY_AUTO_DISCOVERY: 'false'
+
+      - name: Publish build log to summary
+        if: always()
+        shell: bash
+        run: |
+          {
+            echo "### ${{ matrix.os }} build log"
+            echo '```'
+            tail -c 60000 build-output.txt 2>/dev/null || echo '(no log produced)'
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
@@ -56,3 +73,38 @@ jobs:
             lexio-desktop/dist/*.zip
           if-no-files-found: error
           retention-days: 30
+
+  # 把构建产物提交回当前分支，便于从 github.com 拉取后转存 Google Drive
+  collect:
+    name: commit artifacts to branch
+    if: ${{ !cancelled() }}
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: ci-raw
+          merge-multiple: true
+
+      - name: Stage artifacts
+        run: |
+          mkdir -p lexio-desktop/ci-dist
+          find ci-raw -type f -exec cp -f {} lexio-desktop/ci-dist/ \;
+          echo 'Collected files:'
+          ls -la lexio-desktop/ci-dist
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add lexio-desktop/ci-dist
+          if git diff --cached --quiet; then
+            echo "No artifact changes to commit"
+            exit 0
+          fi
+          git commit -m "ci: desktop build artifacts [skip ci]"
+          git push

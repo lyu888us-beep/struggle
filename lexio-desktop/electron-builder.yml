@@ -49,13 +49,8 @@ linux:
   icon: build/icon.png
   category: Education
   synopsis: 英语单词记忆单机版
+  maintainer: lyu888us-beep <lyu888us-beep@users.noreply.github.com>
   target:
     - AppImage
     - deb
   artifactName: Lexio-${version}-${arch}.${ext}
-  desktop:
-    entry:
-      Name: Lexio 乐词
-      Comment: 英语单词记忆单机版
-      Categories: Education;
-      StartupWMClass: lexio
