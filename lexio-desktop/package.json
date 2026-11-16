@@ -3,6 +3,7 @@
   "productName": "Lexio",
   "version": "1.0.0",
   "description": "Lexio 乐词 · 英语单词记忆 —— 单机桌面版（离线可用）",
+  "homepage": "https://github.com/lyu888us-beep/struggle",
   "author": "lyu888us-beep",
   "license": "UNLICENSED",
   "main": "main.js",
