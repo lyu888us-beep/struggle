@@ -23,3 +23,5 @@
 导出文件按原站客户端合并规则整理为 `{ metadata, books }`，每个 book 有独立分类；词条保留 `id`、UK / US 音标、词性、释义和来源分类。精讲词额外保留 `example`、`exampleTranslation`、`mnemonic`、`frequency`、`synonyms`、`antonyms`、`collocations`、`wordFamily`、`examSource` 等字段。
 
 <!-- pages-deploy-trigger -->
+
+<!-- pages-trigger-2 -->
