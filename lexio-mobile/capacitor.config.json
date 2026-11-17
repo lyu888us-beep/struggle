@@ -1,0 +1,9 @@
+{
+  "appId": "com.lyu888us.lexio",
+  "appName": "Lexio 乐词",
+  "webDir": "www",
+  "android": {
+    "allowMixedContent": false,
+    "backgroundColor": "#f7f8f4"
+  }
+}
