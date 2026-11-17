@@ -10,10 +10,10 @@
   • completed installing native dependencies
   • packaging       platform=linux arch=x64 electron=33.4.11 appOutDir=dist/linux-unpacked
   • downloading     url=https://github.com/electron/electron/releases/download/v33.4.11/electron-v33.4.11-linux-x64.zip size=106 MB parts=8
-  • downloaded      url=https://github.com/electron/electron/releases/download/v33.4.11/electron-v33.4.11-linux-x64.zip duration=345ms
+  • downloaded      url=https://github.com/electron/electron/releases/download/v33.4.11/electron-v33.4.11-linux-x64.zip duration=283ms
   • building        target=AppImage arch=x64 file=dist/Lexio-1.0.0-x86_64.AppImage
   • downloading     url=https://github.com/electron-userland/electron-builder-binaries/releases/download/appimage-12.0.1/appimage-12.0.1.7z size=1.6 MB parts=1
-  • downloaded      url=https://github.com/electron-userland/electron-builder-binaries/releases/download/appimage-12.0.1/appimage-12.0.1.7z duration=138ms
+  • downloaded      url=https://github.com/electron-userland/electron-builder-binaries/releases/download/appimage-12.0.1/appimage-12.0.1.7z duration=192ms
   • building        target=deb arch=x64 file=dist/Lexio-1.0.0-amd64.deb
   • downloading     url=https://github.com/electron-userland/electron-builder-binaries/releases/download/fpm-1.9.3-2.3.1-linux-x86_64/fpm-1.9.3-2.3.1-linux-x86_64.7z size=5.0 MB parts=1
-  • downloaded      url=https://github.com/electron-userland/electron-builder-binaries/releases/download/fpm-1.9.3-2.3.1-linux-x86_64/fpm-1.9.3-2.3.1-linux-x86_64.7z duration=215ms
+  • downloaded      url=https://github.com/electron-userland/electron-builder-binaries/releases/download/fpm-1.9.3-2.3.1-linux-x86_64/fpm-1.9.3-2.3.1-linux-x86_64.7z duration=226ms
