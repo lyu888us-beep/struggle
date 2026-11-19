@@ -9,7 +9,7 @@
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="apple-touch-icon" href="./icon-192.png">
   <link rel="icon" href="./icon.svg" type="image/svg+xml">
-  <title>Lexio 乐词 · 每天 15 分钟，把单词记成长期记忆</title>
+  <title>Lexio 乐词 · 全功能版 · 每天 15 分钟，把单词记成长期记忆</title>
   <style>
     :root {
       --ink: #17251f;
@@ -1234,7 +1234,7 @@
         const trial = getTrialState();
         const expired = trial.started && trial.expired;
         $('#expiredBanner').hidden = !expired;
-        $('#sessionStatusText').textContent = expired ? '试用已结束' : '学习中';
+        $('#sessionStatusText').textContent = '全功能版 · 学习中';
       }
       function setStudyIndex(index) { studyIndex = index; updateStudyCard(); document.querySelector('#study').scrollIntoView({behavior:'smooth'}); }
       function speak(text, lang='en-GB') {
