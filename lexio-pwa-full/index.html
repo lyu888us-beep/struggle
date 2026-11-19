@@ -598,6 +598,31 @@
       *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
       html.js [data-reveal] { opacity: 1; transform: none; }
     }
+
+    /* ===== Multi-view navigation (v2) ===== */
+    main > section[data-app-view] { display: none; }
+    main > section[data-app-view].is-active { display: block; }
+    body { padding-bottom: 74px; }
+    .view-topbar { display: none; align-items: center; gap: 14px; max-width: var(--container); margin: 0 auto; padding: 16px 20px 2px; }
+    body[data-app-view]:not([data-app-view="home"]) .view-topbar { display: flex; }
+    .view-topbar .back { display: inline-flex; align-items: center; gap: 6px; text-decoration: none; color: var(--forest); background: var(--paper); border: 1px solid var(--line); border-radius: 999px; padding: 8px 16px; font-size: 13.5px; font-weight: 700; box-shadow: var(--shadow-small); }
+    .view-topbar .label { font-size: 14px; font-weight: 800; color: var(--forest); letter-spacing: .06em; }
+    .menu-section { padding: 6px 0 10px; background: var(--cream); }
+    .menu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 14px; max-width: var(--container); margin: 0 auto; padding: 0 20px; }
+    .menu-card { display: block; background: var(--paper); border: 1px solid var(--line); border-radius: 20px; padding: 18px 16px; text-decoration: none; color: var(--ink); box-shadow: var(--shadow-small); transition: transform .15s ease, box-shadow .15s ease; }
+    .menu-card:hover { transform: translateY(-2px); }
+    .menu-card:active { transform: scale(.97); }
+    .menu-card .m-ico { font-size: 24px; line-height: 1; }
+    .menu-card strong { display: block; margin-top: 10px; color: var(--forest); font-size: 16.5px; }
+    .menu-card span.m-desc { display: block; margin-top: 5px; color: var(--muted); font-size: 12.5px; line-height: 1.55; }
+    .menu-card.primary { background: var(--forest); border-color: var(--forest); }
+    .menu-card.primary strong { color: var(--leaf); }
+    .menu-card.primary span.m-desc { color: #cfe0d4; }
+    .tabbar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 90; display: flex; background: rgba(255,255,255,.97); backdrop-filter: blur(12px); border-top: 1px solid var(--line); padding: 7px 10px calc(7px + env(safe-area-inset-bottom)); }
+    .tabbar a { flex: 1; text-align: center; text-decoration: none; color: var(--muted); font-size: 11.5px; padding: 5px 2px 4px; border-radius: 14px; -webkit-tap-highlight-color: transparent; }
+    .tabbar a .t-ico { display: block; font-size: 19px; line-height: 1.25; margin-bottom: 1px; }
+    .tabbar a.is-current { color: var(--forest); font-weight: 800; background: var(--mint); }
+    .menu-section + .proof-band { border-top: none; }
   </style>
 </head>
 <body>
@@ -624,7 +649,11 @@
   </header>
 
   <main id="main">
-    <section class="hero" id="top">
+    <div class="view-topbar" id="viewTopbar">
+      <a class="back" href="#top">← 首页</a>
+      <span class="label" id="viewTopbarLabel"></span>
+    </div>
+    <section class="hero" id="top" data-app-view="home">
       <div class="container hero-grid">
         <div class="hero-copy" data-reveal>
           <div class="hero-pill"><span>✦</span> 2026 新学期 · 25,000+ 词库学习系统</div>
@@ -663,7 +692,18 @@
       </div>
     </section>
 
-    <section class="proof-band" aria-label="Lexio 原站公开产品数据">
+    <section class="menu-section" id="menu" data-app-view="home" aria-label="功能导航">
+      <div class="menu-grid">
+        <a class="menu-card primary" href="#study"><span class="m-ico">🎯</span><strong>开始学习</strong><span class="m-desc">记忆卡片 · 智能词单 · 错词强化</span></a>
+        <a class="menu-card" href="#library"><span class="m-ico">📚</span><strong>浏览词库</strong><span class="m-desc">高考 / 四六级 / 考研 / 雅思 · 25,024 词</span></a>
+        <a class="menu-card" href="#pricing"><span class="m-ico">💎</span><strong>订阅方案</strong><span class="m-desc">价格 · 试用 · 常见问题一站式</span></a>
+        <a class="menu-card" href="#method"><span class="m-ico">🧠</span><strong>功能介绍</strong><span class="m-desc">记忆曲线 · 真题语境 · 学习效果</span></a>
+        <a class="menu-card" href="#stories"><span class="m-ico">💬</span><strong>学生故事</strong><span class="m-desc">来自备考学生的真实反馈</span></a>
+        <a class="menu-card" href="#ops"><span class="m-ico">⚙️</span><strong>服务保障</strong><span class="m-desc">订阅运维 · 数据保护 · 定期备份</span></a>
+      </div>
+    </section>
+
+    <section class="proof-band" data-app-view="home" aria-label="Lexio 原站公开产品数据">
       <div class="container">
         <div class="proof-inner">
           <div class="proof-item" data-reveal><strong>25,024</strong><span>已导入的考试分类学习记录</span></div>
@@ -675,11 +715,11 @@
       </div>
     </section>
 
-    <section class="school-strip" aria-label="原站展示的学校使用名单">
+    <section class="school-strip" data-app-view="home" aria-label="原站展示的学校使用名单">
       <div class="container"><p>全国 2,000+ 所学校师生的共同选择</p><div class="school-track" aria-label="清华附中、人大附中、复旦附中、杭州外国语、深圳中学、成都七中、南京外国语、华师一附中、上海中学、衡水中学"><span>清华附中</span><span>人大附中</span><span>复旦附中</span><span>杭州外国语</span><span>深圳中学</span><span>成都七中</span><span>南京外国语</span><span>华师一附中</span><span>上海中学</span><span>衡水中学</span><span aria-hidden="true">清华附中</span><span aria-hidden="true">人大附中</span><span aria-hidden="true">复旦附中</span><span aria-hidden="true">杭州外国语</span><span aria-hidden="true">深圳中学</span><span aria-hidden="true">成都七中</span><span aria-hidden="true">南京外国语</span><span aria-hidden="true">华师一附中</span><span aria-hidden="true">上海中学</span><span aria-hidden="true">衡水中学</span></div><small>学校名称沿用原站页面展示内容，正式发布前请核验使用授权。</small></div>
     </section>
 
-    <section class="section features-section" id="method">
+    <section class="section features-section" id="method" data-app-view="about">
       <div class="container">
         <div class="section-heading" data-reveal><div class="eyebrow"><span class="dot"></span> A BETTER WAY TO LEARN</div><h2>不是背更多，<br>是每次复习都 <em>更聪明。</em></h2><p>把认知科学装进日常学习。Lexio 根据你的掌握程度安排复习，把有限的时间留给真正需要巩固的词。</p></div>
         <div class="feature-grid">
@@ -693,7 +733,7 @@
       </div>
     </section>
 
-    <section class="section library-section" id="library">
+    <section class="section library-section" id="library" data-app-view="library">
       <div class="container">
         <div class="section-heading" data-reveal><div class="eyebrow"><span class="dot"></span> ONE LIBRARY, MANY GOALS</div><h2>从校内考试到留学，<br>让每个目标 <em>都有清晰路线。</em></h2><p>已从原站网页内嵌词表提取五大考试词库与 100 条精讲词。首次联网打开时自动导入本机，之后可离线搜索与学习，也可下载 JSON 导入另一台设备。</p></div>
         <div class="exam-grid">
@@ -724,7 +764,7 @@
       </div>
     </section>
 
-    <section class="dark-section" id="study">
+    <section class="dark-section" id="study" data-app-view="study">
       <div class="container">
         <div class="section-heading" data-reveal><div class="eyebrow"><span class="dot"></span> PRODUCT EXPERIENCE</div><h2>打开 App 的每一分钟，<br><em>都在高效记忆。</em></h2><p>试试智能词单、记忆卡片和学习进度。此处是可交互的 PWA 体验版，当前学习状态保存在本设备。</p></div>
         <div class="demo-tabs" role="tablist" aria-label="产品功能演示"><button class="demo-tab active" type="button" role="tab" aria-selected="true" data-demo-tab="plan">📅 智能词单</button><button class="demo-tab" type="button" role="tab" aria-selected="false" data-demo-tab="memory">⚡ 记忆引擎</button><button class="demo-tab" type="button" role="tab" aria-selected="false" data-demo-tab="battle">⚔️ 好友对战</button></div>
@@ -753,7 +793,7 @@
       </div>
     </section>
 
-    <section class="ops-section" id="ops">
+    <section class="ops-section" id="ops" data-app-view="pricing">
       <div class="container">
         <div class="section-heading" data-reveal><div class="eyebrow"><span class="dot"></span> AUTOMATION BY DESIGN</div><h2>从首次体验到续订，<br>让服务 <em>顺畅自动运转。</em></h2><p>为正式上线预留清楚、透明的订阅生命周期。支付、提醒、权限和备份由后台自动化协同，减少人工跟单。</p></div>
         <div class="ops-panel" data-reveal>
@@ -771,7 +811,7 @@
       </div>
     </section>
 
-    <section class="benefits-section" aria-labelledby="benefitsTitle">
+    <section class="benefits-section" data-app-view="about" aria-labelledby="benefitsTitle">
       <div class="container">
         <div class="section-heading" data-reveal><div class="eyebrow"><span class="dot"></span> PROGRESS THAT ADDS UP</div><h2 id="benefitsTitle">把时间花在刀刃上，<br>让努力 <em>真正转化为进步。</em></h2><p>把大目标拆成每天能完成的小步骤，学习节奏更可持续，复习重点也更清楚。</p></div>
         <div class="benefits-grid">
@@ -783,7 +823,7 @@
       </div>
     </section>
 
-    <section class="section testimonials-section" id="stories">
+    <section class="section testimonials-section" id="stories" data-app-view="about">
       <div class="container">
         <div class="section-heading" data-reveal><div class="eyebrow"><span class="dot"></span> STUDENT STORIES</div><h2>让每次努力，<br>都能 <em>看见回响。</em></h2><p>这些学习故事沿用原站的用户反馈文案；上线前请确认授权与真实性。</p></div>
         <div class="testimonial-grid">
@@ -797,7 +837,7 @@
       </div>
     </section>
 
-    <section class="pricing-section" id="pricing">
+    <section class="pricing-section" id="pricing" data-app-view="pricing">
       <div class="container">
         <div class="section-heading" data-reveal><div class="eyebrow"><span class="dot"></span> SIMPLE, STUDENT-FRIENDLY PRICING</div><h2>先完整体验 7 天，<br>再决定是否 <em>继续前进。</em></h2><p>价格透明，不隐藏自动续费。正式环境接入收款后，试用结束时按已授权的订阅方式续费。</p></div>
         <div class="pricing-layout">
@@ -808,7 +848,7 @@
       </div>
     </section>
 
-    <section class="faq-section" id="faq">
+    <section class="faq-section" id="faq" data-app-view="pricing">
       <div class="container faq-layout">
         <div class="faq-aside" data-reveal><h2>你想知道的，<br>都在这里。</h2><p>还有其他问题？把你的词库格式或上线需求告诉我们。</p><a href="#pricing">查看体验与定价 <span aria-hidden="true">↗</span></a></div>
         <div class="faq-list" data-reveal>
@@ -822,7 +862,7 @@
       </div>
     </section>
 
-    <section class="final-cta">
+    <section class="final-cta" data-app-view="home">
       <div class="container" data-reveal><div class="eyebrow"><span class="dot"></span> START SMALL. REMEMBER MORE.</div><h2>今天开始，让下一次考试<br><em>多一份从容。</em></h2><p>不用下载、不用做复杂计划。先用 7 天，找到适合自己的词汇学习节奏。</p><button class="btn btn-lime" type="button" data-open-trial>免费开启 7 天体验 <span class="btn-arrow">↗</span></button></div>
     </section>
   </main>
@@ -1236,7 +1276,7 @@
         $('#expiredBanner').hidden = !expired;
         $('#sessionStatusText').textContent = '全功能版 · 学习中';
       }
-      function setStudyIndex(index) { studyIndex = index; updateStudyCard(); document.querySelector('#study').scrollIntoView({behavior:'smooth'}); }
+      function setStudyIndex(index) { studyIndex = index; updateStudyCard(); if (window.__lexioShow) { window.__lexioShow('study','study'); } else { document.querySelector('#study').scrollIntoView({behavior:'smooth'}); } }
       function speak(text, lang='en-GB') {
         if (activeAudio) { activeAudio.pause(); activeAudio=null; }
         if (!('speechSynthesis' in window)) { toastMessage('此浏览器暂不支持语音朗读。'); return; }
@@ -1289,7 +1329,7 @@
       function openTrial() {
         const state=getTrialState();
         if (state.started && state.expired) { openPayment(); return; }
-        if (state.started) { closeDialog(trialDialog); toastMessage('全功能已解锁，继续学习吧！'); document.querySelector('#study').scrollIntoView({behavior:'smooth'}); return; }
+        if (state.started) { closeDialog(trialDialog); toastMessage('全功能已解锁，继续学习吧！'); if (window.__lexioShow) { window.__lexioShow('study','study'); } else { document.querySelector('#study').scrollIntoView({behavior:'smooth'}); } return; }
         updatePricingUI();
         $('#trialAgree').checked=false;
         $('#confirmTrial').disabled=true;
@@ -1305,7 +1345,7 @@
         closeDialog(trialDialog);
         toastMessage('7 天演示体验已开始。当前预览不会发起真实扣款。');
         updateStudyCard();
-        document.querySelector('#study').scrollIntoView({behavior:'smooth'});
+        if (window.__lexioShow) { window.__lexioShow('study','study'); } else { document.querySelector('#study').scrollIntoView({behavior:'smooth'}); }
       }
       async function checkout() {
         const status=$('#payStatus');
@@ -1390,5 +1430,57 @@
       initializeBank();
     })();
   </script>
+<nav class="tabbar" id="appTabbar" aria-label="底部导航">
+  <a href="#top" data-tab="home"><span class="t-ico">🏠</span>首页</a>
+  <a href="#study" data-tab="study"><span class="t-ico">🎯</span>学习</a>
+  <a href="#library" data-tab="library"><span class="t-ico">📚</span>词库</a>
+  <a href="#pricing" data-tab="pricing"><span class="t-ico">💎</span>订阅</a>
+</nav>
+<script>
+(function () {
+  var SECTION_VIEW = {
+    top: 'home', menu: 'home', main: 'home',
+    method: 'about', stories: 'about', benefits: 'about',
+    library: 'library',
+    study: 'study',
+    ops: 'pricing', pricing: 'pricing', faq: 'pricing'
+  };
+  var VIEW_LABEL = { home: '首页', study: '学习', library: '词库', pricing: '订阅', about: '介绍' };
+  function show(view, anchor) {
+    var secs = document.querySelectorAll('main > section[data-app-view]');
+    for (var i = 0; i < secs.length; i++) {
+      secs[i].classList.toggle('is-active', secs[i].getAttribute('data-app-view') === view);
+    }
+    document.body.setAttribute('data-app-view', view);
+    var lb = document.getElementById('viewTopbarLabel');
+    if (lb) lb.textContent = VIEW_LABEL[view] || view;
+    var tabs = document.querySelectorAll('#appTabbar a');
+    for (var j = 0; j < tabs.length; j++) {
+      tabs[j].classList.toggle('is-current', tabs[j].getAttribute('data-tab') === view);
+    }
+    if (anchor) {
+      var el = document.getElementById(anchor);
+      if (el && typeof el.scrollIntoView === 'function') {
+        requestAnimationFrame(function () { el.scrollIntoView({ behavior: 'smooth' }); });
+        return;
+      }
+    }
+    window.scrollTo(0, 0);
+  }
+  function route() {
+    var key = (location.hash || '').replace(/^#\/?/, '');
+    var view, anchor = null;
+    if (key === '' ) { view = 'home'; }
+    else if (key === 'main') { view = 'home'; anchor = 'top'; }
+    else if (VIEW_LABEL[key]) { view = key; }
+    else if (SECTION_VIEW[key]) { view = SECTION_VIEW[key]; anchor = key; }
+    else { view = 'home'; }
+    show(view, anchor);
+  }
+  window.__lexioShow = show;
+  window.addEventListener('hashchange', route);
+  route();
+})();
+</script>
 </body>
 </html>

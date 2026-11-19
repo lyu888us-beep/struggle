@@ -11,7 +11,7 @@
     "start": "electron .",
     "smoke": "LEXIO_SMOKE=1 electron . --no-sandbox",
     "smoke:mock": "node test/smoke.js",
-    "test": "node test/server.test.js && node test/smoke.js",
+    "test": "node test/server.test.js && node test/smoke.js && node test/nav.test.js",
     "server": "node server.js",
     "dist": "electron-builder --win --linux",
     "dist:win": "electron-builder --win",
@@ -21,6 +21,7 @@
   },
   "devDependencies": {
     "electron": "^33.2.0",
-    "electron-builder": "^25.1.8"
+    "electron-builder": "^25.1.8",
+    "jsdom": "^31.0.1"
   }
 }
