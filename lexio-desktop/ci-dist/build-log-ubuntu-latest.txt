@@ -2,7 +2,7 @@
 > lexio-desktop@1.0.0 dist:linux
 > electron-builder --linux
 
-  • electron-builder  version=25.1.8 os=7.0.0-1019-azure
+  • electron-builder  version=25.1.8 os=7.0.0-1016-aws
   • artifacts will be published if draft release exists  reason=CI detected
   • loaded configuration  file=/home/runner/work/struggle/struggle/lexio-desktop/electron-builder.yml
   • executing @electron/rebuild  electronVersion=33.4.11 arch=x64 buildFromSource=false appDir=./
@@ -10,10 +10,10 @@
   • completed installing native dependencies
   • packaging       platform=linux arch=x64 electron=33.4.11 appOutDir=dist/linux-unpacked
   • downloading     url=https://github.com/electron/electron/releases/download/v33.4.11/electron-v33.4.11-linux-x64.zip size=106 MB parts=8
-  • downloaded      url=https://github.com/electron/electron/releases/download/v33.4.11/electron-v33.4.11-linux-x64.zip duration=408ms
+  • downloaded      url=https://github.com/electron/electron/releases/download/v33.4.11/electron-v33.4.11-linux-x64.zip duration=343ms
   • building        target=AppImage arch=x64 file=dist/Lexio-1.0.0-x86_64.AppImage
   • downloading     url=https://github.com/electron-userland/electron-builder-binaries/releases/download/appimage-12.0.1/appimage-12.0.1.7z size=1.6 MB parts=1
-  • downloaded      url=https://github.com/electron-userland/electron-builder-binaries/releases/download/appimage-12.0.1/appimage-12.0.1.7z duration=210ms
+  • downloaded      url=https://github.com/electron-userland/electron-builder-binaries/releases/download/appimage-12.0.1/appimage-12.0.1.7z duration=173ms
   • building        target=deb arch=x64 file=dist/Lexio-1.0.0-amd64.deb
   • downloading     url=https://github.com/electron-userland/electron-builder-binaries/releases/download/fpm-1.9.3-2.3.1-linux-x86_64/fpm-1.9.3-2.3.1-linux-x86_64.7z size=5.0 MB parts=1
-  • downloaded      url=https://github.com/electron-userland/electron-builder-binaries/releases/download/fpm-1.9.3-2.3.1-linux-x86_64/fpm-1.9.3-2.3.1-linux-x86_64.7z duration=227ms
+  • downloaded      url=https://github.com/electron-userland/electron-builder-binaries/releases/download/fpm-1.9.3-2.3.1-linux-x86_64/fpm-1.9.3-2.3.1-linux-x86_64.7z duration=339ms
