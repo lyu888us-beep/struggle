@@ -76,7 +76,7 @@
     .mobile-menu-toggle { display: none; width: 42px; height: 42px; place-items: center; border: 1px solid var(--line); border-radius: 12px; background: white; cursor: pointer; }
     .mobile-menu-toggle svg { width: 19px; height: 19px; }
     .mobile-menu { display: none; }
-    .hero { position: relative; isolation: isolate; overflow: hidden; padding: 62px 0 71px; }
+    .hero { position: relative; isolation: isolate; overflow: hidden; padding: 62px 0 71px; background: var(--cream); }
     .hero:before { position: absolute; z-index: -1; top: -215px; right: -160px; width: 720px; height: 720px; content: ""; background: radial-gradient(circle, rgba(210,230,191,.63) 0%, rgba(233,241,225,.34) 36%, rgba(247,248,244,0) 72%); }
     .hero:after { position: absolute; z-index: -1; bottom: -200px; left: -180px; width: 500px; height: 500px; content: ""; background: radial-gradient(circle, rgba(220,238,216,.45), rgba(247,248,244,0) 70%); }
     .hero-grid { display: grid; grid-template-columns: minmax(0, .94fr) minmax(0, 1.06fr); align-items: center; gap: 56px; }
@@ -145,20 +145,20 @@
     .sparkle-one { top: 12%; left: 13%; }
     .sparkle-two { right: 9%; bottom: 21%; font-size: 15px; animation-delay: -1.3s; }
     .hero-label { position: absolute; right: 8%; bottom: 3%; z-index: 5; color: #789080; font-size: 9px; letter-spacing: .04em; }
-    .proof-band { padding: 25px 0 26px; border-top: 1px solid #e6ebe4; border-bottom: 1px solid #e6ebe4; background: rgba(255,255,255,.58); }
+    .proof-band { padding: 25px 0 26px; border-top: 1px solid #e6ebe4; border-bottom: 1px solid #e6ebe4; background: #fcfcfa; }
     .proof-inner { display: grid; grid-template-columns: repeat(4, 1fr); align-items: center; gap: 20px; }
     .proof-item { text-align: center; }
     .proof-item strong { display: block; color: var(--forest); font-size: clamp(25px,3vw,34px); line-height: 1; font-weight: 760; letter-spacing: -.055em; }
     .proof-item span { display: block; margin-top: 8px; color: #7b877f; font-size: 10px; }
     .proof-note { margin: 12px auto 0; color: #98a19b; font-size: 9px; text-align: center; }
-    .school-strip { overflow: hidden; padding: 24px 0 20px; background: rgba(255,255,255,.72); border-bottom: 1px solid #e6ebe4; text-align: center; }
+    .school-strip { overflow: hidden; padding: 24px 0 20px; background: #fdfdfc; border-bottom: 1px solid #e6ebe4; text-align: center; }
     .school-strip p { margin: 0 0 14px; color: #8a958d; font-size: 9px; font-weight: 750; letter-spacing: .16em; text-transform: uppercase; }
     .school-track { display: flex; align-items: center; justify-content: flex-start; gap: 44px; width: max-content; color: #758178; animation: school-marquee 36s linear infinite; }
     .school-strip:hover .school-track { animation-play-state: paused; }
     .school-track span { color: #6e7c72; font-size: 14px; font-weight: 750; letter-spacing: -.035em; white-space: nowrap; opacity: .8; }
     .school-strip small { display: block; margin-top: 12px; color: #a0a9a2; font-size: 8px; }
     @keyframes school-marquee { to { transform: translateX(-50%); } }
-    .section { padding: 100px 0; }
+    .section { padding: 100px 0; background: var(--cream); }
     .features-section { padding-top: 106px; }
     .feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
     .feature-card { position: relative; min-height: 226px; padding: 24px 23px 22px; background: rgba(255,255,255,.72); border: 1px solid #e7ebe5; border-radius: 20px; box-shadow: 0 5px 18px rgba(27,51,37,.025); transition: transform .28s ease, box-shadow .28s ease, border-color .28s ease; }
@@ -295,7 +295,7 @@
     .trial-banner[hidden] { display: none; }
     .trial-banner strong { color: #694426; }
     .trial-banner button { flex: 0 0 auto; padding: 5px 8px; color: white; background: #805b3d; border: 0; border-radius: 7px; cursor: pointer; font-size: 9px; font-weight: 700; }
-    .ops-section { padding: 100px 0 98px; }
+    .ops-section { padding: 100px 0 98px; background: var(--cream); }
     .ops-panel { overflow: hidden; padding: 30px; background: linear-gradient(145deg, #fbfcf8, #f0f4eb); border: 1px solid #e3eae0; border-radius: 25px; box-shadow: 0 8px 35px rgba(35,65,40,.045); }
     .ops-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 30px; margin-bottom: 29px; }
     .ops-top h3 { margin: 0; color: var(--ink); font-size: 22px; letter-spacing: -.045em; }
@@ -697,13 +697,13 @@
     .anim-push-out { animation: viewPushOut .42s cubic-bezier(.32,.72,0,1) both; z-index: 1; }
     .anim-pop-in { animation: viewPopIn .42s cubic-bezier(.32,.72,0,1) both; z-index: 2; }
     .anim-pop-out { animation: viewPopOut .42s cubic-bezier(.32,.72,0,1) both; z-index: 3; }
-    .anim-fade-in { animation: viewFadeIn .3s ease both; z-index: 4; }
+    .anim-fade-in { animation: viewFadeUp .26s cubic-bezier(.32,.72,0,1) both; z-index: 4; }
     .anim-fade-out { animation: viewFadeOut .3s ease both; z-index: 3; }
     @keyframes viewPushIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
     @keyframes viewPushOut { from { transform: translateX(0); } to { transform: translateX(-26%); } }
     @keyframes viewPopIn { from { transform: translateX(-26%); } to { transform: translateX(0); } }
     @keyframes viewPopOut { from { transform: translateX(0); } to { transform: translateX(100%); } }
-    @keyframes viewFadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes viewFadeUp { from { transform: translateY(12px); } to { transform: translateY(0); } }
     @keyframes viewFadeOut { from { opacity: 1; } to { opacity: 0; } }
 
     /* ===== v4: library app lock, 3D word-card flip, real-feel battle ===== */
@@ -712,14 +712,14 @@
     .library-shell .library-top, .library-shell .filter-row { flex: 0 0 auto; }
     .library-shell .word-grid { flex: 1 1 auto; min-height: 0; overflow-y: auto; -webkit-overflow-scrolling: touch; align-content: start; padding: 2px 2px 10px; }
     .study-word-card { perspective: 1200px; }
-    .card-flip { position: relative; display: grid; transform-style: preserve-3d; transition: transform .55s cubic-bezier(.32,.72,0,1); min-height: clamp(258px, 44vh, 344px); }
+    .card-flip { position: relative; display: grid; transform-style: preserve-3d; transition: transform .55s cubic-bezier(.32,.72,0,1); min-height: clamp(220px, 36vh, 296px); max-height: clamp(250px, 46vh, 330px); }
     .card-flip.is-flipped { transform: rotateY(180deg); }
     .card-face { grid-area: 1 / 1; min-width: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; }
-    .card-front { position: relative; display: flex; flex-direction: column; transform: translateZ(.5px); }
+    .card-front { position: relative; display: flex; flex-direction: column; transform: translateZ(.5px); overflow-y: auto; overscroll-behavior: contain; }
     .card-flip:not(.is-flipped) .card-back { pointer-events: none; }
     .card-flip.is-flipped .card-front { pointer-events: none; }
     #studyCard { touch-action: pan-y; -webkit-user-select: none; user-select: none; }
-    .card-back { position: relative; display: flex; flex-direction: column; justify-content: center; box-sizing: border-box; overflow-y: auto; background: #fff; border-radius: 17px; padding: 6px 2px; transform: rotateY(180deg) translateZ(.5px); }
+    .card-back { position: relative; display: flex; flex-direction: column; justify-content: center; box-sizing: border-box; overflow-y: auto; overscroll-behavior: contain; background: #fff; border-radius: 17px; padding: 6px 2px; transform: rotateY(180deg) translateZ(.5px); }
     .card-back-label { display: flex; justify-content: space-between; align-items: center; color: #87928b; font-size: 9px; font-weight: 780; letter-spacing: .12em; }
     .card-back-label span { color: #b4beb6; font-weight: 600; letter-spacing: .02em; }
     .card-back .study-example { margin-top: 12px; color: #3f5247; font-size: 13.5px; line-height: 1.75; font-style: italic; }
@@ -1461,17 +1461,25 @@
         $('#sessionStatusText').textContent = '全功能版 · 学习中';
       }
       function setStudyIndex(index) { studyIndex = index; updateStudyCard(); if (window.__lexioShow) { window.__lexioShow('study','study'); } else { document.querySelector('#study').scrollIntoView({behavior:'smooth'}); } }
-      function speak(text, lang='en-GB') {
+      function speak(text, lang='en-GB', done) {
         if (activeAudio) { activeAudio.pause(); activeAudio=null; }
-        if (!('speechSynthesis' in window)) { toastMessage('此浏览器暂不支持语音朗读。'); return; }
-        window.speechSynthesis.cancel();
-        const utterance = new SpeechSynthesisUtterance(text);
-        utterance.lang = lang;
-        utterance.rate = .88;
-        const voices = window.speechSynthesis.getVoices();
-        const voice = voices.find(item => item.lang && item.lang.toLowerCase().startsWith(lang.toLowerCase())) || voices.find(item => item.lang && item.lang.toLowerCase().startsWith('en'));
-        if (voice) utterance.voice = voice;
-        window.speechSynthesis.speak(utterance);
+        let finished = false;
+        const finish = () => { if (finished) return; finished = true; if (typeof done === 'function') done(); };
+        if (!('speechSynthesis' in window)) { toastMessage('此浏览器暂不支持语音朗读。'); finish(); return; }
+        try { window.speechSynthesis.cancel(); } catch(_) {}
+        // iOS Safari：cancel() 后立刻 speak() 会被静默吞掉，延迟一拍再发
+        setTimeout(() => {
+          const utterance = new SpeechSynthesisUtterance(text);
+          utterance.lang = lang;
+          utterance.rate = .88;
+          const voices = window.speechSynthesis.getVoices();
+          const voice = voices.find(item => item.lang && item.lang.toLowerCase().startsWith(lang.toLowerCase())) || voices.find(item => item.lang && item.lang.toLowerCase().startsWith('en'));
+          if (voice) utterance.voice = voice;
+          utterance.onend = finish;
+          utterance.onerror = finish;
+          try { window.speechSynthesis.speak(utterance); } catch(_) { finish(); return; }
+          setTimeout(finish, Math.min(15000, text.length * 110 + 3000));
+        }, 90);
       }
       function speakEntry(entry, lang=activeAccent) {
         if(!entry || !entry.word) return;
@@ -1646,12 +1654,17 @@
         $('#battleMsg').textContent = win ? `你以 ${battle.me} : ${battle.foeScore} 击败了 ${foeName}！` : draw ? `和 ${foeName} 战成 ${battle.me} : ${battle.foeScore} 平手。` : `${foeName} 以 ${battle.foeScore} : ${battle.me} 获胜，换个人再战？`;
         $('#battleStart').textContent = '换个对手 · 再来一局';
       }
-      function battleMaybeAdvance() {
+      function advanceAfterPlayer() {
         if (battle.advancing || battle.over) return;
-        if (battle.meAnswered && battle.foeAnswered) {
-          battle.advancing = true;
-          battleT(() => { battle.advancing = false; battle.i += 1; battleRound(); }, 950);
+        battle.advancing = true;
+        battleClearTimers(); // 取消本题对手未完成的计时：我答完立即进入下一题
+        if (!battle.foeAnswered && battle.foe) {
+          battle.foeAnswered = true;
+          const foeCorrect = Math.random() < 0.7;
+          if (foeCorrect) { battle.foeScore += 1; $('#battleFoeScore').textContent = battle.foeScore; foeStatus('已作答 ✓', 'done'); }
+          else { foeStatus('答错 ✗', 'wrong'); }
         }
+        battleT(() => { battle.advancing = false; battle.i += 1; battleRound(); }, 400);
       }
       function battleRound() {
         if (battle.i >= battle.q.length) { battleEnd(); return; }
@@ -1681,7 +1694,7 @@
               $$('.battle-opt').forEach(x => { if (x.textContent === (cur.meaning || cur.word)) x.classList.add('right'); });
             }
             $('#battleMyScore').textContent = battle.me;
-            battleMaybeAdvance();
+            advanceAfterPlayer();
           });
           box.appendChild(b);
         });
@@ -1698,13 +1711,14 @@
             ? `${chatName}：${pool[Math.floor(Math.random() * pool.length)]}`
             : correct ? `${chatName} 抢先答对了。` : `${chatName} 这题答错了。`;
           $('#battleMsg').textContent = chat;
-          battleMaybeAdvance();
         }, foeDelay);
       }
       $('#battleStart').addEventListener('click', () => {
         if (!bank.length) { $('#battleMsg').textContent = '词库尚未导入完成，请稍后再来对战。'; return; }
         battleClearTimers();
-        battle.q = [...bank].sort(() => Math.random() - 0.5).slice(0, 10);
+        const shuffledBank = [...bank].sort(() => Math.random() - 0.5);
+        battle.q = [];
+        for (let qi = 0; qi < 10; qi++) battle.q.push(shuffledBank[qi % shuffledBank.length]);
         battle.i = 0; battle.me = 0; battle.foeScore = 0; battle.over = false; battle.lock = false;
         battle.meAnswered = false; battle.foeAnswered = false; battle.advancing = false;
         battle.foe = pickFoe();
@@ -1793,7 +1807,14 @@
           $('#wordCardFlip').classList.toggle('is-flipped');
         });
       })();
-      $('#exampleSpeak').addEventListener('click',()=>{ const word=bank[studyIndex]; if (word && word.example) speak(word.example, activeAccent); else toastMessage('这个词还没有例句。'); });
+      $('#exampleSpeak').addEventListener('click',()=>{
+        const word=bank[studyIndex];
+        const btn=$('#exampleSpeak');
+        if(!word || !word.example){ toastMessage('这个词还没有例句。'); return; }
+        if(btn.dataset.speaking==='1'){ try{ window.speechSynthesis && window.speechSynthesis.cancel(); }catch(_){} btn.dataset.speaking='0'; btn.textContent='🔊 朗读例句'; return; }
+        btn.dataset.speaking='1'; btn.textContent='⏸ 停止朗读';
+        speak(word.example, activeAccent, ()=>{ btn.dataset.speaking='0'; btn.textContent='🔊 朗读例句'; });
+      });
       $('#revealMeaning').addEventListener('click',()=>{
         if (getTrialState().expired) { openPayment(); return; }
         const meaning=$('#studyMeaning');const hidden=meaning.classList.toggle('is-hidden');

@@ -151,9 +151,15 @@ function animClean() {
   check('词卡翻面 grid 布局(防重叠)与滑动样式',
     ['.card-flip { position: relative; display: grid;',
      '.card-face { grid-area: 1 / 1;',
-     'min-height: clamp(258px, 44vh, 344px)',
+     'min-height: clamp(220px, 36vh, 296px); max-height: clamp(250px, 46vh, 330px);',
+     'overscroll-behavior: contain;',
      '#studyCard { touch-action: pan-y;',
      '.card-flip.is-flipped .card-front { pointer-events: none; }'].every((frag) => cssText.includes(frag)));
+  check('切换动画不透底(实心背景+非透明淡入)',
+    ['.section { padding: 100px 0; background: var(--cream); }',
+     '.hero { position: relative; isolation: isolate; overflow: hidden; padding: 62px 0 71px; background: var(--cream); }',
+     'background: #fcfcfa;', 'background: #fdfdfc;',
+     'viewFadeUp'].every((frag) => cssText.includes(frag)));
 
   // ---------- 5. 三子面板 ----------
   const panels = [...doc.querySelectorAll('.study-panel')];
@@ -246,6 +252,19 @@ function animClean() {
   check('消息里没有 undefined（名字源完好）', !msgTxt.includes('undefined'), msgTxt);
   check('消息中的对手名与对手卡一致', !/接受|：|抢先|答错|击败|战成|获胜/.test(msgTxt) || msgTxt.includes(cardName2),
     `card=${cardName2} msg=${msgTxt}`);
+  // 玩家节奏：固定 10 题 + 我答完立即进入下一题（不等对手）
+  let st = doc.getElementById('battleState').textContent;
+  for (let i = 0; i < 50 && !/第 1 \/ 10/.test(st); i++) {
+    await sleep(150);
+    st = doc.getElementById('battleState').textContent;
+  }
+  check('对战固定 10 道题', /\/ 10 题/.test(st), st);
+  const optBtn = doc.querySelector('.battle-opt:not([disabled])');
+  check('第 1 题选项可点', !!optBtn, st);
+  if (optBtn) optBtn.click();
+  await sleep(900);
+  const st2 = doc.getElementById('battleState').textContent;
+  check('我答完立即换下一题（不等对手作答）', /第 2 \/ 10/.test(st2), st2);
 
   doc.querySelector('[data-demo-tab="plan"]').click();
   await sleep(30);
