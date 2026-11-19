@@ -98,6 +98,44 @@ function animClean() {
   await sleep(30);
   check('再点卡片 → 翻回正面', !cardFlip.classList.contains('is-flipped'));
 
+  // ---------- 3c. 左右滑动切词（滑走的词记作已记住） ----------
+  function fire(type, target, x, y) {
+    target.dispatchEvent(new window.MouseEvent(type, { bubbles: true, clientX: x, clientY: y }));
+  }
+  const pos0Pre = doc.getElementById('studyPosition').textContent;
+  doc.getElementById('nextWord').click(); // 确保 updateStudyCard 已用真实 bank 渲染
+  await sleep(80);
+  const pos0 = doc.getElementById('studyPosition').textContent;
+  const known0 = parseInt((doc.getElementById('knownCount').textContent || '0').replace(/\D/g, ''), 10) || 0;
+  // 左滑 → 下一个词
+  fire('pointerdown', doc.getElementById('studyCard'), 300, 400);
+  fire('pointermove', window, 210, 402);
+  fire('pointermove', window, 140, 400);
+  fire('pointerup', window, 140, 400);
+  await sleep(950);
+  const pos1 = doc.getElementById('studyPosition').textContent;
+  check('左滑 → 进入下一个词卡', pos1 !== pos0, `${pos0} → ${pos1}`);
+  check('左滑走的词记作已记住', parseInt((doc.getElementById('knownCount').textContent || '0').replace(/\D/g, ''), 10) === known0 + 1,
+    `known=${known0} → ${doc.getElementById('knownCount').textContent}`);
+  check('左滑未误触发翻面', !cardFlip.classList.contains('is-flipped'));
+  // 右滑 → 上一个词
+  fire('pointerdown', doc.getElementById('studyCard'), 140, 400);
+  fire('pointermove', window, 220, 398);
+  fire('pointermove', window, 300, 400);
+  fire('pointerup', window, 300, 400);
+  await sleep(950);
+  const pos2 = doc.getElementById('studyPosition').textContent;
+  check('右滑 → 返回上一个词卡', pos2 === pos0, `${pos1} → ${pos2}`);
+  check('右滑滑走的词也记作已记住', parseInt((doc.getElementById('knownCount').textContent || '0').replace(/\D/g, ''), 10) === known0 + 2,
+    `known=${doc.getElementById('knownCount').textContent}`);
+  // 小幅拖动不应翻面/切词
+  fire('pointerdown', doc.getElementById('studyCard'), 200, 400);
+  fire('pointermove', window, 190, 400);
+  fire('pointerup', window, 190, 400);
+  await sleep(450);
+  check('小幅拖动不切词不翻面', doc.getElementById('studyPosition').textContent === pos0 &&
+    !cardFlip.classList.contains('is-flipped'));
+
   // ---------- 4. 学习板块无宣传/订阅内容 ----------
   const study = doc.getElementById('study');
   check('学习板块无试用/订阅按钮', !study.querySelector('[data-open-trial]') && !study.querySelector('#directSubscribe'));
@@ -110,6 +148,12 @@ function animClean() {
      'body[data-app-view="library"] .site-header',
      'body[data-app-view="library"] .tabbar',
      'main > section[data-app-view="library"].is-active'].every((frag) => cssText.includes(frag)));
+  check('词卡翻面 grid 布局(防重叠)与滑动样式',
+    ['.card-flip { position: relative; display: grid;',
+     '.card-face { grid-area: 1 / 1;',
+     'min-height: clamp(258px, 44vh, 344px)',
+     '#studyCard { touch-action: pan-y;',
+     '.card-flip.is-flipped .card-front { pointer-events: none; }'].every((frag) => cssText.includes(frag)));
 
   // ---------- 5. 三子面板 ----------
   const panels = [...doc.querySelectorAll('.study-panel')];
@@ -187,6 +231,21 @@ function animClean() {
   const foeName2 = doc.getElementById('battleFoeName').textContent;
   check('再开一局换新对手', foeName2 && foeName2 !== '匹配中…' && foeName2 !== foeName,
     `${foeName} → ${foeName2}`);
+  // 回归：battle.foe 字段不再被比分自增破坏（曾导致消息里名字变 undefined / 比分变 [object Object]）
+  let sawFoeAnswer = false;
+  for (let i = 0; i < 75 && !sawFoeAnswer; i++) {
+    await sleep(150);
+    const sc = doc.getElementById('battleFoeScore').textContent;
+    const st = doc.getElementById('battleFoeStatus').textContent;
+    if (sc !== '0' || st.includes('答错')) sawFoeAnswer = true;
+  }
+  const scTxt = doc.getElementById('battleFoeScore').textContent;
+  const msgTxt = doc.getElementById('battleMsg').textContent;
+  const cardName2 = doc.getElementById('battleFoeName').textContent;
+  check('对手作答后比分为纯数字', /^\d+$/.test(scTxt), `score=${scTxt}`);
+  check('消息里没有 undefined（名字源完好）', !msgTxt.includes('undefined'), msgTxt);
+  check('消息中的对手名与对手卡一致', !/接受|：|抢先|答错|击败|战成|获胜/.test(msgTxt) || msgTxt.includes(cardName2),
+    `card=${cardName2} msg=${msgTxt}`);
 
   doc.querySelector('[data-demo-tab="plan"]').click();
   await sleep(30);

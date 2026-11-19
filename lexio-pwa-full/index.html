@@ -712,17 +712,20 @@
     .library-shell .library-top, .library-shell .filter-row { flex: 0 0 auto; }
     .library-shell .word-grid { flex: 1 1 auto; min-height: 0; overflow-y: auto; -webkit-overflow-scrolling: touch; align-content: start; padding: 2px 2px 10px; }
     .study-word-card { perspective: 1200px; }
-    .card-flip { position: relative; transform-style: preserve-3d; transition: transform .55s cubic-bezier(.32,.72,0,1); }
+    .card-flip { position: relative; display: grid; transform-style: preserve-3d; transition: transform .55s cubic-bezier(.32,.72,0,1); min-height: clamp(258px, 44vh, 344px); }
     .card-flip.is-flipped { transform: rotateY(180deg); }
-    .card-face { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
-    .card-front { position: relative; }
-    .card-back { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; box-sizing: border-box; overflow-y: auto; background: #fff; border-radius: 17px; padding: 4px 2px; transform: rotateY(180deg); }
+    .card-face { grid-area: 1 / 1; min-width: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+    .card-front { position: relative; display: flex; flex-direction: column; transform: translateZ(.5px); }
+    .card-flip:not(.is-flipped) .card-back { pointer-events: none; }
+    .card-flip.is-flipped .card-front { pointer-events: none; }
+    #studyCard { touch-action: pan-y; -webkit-user-select: none; user-select: none; }
+    .card-back { position: relative; display: flex; flex-direction: column; justify-content: center; box-sizing: border-box; overflow-y: auto; background: #fff; border-radius: 17px; padding: 6px 2px; transform: rotateY(180deg) translateZ(.5px); }
     .card-back-label { display: flex; justify-content: space-between; align-items: center; color: #87928b; font-size: 9px; font-weight: 780; letter-spacing: .12em; }
     .card-back-label span { color: #b4beb6; font-weight: 600; letter-spacing: .02em; }
     .card-back .study-example { margin-top: 12px; color: #3f5247; font-size: 13.5px; line-height: 1.75; font-style: italic; }
     .card-back .study-example-translation { margin-top: 8px; font-size: 11.5px; }
     .card-back .study-mnemonic { margin-top: 12px; font-size: 11px; }
-    .card-flip-hint { margin: 14px 0 0; text-align: center; color: #9aa69e; font-size: 10.5px; letter-spacing: .02em; }
+    .card-flip-hint { margin: auto 0 0; padding-top: 16px; text-align: center; color: #9aa69e; font-size: 11px; letter-spacing: .02em; }
     .back-actions { display: flex; justify-content: center; margin-top: 14px; }
     .back-speak { min-height: 38px; padding: 0 18px; border: 1px solid #dfe6dc; border-radius: 999px; background: #f1f5eb; color: var(--forest); font-size: 11.5px; font-weight: 760; cursor: pointer; }
     .back-speak:active { transform: scale(.96); }
@@ -1613,10 +1616,11 @@
         lastFoeName = name;
         return name;
       }
-      const battle = { q: [], i: 0, me: 0, foe: 0, over: false, lock: false, foe: null, meAnswered: false, foeAnswered: false, advancing: false, timers: [] };
+      const battle = { q: [], i: 0, me: 0, foeScore: 0, over: false, lock: false, foe: null, meAnswered: false, foeAnswered: false, advancing: false, timers: [] };
       function battleT(fn, ms) { const id = setTimeout(fn, ms); battle.timers.push(id); return id; }
       function battleClearTimers() { battle.timers.forEach(id => clearTimeout(id)); battle.timers = []; }
       function foeStatus(text, cls) { const el = $('#battleFoeStatus'); if (!el) return; el.textContent = text; el.className = 'foe-status' + (cls ? ' ' + cls : ''); }
+      function foeNameNow() { return (battle.foe && battle.foe.name) ? battle.foe.name : '对手'; }
       function pickFoe() {
         return {
           name: pickFoeName(),
@@ -1636,10 +1640,10 @@
         battleClearTimers();
         $('#battleState').textContent = '已结束';
         foeStatus('在线', 'online');
-        const win = battle.me > battle.foe, draw = battle.me === battle.foe;
-        const foeName = battle.foe ? battle.foe.name : '对手';
+        const win = battle.me > battle.foeScore, draw = battle.me === battle.foeScore;
+        const foeName = foeNameNow();
         $('#battleWord').textContent = win ? '🏆 胜利' : draw ? '🤝 平局' : '💪 再战';
-        $('#battleMsg').textContent = win ? `你以 ${battle.me} : ${battle.foe} 击败了 ${foeName}！` : draw ? `和 ${foeName} 战成 ${battle.me} : ${battle.foe} 平手。` : `${foeName} 以 ${battle.foe} : ${battle.me} 获胜，换个人再战？`;
+        $('#battleMsg').textContent = win ? `你以 ${battle.me} : ${battle.foeScore} 击败了 ${foeName}！` : draw ? `和 ${foeName} 战成 ${battle.me} : ${battle.foeScore} 平手。` : `${foeName} 以 ${battle.foeScore} : ${battle.me} 获胜，换个人再战？`;
         $('#battleStart').textContent = '换个对手 · 再来一局';
       }
       function battleMaybeAdvance() {
@@ -1686,12 +1690,13 @@
           if (battle.over) return;
           battle.foeAnswered = true;
           const correct = Math.random() < 0.7;
-          if (correct) { battle.foe += 1; $('#battleFoeScore').textContent = battle.foe; foeStatus('已作答 ✓', 'done'); }
+          if (correct) { battle.foeScore += 1; $('#battleFoeScore').textContent = battle.foeScore; foeStatus('已作答 ✓', 'done'); }
           else { foeStatus('答错 ✗', 'wrong'); }
           const pool = correct ? REACT_GOOD : REACT_BAD;
+          const chatName = foeNameNow();
           const chat = Math.random() < 0.5
-            ? `${battle.foe.name}：${pool[Math.floor(Math.random() * pool.length)]}`
-            : correct ? `${battle.foe.name} 抢先答对了。` : `${battle.foe.name} 这题答错了。`;
+            ? `${chatName}：${pool[Math.floor(Math.random() * pool.length)]}`
+            : correct ? `${chatName} 抢先答对了。` : `${chatName} 这题答错了。`;
           $('#battleMsg').textContent = chat;
           battleMaybeAdvance();
         }, foeDelay);
@@ -1700,7 +1705,7 @@
         if (!bank.length) { $('#battleMsg').textContent = '词库尚未导入完成，请稍后再来对战。'; return; }
         battleClearTimers();
         battle.q = [...bank].sort(() => Math.random() - 0.5).slice(0, 10);
-        battle.i = 0; battle.me = 0; battle.foe = 0; battle.over = false; battle.lock = false;
+        battle.i = 0; battle.me = 0; battle.foeScore = 0; battle.over = false; battle.lock = false;
         battle.meAnswered = false; battle.foeAnswered = false; battle.advancing = false;
         battle.foe = pickFoe();
         $('#battleMyScore').textContent = '0';
@@ -1717,7 +1722,7 @@
         battleT(() => {
           showFoeMeta(battle.foe);
           foeStatus('已接受挑战', 'online');
-          $('#battleMsg').textContent = `${battle.foe.name} 接受了你的挑战。`;
+          $('#battleMsg').textContent = `${foeNameNow()} 接受了你的挑战。`;
           battleT(() => { battleRound(); }, 1100);
         }, 1300 + Math.random() * 1500);
       });
@@ -1728,7 +1733,66 @@
       $('#directSubscribe').addEventListener('click',openPayment);
       $('#wordFile').addEventListener('change',event=>{const file=event.target.files && event.target.files[0];if(file)importFile(file);});
       $('#studySpeak').addEventListener('click',()=>{const word=bank[studyIndex];if(word)speakEntry(word,activeAccent);});
-      $('#studyCard').addEventListener('click',event=>{ if (event.target.closest('button') || event.target.closest('a')) return; $('#wordCardFlip').classList.toggle('is-flipped'); });
+      (function () {
+        const card = $('#studyCard');
+        if (!card) return;
+        let startX = 0, startY = 0, dragging = false, moved = false, suppressClick = false;
+        const THRESH = 56;
+        function swipeGo(dir) {
+          if (!bank.length) return;
+          const left = bank[studyIndex];
+          dailyStats.known += 1; persistStats();
+          if (left && left.word) markWeak(left.word, false);
+          studyIndex = (((studyIndex + dir) % bank.length) + bank.length) % bank.length;
+          updateStudyCard();
+          toastMessage(dir > 0 ? '已记住了 ✓ 下一个词' : '已记住了 ✓ 返回上一个词');
+        }
+        function begin(x, y) { dragging = true; moved = false; startX = x; startY = y; card.style.transition = 'none'; }
+        function move(x, y) {
+          if (!dragging) return;
+          const dx = x - startX, dy = y - startY;
+          if (!moved && Math.abs(dx) < 8 && Math.abs(dy) < 8) return;
+          if (!moved && Math.abs(dy) > Math.abs(dx)) { dragging = false; card.style.transform = ''; return; }
+          moved = true;
+          card.style.transform = 'translateX(' + dx + 'px) rotate(' + (dx * 0.03) + 'deg)';
+        }
+        function end(x) {
+          if (!dragging) return;
+          dragging = false;
+          const dx = x - startX;
+          if (moved && Math.abs(dx) >= THRESH) {
+            suppressClick = true; setTimeout(() => { suppressClick = false; }, 430);
+            const dir = dx < 0 ? 1 : -1;
+            card.style.transition = 'transform .28s cubic-bezier(.32,.72,0,1), opacity .28s ease';
+            card.style.transform = 'translateX(' + (dx < 0 ? '-115%' : '115%') + ') rotate(' + (dx < 0 ? -9 : 9) + 'deg)';
+            card.style.opacity = '0';
+            setTimeout(() => {
+              swipeGo(dir);
+              card.style.transition = 'none';
+              card.style.transform = 'translateX(' + (dir > 0 ? '115%' : '-115%') + ')';
+              card.style.opacity = '0';
+              requestAnimationFrame(() => {
+                card.style.transition = 'transform .34s cubic-bezier(.32,.72,0,1), opacity .34s ease';
+                card.style.transform = '';
+                card.style.opacity = '1';
+              });
+            }, 250);
+          } else {
+            card.style.transition = 'transform .3s cubic-bezier(.32,.72,0,1)';
+            card.style.transform = '';
+            if (moved) { suppressClick = true; setTimeout(() => { suppressClick = false; }, 90); moved = false; }
+          }
+        }
+        card.addEventListener('pointerdown', event => { if (event.target.closest('button') || event.target.closest('a') || event.isPrimary === false) return; begin(event.clientX, event.clientY); });
+        window.addEventListener('pointermove', event => { if (dragging && event.isPrimary !== false) move(event.clientX, event.clientY); });
+        window.addEventListener('pointerup', event => { if (event.isPrimary === false) return; end(event.clientX); });
+        window.addEventListener('pointercancel', () => end(startX));
+        card.addEventListener('click', event => {
+          if (event.target.closest('button') || event.target.closest('a')) return;
+          if (suppressClick || moved) { moved = false; return; }
+          $('#wordCardFlip').classList.toggle('is-flipped');
+        });
+      })();
       $('#exampleSpeak').addEventListener('click',()=>{ const word=bank[studyIndex]; if (word && word.example) speak(word.example, activeAccent); else toastMessage('这个词还没有例句。'); });
       $('#revealMeaning').addEventListener('click',()=>{
         if (getTrialState().expired) { openPayment(); return; }
