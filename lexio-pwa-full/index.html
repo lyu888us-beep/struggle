@@ -625,10 +625,13 @@
     .menu-section + .proof-band { border-top: none; }
 
     /* ===== Study app view (v3): fullscreen, scroll-locked, no marketing ===== */
-    body[data-app-view="study"] { padding-bottom: 0; overflow: hidden; }
-    body[data-app-view="study"] .site-header { display: none; }
-    body[data-app-view="study"] .tabbar { display: none; }
-    body[data-app-view="study"] .view-topbar {
+    body[data-app-view="study"], body[data-app-view="library"] { padding-bottom: 0; overflow: hidden; }
+    body[data-app-view="study"] .site-header,
+    body[data-app-view="library"] .site-header { display: none; }
+    body[data-app-view="study"] .tabbar,
+    body[data-app-view="library"] .tabbar { display: none; }
+    body[data-app-view="study"] .view-topbar,
+    body[data-app-view="library"] .view-topbar {
       position: fixed; top: 0; left: 0; right: 0; z-index: 95;
       display: flex; max-width: none; margin: 0; height: 54px; box-sizing: border-box;
       align-items: center; padding: 0 16px;
@@ -636,7 +639,8 @@
       backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
     }
     body[data-app-view="study"] .view-topbar .back { box-shadow: none; }
-    main > section[data-app-view="study"].is-active {
+    main > section[data-app-view="study"].is-active,
+    main > section[data-app-view="library"].is-active {
       position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 40;
       margin: 0; padding: 54px 0 0; overflow: hidden;
     }
@@ -701,6 +705,39 @@
     @keyframes viewPopOut { from { transform: translateX(0); } to { transform: translateX(100%); } }
     @keyframes viewFadeIn { from { opacity: 0; } to { opacity: 1; } }
     @keyframes viewFadeOut { from { opacity: 1; } to { opacity: 0; } }
+
+    /* ===== v4: library app lock, 3D word-card flip, real-feel battle ===== */
+    .library-shell { display: flex; flex-direction: column; height: 100%; min-height: 0; padding-top: 12px; }
+    .library-shell .library-panel { flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; overflow: hidden; margin: 0; }
+    .library-shell .library-top, .library-shell .filter-row { flex: 0 0 auto; }
+    .library-shell .word-grid { flex: 1 1 auto; min-height: 0; overflow-y: auto; -webkit-overflow-scrolling: touch; align-content: start; padding: 2px 2px 10px; }
+    .study-word-card { perspective: 1200px; }
+    .card-flip { position: relative; transform-style: preserve-3d; transition: transform .55s cubic-bezier(.32,.72,0,1); }
+    .card-flip.is-flipped { transform: rotateY(180deg); }
+    .card-face { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+    .card-front { position: relative; }
+    .card-back { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; box-sizing: border-box; overflow-y: auto; background: #fff; border-radius: 17px; padding: 4px 2px; transform: rotateY(180deg); }
+    .card-back-label { display: flex; justify-content: space-between; align-items: center; color: #87928b; font-size: 9px; font-weight: 780; letter-spacing: .12em; }
+    .card-back-label span { color: #b4beb6; font-weight: 600; letter-spacing: .02em; }
+    .card-back .study-example { margin-top: 12px; color: #3f5247; font-size: 13.5px; line-height: 1.75; font-style: italic; }
+    .card-back .study-example-translation { margin-top: 8px; font-size: 11.5px; }
+    .card-back .study-mnemonic { margin-top: 12px; font-size: 11px; }
+    .card-flip-hint { margin: 14px 0 0; text-align: center; color: #9aa69e; font-size: 10.5px; letter-spacing: .02em; }
+    .back-actions { display: flex; justify-content: center; margin-top: 14px; }
+    .back-speak { min-height: 38px; padding: 0 18px; border: 1px solid #dfe6dc; border-radius: 999px; background: #f1f5eb; color: var(--forest); font-size: 11.5px; font-weight: 760; cursor: pointer; }
+    .back-speak:active { transform: scale(.96); }
+    .foe-card { display: flex; align-items: center; gap: 11px; margin-top: 12px; padding: 11px 13px; background: #fff; border: 1px solid #e9eee7; border-radius: 15px; }
+    .foe-avatar { width: 42px; height: 42px; flex: 0 0 auto; display: grid; place-items: center; font-size: 21px; background: linear-gradient(135deg, #eef5e6, #dcecce); border-radius: 50%; border: 2px solid #d8e6c8; }
+    .foe-info { min-width: 0; flex: 1 1 auto; }
+    .foe-info strong { display: block; color: var(--ink); font-size: 14.5px; letter-spacing: -.02em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .foe-info small { display: block; margin-top: 2px; color: #8b968e; font-size: 9.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .foe-status { flex: 0 0 auto; padding: 5px 10px; border-radius: 999px; font-size: 9.5px; font-weight: 780; background: #edf4e5; color: #5e7c47; }
+    .foe-status.searching { background: #fff3d9; color: #9a7415; animation: foePulse 1s ease-in-out infinite; }
+    .foe-status.typing { background: #e9f0fb; color: #3d6bb3; animation: foePulse .9s ease-in-out infinite; }
+    .foe-status.online { background: #edf4e5; color: #5e7c47; }
+    .foe-status.done { background: #e9f7cf; color: #3d5a2a; }
+    .foe-status.wrong { background: #fbe6e2; color: #8c3d2e; }
+    @keyframes foePulse { 0%,100% { opacity: 1; } 50% { opacity: .5; } }
   </style>
 </head>
 <body>
@@ -825,23 +862,15 @@
     </section>
 
     <section class="section library-section" id="library" data-app-view="library">
-      <div class="container">
-        <div class="section-heading" data-reveal><div class="eyebrow"><span class="dot"></span> ONE LIBRARY, MANY GOALS</div><h2>从校内考试到留学，<br>让每个目标 <em>都有清晰路线。</em></h2><p>已从原站网页内嵌词表提取五大考试词库与 100 条精讲词。首次联网打开时自动导入本机，之后可离线搜索与学习，也可下载 JSON 导入另一台设备。</p></div>
-        <div class="exam-grid">
-          <article class="exam-card" style="--wash:#e5efd8" data-reveal><span class="exam-icon">高</span><strong>3,500 词</strong><h3>高考核心词</h3><p>高考大纲 · 真题高频</p></article>
-          <article class="exam-card stagger-1" style="--wash:#f2ead5" data-reveal><span class="exam-icon">4</span><strong>4,500 词</strong><h3>大学英语四级</h3><p>CET-4 · 高频核心</p></article>
-          <article class="exam-card stagger-2" style="--wash:#e0e9f0" data-reveal><span class="exam-icon">6</span><strong>5,500 词</strong><h3>大学英语六级</h3><p>CET-6 · 进阶刷分</p></article>
-          <article class="exam-card stagger-3" style="--wash:#f4e5dc" data-reveal><span class="exam-icon">研</span><strong>5,500 词</strong><h3>考研英语</h3><p>熟词生义 · 真题拆解</p></article>
-          <article class="exam-card stagger-4" style="--wash:#e9e3f2" data-reveal><span class="exam-icon">雅</span><strong>6,000 词</strong><h3>雅思核心词</h3><p>学术语境 · 话题拓展</p></article>
-        </div>
-        <div class="roots-panel" data-reveal><div class="roots-intro"><span class="eyebrow"><span class="dot"></span> WORD ROOT MINI-CLASS</span><h3>一个词根，<br>串起一整组单词。</h3><p>把零散词汇连成可理解的网络，背过一个，再遇见同族词就更容易。</p></div><div class="root-list"><div class="root-row"><strong>spect / spec</strong><span>看 · look</span><small>inspect · perspective · spectacular</small></div><div class="root-row"><strong>port</strong><span>携带 · carry</span><small>transport · support · portable</small></div><div class="root-row"><strong>mit / miss</strong><span>送、放 · send</span><small>submit · transmit · mission</small></div></div></div>
+      <div class="container library-shell">
         <div class="library-panel" data-reveal>
           <div class="library-top">
-            <div class="library-top-left"><h3>词库内容中心 <span id="bankCountLabel" style="font-size:10px;color:#8b968e;font-weight:550">正在载入…</span></h3><p>可搜索英语单词或中文释义，点击“学习”可在下方体验记忆卡片。</p></div>
+            <div class="library-top-left"><h3>词库内容中心 <span id="bankCountLabel" style="font-size:10px;color:#8b968e;font-weight:550">正在载入…</span></h3><p>搜索单词或释义，点「学习此词」直接跳到学习面板。</p></div>
             <div class="library-actions">
               <label class="search-wrap"><span class="visually-hidden">搜索单词或释义</span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8" stroke="currentColor" stroke-width="1.8"/><path d="m16 16 4.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><input class="search-input" type="search" id="wordSearch" placeholder="搜索英文 / 中文" autocomplete="off"></label>
               <button class="import-button" id="importWordsBtn" type="button"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 15V4m0 0L8 8m4-4 4 4M5 14v5a1.5 1.5 0 0 0 1.5 1.5h11A1.5 1.5 0 0 0 19 19v-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>导入词库</button>
               <button class="import-button" id="syncWordsBtn" type="button" aria-label="从互联网下载同步词库"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 16.6A4.3 4.3 0 0 0 18 8.5 6.3 6.3 0 0 0 6 9.8 3.5 3.5 0 0 0 6.5 17H18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="m12 11 0 8m0 0-3-3m3 3 3-3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>联网同步</button>
+              <a class="import-button" href="./data/original-site-wordbank.json" download="lexio-original-site-wordbank.json" style="display:inline-flex;align-items:center;text-decoration:none">⬇ 词库 JSON</a>
               <input class="visually-hidden" id="wordFile" type="file" accept=".json,.csv,application/json,text/csv" aria-label="选择 JSON 或 CSV 词库文件">
             </div>
           </div>
@@ -849,9 +878,24 @@
             <button class="filter-chip active" type="button" role="tab" aria-selected="true" data-filter="all">全部词条</button><button class="filter-chip" type="button" role="tab" aria-selected="false" data-filter="高考">高考</button><button class="filter-chip" type="button" role="tab" aria-selected="false" data-filter="CET-4">四级</button><button class="filter-chip" type="button" role="tab" aria-selected="false" data-filter="CET-6">六级</button><button class="filter-chip" type="button" role="tab" aria-selected="false" data-filter="考研">考研</button><button class="filter-chip" type="button" role="tab" aria-selected="false" data-filter="雅思">雅思</button>
           </div>
           <div class="word-grid" id="wordGrid" aria-live="polite"><div class="empty-state">正在准备词库…</div></div>
-          <div class="migration-note"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/><path d="M12 11v5m0-8h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span><strong>词库已核验：</strong>原站内嵌的五大考试词库与 100 条精讲词已打包为 25,024 条学习记录。首次联网打开时自动导入本机 IndexedDB，之后可离线学习；同一拼写在不同考试列表中按原分类保留。</span><a href="./data/original-site-wordbank.json" download="lexio-original-site-wordbank.json">下载词库 JSON →</a></div>
-          <p class="library-footnote">预期字段支持 word / english、meaning / translation、phonetic、pos、example、category / exam、uk / us；保留源记录并映射到统一学习卡片。</p>
         </div>
+      </div>
+    </section>
+
+    
+    <section class="section library-intro" data-app-view="about" aria-label="词库介绍">
+      <div class="container">
+        <div class="section-heading" data-reveal><div class="eyebrow"><span class="dot"></span> ONE LIBRARY, MANY GOALS</div><h2>从校内考试到留学，<br>让每个目标 <em>都有清晰路线。</em></h2><p>已从原站网页内嵌词表提取五大考试词库与 100 条精讲词。首次联网打开时自动导入本机，之后可离线搜索与学习，也可下载 JSON 导入另一台设备。</p></div>
+<div class="exam-grid">
+          <article class="exam-card" style="--wash:#e5efd8" data-reveal><span class="exam-icon">高</span><strong>3,500 词</strong><h3>高考核心词</h3><p>高考大纲 · 真题高频</p></article>
+          <article class="exam-card stagger-1" style="--wash:#f2ead5" data-reveal><span class="exam-icon">4</span><strong>4,500 词</strong><h3>大学英语四级</h3><p>CET-4 · 高频核心</p></article>
+          <article class="exam-card stagger-2" style="--wash:#e0e9f0" data-reveal><span class="exam-icon">6</span><strong>5,500 词</strong><h3>大学英语六级</h3><p>CET-6 · 进阶刷分</p></article>
+          <article class="exam-card stagger-3" style="--wash:#f4e5dc" data-reveal><span class="exam-icon">研</span><strong>5,500 词</strong><h3>考研英语</h3><p>熟词生义 · 真题拆解</p></article>
+          <article class="exam-card stagger-4" style="--wash:#e9e3f2" data-reveal><span class="exam-icon">雅</span><strong>6,000 词</strong><h3>雅思核心词</h3><p>学术语境 · 话题拓展</p></article>
+        </div>
+        <div class="roots-panel" data-reveal><div class="roots-intro"><span class="eyebrow"><span class="dot"></span> WORD ROOT MINI-CLASS</span><h3>一个词根，<br>串起一整组单词。</h3><p>把零散词汇连成可理解的网络，背过一个，再遇见同族词就更容易。</p></div><div class="root-list"><div class="root-row"><strong>spect / spec</strong><span>看 · look</span><small>inspect · perspective · spectacular</small></div><div class="root-row"><strong>port</strong><span>携带 · carry</span><small>transport · support · portable</small></div><div class="root-row"><strong>mit / miss</strong><span>送、放 · send</span><small>submit · transmit · mission</small></div></div></div>
+        <div class="migration-note"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/><path d="M12 11v5m0-8h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span><strong>词库已核验：</strong>原站内嵌的五大考试词库与 100 条精讲词已打包为 25,024 条学习记录。首次联网打开时自动导入本机 IndexedDB，之后可离线学习；同一拼写在不同考试列表中按原分类保留。</span><a href="./data/original-site-wordbank.json" download="lexio-original-site-wordbank.json">下载词库 JSON →</a></div>
+          <p class="library-footnote">预期字段支持 word / english、meaning / translation、phonetic、pos、example、category / exam、uk / us；保留源记录并映射到统一学习卡片。</p>
       </div>
     </section>
 
@@ -864,10 +908,22 @@
             <div class="study-app-top"><div class="study-app-brand"><span class="mini-logo"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M6 18V6.5c0-.8.7-1.5 1.5-1.5H18M6 18h11.5c.8 0 1.5-.7 1.5-1.5V8" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"/><path d="m10 13 2 2 5-6" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Lexio 学习空间<small id="studyDate">今日学习 · 15 分钟</small></span></div><span class="session-status"><i></i><span id="sessionStatusText">学习中</span></span></div>
             <div class="study-stats"><div class="study-stat"><span>今日已掌握</span><strong id="knownCount">0</strong></div><div class="study-stat"><span>本轮计划</span><strong>30</strong></div><div class="study-stat"><span>连续学习</span><strong>7 <small style="font-size:9px;font-weight:550">天</small></strong></div></div>
             <div class="study-meter" aria-label="今日学习进度"><span id="studyProgress"></span></div>
-            <article class="study-word-card" aria-live="polite">
-              <div class="study-word-top"><span id="studyCategory">TODAY'S WORD · 01</span><span id="studyPosition">01 / 24</span></div>
-              <div class="study-word-main"><div><h3 id="studyWord">serendipity</h3><p class="phonetic" id="studyPhonetic">/ˌser.ənˈdɪp.ə.ti/ · n.</p></div><button class="sound-round" type="button" id="studySpeak" aria-label="播放单词发音"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 10v4h4l5 4V6l-5 4H4Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M16 9a5 5 0 0 1 0 6m2-9a9 9 0 0 1 0 12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></button></div>
-              <p class="study-meaning is-hidden" id="studyMeaning">点击“显示释义”进行自测。</p><p class="study-example" id="studyExample">先试着回忆，再揭晓释义。能主动想起，记忆才会更牢。</p><p class="study-example-translation" id="studyExampleTranslation" hidden></p><p class="study-mnemonic" id="studyMnemonic" hidden></p>
+            <article class="study-word-card" id="studyCard" aria-live="polite">
+              <div class="card-flip" id="wordCardFlip">
+                <div class="card-face card-front">
+                  <div class="study-word-top"><span id="studyCategory">TODAY'S WORD · 01</span><span id="studyPosition">01 / 24</span></div>
+                  <div class="study-word-main"><div><h3 id="studyWord">serendipity</h3><p class="phonetic" id="studyPhonetic">/ˌser.ənˈdɪp.ə.ti/ · n.</p></div><button class="sound-round" type="button" id="studySpeak" aria-label="播放单词发音"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 10v4h4l5 4V6l-5 4H4Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M16 9a5 5 0 0 1 0 6m2-9a9 9 0 0 1 0 12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></button></div>
+                  <p class="study-meaning is-hidden" id="studyMeaning">点击“显示释义”进行自测。</p>
+                  <p class="card-flip-hint" id="cardFlipHint">轻点卡片 · 翻到背面看例句 🔄</p>
+                </div>
+                <div class="card-face card-back" id="cardBack">
+                  <div class="card-back-label"><span>EXAMPLE · 例句</span><span>轻点翻回 ↺</span></div>
+                  <p class="study-example" id="studyExample">先试着回忆，再揭晓释义。能主动想起，记忆才会更牢。</p>
+                  <p class="study-example-translation" id="studyExampleTranslation" hidden></p>
+                  <p class="study-mnemonic" id="studyMnemonic" hidden></p>
+                  <div class="back-actions"><button class="back-speak" id="exampleSpeak" type="button" aria-label="播放例句发音">🔊 朗读例句</button></div>
+                </div>
+              </div>
             </article>
             <div class="study-controls"><button class="study-control" type="button" id="revealMeaning">显示释义</button><button class="study-control" type="button" id="nextWord">跳过这个词 →</button><button class="study-control" type="button" id="againWord">还不熟悉 · 再练一次</button><button class="study-control primary" type="button" id="knownWord">记住了 ✓</button></div>
             <div class="trial-banner" id="expiredBanner" hidden><span><strong>7 天试用已结束。</strong>开通 Pro 后继续完整学习。</span><button type="button" id="bannerSubscribe">开通 Pro</button></div>
@@ -892,9 +948,14 @@
                 <span class="weak-badge" id="battleState">未开始</span>
               </div>
               <div class="battle-scoreboard">
-                <div class="battle-side"><small>你</small><strong id="battleMyScore">0</strong></div>
+                <div class="battle-side"><strong id="battleMyScore">0</strong><small>你</small></div>
                 <div class="battle-vs">VS</div>
-                <div class="battle-side"><small>对手 · Lex</small><strong id="battleFoeScore">0</strong></div>
+                <div class="battle-side"><strong id="battleFoeScore">0</strong><small>对手</small></div>
+              </div>
+              <div class="foe-card">
+                <div class="foe-avatar" id="battleFoeAvatar">👤</div>
+                <div class="foe-info"><strong id="battleFoeName">尚未匹配</strong><small id="battleFoeStats">开始对战后自动匹配在线对手</small></div>
+                <span class="foe-status" id="battleFoeStatus">在线</span>
               </div>
               <div class="battle-stage">
                 <div class="battle-word" id="battleWord">准备好了吗？</div>
@@ -1380,11 +1441,14 @@
         $('#studyPosition').textContent = `${String(studyIndex+1).padStart(2,'0')} / ${String(bank.length).padStart(2,'0')}`;
         $('#studyMeaning').textContent = word.meaning;
         $('#studyMeaning').classList.add('is-hidden');
-        $('#studyExample').textContent = word.example ? `“${word.example}”` : '先试着回忆，再揭晓释义。主动想起，记忆才会更牢。';
+        $('#studyExample').textContent = word.example ? `“${word.example}”` : '本词暂无例句。先在正面自测回忆，想不起再翻回来对照。';
         $('#studyExampleTranslation').textContent = word.exampleTranslation || '';
         $('#studyExampleTranslation').hidden = !word.exampleTranslation;
         $('#studyMnemonic').textContent = word.mnemonic ? `记忆线索：${word.mnemonic}` : '';
         $('#studyMnemonic').hidden = !word.mnemonic;
+        const flipEl = $('#wordCardFlip'); if (flipEl) flipEl.classList.remove('is-flipped');
+        const revealBtn = $('#revealMeaning'); if (revealBtn) revealBtn.textContent = '显示释义';
+        const exSpeakBtn = $('#exampleSpeak'); if (exSpeakBtn) exSpeakBtn.hidden = !word.example;
         $('#knownCount').textContent = dailyStats.known.toLocaleString();
         $('#studyProgress').style.width = `${Math.min(100, dailyStats.known / 30 * 100)}%`;
         $('#studyDate').textContent = `今日学习 · ${new Intl.DateTimeFormat('zh-CN',{month:'long',day:'numeric'}).format(new Date())}`;
@@ -1533,22 +1597,66 @@
         }));
       }
       window.__lexioWeak = { list: () => weakWords.slice(), add: (w) => markWeak(w, true), remove: (w) => markWeak(w, false), render: renderWeakList };
-      const battle = { q: [], i: 0, me: 0, foe: 0, over: false, lock: false };
-      function battleRound() {
-        if (battle.i >= battle.q.length) {
-          battle.over = true;
-          $('#battleState').textContent = '已结束';
-          const win = battle.me > battle.foe, draw = battle.me === battle.foe;
-          $('#battleWord').textContent = win ? '🏆 胜利' : draw ? '🤝 平局' : '💪 再战';
-          $('#battleMsg').textContent = win ? `你以 ${battle.me} : ${battle.foe} 获胜！` : draw ? `平局 ${battle.me} : ${battle.foe}，旗鼓相当。` : `对手以 ${battle.foe} : ${battle.me} 获胜，再来一局？`;
-          $('#battleStart').textContent = '再来一局';
-          return;
+      const FOE_NAMES = {
+        cn: ['陈思远','王雨桐','李昊然','张一诺','刘梓萱','赵子轩','周语彤','吴俊熙','徐念安','孙以柔','卷王小陈','四级必过鸭','背单词上瘾','深夜刷词党','今天不摆烂','单词收割机','小林同学','阿澈','许愿池的鱼','逆风翻盘侠'],
+        en: ['Alex','Moon_River','Zane','Coco','Ivy','Leo007','WordSmith','NightOwl','Sam','Jasper','Luna_R','TimCan','GreenTea','SkyRunner','Kai','Nova'],
+        other: ['xX_暗影_Xx','🍀小幸运','ツ词汇王','Ω_mega','꧁༺夜空༻꧂','K-pop捕手','速通の神','..ghost..','T̷i̷m̷','мидгард','яусский_друг','øorder','soirée_404','王³','深夜の猫','彡Rev彡']
+      };
+      const FOE_AVATARS = ['🦊','🐰','🐼','🦉','🐯','🐱','🦁','🐸','🐵','🐧','👾','🤖','🥷','🧙','☄️','🍀'];
+      const REACT_GOOD = ['稳！','有点东西','好快……','轮到我发力了','你练过吧？'];
+      const REACT_BAD = ['这题我见过😅','手滑了','记错了记错了','你也太快了吧','下题追回来','有点难，不算！'];
+      let lastFoeName = null;
+      function pickFoeName() {
+        const all = FOE_NAMES.cn.concat(FOE_NAMES.en, FOE_NAMES.other);
+        let name, guard = 0;
+        do { name = all[Math.floor(Math.random() * all.length)]; guard++; } while (name === lastFoeName && guard < 40);
+        lastFoeName = name;
+        return name;
+      }
+      const battle = { q: [], i: 0, me: 0, foe: 0, over: false, lock: false, foe: null, meAnswered: false, foeAnswered: false, advancing: false, timers: [] };
+      function battleT(fn, ms) { const id = setTimeout(fn, ms); battle.timers.push(id); return id; }
+      function battleClearTimers() { battle.timers.forEach(id => clearTimeout(id)); battle.timers = []; }
+      function foeStatus(text, cls) { const el = $('#battleFoeStatus'); if (!el) return; el.textContent = text; el.className = 'foe-status' + (cls ? ' ' + cls : ''); }
+      function pickFoe() {
+        return {
+          name: pickFoeName(),
+          avatar: FOE_AVATARS[Math.floor(Math.random() * FOE_AVATARS.length)],
+          matches: 40 + Math.floor(Math.random() * 460),
+          winRate: 52 + Math.floor(Math.random() * 31),
+          ping: 18 + Math.floor(Math.random() * 90)
+        };
+      }
+      function showFoeMeta(foe) {
+        $('#battleFoeAvatar').textContent = foe.avatar;
+        $('#battleFoeName').textContent = foe.name;
+        $('#battleFoeStats').textContent = `${foe.winRate}% 胜率 · ${foe.matches} 场 · ${foe.ping}ms`;
+      }
+      function battleEnd() {
+        battle.over = true;
+        battleClearTimers();
+        $('#battleState').textContent = '已结束';
+        foeStatus('在线', 'online');
+        const win = battle.me > battle.foe, draw = battle.me === battle.foe;
+        const foeName = battle.foe ? battle.foe.name : '对手';
+        $('#battleWord').textContent = win ? '🏆 胜利' : draw ? '🤝 平局' : '💪 再战';
+        $('#battleMsg').textContent = win ? `你以 ${battle.me} : ${battle.foe} 击败了 ${foeName}！` : draw ? `和 ${foeName} 战成 ${battle.me} : ${battle.foe} 平手。` : `${foeName} 以 ${battle.foe} : ${battle.me} 获胜，换个人再战？`;
+        $('#battleStart').textContent = '换个对手 · 再来一局';
+      }
+      function battleMaybeAdvance() {
+        if (battle.advancing || battle.over) return;
+        if (battle.meAnswered && battle.foeAnswered) {
+          battle.advancing = true;
+          battleT(() => { battle.advancing = false; battle.i += 1; battleRound(); }, 950);
         }
+      }
+      function battleRound() {
+        if (battle.i >= battle.q.length) { battleEnd(); return; }
+        battle.meAnswered = false; battle.foeAnswered = false; battle.lock = false; battle.advancing = false;
         const cur = battle.q[battle.i];
-        battle.lock = false;
         $('#battleState').textContent = `第 ${battle.i + 1} / ${battle.q.length} 题`;
         $('#battleWord').textContent = cur.word;
         $('#battleMsg').textContent = '选择正确释义，答对得分。';
+        foeStatus('思考中…', 'typing');
         const wrong = bank.filter(w => w !== cur && w.meaning && w.meaning !== cur.meaning).sort(() => Math.random() - 0.5).slice(0, 2);
         const opts = [cur, ...wrong].sort(() => Math.random() - 0.5);
         const box = $('#battleOptions');
@@ -1559,38 +1667,69 @@
           b.className = 'battle-opt';
           b.textContent = o.meaning || o.word;
           b.addEventListener('click', () => {
-            if (battle.lock || battle.over) return;
+            if (battle.lock || battle.over || battle.meAnswered) return;
             battle.lock = true;
+            battle.meAnswered = true;
             $$('.battle-opt').forEach(x => { x.disabled = true; });
-            if (o === cur) { battle.me += 1; b.classList.add('right'); $('#battleMsg').textContent = '答对了！'; }
+            if (o === cur) { battle.me += 1; b.classList.add('right'); }
             else {
               b.classList.add('wrong');
-              $('#battleMsg').textContent = `正确答案：${cur.meaning || cur.word}`;
               $$('.battle-opt').forEach(x => { if (x.textContent === (cur.meaning || cur.word)) x.classList.add('right'); });
             }
-            if (Math.random() < 0.6) battle.foe += 1;
             $('#battleMyScore').textContent = battle.me;
-            $('#battleFoeScore').textContent = battle.foe;
-            setTimeout(() => { battle.i += 1; battleRound(); }, 950);
+            battleMaybeAdvance();
           });
           box.appendChild(b);
         });
+        const foeDelay = 1500 + Math.random() * 3800;
+        battleT(() => {
+          if (battle.over) return;
+          battle.foeAnswered = true;
+          const correct = Math.random() < 0.7;
+          if (correct) { battle.foe += 1; $('#battleFoeScore').textContent = battle.foe; foeStatus('已作答 ✓', 'done'); }
+          else { foeStatus('答错 ✗', 'wrong'); }
+          const pool = correct ? REACT_GOOD : REACT_BAD;
+          const chat = Math.random() < 0.5
+            ? `${battle.foe.name}：${pool[Math.floor(Math.random() * pool.length)]}`
+            : correct ? `${battle.foe.name} 抢先答对了。` : `${battle.foe.name} 这题答错了。`;
+          $('#battleMsg').textContent = chat;
+          battleMaybeAdvance();
+        }, foeDelay);
       }
       $('#battleStart').addEventListener('click', () => {
         if (!bank.length) { $('#battleMsg').textContent = '词库尚未导入完成，请稍后再来对战。'; return; }
+        battleClearTimers();
         battle.q = [...bank].sort(() => Math.random() - 0.5).slice(0, 10);
-        battle.i = 0; battle.me = 0; battle.foe = 0; battle.over = false;
+        battle.i = 0; battle.me = 0; battle.foe = 0; battle.over = false; battle.lock = false;
+        battle.meAnswered = false; battle.foeAnswered = false; battle.advancing = false;
+        battle.foe = pickFoe();
         $('#battleMyScore').textContent = '0';
         $('#battleFoeScore').textContent = '0';
-        $('#battleStart').textContent = '重新开始';
-        battleRound();
+        $('#battleStart').textContent = '重新匹配';
+        $('#battleState').textContent = '匹配中…';
+        $('#battleWord').textContent = '正在寻找实力相当的对手…';
+        $('#battleOptions').innerHTML = '';
+        $('#battleFoeAvatar').textContent = '🔎';
+        $('#battleFoeName').textContent = '匹配中…';
+        $('#battleFoeStats').textContent = '正在在线房间里挑选对手…';
+        foeStatus('搜索中', 'searching');
+        $('#battleMsg').textContent = '通常几秒钟就会有人应战。';
+        battleT(() => {
+          showFoeMeta(battle.foe);
+          foeStatus('已接受挑战', 'online');
+          $('#battleMsg').textContent = `${battle.foe.name} 接受了你的挑战。`;
+          battleT(() => { battleRound(); }, 1100);
+        }, 1300 + Math.random() * 1500);
       });
+      window.__lexioBattle = { start: () => $('#battleStart').click(), nextName: pickFoeName, foe: () => battle.foe };
       renderWeakList();
       $$('[data-demo-tab]').forEach(button=>button.addEventListener('click',()=>selectShowcaseTab(button.dataset.demoTab)));
       $$('.provider-choice').forEach(button=>button.addEventListener('click',()=>{selectedProvider=button.dataset.providerSelect;$$('.provider-choice').forEach(item=>{const active=item===button;item.classList.toggle('active',active);item.setAttribute('aria-pressed',String(active));});}));
       $('#directSubscribe').addEventListener('click',openPayment);
       $('#wordFile').addEventListener('change',event=>{const file=event.target.files && event.target.files[0];if(file)importFile(file);});
       $('#studySpeak').addEventListener('click',()=>{const word=bank[studyIndex];if(word)speakEntry(word,activeAccent);});
+      $('#studyCard').addEventListener('click',event=>{ if (event.target.closest('button') || event.target.closest('a')) return; $('#wordCardFlip').classList.toggle('is-flipped'); });
+      $('#exampleSpeak').addEventListener('click',()=>{ const word=bank[studyIndex]; if (word && word.example) speak(word.example, activeAccent); else toastMessage('这个词还没有例句。'); });
       $('#revealMeaning').addEventListener('click',()=>{
         if (getTrialState().expired) { openPayment(); return; }
         const meaning=$('#studyMeaning');const hidden=meaning.classList.toggle('is-hidden');
@@ -1670,8 +1809,8 @@
     if (booted && prev && prev !== view && main) {
       var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       if (!reduced) {
-        if (view === 'study') anim = 'push';
-        else if (prev === 'study' || view === 'home') anim = 'pop';
+        if (view === 'study' || view === 'library') anim = 'push';
+        else if (prev === 'study' || prev === 'library' || view === 'home') anim = 'pop';
         else if (prev === 'home') anim = 'push';
         else anim = 'fade';
       }
@@ -1694,7 +1833,7 @@
     }
     booted = true;
     function placeAnchor() {
-      if (view === 'study') { window.scrollTo(0, 0); return; }
+      if (view === 'study' || view === 'library') { window.scrollTo(0, 0); return; }
       if (anchor) {
         var el = document.getElementById(anchor);
         if (el && typeof el.scrollIntoView === 'function') { el.scrollIntoView({ behavior: 'smooth' }); return; }
