@@ -268,7 +268,7 @@
     .study-word-main .phonetic { margin: 5px 0 0; color: #86928a; font-size: 10px; }
     .study-word-main .sound-round { flex: 0 0 auto; width: 38px; height: 38px; color: var(--forest); background: #eff5e9; border: 0; }
     .study-meaning { position: relative; z-index: 1; margin: 16px 0 0; padding-top: 13px; border-top: 1px solid #edf0ea; color: #4f6657; font-size: 13px; font-weight: 720; }
-    .study-meaning.is-hidden { color: #99a39c; font-weight: 550; }
+    .study-meaning.is-hidden { color: #99a39c; font-weight: 550; filter: blur(7px); -webkit-filter: blur(7px); user-select: none; -webkit-user-select: none; }
     .study-example { position: relative; z-index: 1; margin: 9px 0 0; color: #859088; font-size: 10px; font-style: italic; line-height: 1.6; }
     .study-example-translation { position: relative; z-index: 1; margin: 4px 0 0; color: #8b968e; font-size: 9px; line-height: 1.5; }
     .study-mnemonic { position: relative; z-index: 1; margin: 8px 0 0; padding: 8px 9px; color: #52645a; background: #f1f5eb; border-radius: 9px; font-size: 9px; line-height: 1.55; }
@@ -374,7 +374,7 @@
     .team-row h3 { margin: 0; color: var(--ink); font-size: 13px; }
     .team-row p { margin: 3px 0 0; color: #829087; font-size: 10px; }
     .team-row a { flex: 0 0 auto; color: var(--forest); font-size: 10px; font-weight: 760; }
-    .faq-section { padding: 103px 0 104px; }
+    .faq-section { padding: 103px 0 104px; background: var(--cream); }
     .faq-layout { display: grid; grid-template-columns: .7fr 1.3fr; gap: 60px; align-items: start; max-width: 1010px; margin: 0 auto; }
     .faq-aside h2 { margin: 0; color: var(--ink); font-size: clamp(32px,4.5vw,49px); line-height: 1.13; letter-spacing: -.055em; }
     .faq-aside p { margin: 14px 0 20px; color: #77847b; font-size: 12px; line-height: 1.7; }
@@ -741,6 +741,9 @@
     .foe-status.done { background: #e9f7cf; color: #3d5a2a; }
     .foe-status.wrong { background: #fbe6e2; color: #8c3d2e; }
     @keyframes foePulse { 0%,100% { opacity: 1; } 50% { opacity: .5; } }
+    body.view-anim-lock .site-header,
+    body.view-anim-lock .tabbar,
+    body.view-anim-lock .view-topbar { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
   </style>
 </head>
 <body>
@@ -873,7 +876,7 @@
               <label class="search-wrap"><span class="visually-hidden">搜索单词或释义</span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8" stroke="currentColor" stroke-width="1.8"/><path d="m16 16 4.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><input class="search-input" type="search" id="wordSearch" placeholder="搜索英文 / 中文" autocomplete="off"></label>
               <button class="import-button" id="importWordsBtn" type="button"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 15V4m0 0L8 8m4-4 4 4M5 14v5a1.5 1.5 0 0 0 1.5 1.5h11A1.5 1.5 0 0 0 19 19v-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>导入词库</button>
               <button class="import-button" id="syncWordsBtn" type="button" aria-label="从互联网下载同步词库"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 16.6A4.3 4.3 0 0 0 18 8.5 6.3 6.3 0 0 0 6 9.8 3.5 3.5 0 0 0 6.5 17H18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="m12 11 0 8m0 0-3-3m3 3 3-3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>联网同步</button>
-              <a class="import-button" href="./data/original-site-wordbank.json" download="lexio-original-site-wordbank.json" style="display:inline-flex;align-items:center;text-decoration:none">⬇ 词库 JSON</a>
+              <button class="import-button" id="exportBankBtn" type="button">⬇ 下载词库</button>
               <input class="visually-hidden" id="wordFile" type="file" accept=".json,.csv,application/json,text/csv" aria-label="选择 JSON 或 CSV 词库文件">
             </div>
           </div>
@@ -897,7 +900,7 @@
           <article class="exam-card stagger-4" style="--wash:#e9e3f2" data-reveal><span class="exam-icon">雅</span><strong>6,000 词</strong><h3>雅思核心词</h3><p>学术语境 · 话题拓展</p></article>
         </div>
         <div class="roots-panel" data-reveal><div class="roots-intro"><span class="eyebrow"><span class="dot"></span> WORD ROOT MINI-CLASS</span><h3>一个词根，<br>串起一整组单词。</h3><p>把零散词汇连成可理解的网络，背过一个，再遇见同族词就更容易。</p></div><div class="root-list"><div class="root-row"><strong>spect / spec</strong><span>看 · look</span><small>inspect · perspective · spectacular</small></div><div class="root-row"><strong>port</strong><span>携带 · carry</span><small>transport · support · portable</small></div><div class="root-row"><strong>mit / miss</strong><span>送、放 · send</span><small>submit · transmit · mission</small></div></div></div>
-        <div class="migration-note"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/><path d="M12 11v5m0-8h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span><strong>词库已核验：</strong>原站内嵌的五大考试词库与 100 条精讲词已打包为 25,024 条学习记录。首次联网打开时自动导入本机 IndexedDB，之后可离线学习；同一拼写在不同考试列表中按原分类保留。</span><a href="./data/original-site-wordbank.json" download="lexio-original-site-wordbank.json">下载词库 JSON →</a></div>
+        <div class="migration-note"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/><path d="M12 11v5m0-8h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span><strong>词库已核验：</strong>原站内嵌的五大考试词库与 100 条精讲词已打包为 25,024 条学习记录。首次联网打开时自动导入本机 IndexedDB，之后可离线学习；同一拼写在不同考试列表中按原分类保留。</span><a href="#" data-export-bank>下载词库 →</a></div>
           <p class="library-footnote">预期字段支持 word / english、meaning / translation、phonetic、pos、example、category / exam、uk / us；保留源记录并映射到统一学习卡片。</p>
       </div>
     </section>
@@ -1479,7 +1482,33 @@
           utterance.onerror = finish;
           try { window.speechSynthesis.speak(utterance); } catch(_) { finish(); return; }
           setTimeout(finish, Math.min(15000, text.length * 110 + 3000));
-        }, 90);
+        }, 250);
+      }
+      function speakExample(text, lang, onDone) {
+        const fallback = () => speak(text, lang, onDone);
+        try {
+          const type = lang === 'en-US' ? 2 : 1;
+          const url = 'https://dict.youdao.com/dictvoice?audio=' + encodeURIComponent(text) + '&type=' + type;
+          if (typeof Audio !== 'undefined') {
+            if (activeAudio) { try { activeAudio.pause(); } catch(_) {} activeAudio = null; }
+            const audio = new Audio(url);
+            activeAudio = audio;
+            let settled = false;
+            const settle = (useFallback) => {
+              if (settled) return;
+              settled = true;
+              if (activeAudio === audio) activeAudio = null;
+              if (useFallback) fallback();
+              else if (typeof onDone === 'function') onDone();
+            };
+            audio.onended = () => settle(false);
+            audio.onerror = () => settle(true);
+            const playPromise = audio.play();
+            if (playPromise && playPromise.catch) playPromise.catch(() => settle(true));
+            return;
+          }
+        } catch(_) {}
+        fallback();
       }
       function speakEntry(entry, lang=activeAccent) {
         if(!entry || !entry.word) return;
@@ -1811,10 +1840,37 @@
         const word=bank[studyIndex];
         const btn=$('#exampleSpeak');
         if(!word || !word.example){ toastMessage('这个词还没有例句。'); return; }
-        if(btn.dataset.speaking==='1'){ try{ window.speechSynthesis && window.speechSynthesis.cancel(); }catch(_){} btn.dataset.speaking='0'; btn.textContent='🔊 朗读例句'; return; }
+        if(btn.dataset.speaking==='1'){ try{ window.speechSynthesis && window.speechSynthesis.cancel(); }catch(_){} if(activeAudio){try{activeAudio.pause();}catch(_){} activeAudio=null;} btn.dataset.speaking='0'; btn.textContent='🔊 朗读例句'; return; }
         btn.dataset.speaking='1'; btn.textContent='⏸ 停止朗读';
-        speak(word.example, activeAccent, ()=>{ btn.dataset.speaking='0'; btn.textContent='🔊 朗读例句'; });
+        speakExample(word.example, activeAccent, ()=>{ btn.dataset.speaking='0'; btn.textContent='🔊 朗读例句'; });
       });
+      async function exportWordBank() {
+        toastMessage('正在准备词库…');
+        let text = null;
+        try {
+          const response = await fetch('./data/original-site-wordbank.json', { cache: 'no-store' });
+          if (response.ok) text = await response.text();
+        } catch(_) {}
+        if (!text && bank.length) text = JSON.stringify(bank);
+        if (!text) { toastMessage('词库还没准备好，请稍后再试。'); return; }
+        try {
+          const blob = new Blob([text], { type: 'application/json' });
+          const url = URL.createObjectURL(blob);
+          const link = document.createElement('a');
+          link.href = url;
+          link.download = '乐词词库.json';
+          link.rel = 'noopener';
+          document.body.appendChild(link);
+          link.click();
+          link.remove();
+          setTimeout(() => { try { URL.revokeObjectURL(url); } catch(_) {} }, 4000);
+          toastMessage('已开始下载「乐词词库」。');
+        } catch(_) { toastMessage('此浏览器暂不支持直接下载，请稍后再试。'); }
+      }
+      window.__lexioExportBank = exportWordBank;
+      const exportBankBtn = $('#exportBankBtn');
+      if (exportBankBtn) exportBankBtn.addEventListener('click', exportWordBank);
+      $$('[data-export-bank]').forEach(el => el.addEventListener('click', event => { event.preventDefault(); exportWordBank(); }));
       $('#revealMeaning').addEventListener('click',()=>{
         if (getTrialState().expired) { openPayment(); return; }
         const meaning=$('#studyMeaning');const hidden=meaning.classList.toggle('is-hidden');
@@ -1881,8 +1937,9 @@
     for (var x = 0; x < p.outers.length; x++) {
       p.outers[x].classList.remove(p.outCls);
       p.outers[x].classList.remove('is-active');
+      p.outers[x].style.zIndex = '';
     }
-    for (var y = 0; y < p.inn.length; y++) p.inn[y].classList.remove(p.inCls);
+    for (var y = 0; y < p.inn.length; y++) { p.inn[y].classList.remove(p.inCls); p.inn[y].style.zIndex = ''; }
     if (p.done) p.done();
   }
   function show(view, anchor) {
@@ -1930,8 +1987,15 @@
     var outCls = anim === 'push' ? 'anim-push-out' : anim === 'pop' ? 'anim-pop-out' : 'anim-fade-out';
     main.classList.add('is-animating');
     document.body.classList.add('view-anim-lock');
-    for (var a = 0; a < inn.length; a++) inn[a].classList.add(inCls);
-    for (var b = 0; b < outers.length; b++) outers[b].classList.add(outCls);
+    var incomingTop = anim !== 'pop';
+    for (var a = 0; a < inn.length; a++) {
+      inn[a].classList.add(inCls);
+      inn[a].style.zIndex = String((incomingTop ? 100 : 0) + (inn.length - a));
+    }
+    for (var b = 0; b < outers.length; b++) {
+      outers[b].classList.add(outCls);
+      outers[b].style.zIndex = String((incomingTop ? 0 : 100) + (outers.length - b));
+    }
     pending = { main: main, outers: outers, inn: inn, inCls: inCls, outCls: outCls, timer: null, done: placeAnchor };
     pending.timer = setTimeout(function () { if (pending) { pending.timer = null; endAnim(); } }, 470);
   }

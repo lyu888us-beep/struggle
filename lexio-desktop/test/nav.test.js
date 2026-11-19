@@ -98,6 +98,16 @@ function animClean() {
   await sleep(30);
   check('再点卡片 → 翻回正面', !cardFlip.classList.contains('is-flipped'));
 
+  // 释义自测开关
+  const meaningEl = doc.getElementById('studyMeaning');
+  const hiddenBefore = meaningEl.classList.contains('is-hidden');
+  doc.getElementById('revealMeaning').click();
+  await sleep(20);
+  check('显示释义按钮切换遮罩状态', meaningEl.classList.contains('is-hidden') !== hiddenBefore);
+  doc.getElementById('revealMeaning').click();
+  await sleep(20);
+  check('隐藏释义按钮恢复遮罩', meaningEl.classList.contains('is-hidden') === hiddenBefore);
+
   // ---------- 3c. 左右滑动切词（滑走的词记作已记住） ----------
   function fire(type, target, x, y) {
     target.dispatchEvent(new window.MouseEvent(type, { bubbles: true, clientX: x, clientY: y }));
@@ -155,11 +165,16 @@ function animClean() {
      'overscroll-behavior: contain;',
      '#studyCard { touch-action: pan-y;',
      '.card-flip.is-flipped .card-front { pointer-events: none; }'].every((frag) => cssText.includes(frag)));
-  check('切换动画不透底(实心背景+非透明淡入)',
+  check('切换动画不透底(实心背景+非透明淡入+FAQ背景+动画禁毛玻璃)',
     ['.section { padding: 100px 0; background: var(--cream); }',
      '.hero { position: relative; isolation: isolate; overflow: hidden; padding: 62px 0 71px; background: var(--cream); }',
+     '.faq-section { padding: 103px 0 104px; background: var(--cream); }',
      'background: #fcfcfa;', 'background: #fdfdfc;',
-     'viewFadeUp'].every((frag) => cssText.includes(frag)));
+     'viewFadeUp',
+     'body.view-anim-lock .site-header',
+     'backdrop-filter: none !important'].every((frag) => cssText.includes(frag)));
+  check('释义未揭晓时真正遮住(blur)',
+    cssText.includes('.study-meaning.is-hidden { color: #99a39c; font-weight: 550; filter: blur(7px);'));
 
   // ---------- 5. 三子面板 ----------
   const panels = [...doc.querySelectorAll('.study-panel')];
@@ -308,6 +323,14 @@ function animClean() {
     !!doc.querySelector('section.library-intro .roots-panel'));
   check('词库头部为功能提示(非营销)',
     lib.textContent.includes('点「学习此词」直接跳到学习面板'));
+  const exportBtn = doc.getElementById('exportBankBtn');
+  check('下载按钮文案=下载词库(无JSON字样)',
+    !!exportBtn && exportBtn.textContent.trim() === '⬇ 下载词库' && !lib.textContent.includes('JSON'),
+    exportBtn ? exportBtn.textContent : 'missing');
+  check('词库导出走本地 Blob 通道', typeof window.__lexioExportBank === 'function' &&
+    !lib.querySelector('a[href*="original-site-wordbank.json"]'));
+  try { await window.__lexioExportBank(); check('导出执行不抛错', true); }
+  catch (e) { check('导出执行不抛错', false, String(e)); }
 
   await setHashSettled('#top');
   check('#top → 返回首页', doc.body.getAttribute('data-app-view') === 'home' && animClean());
