@@ -744,6 +744,8 @@
     body.view-anim-lock .site-header,
     body.view-anim-lock .tabbar,
     body.view-anim-lock .view-topbar { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
+    .word-load-more { grid-column: 1 / -1; padding: 10px 12px; background: #eaf3e3; border: 1px solid #d5e6ca; border-radius: 12px; color: var(--forest); font-size: 11px; font-weight: 700; cursor: pointer; transition: background .2s ease; }
+    .word-load-more:hover { background: #e0efd6; }
   </style>
 </head>
 <body>
@@ -876,7 +878,6 @@
               <label class="search-wrap"><span class="visually-hidden">搜索单词或释义</span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8" stroke="currentColor" stroke-width="1.8"/><path d="m16 16 4.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><input class="search-input" type="search" id="wordSearch" placeholder="搜索英文 / 中文" autocomplete="off"></label>
               <button class="import-button" id="importWordsBtn" type="button"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 15V4m0 0L8 8m4-4 4 4M5 14v5a1.5 1.5 0 0 0 1.5 1.5h11A1.5 1.5 0 0 0 19 19v-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>导入词库</button>
               <button class="import-button" id="syncWordsBtn" type="button" aria-label="从互联网下载同步词库"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 16.6A4.3 4.3 0 0 0 18 8.5 6.3 6.3 0 0 0 6 9.8 3.5 3.5 0 0 0 6.5 17H18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="m12 11 0 8m0 0-3-3m3 3 3-3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>联网同步</button>
-              <button class="import-button" id="exportBankBtn" type="button">⬇ 下载词库</button>
               <input class="visually-hidden" id="wordFile" type="file" accept=".json,.csv,application/json,text/csv" aria-label="选择 JSON 或 CSV 词库文件">
             </div>
           </div>
@@ -900,7 +901,7 @@
           <article class="exam-card stagger-4" style="--wash:#e9e3f2" data-reveal><span class="exam-icon">雅</span><strong>6,000 词</strong><h3>雅思核心词</h3><p>学术语境 · 话题拓展</p></article>
         </div>
         <div class="roots-panel" data-reveal><div class="roots-intro"><span class="eyebrow"><span class="dot"></span> WORD ROOT MINI-CLASS</span><h3>一个词根，<br>串起一整组单词。</h3><p>把零散词汇连成可理解的网络，背过一个，再遇见同族词就更容易。</p></div><div class="root-list"><div class="root-row"><strong>spect / spec</strong><span>看 · look</span><small>inspect · perspective · spectacular</small></div><div class="root-row"><strong>port</strong><span>携带 · carry</span><small>transport · support · portable</small></div><div class="root-row"><strong>mit / miss</strong><span>送、放 · send</span><small>submit · transmit · mission</small></div></div></div>
-        <div class="migration-note"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/><path d="M12 11v5m0-8h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span><strong>词库已核验：</strong>原站内嵌的五大考试词库与 100 条精讲词已打包为 25,024 条学习记录。首次联网打开时自动导入本机 IndexedDB，之后可离线学习；同一拼写在不同考试列表中按原分类保留。</span><a href="#" data-export-bank>下载词库 →</a></div>
+        <div class="migration-note"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/><path d="M12 11v5m0-8h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span><strong>词库已核验：</strong>原站内嵌的五大考试词库与 100 条精讲词已打包为 25,024 条学习记录。首次联网打开时自动导入本机 IndexedDB，之后可离线学习；同一拼写在不同考试列表中按原分类保留。</span></div>
           <p class="library-footnote">预期字段支持 word / english、meaning / translation、phonetic、pos、example、category / exam、uk / us；保留源记录并映射到统一学习卡片。</p>
       </div>
     </section>
@@ -1323,18 +1324,34 @@
         $$('[data-study-panel]').forEach(panel=>panel.classList.toggle('is-active',panel.dataset.studyPanel===key));
         if (key==='memory') renderWeakList();
       }
-      function renderWordGrid() {
+      let gridShown = 0;
+      const GRID_PAGE_SIZE = 100;
+      function renderWordGrid(resetPage) {
+        if (resetPage) gridShown = 0;
         const query = ($('#wordSearch').value || '').trim().toLowerCase();
         const filtered = bank.filter(word => categoryMatches(word, activeFilter) && (!query || `${word.word} ${word.meaning} ${word.category} ${word.phonetic} ${word.ukPhonetic} ${word.usPhonetic}`.toLowerCase().includes(query)));
-        const shown = filtered.slice(0, 9);
+        if (!gridShown) gridShown = Math.min(GRID_PAGE_SIZE, filtered.length);
+        const shown = filtered.slice(0, gridShown);
         const grid = $('#wordGrid');
         if (!shown.length) { grid.innerHTML = '<div class="empty-state">没有找到匹配词条。试试更短的关键词，或切换考试分类。</div>'; return; }
         grid.innerHTML = shown.map(word => {
           const index = bank.findIndex(item => item.id === word.id);
           return `<article class="word-tile"><div class="word-tile-head"><div><h4>${escapeHTML(word.word)}</h4><p class="phonetic">${escapeHTML(displayedPhonetic(word) || '音标待补充')} ${word.pos ? ' · ' + escapeHTML(word.pos) : ''}</p></div><button class="word-speak" type="button" aria-label="播放 ${escapeHTML(word.word)} 发音" data-word-index="${index}" data-word-speak><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 10v4h4l5 4V6l-5 4H4Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M16 9a5 5 0 0 1 0 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button></div><p class="meaning">${escapeHTML(word.meaning)}</p><div class="word-tile-bottom"><span class="word-tag">${escapeHTML(word.category)}</span><button class="word-open" type="button" data-word-index="${index}" data-word-open>学习此词</button></div></article>`;
         }).join('');
+        const status = document.createElement('div');
+        status.className = 'empty-state';
+        status.style.cssText = 'grid-column:1/-1;padding:7px 0 0';
+        status.textContent = filtered.length > shown.length
+          ? `已显示 ${shown.length.toLocaleString()} / ${filtered.length.toLocaleString()} 条`
+          : `共 ${filtered.length.toLocaleString()} 条`;
+        grid.appendChild(status);
         if (filtered.length > shown.length) {
-          const note = document.createElement('div'); note.className='empty-state'; note.style.padding='7px 0 0'; note.textContent=`当前显示前 ${shown.length} 条；共有 ${filtered.length.toLocaleString()} 条匹配。继续搜索以缩小范围。`; grid.appendChild(note);
+          const more = document.createElement('button');
+          more.type = 'button';
+          more.className = 'word-load-more';
+          more.textContent = '加载更多';
+          more.addEventListener('click', () => { gridShown += GRID_PAGE_SIZE; renderWordGrid(); });
+          grid.appendChild(more);
         }
       }
       function parseCSV(text) {
@@ -1603,10 +1620,10 @@
         }
       }
 
-      $('#wordSearch').addEventListener('input',renderWordGrid);
+      $('#wordSearch').addEventListener('input',()=>renderWordGrid(true));
       $$('.filter-chip').forEach(button=>button.addEventListener('click',()=>{
         $$('.filter-chip').forEach(item=>{item.classList.remove('active');item.setAttribute('aria-selected','false');});
-        button.classList.add('active');button.setAttribute('aria-selected','true');activeFilter=button.dataset.filter;renderWordGrid();
+        button.classList.add('active');button.setAttribute('aria-selected','true');activeFilter=button.dataset.filter;renderWordGrid(true);
       }));
       $('#wordGrid').addEventListener('click',event=>{
         const speakButton=event.target.closest('[data-word-speak]');
@@ -1866,45 +1883,7 @@
         toastMessage('正在朗读例句…');
         speakExample(word.example, activeAccent, ()=>{ btn.dataset.speaking='0'; btn.textContent='🔊 朗读例句'; });
       });
-      async function exportWordBank() {
-        toastMessage('正在准备词库…');
-        let text = null;
-        try {
-          const response = await fetch('./data/original-site-wordbank.json', { cache: 'no-store' });
-          if (response.ok) text = await response.text();
-        } catch(_) {}
-        if (!text && bank.length) text = JSON.stringify(bank);
-        if (!text) { toastMessage('词库还没准备好，请稍后再试。'); return; }
-        let shared = false;
-        try {
-          const file = new File([text], '乐词词库.json', { type: 'application/json' });
-          if (navigator.canShare && navigator.canShare({ files: [file] })) {
-            await navigator.share({ files: [file], title: '乐词词库', text: '乐词词库词表备份' });
-            shared = true;
-            toastMessage('已打开系统分享，可选「存储到文件」。');
-          }
-        } catch(shareErr) {
-          if (shareErr && shareErr.name === 'AbortError') { toastMessage('已取消下载。'); return; }
-        }
-        if (shared) return;
-        try {
-          const blob = new Blob([text], { type: 'application/json' });
-          const url = URL.createObjectURL(blob);
-          const link = document.createElement('a');
-          link.href = url;
-          link.download = '乐词词库.json';
-          link.rel = 'noopener';
-          document.body.appendChild(link);
-          link.click();
-          link.remove();
-          setTimeout(() => { try { URL.revokeObjectURL(url); } catch(_) {} }, 4000);
-          toastMessage('已开始下载「乐词词库」。');
-        } catch(_) { toastMessage('此浏览器暂不支持直接下载，请稍后再试。'); }
-      }
-      window.__lexioExportBank = exportWordBank;
-      const exportBankBtn = $('#exportBankBtn');
-      if (exportBankBtn) exportBankBtn.addEventListener('click', exportWordBank);
-      $$('[data-export-bank]').forEach(el => el.addEventListener('click', event => { event.preventDefault(); exportWordBank(); }));
+
       $('#revealMeaning').addEventListener('click',()=>{
         if (getTrialState().expired) { openPayment(); return; }
         const meaning=$('#studyMeaning');const hidden=meaning.classList.toggle('is-hidden');

@@ -179,8 +179,6 @@ function animClean() {
   check('例句朗读三通道(GoogleTTS→有道→系统语音)',
     pageHtml.includes('translate_tts') && pageHtml.includes('dictvoice') &&
     pageHtml.includes('正在朗读例句'));
-  check('下载优先系统分享面板(不弹站点域名)',
-    pageHtml.includes('navigator.canShare') && pageHtml.includes('navigator.share'));
   check('新版本自动刷新(根治旧会话不更新)',
     pageHtml.includes('controllerchange') && pageHtml.includes('swRefreshing'));
 
@@ -350,14 +348,27 @@ function animClean() {
     !!doc.querySelector('section.library-intro .roots-panel'));
   check('词库头部为功能提示(非营销)',
     lib.textContent.includes('点「学习此词」直接跳到学习面板'));
-  const exportBtn = doc.getElementById('exportBankBtn');
-  check('下载按钮文案=下载词库(无JSON字样)',
-    !!exportBtn && exportBtn.textContent.trim() === '⬇ 下载词库' && !lib.textContent.includes('JSON'),
-    exportBtn ? exportBtn.textContent : 'missing');
-  check('词库导出走本地 Blob 通道', typeof window.__lexioExportBank === 'function' &&
-    !lib.querySelector('a[href*="original-site-wordbank.json"]'));
-  try { await window.__lexioExportBank(); check('导出执行不抛错', true); }
-  catch (e) { check('导出执行不抛错', false, String(e)); }
+  check('已取消下载按钮(词库内置自动载入)',
+    !doc.getElementById('exportBankBtn') && typeof window.__lexioExportBank === 'undefined' &&
+    !lib.textContent.includes('下载词库') &&
+    doc.documentElement.outerHTML.includes('original-site-wordbank.json'));
+  const tilesAll = doc.querySelectorAll('#wordGrid .word-tile');
+  check('词库全量显示(无9条上限) — 24条全部渲染',
+    tilesAll.length === 24 && !doc.getElementById('wordGrid').textContent.includes('前 9'),
+    `tiles=${tilesAll.length}`);
+  check('分页状态+加载更多按钮(静态)',
+    doc.documentElement.outerHTML.includes('GRID_PAGE_SIZE') &&
+    doc.documentElement.outerHTML.includes('加载更多'));
+  const chipGk = [...doc.querySelectorAll('.filter-chip')].find((b) => b.dataset.filter === '高考');
+  if (chipGk) chipGk.click();
+  await sleep(40);
+  const tilesGk = doc.querySelectorAll('#wordGrid .word-tile');
+  const gkTags = [...tilesGk].map((t) => (t.querySelector('.word-tag') || {}).textContent);
+  check('高考分类只显示高考词条', tilesGk.length >= 1 && gkTags.every((t) => t === '高考'),
+    `count=${tilesGk.length} tags=${[...new Set(gkTags)].join(',')}`);
+  const chipAll = [...doc.querySelectorAll('.filter-chip')].find((b) => b.dataset.filter === 'all');
+  if (chipAll) chipAll.click();
+  await sleep(40);
 
   await setHashSettled('#top');
   check('#top → 返回首页', doc.body.getAttribute('data-app-view') === 'home' && animClean());
