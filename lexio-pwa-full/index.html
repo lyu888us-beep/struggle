@@ -623,6 +623,84 @@
     .tabbar a .t-ico { display: block; font-size: 19px; line-height: 1.25; margin-bottom: 1px; }
     .tabbar a.is-current { color: var(--forest); font-weight: 800; background: var(--mint); }
     .menu-section + .proof-band { border-top: none; }
+
+    /* ===== Study app view (v3): fullscreen, scroll-locked, no marketing ===== */
+    body[data-app-view="study"] { padding-bottom: 0; overflow: hidden; }
+    body[data-app-view="study"] .site-header { display: none; }
+    body[data-app-view="study"] .tabbar { display: none; }
+    body[data-app-view="study"] .view-topbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 95;
+      display: flex; max-width: none; margin: 0; height: 54px; box-sizing: border-box;
+      align-items: center; padding: 0 16px;
+      background: rgba(247,248,244,.97); border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+    }
+    body[data-app-view="study"] .view-topbar .back { box-shadow: none; }
+    main > section[data-app-view="study"].is-active {
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 40;
+      margin: 0; padding: 54px 0 0; overflow: hidden;
+    }
+    .study-shell { display: flex; flex-direction: column; height: 100%; min-height: 0; padding-top: 12px; }
+    .study-shell .demo-tabs { flex: 0 0 auto; margin: 0 0 10px; }
+    .study-panels { position: relative; flex: 1 1 auto; min-height: 0; }
+    .study-panel { position: absolute; inset: 0; display: none; overflow: hidden; }
+    .study-panel.is-active { display: block; }
+    .study-panel[data-study-panel="plan"] .study-app {
+      height: 100%; width: 100%; max-width: 600px; margin: 0 auto;
+      overflow-y: auto; -webkit-overflow-scrolling: touch;
+    }
+    .study-scroll {
+      height: 100%; box-sizing: border-box; overflow-y: auto; -webkit-overflow-scrolling: touch;
+      background: #f8faf6; color: var(--ink); border: 1px solid rgba(255,255,255,.44);
+      border-radius: 24px; padding: 18px; box-shadow: 0 28px 80px rgba(0,0,0,.2);
+    }
+    .panel-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+    .panel-head .eyebrow { color: #7a8a7e; }
+    .panel-head h3 { margin: 6px 0 0; color: var(--ink); font-size: clamp(19px, 3vw, 25px); letter-spacing: -.04em; line-height: 1.25; }
+    .weak-badge { flex: 0 0 auto; padding: 6px 11px; border-radius: 999px; background: #edf4e5; color: #5e7c47; font-size: 10px; font-weight: 760; white-space: nowrap; }
+    .panel-note { margin: 10px 0 0; color: #8b968e; font-size: 11.5px; line-height: 1.7; }
+    .weak-list { list-style: none; margin: 14px 0 0; padding: 0; display: grid; gap: 9px; }
+    .weak-item { display: flex; align-items: center; justify-content: space-between; gap: 10px; background: #fff; border: 1px solid #e9eee7; border-radius: 14px; padding: 11px 13px; }
+    .weak-main { min-width: 0; }
+    .weak-main strong { display: block; color: var(--ink); font-size: 15px; letter-spacing: -.02em; }
+    .weak-main span { display: block; margin-top: 3px; color: #8b968e; font-size: 10.5px; line-height: 1.5; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .weak-acts { display: flex; gap: 6px; flex: 0 0 auto; }
+    .weak-acts button { min-height: 32px; padding: 0 11px; border-radius: 10px; border: 1px solid #e6ebe4; background: #f6f9f3; color: #69766e; font-size: 10.5px; font-weight: 730; cursor: pointer; }
+    .weak-acts .weak-go { background: var(--forest); border-color: var(--forest); color: #fff; }
+    .weak-acts .weak-ok { background: var(--leaf); border-color: var(--leaf); color: var(--forest); }
+    .panel-empty { margin-top: 16px; padding: 18px 14px; text-align: center; color: #8b968e; font-size: 12px; line-height: 1.7; background: #f1f5eb; border: 1px dashed #d8e2d4; border-radius: 14px; }
+    .battle-scoreboard { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 10px; margin-top: 14px; text-align: center; }
+    .battle-side small { display: block; color: #8b968e; font-size: 10px; }
+    .battle-side strong { display: block; margin-top: 3px; color: var(--ink); font-size: 26px; letter-spacing: -.04em; }
+    .battle-vs { width: 44px; height: 44px; display: grid; place-items: center; border-radius: 50%; background: var(--forest); color: var(--leaf); font-size: 11px; font-weight: 800; }
+    .battle-stage { margin-top: 14px; background: #fff; border: 1px solid #e9eee7; border-radius: 17px; padding: 18px; }
+    .battle-word { color: var(--ink); font-size: clamp(21px, 4vw, 30px); font-weight: 760; letter-spacing: -.04em; text-align: center; overflow-wrap: anywhere; }
+    .battle-options { display: grid; gap: 8px; margin-top: 14px; }
+    .battle-opt { min-height: 42px; padding: 9px 12px; border: 1px solid #e6ebe4; border-radius: 12px; background: #f8faf6; color: #4f6657; font-size: 12.5px; font-weight: 640; text-align: left; cursor: pointer; transition: transform .15s ease, background .15s ease; }
+    .battle-opt:active { transform: scale(.985); }
+    .battle-opt.right { background: #e9f7cf; border-color: #bcdc84; color: #3d5a2a; }
+    .battle-opt.wrong { background: #fbe6e2; border-color: #eeb8ae; color: #8c3d2e; }
+    .battle-opt:disabled { cursor: default; }
+    .battle-msg { margin: 12px 0 0; color: #8b968e; font-size: 11.5px; text-align: center; line-height: 1.7; }
+    .battle-actions { display: flex; justify-content: center; margin-top: 14px; }
+    .battle-actions .study-control { min-width: 172px; min-height: 44px; font-size: 12px; }
+    .showcase-intro .study-side-copy { max-width: 740px; margin-top: 12px; }
+    /* v3: iOS-style push / pop / crossfade view transitions */
+    body.view-anim-lock { overflow: hidden; }
+    main.is-animating { position: relative; display: grid; grid-template-rows: 100vh; grid-template-rows: 100dvh; height: 100vh; height: 100dvh; overflow: hidden; }
+    main.is-animating > section[data-app-view] { grid-row: 1; grid-column: 1; height: 100vh; height: 100dvh; min-height: 0; overflow-y: auto; }
+    .anim-push-in { animation: viewPushIn .42s cubic-bezier(.32,.72,0,1) both; z-index: 6; }
+    .anim-push-out { animation: viewPushOut .42s cubic-bezier(.32,.72,0,1) both; z-index: 1; }
+    .anim-pop-in { animation: viewPopIn .42s cubic-bezier(.32,.72,0,1) both; z-index: 2; }
+    .anim-pop-out { animation: viewPopOut .42s cubic-bezier(.32,.72,0,1) both; z-index: 3; }
+    .anim-fade-in { animation: viewFadeIn .3s ease both; z-index: 4; }
+    .anim-fade-out { animation: viewFadeOut .3s ease both; z-index: 3; }
+    @keyframes viewPushIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
+    @keyframes viewPushOut { from { transform: translateX(0); } to { transform: translateX(-26%); } }
+    @keyframes viewPopIn { from { transform: translateX(-26%); } to { transform: translateX(0); } }
+    @keyframes viewPopOut { from { transform: translateX(0); } to { transform: translateX(100%); } }
+    @keyframes viewFadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes viewFadeOut { from { opacity: 1; } to { opacity: 0; } }
   </style>
 </head>
 <body>
@@ -733,6 +811,19 @@
       </div>
     </section>
 
+    <section class="dark-section showcase-intro" data-app-view="about" aria-label="产品体验介绍">
+      <div class="container">
+        <div class="section-heading" data-reveal><div class="eyebrow"><span class="dot"></span> PRODUCT EXPERIENCE</div><h2>打开 App 的每一分钟，<br><em>都在高效记忆。</em></h2><p>试试智能词单、记忆卡片和学习进度。此处是可交互的 PWA 体验版，当前学习状态保存在本设备。</p></div>
+        <div class="study-side-copy" id="showcasePanel" role="tabpanel" data-reveal>
+            <div class="eyebrow"><span class="dot"></span> SMALL STEPS, REAL PROGRESS</div>
+            <h3 id="showcaseHeadline">每天醒来，<br><em>词单已为你排好。</em></h3>
+            <p id="showcaseCopy">告诉 Lexio 你的考试目标和日期，系统拆解考纲词库，生成刚刚好的每日任务——不多到崩溃，不少到焦虑。</p>
+            <ul class="check-list"><li><span class="check">✓</span><span data-showcase-bullet="0">按考试日期倒推每日词量。</span></li><li><span class="check">✓</span><span data-showcase-bullet="1">新词与复习词智能配比。</span></li><li><span class="check">✓</span><span data-showcase-bullet="2">漏打卡自动重排，不让任务堆积。</span></li></ul>
+            <button class="btn btn-lime" type="button" data-open-trial>开始我的 7 天体验 <span class="btn-arrow">↗</span></button>
+          </div>
+      </div>
+    </section>
+
     <section class="section library-section" id="library" data-app-view="library">
       <div class="container">
         <div class="section-heading" data-reveal><div class="eyebrow"><span class="dot"></span> ONE LIBRARY, MANY GOALS</div><h2>从校内考试到留学，<br>让每个目标 <em>都有清晰路线。</em></h2><p>已从原站网页内嵌词表提取五大考试词库与 100 条精讲词。首次联网打开时自动导入本机，之后可离线搜索与学习，也可下载 JSON 导入另一台设备。</p></div>
@@ -764,11 +855,11 @@
       </div>
     </section>
 
-    <section class="dark-section" id="study" data-app-view="study">
-      <div class="container">
-        <div class="section-heading" data-reveal><div class="eyebrow"><span class="dot"></span> PRODUCT EXPERIENCE</div><h2>打开 App 的每一分钟，<br><em>都在高效记忆。</em></h2><p>试试智能词单、记忆卡片和学习进度。此处是可交互的 PWA 体验版，当前学习状态保存在本设备。</p></div>
+    <section class="dark-section study-view" id="study" data-app-view="study">
+      <div class="container study-shell">
         <div class="demo-tabs" role="tablist" aria-label="产品功能演示"><button class="demo-tab active" type="button" role="tab" aria-selected="true" data-demo-tab="plan">📅 智能词单</button><button class="demo-tab" type="button" role="tab" aria-selected="false" data-demo-tab="memory">⚡ 记忆引擎</button><button class="demo-tab" type="button" role="tab" aria-selected="false" data-demo-tab="battle">⚔️ 好友对战</button></div>
-        <div class="workbench">
+        <div class="study-panels">
+          <div class="study-panel is-active" data-study-panel="plan" role="tabpanel" aria-label="智能词单">
           <div class="study-app" data-reveal>
             <div class="study-app-top"><div class="study-app-brand"><span class="mini-logo"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M6 18V6.5c0-.8.7-1.5 1.5-1.5H18M6 18h11.5c.8 0 1.5-.7 1.5-1.5V8" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"/><path d="m10 13 2 2 5-6" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Lexio 学习空间<small id="studyDate">今日学习 · 15 分钟</small></span></div><span class="session-status"><i></i><span id="sessionStatusText">学习中</span></span></div>
             <div class="study-stats"><div class="study-stat"><span>今日已掌握</span><strong id="knownCount">0</strong></div><div class="study-stat"><span>本轮计划</span><strong>30</strong></div><div class="study-stat"><span>连续学习</span><strong>7 <small style="font-size:9px;font-weight:550">天</small></strong></div></div>
@@ -782,12 +873,36 @@
             <div class="trial-banner" id="expiredBanner" hidden><span><strong>7 天试用已结束。</strong>开通 Pro 后继续完整学习。</span><button type="button" id="bannerSubscribe">开通 Pro</button></div>
             <div class="study-app-foot"><span id="storageStatus">演示词库 · 本地保存</span><div class="accent-toggle" aria-label="发音口音"><button type="button" class="active" data-accent="en-GB">英式</button><button type="button" data-accent="en-US">美式</button></div></div>
           </div>
-          <div class="study-side-copy" id="showcasePanel" role="tabpanel" data-reveal>
-            <div class="eyebrow"><span class="dot"></span> SMALL STEPS, REAL PROGRESS</div>
-            <h3 id="showcaseHeadline">每天醒来，<br><em>词单已为你排好。</em></h3>
-            <p id="showcaseCopy">告诉 Lexio 你的考试目标和日期，系统拆解考纲词库，生成刚刚好的每日任务——不多到崩溃，不少到焦虑。</p>
-            <ul class="check-list"><li><span class="check">✓</span><span data-showcase-bullet="0">按考试日期倒推每日词量。</span></li><li><span class="check">✓</span><span data-showcase-bullet="1">新词与复习词智能配比。</span></li><li><span class="check">✓</span><span data-showcase-bullet="2">漏打卡自动重排，不让任务堆积。</span></li></ul>
-            <button class="btn btn-lime" type="button" data-open-trial>开始我的 7 天体验 <span class="btn-arrow">↗</span></button>
+                    </div>
+          <div class="study-panel" data-study-panel="memory" role="tabpanel" aria-label="记忆引擎">
+            <div class="study-scroll weak-panel">
+              <div class="panel-head">
+                <div><div class="eyebrow"><span class="dot"></span> MEMORY ENGINE</div><h3>看过了，但还没记住的词</h3></div>
+                <span class="weak-badge" id="weakCount">0 个待巩固</span>
+              </div>
+              <p class="panel-note">此面板只显示需要巩固的词：卡片上点「还不熟悉 · 再练一次」会加入这里，点「记住了 ✓」自动移出。这里只有复习清单，没有其他内容。</p>
+              <ul class="weak-list" id="weakList"></ul>
+              <div class="panel-empty" id="weakEmpty">暂时没有薄弱词。继续学习，标记不熟的词会自动出现在这里。</div>
+            </div>
+          </div>
+          <div class="study-panel" data-study-panel="battle" role="tabpanel" aria-label="好友对战">
+            <div class="study-scroll battle-panel">
+              <div class="panel-head">
+                <div><div class="eyebrow"><span class="dot"></span> FRIEND BATTLE</div><h3>10 题词义快答 · 你 VS 对手</h3></div>
+                <span class="weak-badge" id="battleState">未开始</span>
+              </div>
+              <div class="battle-scoreboard">
+                <div class="battle-side"><small>你</small><strong id="battleMyScore">0</strong></div>
+                <div class="battle-vs">VS</div>
+                <div class="battle-side"><small>对手 · Lex</small><strong id="battleFoeScore">0</strong></div>
+              </div>
+              <div class="battle-stage">
+                <div class="battle-word" id="battleWord">准备好了吗？</div>
+                <div class="battle-options" id="battleOptions"></div>
+              </div>
+              <p class="battle-msg" id="battleMsg">与 AI 对手进行 10 题词义快答，答对得分。正式版将支持邀请好友、房间对战与排行榜。</p>
+              <div class="battle-actions"><button class="study-control primary" id="battleStart" type="button">开始对战</button></div>
+            </div>
           </div>
         </div>
       </div>
@@ -1138,6 +1253,8 @@
         $('#showcaseCopy').textContent=content.copy;
         $$('[data-showcase-bullet]').forEach((item,index)=>item.textContent=content.bullets[index]||'');
         $$('[data-demo-tab]').forEach(button=>{const active=button.dataset.demoTab===key;button.classList.toggle('active',active);button.setAttribute('aria-selected',String(active));});
+        $$('[data-study-panel]').forEach(panel=>panel.classList.toggle('is-active',panel.dataset.studyPanel===key));
+        if (key==='memory') renderWeakList();
       }
       function renderWordGrid() {
         const query = ($('#wordSearch').value || '').trim().toLowerCase();
@@ -1387,6 +1504,88 @@
       $('#wordSourceUrl').addEventListener('keydown',event=>{if(event.key==='Enter'){event.preventDefault();$('#saveWordSource').click();}});
       $('#clearWordSource').addEventListener('click',()=>{try{localStorage.removeItem('lexio.wordSourceUrl');}catch(_){}$('#wordSourceUrl').value='';wordSourceConfig.sourceUrl='';$('#wordSourceStatus').textContent='已清除此设备保存的网址。';});
       $$('.plan-option').forEach(button=>button.addEventListener('click',()=>{selectedPlanId=button.dataset.planSelect;try{localStorage.setItem('lexio.selectedPlan',selectedPlanId);}catch(_){}updatePricingUI();}));
+      let weakWords = (()=>{ try { const v=JSON.parse(localStorage.getItem('lexio.weakWords')||'[]'); return Array.isArray(v)?v.filter(Boolean):[]; } catch(_) { return []; } })();
+      function persistWeak(){ try { localStorage.setItem('lexio.weakWords',JSON.stringify(weakWords)); } catch(_) {} }
+      function markWeak(wordKey, on) {
+        if (!wordKey) return;
+        const i = weakWords.indexOf(wordKey);
+        if (on && i < 0) weakWords.push(wordKey);
+        if (!on && i >= 0) weakWords.splice(i, 1);
+        persistWeak();
+        renderWeakList();
+      }
+      function renderWeakList() {
+        const list = $('#weakList'), empty = $('#weakEmpty'), count = $('#weakCount');
+        if (!list) return;
+        if (count) count.textContent = weakWords.length + ' 个待巩固';
+        if (!weakWords.length) { list.innerHTML = ''; if (empty) empty.hidden = false; return; }
+        if (empty) empty.hidden = true;
+        list.innerHTML = weakWords.map(w => {
+          const entry = bank.find(item => item && item.word === w);
+          const detail = entry ? [entry.phonetic || '', entry.meaning || ''].filter(Boolean).join(' · ') : '回到卡片再看一次';
+          return '<li class="weak-item"><div class="weak-main"><strong>' + escapeHTML(w) + '</strong><span>' + escapeHTML(detail) + '</span></div><div class="weak-acts"><button type="button" class="weak-go" data-weak-go="' + escapeHTML(w) + '">去学习</button><button type="button" class="weak-ok" data-weak-ok="' + escapeHTML(w) + '">记住了</button></div></li>';
+        }).join('');
+        $$('[data-weak-ok]').forEach(b => b.addEventListener('click', () => markWeak(b.dataset.weakOk, false)));
+        $$('[data-weak-go]').forEach(b => b.addEventListener('click', () => {
+          const idx = bank.findIndex(item => item && item.word === b.dataset.weakGo);
+          if (idx >= 0) setStudyIndex(idx);
+          selectShowcaseTab('plan');
+        }));
+      }
+      window.__lexioWeak = { list: () => weakWords.slice(), add: (w) => markWeak(w, true), remove: (w) => markWeak(w, false), render: renderWeakList };
+      const battle = { q: [], i: 0, me: 0, foe: 0, over: false, lock: false };
+      function battleRound() {
+        if (battle.i >= battle.q.length) {
+          battle.over = true;
+          $('#battleState').textContent = '已结束';
+          const win = battle.me > battle.foe, draw = battle.me === battle.foe;
+          $('#battleWord').textContent = win ? '🏆 胜利' : draw ? '🤝 平局' : '💪 再战';
+          $('#battleMsg').textContent = win ? `你以 ${battle.me} : ${battle.foe} 获胜！` : draw ? `平局 ${battle.me} : ${battle.foe}，旗鼓相当。` : `对手以 ${battle.foe} : ${battle.me} 获胜，再来一局？`;
+          $('#battleStart').textContent = '再来一局';
+          return;
+        }
+        const cur = battle.q[battle.i];
+        battle.lock = false;
+        $('#battleState').textContent = `第 ${battle.i + 1} / ${battle.q.length} 题`;
+        $('#battleWord').textContent = cur.word;
+        $('#battleMsg').textContent = '选择正确释义，答对得分。';
+        const wrong = bank.filter(w => w !== cur && w.meaning && w.meaning !== cur.meaning).sort(() => Math.random() - 0.5).slice(0, 2);
+        const opts = [cur, ...wrong].sort(() => Math.random() - 0.5);
+        const box = $('#battleOptions');
+        box.innerHTML = '';
+        opts.forEach(o => {
+          const b = document.createElement('button');
+          b.type = 'button';
+          b.className = 'battle-opt';
+          b.textContent = o.meaning || o.word;
+          b.addEventListener('click', () => {
+            if (battle.lock || battle.over) return;
+            battle.lock = true;
+            $$('.battle-opt').forEach(x => { x.disabled = true; });
+            if (o === cur) { battle.me += 1; b.classList.add('right'); $('#battleMsg').textContent = '答对了！'; }
+            else {
+              b.classList.add('wrong');
+              $('#battleMsg').textContent = `正确答案：${cur.meaning || cur.word}`;
+              $$('.battle-opt').forEach(x => { if (x.textContent === (cur.meaning || cur.word)) x.classList.add('right'); });
+            }
+            if (Math.random() < 0.6) battle.foe += 1;
+            $('#battleMyScore').textContent = battle.me;
+            $('#battleFoeScore').textContent = battle.foe;
+            setTimeout(() => { battle.i += 1; battleRound(); }, 950);
+          });
+          box.appendChild(b);
+        });
+      }
+      $('#battleStart').addEventListener('click', () => {
+        if (!bank.length) { $('#battleMsg').textContent = '词库尚未导入完成，请稍后再来对战。'; return; }
+        battle.q = [...bank].sort(() => Math.random() - 0.5).slice(0, 10);
+        battle.i = 0; battle.me = 0; battle.foe = 0; battle.over = false;
+        $('#battleMyScore').textContent = '0';
+        $('#battleFoeScore').textContent = '0';
+        $('#battleStart').textContent = '重新开始';
+        battleRound();
+      });
+      renderWeakList();
       $$('[data-demo-tab]').forEach(button=>button.addEventListener('click',()=>selectShowcaseTab(button.dataset.demoTab)));
       $$('.provider-choice').forEach(button=>button.addEventListener('click',()=>{selectedProvider=button.dataset.providerSelect;$$('.provider-choice').forEach(item=>{const active=item===button;item.classList.toggle('active',active);item.setAttribute('aria-pressed',String(active));});}));
       $('#directSubscribe').addEventListener('click',openPayment);
@@ -1399,11 +1598,11 @@
       });
       $('#knownWord').addEventListener('click',()=>{
         if (getTrialState().expired) { openPayment(); return; }
-        dailyStats.known+=1;persistStats();studyIndex=(studyIndex+1)%Math.max(1,bank.length);updateStudyCard();toastMessage('记得不错！这条词目已加入今日掌握进度。');
+        const masteredWord = bank[studyIndex] && bank[studyIndex].word; dailyStats.known+=1;persistStats();markWeak(masteredWord,false);studyIndex=(studyIndex+1)%Math.max(1,bank.length);updateStudyCard();toastMessage('记得不错！这条词目已加入今日掌握进度。');
       });
       $('#againWord').addEventListener('click',()=>{
         if (getTrialState().expired) { openPayment(); return; }
-        dailyStats.again+=1;persistStats();$('#studyMeaning').classList.remove('is-hidden');$('#revealMeaning').textContent='隐藏释义';toastMessage('已标记为待巩固，稍后再回来复习。');
+        const weakWord = bank[studyIndex] && bank[studyIndex].word; dailyStats.again+=1;persistStats();markWeak(weakWord,true);$('#studyMeaning').classList.remove('is-hidden');$('#revealMeaning').textContent='隐藏释义';toastMessage('已加入记忆引擎：薄弱词已收集。');
       });
       $('#nextWord').addEventListener('click',()=>{studyIndex=(studyIndex+1)%Math.max(1,bank.length);updateStudyCard();});
       $$('.accent-toggle button').forEach(button=>button.addEventListener('click',()=>{$$('.accent-toggle button').forEach(b=>b.classList.remove('active'));button.classList.add('active');activeAccent=button.dataset.accent;renderWordGrid();if(bank[studyIndex])$('#studyPhonetic').textContent=`${displayedPhonetic(bank[studyIndex])||'音标待补充'}${bank[studyIndex].pos?' · '+bank[studyIndex].pos:''}`;}));
@@ -1446,10 +1645,45 @@
     ops: 'pricing', pricing: 'pricing', faq: 'pricing'
   };
   var VIEW_LABEL = { home: '首页', study: '学习', library: '词库', pricing: '订阅', about: '介绍' };
+  var booted = false;
+  var pending = null;
+  function endAnim() {
+    if (!pending) return;
+    var p = pending;
+    pending = null;
+    if (p.timer) { clearTimeout(p.timer); p.timer = null; }
+    p.main.classList.remove('is-animating');
+    document.body.classList.remove('view-anim-lock');
+    for (var x = 0; x < p.outers.length; x++) {
+      p.outers[x].classList.remove(p.outCls);
+      p.outers[x].classList.remove('is-active');
+    }
+    for (var y = 0; y < p.inn.length; y++) p.inn[y].classList.remove(p.inCls);
+    if (p.done) p.done();
+  }
   function show(view, anchor) {
+    if (pending) endAnim();
     var secs = document.querySelectorAll('main > section[data-app-view]');
+    var main = document.getElementById('main');
+    var prev = document.body.getAttribute('data-app-view');
+    var anim = 'none';
+    if (booted && prev && prev !== view && main) {
+      var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (!reduced) {
+        if (view === 'study') anim = 'push';
+        else if (prev === 'study' || view === 'home') anim = 'pop';
+        else if (prev === 'home') anim = 'push';
+        else anim = 'fade';
+      }
+    }
+    var outers = [], inn = [];
     for (var i = 0; i < secs.length; i++) {
-      secs[i].classList.toggle('is-active', secs[i].getAttribute('data-app-view') === view);
+      var want = secs[i].getAttribute('data-app-view') === view;
+      if (want) { secs[i].classList.add('is-active'); inn.push(secs[i]); }
+      else if (secs[i].classList.contains('is-active')) {
+        if (anim === 'none') secs[i].classList.remove('is-active');
+        else outers.push(secs[i]);
+      }
     }
     document.body.setAttribute('data-app-view', view);
     var lb = document.getElementById('viewTopbarLabel');
@@ -1458,14 +1692,24 @@
     for (var j = 0; j < tabs.length; j++) {
       tabs[j].classList.toggle('is-current', tabs[j].getAttribute('data-tab') === view);
     }
-    if (anchor) {
-      var el = document.getElementById(anchor);
-      if (el && typeof el.scrollIntoView === 'function') {
-        requestAnimationFrame(function () { el.scrollIntoView({ behavior: 'smooth' }); });
-        return;
+    booted = true;
+    function placeAnchor() {
+      if (view === 'study') { window.scrollTo(0, 0); return; }
+      if (anchor) {
+        var el = document.getElementById(anchor);
+        if (el && typeof el.scrollIntoView === 'function') { el.scrollIntoView({ behavior: 'smooth' }); return; }
       }
+      window.scrollTo(0, 0);
     }
-    window.scrollTo(0, 0);
+    if (anim === 'none') { placeAnchor(); return; }
+    var inCls = anim === 'push' ? 'anim-push-in' : anim === 'pop' ? 'anim-pop-in' : 'anim-fade-in';
+    var outCls = anim === 'push' ? 'anim-push-out' : anim === 'pop' ? 'anim-pop-out' : 'anim-fade-out';
+    main.classList.add('is-animating');
+    document.body.classList.add('view-anim-lock');
+    for (var a = 0; a < inn.length; a++) inn[a].classList.add(inCls);
+    for (var b = 0; b < outers.length; b++) outers[b].classList.add(outCls);
+    pending = { main: main, outers: outers, inn: inn, inCls: inCls, outCls: outCls, timer: null, done: placeAnchor };
+    pending.timer = setTimeout(function () { if (pending) { pending.timer = null; endAnim(); } }, 470);
   }
   function route() {
     var key = (location.hash || '').replace(/^#\/?/, '');
