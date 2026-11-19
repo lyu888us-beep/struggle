@@ -268,7 +268,7 @@
     .study-word-main .phonetic { margin: 5px 0 0; color: #86928a; font-size: 10px; }
     .study-word-main .sound-round { flex: 0 0 auto; width: 38px; height: 38px; color: var(--forest); background: #eff5e9; border: 0; }
     .study-meaning { position: relative; z-index: 1; margin: 16px 0 0; padding-top: 13px; border-top: 1px solid #edf0ea; color: #4f6657; font-size: 13px; font-weight: 720; }
-    .study-meaning.is-hidden { color: #99a39c; font-weight: 550; filter: blur(7px); -webkit-filter: blur(7px); user-select: none; -webkit-user-select: none; }
+    .study-meaning.is-hidden { color: transparent; user-select: none; -webkit-user-select: none; }
     .study-example { position: relative; z-index: 1; margin: 9px 0 0; color: #859088; font-size: 10px; font-style: italic; line-height: 1.6; }
     .study-example-translation { position: relative; z-index: 1; margin: 4px 0 0; color: #8b968e; font-size: 9px; line-height: 1.5; }
     .study-mnemonic { position: relative; z-index: 1; margin: 8px 0 0; padding: 8px 9px; color: #52645a; background: #f1f5eb; border-radius: 9px; font-size: 9px; line-height: 1.55; }
@@ -1485,30 +1485,51 @@
         }, 250);
       }
       function speakExample(text, lang, onDone) {
-        const fallback = () => speak(text, lang, onDone);
-        try {
-          const type = lang === 'en-US' ? 2 : 1;
-          const url = 'https://dict.youdao.com/dictvoice?audio=' + encodeURIComponent(text) + '&type=' + type;
-          if (typeof Audio !== 'undefined') {
-            if (activeAudio) { try { activeAudio.pause(); } catch(_) {} activeAudio = null; }
-            const audio = new Audio(url);
-            activeAudio = audio;
-            let settled = false;
-            const settle = (useFallback) => {
-              if (settled) return;
-              settled = true;
-              if (activeAudio === audio) activeAudio = null;
-              if (useFallback) fallback();
-              else if (typeof onDone === 'function') onDone();
-            };
-            audio.onended = () => settle(false);
-            audio.onerror = () => settle(true);
-            const playPromise = audio.play();
-            if (playPromise && playPromise.catch) playPromise.catch(() => settle(true));
-            return;
-          }
-        } catch(_) {}
-        fallback();
+        const type = lang === 'en-US' ? 2 : 1;
+        const enc = encodeURIComponent(text);
+        const urls = [
+          'https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=en&q=' + enc,
+          'https://dict.youdao.com/dictvoice?audio=' + enc + '&type=' + type
+        ];
+        const finish = () => { if (typeof onDone === 'function') onDone(); };
+        const trySpeech = () => speak(text, lang, finish);
+        if (typeof Audio === 'undefined') { trySpeech(); return; }
+        let idx = 0;
+        const tryNext = () => {
+          if (idx >= urls.length) { trySpeech(); return; }
+          const url = urls[idx++];
+          let audio;
+          try { audio = new Audio(url); } catch(_) { tryNext(); return; }
+          if (activeAudio) { try { activeAudio.pause(); } catch(_) {} activeAudio = null; }
+          activeAudio = audio;
+          let settled = false;
+          let hardStop = null;
+          const settleFail = () => {
+            if (settled) return;
+            settled = true;
+            if (hardStop) { clearTimeout(hardStop); hardStop = null; }
+            try { audio.pause(); } catch(_) {}
+            if (activeAudio === audio) activeAudio = null;
+            tryNext();
+          };
+          const settleOk = () => {
+            if (settled) return;
+            settled = true;
+            if (hardStop) { clearTimeout(hardStop); hardStop = null; }
+            if (activeAudio === audio) activeAudio = null;
+            finish();
+          };
+          audio.addEventListener('error', settleFail, { once: true });
+          audio.addEventListener('playing', () => {
+            if (settled) return;
+            hardStop = setTimeout(settleOk, Math.min(30000, text.length * 130 + 4000));
+          }, { once: true });
+          audio.addEventListener('ended', settleOk, { once: true });
+          setTimeout(() => { if (!settled && !hardStop) settleFail(); }, 2500);
+          const playPromise = audio.play();
+          if (playPromise && playPromise.catch) playPromise.catch(() => settleFail());
+        };
+        tryNext();
       }
       function speakEntry(entry, lang=activeAccent) {
         if(!entry || !entry.word) return;
@@ -1842,6 +1863,7 @@
         if(!word || !word.example){ toastMessage('这个词还没有例句。'); return; }
         if(btn.dataset.speaking==='1'){ try{ window.speechSynthesis && window.speechSynthesis.cancel(); }catch(_){} if(activeAudio){try{activeAudio.pause();}catch(_){} activeAudio=null;} btn.dataset.speaking='0'; btn.textContent='🔊 朗读例句'; return; }
         btn.dataset.speaking='1'; btn.textContent='⏸ 停止朗读';
+        toastMessage('正在朗读例句…');
         speakExample(word.example, activeAccent, ()=>{ btn.dataset.speaking='0'; btn.textContent='🔊 朗读例句'; });
       });
       async function exportWordBank() {
@@ -1853,6 +1875,18 @@
         } catch(_) {}
         if (!text && bank.length) text = JSON.stringify(bank);
         if (!text) { toastMessage('词库还没准备好，请稍后再试。'); return; }
+        let shared = false;
+        try {
+          const file = new File([text], '乐词词库.json', { type: 'application/json' });
+          if (navigator.canShare && navigator.canShare({ files: [file] })) {
+            await navigator.share({ files: [file], title: '乐词词库', text: '乐词词库词表备份' });
+            shared = true;
+            toastMessage('已打开系统分享，可选「存储到文件」。');
+          }
+        } catch(shareErr) {
+          if (shareErr && shareErr.name === 'AbortError') { toastMessage('已取消下载。'); return; }
+        }
+        if (shared) return;
         try {
           const blob = new Blob([text], { type: 'application/json' });
           const url = URL.createObjectURL(blob);
@@ -1904,7 +1938,15 @@
         if(installPrompt){installPrompt.prompt();const choice=await installPrompt.userChoice;toastMessage(choice.outcome==='accepted'?'Lexio 已开始安装。':'你可以稍后再安装 Lexio。');installPrompt=null;}
         else toastMessage('可在浏览器菜单中选择“安装应用”或“添加到主屏幕”。请使用 HTTPS 访问。');
       });
-      if('serviceWorker' in navigator && location.protocol!=='file:') navigator.serviceWorker.register('./sw.js').catch(error=>console.info('Service Worker will activate when served from a supported secure origin.',error));
+      if('serviceWorker' in navigator && location.protocol!=='file:') {
+        navigator.serviceWorker.register('./sw.js').catch(error=>console.info('Service Worker will activate when served from a supported secure origin.',error));
+        var swRefreshing = false;
+        navigator.serviceWorker.addEventListener('controllerchange', function() {
+          if (swRefreshing) return;
+          swRefreshing = true;
+          window.location.reload();
+        });
+      }
       loadPublicConfigs();
       initializeBank();
     })();

@@ -173,8 +173,16 @@ function animClean() {
      'viewFadeUp',
      'body.view-anim-lock .site-header',
      'backdrop-filter: none !important'].every((frag) => cssText.includes(frag)));
-  check('释义未揭晓时真正遮住(blur)',
-    cssText.includes('.study-meaning.is-hidden { color: #99a39c; font-weight: 550; filter: blur(7px);'));
+  check('释义未揭晓时完全不显示(透明,非马赛克)',
+    cssText.includes('.study-meaning.is-hidden { color: transparent;'));
+  const pageHtml = doc.documentElement.outerHTML;
+  check('例句朗读三通道(GoogleTTS→有道→系统语音)',
+    pageHtml.includes('translate_tts') && pageHtml.includes('dictvoice') &&
+    pageHtml.includes('正在朗读例句'));
+  check('下载优先系统分享面板(不弹站点域名)',
+    pageHtml.includes('navigator.canShare') && pageHtml.includes('navigator.share'));
+  check('新版本自动刷新(根治旧会话不更新)',
+    pageHtml.includes('controllerchange') && pageHtml.includes('swRefreshing'));
 
   // ---------- 5. 三子面板 ----------
   const panels = [...doc.querySelectorAll('.study-panel')];
@@ -280,6 +288,25 @@ function animClean() {
   await sleep(900);
   const st2 = doc.getElementById('battleState').textContent;
   check('我答完立即换下一题（不等对手作答）', /第 2 \/ 10/.test(st2), st2);
+
+  // 连打到第 10 题并结算 —— 杜绝“只有7题”
+  let deepOk = true, deepLabel = st2;
+  for (let r = 2; r <= 10; r++) {
+    deepLabel = doc.getElementById('battleState').textContent;
+    if (!new RegExp(`第 ${r} / 10 题`).test(deepLabel)) { deepOk = false; break; }
+    if (r === 10) break;
+    const optsDeep = doc.querySelectorAll('.battle-opt');
+    (optsDeep[0] || { click() {} }).click();
+    await sleep(480);
+  }
+  check('连答推进到第 10 / 10 题（杜绝7题）', deepOk, deepLabel);
+  const optsFinal = doc.querySelectorAll('.battle-opt');
+  (optsFinal[0] || { click() {} }).click();
+  await sleep(520);
+  check('第10题答完 → 对局结算(再来一局)',
+    doc.getElementById('battleState').textContent === '已结束' &&
+    doc.getElementById('battleStart').textContent.includes('再来一局'),
+    `${doc.getElementById('battleState').textContent} | ${doc.getElementById('battleStart').textContent}`);
 
   doc.querySelector('[data-demo-tab="plan"]').click();
   await sleep(30);
