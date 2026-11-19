@@ -1,0 +1,49 @@
+{
+  "id": "./",
+  "name": "Lexio 乐词 · 英语单词记忆",
+  "short_name": "乐词",
+  "description": "为学生打造的英语词汇记忆 PWA，覆盖高考、四六级、考研与雅思学习路线。",
+  "lang": "zh-CN",
+  "start_url": "./index.html?source=pwa",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
+  "orientation": "portrait-primary",
+  "background_color": "#f7f8f4",
+  "theme_color": "#163f32",
+  "categories": ["education", "productivity"],
+  "icons": [
+    {
+      "src": "./icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "开始学习",
+      "short_name": "学习",
+      "url": "./index.html#study",
+      "icons": [{"src": "./icon.svg", "sizes": "any", "type": "image/svg+xml"}]
+    },
+    {
+      "name": "浏览词库",
+      "short_name": "词库",
+      "url": "./index.html#library",
+      "icons": [{"src": "./icon.svg", "sizes": "any", "type": "image/svg+xml"}]
+    }
+  ]
+}

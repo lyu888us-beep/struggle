@@ -3,7 +3,7 @@ name: deploy-lexio-pages
 on:
   push:
     paths:
-      - 'lexio-desktop/assets/**'
+      - 'lexio-pwa-full/**'
       - '.github/workflows/deploy-lexio-pages.yml'
   workflow_dispatch:
 
@@ -30,7 +30,7 @@ jobs:
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: lexio-desktop/assets
+          path: lexio-pwa-full
 
       - name: Deploy to GitHub Pages
         id: deployment
