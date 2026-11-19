@@ -10,7 +10,7 @@
   • completed installing native dependencies
   • packaging       platform=darwin arch=arm64 electron=33.4.11 appOutDir=dist/mac-arm64
   • downloading     url=https://github.com/electron/electron/releases/download/v33.4.11/electron-v33.4.11-darwin-arm64.zip size=100 MB parts=6
-  • downloaded      url=https://github.com/electron/electron/releases/download/v33.4.11/electron-v33.4.11-darwin-arm64.zip duration=906ms
+  • downloaded      url=https://github.com/electron/electron/releases/download/v33.4.11/electron-v33.4.11-darwin-arm64.zip duration=963ms
   • skipped macOS application code signing  reason=, see https://electron.build/code-signing CSC_IDENTITY_AUTO_DISCOVERY=false
   • building        target=DMG arch=arm64 file=dist/Lexio-1.0.0-arm64.dmg
   • building        target=macOS zip arch=arm64 file=dist/Lexio-1.0.0-arm64.zip
