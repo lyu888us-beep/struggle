@@ -1,0 +1,7 @@
+{
+  "sourceUrl": "./data/original-site-wordbank.json",
+  "format": "json",
+  "expectedCount": 25024,
+  "cacheOnDevice": true,
+  "notes": "已从原站公开 HTML 内嵌模块提取五大考试词库与 100 条精讲词，按原站合并逻辑生成 25,024 条学习记录。首次联网打开时自动保存到 IndexedDB。"
+}

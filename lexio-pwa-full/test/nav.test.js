@@ -1,0 +1,491 @@
+'use strict';
+
+/**
+ * 多视图导航测试（v3）：首页菜单层级 + iOS 式推入动画 + 学习面板全屏锁定 + 三子面板。
+ * 运行：node lexio-pwa-full/test/nav.test.js
+ */
+const fs = require('fs');
+const path = require('path');
+const { JSDOM, VirtualConsole } = require('jsdom');
+
+const htmlPath = path.join(__dirname, '..', 'index.html');
+const html = fs.readFileSync(htmlPath, 'utf8');
+const swSource = fs.readFileSync(path.join(__dirname, '..', 'sw.js'), 'utf8');
+
+const vc = new VirtualConsole(); // 吞掉应用脚本在 jsdom 环境的预期报错（fetch/IndexedDB 不存在）
+vc.on('jsdomError', () => {});
+vc.on('error', () => {});
+
+const dom = new JSDOM(html, {
+  url: 'http://localhost/',
+  runScripts: 'dangerously',
+  pretendToBeVisual: true,
+  virtualConsole: vc,
+  beforeParse(window) {
+    class MockAudio {
+      constructor(src) { this.src = src; this.listeners = {}; window.__lastAudio = this; (window.__audioInstances ||= []).push(this); }
+      addEventListener(type, callback) { (this.listeners[type] ||= []).push(callback); }
+      emit(type) {
+        const event = { type };
+        if (typeof this['on' + type] === 'function') this['on' + type](event);
+        (this.listeners[type] || []).forEach(callback => callback(event));
+      }
+      play() { return Promise.resolve(); }
+      pause() {}
+    }
+    window.Audio = MockAudio;
+    window.SpeechSynthesisUtterance = function (text) { this.text = text; this.lang = ''; this.rate = 1; };
+    window.speechSynthesis = {
+      speaking: false,
+      pending: false,
+      getVoices: () => [{ lang: 'en-US' }, { lang: 'en-GB' }],
+      cancel() { this.speaking = false; this.pending = false; },
+      speak(utterance) {
+        this.speaking = true;
+        window.__lastUtterance = utterance;
+        if (utterance.onstart) utterance.onstart();
+      },
+    };
+  },
+});
+
+const { window } = dom;
+const doc = window.document;
+const scrollCalls = [];
+Object.defineProperty(window, 'scrollY', { configurable: true, writable: true, value: 0 });
+window.scrollTo = (_x, y) => { window.scrollY = Number(y) || 0; scrollCalls.push(window.scrollY); };
+
+let failed = 0;
+function check(name, ok, detail) {
+  console.log(`${ok ? '✓' : '✗'} ${name}${detail ? ' — ' + detail : ''}`);
+  if (!ok) failed++;
+}
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+const activeViews = () =>
+  [...doc.querySelectorAll('main > section[data-app-view]')].filter((s) => s.classList.contains('is-active'));
+const viewNames = () => activeViews().map((s) => s.getAttribute('data-app-view'));
+async function setHash(h) {
+  window.location.hash = h;
+  await sleep(60);
+}
+async function setHashSettled(h) {
+  window.location.hash = h;
+  await sleep(600); // 动画 470ms + 余量
+}
+function animClean() {
+  const main = doc.getElementById('main');
+  const leftover = [...doc.querySelectorAll('.anim-push-in,.anim-push-out,.anim-pop-in,.anim-pop-out,.anim-fade-in,.anim-fade-out')];
+  return (
+    !main.classList.contains('is-animating') &&
+    !doc.body.classList.contains('view-anim-lock') &&
+    leftover.length === 0
+  );
+}
+
+(async () => {
+  await sleep(200);
+
+  // ---------- 1. 默认首页 ----------
+  check('默认进入首页', doc.body.getAttribute('data-app-view') === 'home');
+  check('首页分组激活', viewNames().every((v) => v === 'home') && viewNames().length >= 5,
+    `active=${viewNames().length}`);
+  check('首屏无动画残留', animClean());
+  const cards = [...doc.querySelectorAll('.menu-card')];
+  check('首页菜单卡片 = 6', cards.length === 6, `实际 ${cards.length}`);
+
+  // ---------- 2. 底部导航 ----------
+  const tabs = [...doc.querySelectorAll('#appTabbar a')];
+  check('底部导航 4 个标签', tabs.length === 4);
+  check('首页标签默认高亮', tabs.find((t) => t.dataset.tab === 'home').classList.contains('is-current'));
+
+  // ---------- 3. 进入学习：动画 + 全屏锁定 ----------
+  await setHashSettled('#study');
+  check('#study → 学习视图', doc.body.getAttribute('data-app-view') === 'study' &&
+    doc.getElementById('study').classList.contains('is-active'));
+  check('动画结束后无残留', animClean());
+  check('无关板块已隐藏',
+    !doc.getElementById('method').classList.contains('is-active') &&
+    !doc.getElementById('pricing').classList.contains('is-active') &&
+    !doc.getElementById('library').classList.contains('is-active'));
+  check('学习分组只含学习一个 section',
+    viewNames().length === 1 && viewNames()[0] === 'study', `active=${viewNames().join(',')}`);
+  check('顶栏标签 = 学习', doc.getElementById('viewTopbarLabel').textContent === '学习');
+  check('学习中底部“学习”高亮', tabs.find((t) => t.dataset.tab === 'study').classList.contains('is-current'));
+
+  // ---------- 3b. 词卡 3D 翻面（背面=例句+读音） ----------
+  const cardFlip = doc.getElementById('wordCardFlip');
+  check('词卡翻面容器存在且初始朝正面', cardFlip && !cardFlip.classList.contains('is-flipped'));
+  check('背面 = 例句 + 例句读音',
+    !!doc.getElementById('cardBack') && !!doc.getElementById('studyExample') && !!doc.getElementById('exampleSpeak') &&
+    doc.getElementById('cardBack').contains(doc.getElementById('studyExample')));
+  doc.getElementById('studyCard').click();
+  await sleep(30);
+  check('点击卡片 → 翻到背面', cardFlip.classList.contains('is-flipped'));
+  doc.getElementById('studySpeak').click();
+  await sleep(30);
+  check('点发音按钮不触发翻面', cardFlip.classList.contains('is-flipped'));
+  doc.getElementById('studyCard').click();
+  await sleep(30);
+  check('再点卡片 → 翻回正面', !cardFlip.classList.contains('is-flipped'));
+
+  // 例句点击时立即调用设备 en-US 系统语音，避免异步逐词音频失去 iOS 用户手势授权。
+  const exampleSpeakButton = doc.getElementById('exampleSpeak');
+  const audioCountBeforeSentence = (window.__audioInstances || []).length;
+  exampleSpeakButton.click();
+  await sleep(30);
+  const exampleUtterance = window.__lastUtterance;
+  check('例句直接启动完整 en-US 系统语音', !!exampleUtterance &&
+    exampleUtterance.lang === 'en-US' && exampleUtterance.text.length > 20 && exampleUtterance.text.includes(' '));
+  check('例句朗读不依赖异步逐词音频请求', (window.__audioInstances || []).length === audioCountBeforeSentence);
+  exampleSpeakButton.click(); // stop the mocked utterance and leave no timer behind
+
+  // 释义自测开关
+  const meaningEl = doc.getElementById('studyMeaning');
+  const hiddenBefore = meaningEl.classList.contains('is-hidden');
+  doc.getElementById('revealMeaning').click();
+  await sleep(20);
+  check('显示释义按钮切换遮罩状态', meaningEl.classList.contains('is-hidden') !== hiddenBefore);
+  doc.getElementById('revealMeaning').click();
+  await sleep(20);
+  check('隐藏释义按钮恢复遮罩', meaningEl.classList.contains('is-hidden') === hiddenBefore);
+
+  // ---------- 3c. 左右滑动切词（滑走的词记作已记住） ----------
+  function fire(type, target, x, y) {
+    target.dispatchEvent(new window.MouseEvent(type, { bubbles: true, clientX: x, clientY: y }));
+  }
+  const pos0Pre = doc.getElementById('studyPosition').textContent;
+  doc.getElementById('nextWord').click(); // 确保 updateStudyCard 已用真实 bank 渲染
+  await sleep(80);
+  const pos0 = doc.getElementById('studyPosition').textContent;
+  const known0 = parseInt((doc.getElementById('knownCount').textContent || '0').replace(/\D/g, ''), 10) || 0;
+  // 左滑 → 下一个词
+  fire('pointerdown', doc.getElementById('studyCard'), 300, 400);
+  fire('pointermove', window, 210, 402);
+  fire('pointermove', window, 140, 400);
+  fire('pointerup', window, 140, 400);
+  await sleep(950);
+  const pos1 = doc.getElementById('studyPosition').textContent;
+  check('左滑 → 进入下一个词卡', pos1 !== pos0, `${pos0} → ${pos1}`);
+  check('左滑走的词记作已记住', parseInt((doc.getElementById('knownCount').textContent || '0').replace(/\D/g, ''), 10) === known0 + 1,
+    `known=${known0} → ${doc.getElementById('knownCount').textContent}`);
+  check('左滑未误触发翻面', !cardFlip.classList.contains('is-flipped'));
+  // 右滑 → 上一个词
+  fire('pointerdown', doc.getElementById('studyCard'), 140, 400);
+  fire('pointermove', window, 220, 398);
+  fire('pointermove', window, 300, 400);
+  fire('pointerup', window, 300, 400);
+  await sleep(950);
+  const pos2 = doc.getElementById('studyPosition').textContent;
+  check('右滑 → 返回上一个词卡', pos2 === pos0, `${pos1} → ${pos2}`);
+  check('右滑滑走的词也记作已记住', parseInt((doc.getElementById('knownCount').textContent || '0').replace(/\D/g, ''), 10) === known0 + 2,
+    `known=${doc.getElementById('knownCount').textContent}`);
+  // 小幅拖动不应翻面/切词
+  fire('pointerdown', doc.getElementById('studyCard'), 200, 400);
+  fire('pointermove', window, 190, 400);
+  fire('pointerup', window, 190, 400);
+  await sleep(450);
+  check('小幅拖动不切词不翻面', doc.getElementById('studyPosition').textContent === pos0 &&
+    !cardFlip.classList.contains('is-flipped'));
+
+  // ---------- 4. 学习板块无宣传/订阅内容 ----------
+  const study = doc.getElementById('study');
+  check('学习板块无试用/订阅按钮', !study.querySelector('[data-open-trial]') && !study.querySelector('#directSubscribe'));
+  check('学习板块无宣传文案块', !study.querySelector('.study-side-copy') && !study.textContent.includes('PRODUCT EXPERIENCE'));
+  check('学习板块无 7 天体验字样', !study.textContent.includes('7 天体验') && !study.textContent.includes('定价'));
+  const cssText = [...doc.querySelectorAll('style')].map((s) => s.textContent).join('\n');
+  check('学习/词库 全屏锁定 + 隐藏营销导航(样式规则)',
+    ['body[data-app-view="library"] { padding-bottom: 0; overflow: hidden; }',
+     'body[data-app-view="study"], body[data-app-view="library"] { padding-bottom: 0; overflow: hidden; }',
+     'body[data-app-view="library"] .site-header',
+     'body[data-app-view="library"] .tabbar',
+     'main > section[data-app-view="library"].is-active'].every((frag) => cssText.includes(frag)));
+  check('词卡翻面 grid 布局(防重叠)与滑动样式',
+    ['.card-flip { position: relative; display: grid;',
+     '.card-face { grid-area: 1 / 1;',
+     'min-height: clamp(220px, 36vh, 296px); max-height: clamp(250px, 46vh, 330px);',
+     'overscroll-behavior: contain;',
+     '#studyCard { touch-action: pan-y;',
+     '.card-flip.is-flipped .card-front { pointer-events: none; }'].every((frag) => cssText.includes(frag)));
+  check('切换动画不透底(实心背景+非透明淡入+FAQ背景+动画禁毛玻璃)',
+    ['.section { padding: 100px 0; background: var(--cream); }',
+     '.hero { position: relative; isolation: isolate; overflow: hidden; padding: 62px 0 71px; background: var(--cream); }',
+     '.faq-section { padding: 103px 0 104px; background: var(--cream); }',
+     'background: #fcfcfa;', 'background: #fdfdfc;',
+     'viewFadeUp',
+     'body.view-anim-lock .site-header',
+     'backdrop-filter: none !important'].every((frag) => cssText.includes(frag)));
+  check('释义未揭晓时完全不显示(透明,非马赛克)',
+    cssText.includes('.study-meaning.is-hidden { color: transparent;'));
+  const pageHtml = doc.documentElement.outerHTML;
+  check('例句朗读直接使用完整 en-US 系统语音，避免异步音频链',
+    pageHtml.includes("speak(sentence, 'en-US', onDone, onError)") &&
+    !pageHtml.includes('function speakExample(text, onDone, onError) {\n        const sentence = String(text || \'\').trim();\n        const matches ='));
+  check('例句朗读按钮和状态明确标记美式发音',
+    pageHtml.includes('使用美式发音播放例句') && pageHtml.includes('正在调用设备的美式语音朗读整句'));
+  check('不再显示/绑定手动导入，保留联网同步入口和 GitHub Raw 对话框',
+    !pageHtml.includes('importWordsBtn') && !pageHtml.includes('wordFile') && !pageHtml.includes('function importFile') &&
+    !!doc.getElementById('syncWordsBtn') && !!doc.getElementById('wordSourceDialog') &&
+    pageHtml.includes('raw.githubusercontent.com'));
+  check('手机首页采用 App 栏、底部 Tab 和安全区布局',
+    cssText.includes('body[data-app-view="home"] .site-header') &&
+    cssText.includes('body[data-app-view="home"] .proof-band') &&
+    cssText.includes('env(safe-area-inset-top)') && cssText.includes('env(safe-area-inset-bottom)'));
+  check('首页/订阅进场动画和订阅价格切换动效存在',
+    cssText.includes('@keyframes appHomeEnter') && cssText.includes('@keyframes appPricingEnter') &&
+    cssText.includes('@keyframes pricePop') && cssText.includes('.price strong.is-changing') &&
+    cssText.includes('prefers-reduced-motion: reduce'));
+  check('新版 Service Worker 缓存将旧 PWA 更新到 v12',
+    swSource.includes("CACHE_NAME = 'lexio-shell-v12-example-voice-library-return'") &&
+    pageHtml.includes('controllerchange') && pageHtml.includes('swRefreshing'));
+
+  // ---------- 5. 三子面板 ----------
+  const panels = [...doc.querySelectorAll('.study-panel')];
+  check('学习面板 = 3 个子面板', panels.length === 3, `实际 ${panels.length}`);
+  const planPanel = doc.querySelector('[data-study-panel="plan"]');
+  const memoryPanel = doc.querySelector('[data-study-panel="memory"]');
+  const battlePanel = doc.querySelector('[data-study-panel="battle"]');
+  check('默认子面板 = 智能词单（卡片）', planPanel.classList.contains('is-active') &&
+    !!planPanel.querySelector('.study-word-card') && !!planPanel.querySelector('#knownWord'));
+  check('卡片面板无 side-copy', !planPanel.querySelector('.study-side-copy'));
+
+  const memTab = doc.querySelector('[data-demo-tab="memory"]');
+  memTab.click();
+  await sleep(30);
+  check('点“记忆引擎”→ 切到薄弱词面板', memoryPanel.classList.contains('is-active') &&
+    !planPanel.classList.contains('is-active') && !battlePanel.classList.contains('is-active'));
+  check('记忆引擎只显示薄弱词列表',
+    !!doc.getElementById('weakList') && !!doc.getElementById('weakCount') &&
+    !memoryPanel.querySelector('[data-open-trial]') && !memoryPanel.textContent.includes('订阅'));
+
+  const weakApi = window.__lexioWeak;
+  check('__lexioWeak 已暴露', typeof weakApi === 'object' && typeof weakApi.add === 'function');
+  weakApi.add('serendipity');
+  weakApi.add('persevere');
+  await sleep(30);
+  check('薄弱词可添加并渲染', weakApi.list().length === 2 &&
+    doc.querySelectorAll('#weakList .weak-item').length === 2 &&
+    doc.getElementById('weakEmpty').hidden === true,
+    `count=${weakApi.list().length}`);
+  doc.querySelector('[data-weak-ok="serendipity"]').click();
+  await sleep(30);
+  check('点“记住了”移出薄弱词', weakApi.list().length === 1 &&
+    doc.querySelectorAll('#weakList .weak-item').length === 1);
+  weakApi.remove('persevere');
+  await sleep(30);
+  check('清空后显示空态', weakApi.list().length === 0 && doc.getElementById('weakEmpty').hidden === false);
+
+  const battleTab = doc.querySelector('[data-demo-tab="battle"]');
+  battleTab.click();
+  await sleep(30);
+  check('点“好友对战”→ 切到对战面板', battlePanel.classList.contains('is-active') &&
+    !planPanel.classList.contains('is-active') && !memoryPanel.classList.contains('is-active'));
+  check('对战面板只有对战 UI',
+    !!doc.getElementById('battleStart') && !!doc.getElementById('battleMyScore') &&
+    !battlePanel.querySelector('[data-open-trial]') && !battlePanel.textContent.includes('免费体验'));
+
+  // ---------- 5b. 真实感对战（每局新对手：中文/英文/特殊字符名） ----------
+  const battleApi = window.__lexioBattle;
+  check('__lexioBattle 已暴露', typeof battleApi === 'object' && typeof battleApi.nextName === 'function');
+  const nameSeq = [];
+  for (let i = 0; i < 30; i++) nameSeq.push(battleApi.nextName());
+  check('对手名不重复相邻(连续抽取)', nameSeq.every((n, i) => n && (i === 0 || n !== nameSeq[i - 1])),
+    `sample=${nameSeq.slice(0, 5).join('/')}`);
+  const hasCJK = nameSeq.some((n) => /[一-鿿]/.test(n));
+  const hasLatin = nameSeq.some((n) => /[A-Za-z]/.test(n));
+  const hasSymbolic = nameSeq.some((n) => /[^一-鿿A-Za-z0-9\s]/.test(n));
+  check('名字池含中文名/英文名/特殊符号名', hasCJK && hasLatin && hasSymbolic,
+    `cjk=${hasCJK} latin=${hasLatin} sym=${hasSymbolic}`);
+  check('对手卡元素齐全',
+    !!doc.getElementById('battleFoeName') && !!doc.getElementById('battleFoeAvatar') &&
+    !!doc.getElementById('battleFoeStats') && !!doc.getElementById('battleFoeStatus'));
+  // 真实匹配流程：点击开始 → 等待匹配 → 出现随机对手名
+  doc.getElementById('battleStart').click();
+  await sleep(120);
+  check('匹配中状态', doc.getElementById('battleState').textContent === '匹配中…' &&
+    doc.getElementById('battleFoeName').textContent === '匹配中…');
+  await sleep(3400); // 匹配 1.3~2.8s + 出场 1.1s
+  const foeName = doc.getElementById('battleFoeName').textContent;
+  check('匹配成功且对手有真实感名字', foeName && foeName !== '匹配中…' && foeName !== '尚未匹配',
+    `opponent=${foeName}`);
+  check('对手资料(胜率/场数/延迟)已显示', /胜率/.test(doc.getElementById('battleFoeStats').textContent),
+    doc.getElementById('battleFoeStats').textContent);
+  battleApi.start(); // 重新匹配 → 必须换新对手
+  await sleep(3400);
+  const foeName2 = doc.getElementById('battleFoeName').textContent;
+  check('再开一局换新对手', foeName2 && foeName2 !== '匹配中…' && foeName2 !== foeName,
+    `${foeName} → ${foeName2}`);
+  // 回归：battle.foe 字段不再被比分自增破坏（曾导致消息里名字变 undefined / 比分变 [object Object]）
+  let sawFoeAnswer = false;
+  for (let i = 0; i < 75 && !sawFoeAnswer; i++) {
+    await sleep(150);
+    const sc = doc.getElementById('battleFoeScore').textContent;
+    const st = doc.getElementById('battleFoeStatus').textContent;
+    if (sc !== '0' || st.includes('答错')) sawFoeAnswer = true;
+  }
+  const scTxt = doc.getElementById('battleFoeScore').textContent;
+  const msgTxt = doc.getElementById('battleMsg').textContent;
+  const cardName2 = doc.getElementById('battleFoeName').textContent;
+  check('对手作答后比分为纯数字', /^\d+$/.test(scTxt), `score=${scTxt}`);
+  check('消息里没有 undefined（名字源完好）', !msgTxt.includes('undefined'), msgTxt);
+  check('消息中的对手名与对手卡一致', !/接受|：|抢先|答错|击败|战成|获胜/.test(msgTxt) || msgTxt.includes(cardName2),
+    `card=${cardName2} msg=${msgTxt}`);
+  // 玩家节奏：固定 10 题 + 我答完立即进入下一题（不等对手）
+  let st = doc.getElementById('battleState').textContent;
+  for (let i = 0; i < 50 && !/第 1 \/ 10/.test(st); i++) {
+    await sleep(150);
+    st = doc.getElementById('battleState').textContent;
+  }
+  check('对战固定 10 道题', /\/ 10 题/.test(st), st);
+  const optBtn = doc.querySelector('.battle-opt:not([disabled])');
+  check('第 1 题选项可点', !!optBtn, st);
+  if (optBtn) optBtn.click();
+  await sleep(900);
+  const st2 = doc.getElementById('battleState').textContent;
+  check('我答完立即换下一题（不等对手作答）', /第 2 \/ 10/.test(st2), st2);
+
+  // 连打到第 10 题并结算 —— 杜绝“只有7题”
+  let deepOk = true, deepLabel = st2;
+  for (let r = 2; r <= 10; r++) {
+    deepLabel = doc.getElementById('battleState').textContent;
+    if (!new RegExp(`第 ${r} / 10 题`).test(deepLabel)) { deepOk = false; break; }
+    if (r === 10) break;
+    const optsDeep = doc.querySelectorAll('.battle-opt');
+    (optsDeep[0] || { click() {} }).click();
+    await sleep(480);
+  }
+  check('连答推进到第 10 / 10 题（杜绝7题）', deepOk, deepLabel);
+  const optsFinal = doc.querySelectorAll('.battle-opt');
+  (optsFinal[0] || { click() {} }).click();
+  await sleep(520);
+  const battleStats = battleApi.stats();
+  check('第10题答完 → 对局结算(再来一局)',
+    doc.getElementById('battleState').textContent === '已结束' &&
+    doc.getElementById('battleStart').textContent.includes('再来一局') &&
+    battleStats.over && battleStats.answered === 10 && battleStats.total === 10,
+    `${doc.getElementById('battleState').textContent} | 已答 ${battleStats.answered}/${battleStats.total} | ${doc.getElementById('battleStart').textContent}`);
+
+  doc.querySelector('[data-demo-tab="plan"]').click();
+  await sleep(30);
+  check('可切回智能词单', planPanel.classList.contains('is-active'));
+
+  // ---------- 6. 宣传内容移到介绍视图 ----------
+  const intro = doc.querySelector('section.showcase-intro');
+  check('宣传语块移入介绍视图', intro && intro.getAttribute('data-app-view') === 'about' &&
+    !!intro.querySelector('#showcasePanel') && intro.textContent.includes('PRODUCT EXPERIENCE'));
+  const proofBand = doc.querySelector('.proof-band');
+  check('首页宣传改为可核对的产品配置，不显示虚高累计记忆数',
+    !!proofBand && proofBand.textContent.includes('10 题') && proofBand.textContent.includes('30 词') &&
+    !proofBand.textContent.includes('11 亿') && !proofBand.textContent.includes('282 万') &&
+    !proofBand.textContent.includes('4.9 / 5'));
+
+  // ---------- 7. 其它路由仍兼容 ----------
+  await setHashSettled('#pricing');
+  check('#pricing → 订阅视图（长轴整页）',
+    doc.body.getAttribute('data-app-view') === 'pricing' &&
+    ['ops', 'pricing', 'faq'].every((id) => doc.getElementById(id).classList.contains('is-active')));
+  check('订阅页动画后无残留', animClean());
+
+  await setHashSettled('#method');
+  const aboutTotal = doc.querySelectorAll('main > section[data-app-view="about"]').length;
+  const aboutActive = doc.querySelectorAll('main > section[data-app-view="about"].is-active').length;
+  check('#method → 介绍视图（全部介绍板块激活）',
+    doc.body.getAttribute('data-app-view') === 'about' &&
+    doc.getElementById('method').classList.contains('is-active') &&
+    aboutActive === aboutTotal && aboutTotal >= 5,
+    `active=${aboutActive}/${aboutTotal}`);
+
+  await setHashSettled('#library');
+  check('#library → 词库视图', doc.body.getAttribute('data-app-view') === 'library' &&
+    doc.getElementById('library').classList.contains('is-active') && animClean());
+  const lib = doc.getElementById('library');
+  check('词库 = 纯功能面板(无宣传)',
+    !!lib.querySelector('#wordSearch') && !!lib.querySelector('#wordGrid') &&
+    !lib.querySelector('.section-heading') && !lib.querySelector('.exam-grid') &&
+    !lib.querySelector('.roots-panel') && !lib.querySelector('.migration-note'));
+  check('词库无营销文案',
+    !lib.textContent.includes('ONE LIBRARY') && !lib.textContent.includes('词库已核验') &&
+    !lib.textContent.includes('WORD ROOT') && !lib.textContent.includes('[data-open-trial]'));
+  check('词库介绍内容移入介绍视图',
+    !!doc.querySelector('section.library-intro[data-app-view="about"]') &&
+    doc.querySelector('section.library-intro').querySelectorAll('.exam-card').length === 5 &&
+    !!doc.querySelector('section.library-intro .roots-panel'));
+  check('词库头部为功能提示(非营销)',
+    lib.textContent.includes('点「学习此词」直接跳到学习面板'));
+  check('已取消下载按钮(词库内置自动载入)',
+    !doc.getElementById('exportBankBtn') && typeof window.__lexioExportBank === 'undefined' &&
+    !lib.textContent.includes('下载词库') &&
+    doc.documentElement.outerHTML.includes('original-site-wordbank.json'));
+  const tilesAll = doc.querySelectorAll('#wordGrid .word-tile');
+  check('词库全量显示(无9条上限) — 24条全部渲染',
+    tilesAll.length === 24 && !doc.getElementById('wordGrid').textContent.includes('前 9'),
+    `tiles=${tilesAll.length}`);
+  check('分页状态+加载更多按钮(静态)',
+    doc.documentElement.outerHTML.includes('GRID_PAGE_SIZE') &&
+    doc.documentElement.outerHTML.includes('加载更多'));
+  const chipGk = [...doc.querySelectorAll('.filter-chip')].find((b) => b.dataset.filter === '高考');
+  if (chipGk) chipGk.click();
+  await sleep(40);
+  const tilesGk = doc.querySelectorAll('#wordGrid .word-tile');
+  const gkTags = [...tilesGk].map((t) => (t.querySelector('.word-tag') || {}).textContent);
+  check('高考分类只显示高考词条', tilesGk.length >= 1 && gkTags.every((t) => t === '高考'),
+    `count=${tilesGk.length} tags=${[...new Set(gkTags)].join(',')}`);
+  if (tilesGk.length) {
+    const selectedTile = tilesGk[0];
+    const selectedWord = selectedTile.querySelector('h4').textContent;
+    let tileTop = 137;
+    selectedTile.getBoundingClientRect = () => ({top:tileTop, bottom:tileTop + 100, left:0, right:200, width:200, height:100});
+    window.scrollY = 500;
+    selectedTile.querySelector('[data-word-open]').click();
+    await sleep(600);
+    check('词库“学习此词”精准打开所选词卡',
+      doc.body.getAttribute('data-app-view') === 'study' && doc.getElementById('studyWord').textContent === selectedWord,
+      `selected=${selectedWord} card=${doc.getElementById('studyWord').textContent}`);
+    const returnButton = doc.getElementById('returnLibraryBtn');
+    check('从词库进入学习后显示返回词库按键', !!returnButton && !returnButton.hidden);
+    tileTop = 600; // 模拟返回时词条在文档中的位置，验证滚动锚点恢复
+    returnButton.click();
+    await sleep(650);
+    check('返回词库后保留原筛选和所选词位置',
+      doc.body.getAttribute('data-app-view') === 'library' && chipGk.classList.contains('active') &&
+      [...doc.querySelectorAll('#wordGrid .word-tile h4')].some((heading) => heading.textContent === selectedWord) &&
+      Math.abs((tileTop - window.scrollY) - 137) < 1 && returnButton.hidden,
+      `word=${selectedWord} scrollY=${window.scrollY} calls=${scrollCalls.length}`);
+  }
+  const chipAll = [...doc.querySelectorAll('.filter-chip')].find((b) => b.dataset.filter === 'all');
+  if (chipAll) chipAll.click();
+  await sleep(40);
+
+  await setHashSettled('#top');
+  check('#top → 返回首页', doc.body.getAttribute('data-app-view') === 'home' && animClean());
+  check('回首页后学习区已隐藏', !doc.getElementById('study').classList.contains('is-active'));
+
+  // ---------- 8. 模块跳转入口 ----------
+  check('window.__lexioShow 已暴露', typeof window.__lexioShow === 'function');
+  window.__lexioShow('study', 'study');
+  await sleep(600);
+  check('__lexioShow 可推入学习视图且动画清场',
+    doc.body.getAttribute('data-app-view') === 'study' && animClean());
+
+  const secs = [...doc.querySelectorAll('main > section')];
+  check('所有板块都归组', secs.every((s) => s.hasAttribute('data-app-view')),
+    `${secs.length} sections`);
+
+  const bundled = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'original-site-wordbank.json'), 'utf8'));
+  const bundledWords = bundled.books.flatMap((book) => book.words || []);
+  const missingExamples = bundledWords.filter((word) => !String(word.example || '').trim()).length;
+  const missingMnemonics = bundledWords.filter((word) => !String(word.mnemonic || '').trim()).length;
+  const sourcedExamples = bundledWords.filter((word) => String(word.exampleSource || '').startsWith('dictionary:')).length;
+  const generatedExamples = bundledWords.filter((word) => word.exampleSource === 'generated-gloss-prompt').length;
+  check('内置词库逐词有例句字段，生成示例已明确标记',
+    bundledWords.length === 25024 && missingExamples === 0 && sourcedExamples + generatedExamples + 100 === bundledWords.length,
+    `total=${bundledWords.length} missing=${missingExamples} sourced=${sourcedExamples} generated=${generatedExamples}`);
+  check('内置词库逐词有记忆线索/复习提示', missingMnemonics === 0 &&
+    bundledWords.filter((word) => word.mnemonicSource === 'generated-recall-cue').length > 0,
+    `missing=${missingMnemonics}`);
+
+  console.log(failed === 0 ? '\n导航测试全部通过 ✔' : `\n${failed} 项失败 ✘`);
+  process.exit(failed === 0 ? 0 : 1);
+})().catch((e) => {
+  console.error(e);
+  process.exit(1);
+});
