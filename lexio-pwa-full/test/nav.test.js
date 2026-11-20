@@ -294,8 +294,8 @@ function animClean() {
     cssText.includes('@keyframes appHomeEnter') && cssText.includes('@keyframes appPricingEnter') &&
     cssText.includes('@keyframes pricePop') && cssText.includes('.price strong.is-changing') &&
     cssText.includes('prefers-reduced-motion: reduce'));
-  check('Service Worker 升到 v16 并预缓存口语句库与安装引导视频',
-    swSource.includes("CACHE_NAME = 'lexio-shell-v16-english-only-examples'") &&
+  check('Service Worker 升到 v17 并预缓存口语句库与安装引导视频',
+    swSource.includes("CACHE_NAME = 'lexio-shell-v17-full-sentence-examples'") &&
     swSource.includes("'./data/daily-conversation.json'") &&
     swSource.includes("'./media/install-guide.mp4'") &&
     pageHtml.includes('controllerchange') && pageHtml.includes('swRefreshing'));
@@ -865,7 +865,25 @@ function animClean() {
       `before=${chineseBefore} after=${chineseAfter}`);
     const version = (pageHtml.match(/BUNDLED_CONTENT_VERSION\s*=\s*'([^']+)'/) || [])[1];
     check('内容版本号已递增，老客户端会触发这次迁移',
-      version === 'example-english-only-2026-11-v2', String(version));
+      version === 'example-full-sentences-2026-11-v3', String(version));
+
+    // 上一版已经替换成英文、但仍是词典残句的记录也要升级成完整句子
+    const fragmentInstall = [normalize({
+      ...bundledRecords.find((r) => r.word === 'energetic'),
+      example: 'an energetic man', exampleSource: 'dictionary:雅思',
+    })];
+    const upgraded = await runner(
+      () => Promise.resolve({ ok: true, json: () => Promise.resolve(bundled) }),
+      () => bundledRecords,
+      (item) => normalize(item),
+      async () => {},
+      async () => {},
+      version, fragmentInstall, { isDemo: false, contentVersion: 'example-english-only-2026-11-v2' }
+    );
+    const upgradedExample = upgraded[0] && upgraded[0].example;
+    check('词典残句会被升级成可朗读的完整英文句子',
+      !!upgradedExample && /^[A-Z]/.test(upgradedExample) && /[.!?]$/.test(upgradedExample),
+      String(upgradedExample));
   }
 
   console.log(failed === 0 ? '\n导航测试全部通过 ✔' : `\n${failed} 项失败 ✘`);

@@ -1442,7 +1442,7 @@
       const DB_WORDS = 'words';
       const DB_STAGING = 'stagingWords';
       const DB_META = 'meta';
-      const BUNDLED_CONTENT_VERSION = 'example-english-only-2026-11-v2';
+      const BUNDLED_CONTENT_VERSION = 'example-full-sentences-2026-11-v3';
       let db = null;
       let bankReady = false;
       let bank = SAMPLE_WORDS.map((w, i) => normalizeWord(w, i));
@@ -1583,10 +1583,20 @@
                still contains Chinese — older bundles shipped gloss prompts
                like “The word X means Y in this context.” that the English
                voice read out loud in the middle of an English sentence. */
-            const hasCJK = /[\u3400-\u9fff\uf900-\ufaff\u3000-\u303f\uff00-\uffef]/.test(String(current[field] || ''));
+            const currentText = String(current[field] || '');
+            const hasCJK = /[\u3400-\u9fff\uf900-\ufaff\u3000-\u303f\uff00-\uffef]/.test(currentText);
+            /* A dictionary fragment ("an energetic man", "...the president's
+               departure") is not a sentence: it cannot be read aloud as one
+               and it teaches no usage. Bundled data now ships full sentences,
+               so an installed record with a fragment is upgraded. */
+            const isFragment = field === 'example' && (
+              currentText.trim().startsWith('...') ||
+              (/^[a-z]/.test(currentText.trim()) && !/[.!?]["'\u201d)]?$/.test(currentText.trim()))
+            );
             const replaceGenerated = sourceField && (
               oldSource.startsWith('generated-') ||
-              (field === 'example' && hasCJK)
+              (field === 'example' && hasCJK) ||
+              isFragment
             );
             const sameText = String(current[field] || '').trim() === String(update[field] || '').trim();
             if (sameText && (!sourceField || (current[sourceField] || '') === newSource)) continue;
