@@ -1,5 +1,5 @@
 /* Lexio 乐词 PWA shell cache. Bump the cache version whenever app assets change. */
-const CACHE_NAME = 'lexio-shell-v14-1000-conversation-phrases';
+const CACHE_NAME = 'lexio-shell-v15-app-shell-install-guide';
 const SHELL_URLS = [
   './',
   './index.html',
@@ -8,6 +8,8 @@ const SHELL_URLS = [
   './wordbank.config.json',
   './data/original-site-wordbank.json',
   './data/daily-conversation.json',
+  './media/install-guide.mp4',
+  './media/install-guide-poster.jpg',
   './icon.svg',
   './icon-192.png',
   './icon-512.png'

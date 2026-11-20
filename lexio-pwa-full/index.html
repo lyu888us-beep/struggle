@@ -351,6 +351,7 @@
     .testimonial { display: flex; flex-direction: column; min-height: 252px; padding: 23px; background: rgba(255,255,255,.83); border: 1px solid #e6ebe4; border-radius: 19px; box-shadow: 0 6px 19px rgba(28,54,36,.025); transition: transform .25s, box-shadow .25s; }
     .testimonial:hover { transform: translateY(-4px); box-shadow: var(--shadow-small); }
     .stars { display: flex; gap: 3px; color: #c19b39; font-size: 12px; letter-spacing: .1em; }
+    .quote-tag { display: inline-flex; padding: 4px 10px; border-radius: 999px; background: #eef4e7; color: #5c7a46; font-size: 9.5px; font-weight: 780; }
     .testimonial blockquote { flex: 1; margin: 16px 0 22px; color: #3b4d42; font-size: 13px; line-height: 1.8; }
     .person { display: flex; align-items: center; gap: 10px; padding-top: 14px; border-top: 1px solid #edf0eb; }
     .person-avatar { display: grid; place-items: center; width: 36px; height: 36px; color: #476247; background: #e5efdb; border-radius: 50%; font-size: 11px; font-weight: 800; }
@@ -530,7 +531,21 @@
       .proof-item strong { font-size: 29px; }
       .proof-item span { margin-top: 6px; font-size: 9px; }
       .proof-note { max-width: 320px; line-height: 1.5; }
-      .section { padding: 76px 0; }
+      .section { padding: 44px 0; }
+      body[data-app-view="home"] main > section { padding-top: 30px; padding-bottom: 30px; }
+      body[data-app-view="home"] main > section.hero { padding-top: 16px; padding-bottom: 14px; }
+      body[data-app-view="home"] main > section.menu-section { padding-top: 0; padding-bottom: 12px; }
+      body[data-app-view="home"] main > section.final-cta { padding-top: 40px; padding-bottom: 40px; }
+      body[data-app-view="home"] main > section .section-heading { margin-bottom: 22px; }
+      body[data-app-view="home"] main > section .section-heading h2 { font-size: clamp(24px, 6.4vw, 31px); }
+      body[data-app-view="home"] main > section .section-heading p { margin-top: 10px; font-size: 12px; line-height: 1.65; }
+      body[data-app-view="home"] .eyebrow { margin-bottom: 9px; font-size: 9px; }
+      body[data-app-view="home"] .feature-grid { grid-template-columns: 1fr; gap: 10px; }
+      body[data-app-view="home"] .feature-card { min-height: auto; padding: 16px 15px; border-radius: 16px; }
+      body[data-app-view="home"] .feature-icon { width: 34px; height: 34px; margin-bottom: 12px; border-radius: 11px; }
+      body[data-app-view="home"] .feature-card h3 { font-size: 15px; }
+      body[data-app-view="home"] .feature-card p { font-size: 11.5px; line-height: 1.65; }
+      body[data-app-view="home"] .feature-card .card-link { margin-top: 10px; font-size: 10.5px; }
       .section-heading { margin-bottom: 33px; }
       .section-heading h2 { font-size: 37px; }
       .section-heading p { margin-top: 13px; font-size: 13px; }
@@ -724,22 +739,23 @@
     .battle-actions { display: flex; justify-content: center; margin-top: 14px; }
     .battle-actions .study-control { min-width: 172px; min-height: 44px; font-size: 12px; }
     .showcase-intro .study-side-copy { max-width: 740px; margin-top: 12px; }
-    /* v3: iOS-style push / pop / crossfade view transitions */
+    /* v5: GPU-only view transitions. Nothing repaints: sections are
+       pre-laid-out, so a transition is one composited translate/fade. */
     body.view-anim-lock { overflow: hidden; }
-    main.is-animating { position: relative; display: grid; grid-template-rows: 100vh; grid-template-rows: 100dvh; height: 100vh; height: 100dvh; overflow: hidden; }
-    main.is-animating > section[data-app-view] { grid-row: 1; grid-column: 1; height: 100vh; height: 100dvh; min-height: 0; overflow-y: auto; }
-    .anim-push-in { animation: viewPushIn .42s cubic-bezier(.32,.72,0,1) both; z-index: 6; }
-    .anim-push-out { animation: viewPushOut .42s cubic-bezier(.32,.72,0,1) both; z-index: 1; }
-    .anim-pop-in { animation: viewPopIn .42s cubic-bezier(.32,.72,0,1) both; z-index: 2; }
-    .anim-pop-out { animation: viewPopOut .42s cubic-bezier(.32,.72,0,1) both; z-index: 3; }
-    .anim-fade-in { animation: viewFadeUp .26s cubic-bezier(.32,.72,0,1) both; z-index: 4; }
-    .anim-fade-out { animation: viewFadeOut .3s ease both; z-index: 3; }
-    @keyframes viewPushIn { from { transform: translateX(100%); opacity: .88; } to { transform: translateX(0); opacity: 1; } }
-    @keyframes viewPushOut { from { transform: translateX(0); opacity: 1; } to { transform: translateX(-24%); opacity: .72; } }
-    @keyframes viewPopIn { from { transform: translateX(-24%); opacity: .72; } to { transform: translateX(0); opacity: 1; } }
-    @keyframes viewPopOut { from { transform: translateX(0); opacity: 1; } to { transform: translateX(100%); opacity: .9; } }
-    @keyframes viewFadeUp { from { transform: translateY(16px) scale(.992); opacity: .72; } to { transform: translateY(0) scale(1); opacity: 1; } }
-    @keyframes viewFadeOut { from { opacity: 1; } to { opacity: 0; } }
+    main.is-animating { position: relative; }
+    main.is-animating > section.is-active { animation-fill-mode: both; animation-duration: .2s; animation-timing-function: cubic-bezier(.22,.68,.24,1); }
+    .anim-push-in { animation-name: viewPushIn; }
+    .anim-push-out { animation-name: viewPushOut; animation-duration: .16s !important; }
+    .anim-pop-in { animation-name: viewPopIn; }
+    .anim-pop-out { animation-name: viewPopOut; animation-duration: .16s !important; }
+    .anim-fade-in { animation-name: viewFadeUp; }
+    .anim-fade-out { animation-name: viewFadeOut; animation-duration: .14s !important; }
+    @keyframes viewPushIn { from { transform: translate3d(26px,0,0); opacity: .62; } to { transform: translate3d(0,0,0); opacity: 1; } }
+    @keyframes viewPushOut { from { transform: translate3d(0,0,0); opacity: 1; } to { transform: translate3d(-12px,0,0); opacity: .7; } }
+    @keyframes viewPopIn { from { transform: translate3d(-12px,0,0); opacity: .7; } to { transform: translate3d(0,0,0); opacity: 1; } }
+    @keyframes viewPopOut { from { transform: translate3d(0,0,0); opacity: 1; } to { transform: translate3d(26px,0,0); opacity: .62; } }
+    @keyframes viewFadeUp { from { opacity: .55; } to { opacity: 1; } }
+    @keyframes viewFadeOut { from { opacity: 1; } to { opacity: .55; } }
 
     /* ===== v4: library app lock, 3D word-card flip, real-feel battle ===== */
     .library-shell { display: flex; box-sizing: border-box; flex-direction: column; height: 100%; min-height: 0; padding: 12px 0 calc(12px + env(safe-area-inset-bottom)); }
@@ -782,6 +798,131 @@
     .word-load-more { grid-column: 1 / -1; padding: 10px 12px; background: #eaf3e3; border: 1px solid #d5e6ca; border-radius: 12px; color: var(--forest); font-size: 11px; font-weight: 700; cursor: pointer; transition: background .2s ease; }
     .word-load-more:hover { background: #e0efd6; }
 
+
+    /* ===== v5: swipe card (compositor-only motion) ===== */
+    #studyCard { will-change: transform; }
+    #studyCard.is-dragging { transition: none !important; }
+    #studyCard.is-leaving-left { transition: transform .12s ease-out, opacity .12s ease-out !important; transform: translate3d(-108%,0,0) rotate(-5deg) !important; opacity: .3; }
+    #studyCard.is-leaving-right { transition: transform .12s ease-out, opacity .12s ease-out !important; transform: translate3d(108%,0,0) rotate(5deg) !important; opacity: .3; }
+    #studyCard.is-entering-right { transition: none !important; transform: translate3d(46%,0,0); opacity: 0; }
+    #studyCard.is-entering-left { transition: none !important; transform: translate3d(-46%,0,0); opacity: 0; }
+    #studyCard.is-entering { transition: transform .19s cubic-bezier(.22,.68,.24,1), opacity .19s ease !important; transform: translate3d(0,0,0); opacity: 1; }
+    .library-mode-panel.panel-in { animation: panelIn .18s ease-out both; }
+    @keyframes panelIn { from { opacity: .45; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* ===== v5: memory panel with real local numbers ===== */
+    .memory-summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 13px; }
+    .memory-stat { padding: 10px 11px; background: #fff; border: 1px solid #e9eee7; border-radius: 13px; }
+    .memory-stat small { display: block; color: #8b968e; font-size: 9.5px; }
+    .memory-stat strong { display: block; margin-top: 2px; color: var(--forest); font-size: 19px; letter-spacing: -.04em; }
+    .memory-stat strong em { font-style: normal; font-size: 10px; color: #8b968e; font-weight: 600; }
+    .memory-curve { margin-top: 10px; padding: 12px 13px 10px; background: #fff; border: 1px solid #e9eee7; border-radius: 14px; }
+    .memory-curve-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+    .memory-curve-head strong { color: var(--ink); font-size: 11.5px; }
+    .memory-curve-head span { color: #8b968e; font-size: 9.5px; }
+    .memory-bars { display: grid; grid-template-columns: repeat(7, 1fr); align-items: end; gap: 6px; height: 54px; margin-top: 10px; }
+    .memory-bars i { display: block; min-height: 3px; background: linear-gradient(180deg,#cfe86f,#9cc056); border-radius: 5px 5px 3px 3px; transition: height .25s ease; }
+    .memory-bars i.is-empty { background: #edf1ea; }
+    .memory-bars small { display: block; color: #98a29b; font-size: 8px; text-align: center; }
+
+    /* ===== v5: 100dvh app shell — use the whole screen, no blank bands ===== */
+    @supports (height: 100dvh) {
+      html, body { min-height: 100dvh; }
+    }
+    main > section[data-app-view="home"] { min-height: 60dvh; }
+    body[data-app-view="home"] .menu-section + .proof-band { border-top: none; }
+    @media (max-width: 760px) {
+      /* The dashboard fills the viewport: the hero and the two action rows
+         are sized so the first screen has no empty band at the bottom. */
+      body[data-app-view="home"] main { min-height: calc(100dvh - 60px - env(safe-area-inset-top) - 64px - env(safe-area-inset-bottom)); }
+      body[data-app-view="home"] .hero { min-height: 0; }
+      body[data-app-view="home"] .hero-meta { margin-bottom: 2px; }
+      body[data-app-view="home"] .menu-grid { margin-bottom: 2px; }
+      body[data-app-view="home"] main > section.library-intro,
+      body[data-app-view="home"] main > section.features-section,
+      body[data-app-view="home"] main > section.showcase-intro,
+      body[data-app-view="home"] main > section.benefits-section,
+      body[data-app-view="home"] main > section.testimonials-section { background: var(--cream); border-top: 1px solid rgba(226,233,224,.7); }
+      body[data-app-view="home"] .final-cta { border-radius: 0; }
+    }
+    /* Pricing/FAQ scroll inside the app frame instead of padding the page. */
+    @media (max-width: 760px) {
+      body[data-app-view="pricing"] main > section { padding-top: 34px; padding-bottom: 34px; }
+      body[data-app-view="pricing"] .section-heading { margin-bottom: 22px; }
+      body[data-app-view="pricing"] .section-heading h2 { font-size: clamp(25px, 6.6vw, 33px); }
+    }
+
+    /* ===== v5: home progress card (real local numbers only) ===== */
+    .hero-progress { min-height: 0; display: block; }
+    .progress-card { padding: 20px; background: #fff; border: 1px solid var(--line); border-radius: 22px; box-shadow: var(--shadow-small); }
+    .progress-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+    .progress-head small { display: block; color: #859087; font-size: 10px; }
+    .progress-head strong { display: block; margin-top: 3px; color: var(--ink); font-size: 17px; letter-spacing: -.03em; }
+    .progress-chip { flex: 0 0 auto; padding: 4px 9px; border-radius: 999px; background: #edf4e5; color: #5e7c47; font-size: 9.5px; font-weight: 780; }
+    .progress-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 14px; }
+    .progress-stats div { padding: 10px; background: #f7faf4; border: 1px solid #edf1ea; border-radius: 13px; }
+    .progress-stats small { display: block; color: #859087; font-size: 9.5px; }
+    .progress-stats strong { display: block; margin-top: 2px; color: var(--forest); font-size: 19px; letter-spacing: -.04em; }
+    .progress-bar { height: 6px; margin-top: 13px; overflow: hidden; background: #e9eee7; border-radius: 999px; }
+    .progress-bar span { display: block; width: 0; height: 100%; border-radius: inherit; background: linear-gradient(90deg, #92b953, #cfe86f); transition: width .3s ease; }
+    .progress-note { margin: 9px 0 0; color: #8b968e; font-size: 10px; line-height: 1.6; }
+    .progress-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 13px; }
+    .progress-actions .btn { min-height: 40px; font-size: 11px; }
+    .progress-tip { display: flex; align-items: flex-start; gap: 8px; margin-top: 10px; padding: 10px 12px; color: #6f6351; background: #fdf7ea; border: 1px solid #f0e6d2; border-radius: 13px; font-size: 10px; line-height: 1.6; }
+    .progress-tip span[aria-hidden] { color: #a08550; font-size: 12px; line-height: 1.4; }
+
+    /* ===== v5: full-screen app shell ===== */
+    .app-page { display: flex; flex-direction: column; height: 100%; min-height: 0; padding-bottom: env(safe-area-inset-bottom); }
+    .app-scroll { flex: 1 1 auto; min-height: 0; overflow-y: auto; -webkit-overflow-scrolling: touch; overscroll-behavior: contain; }
+    body[data-app-view="pricing"] .app-scroll { padding-top: 0; }
+
+    /* ===== v5: install dialog + guide video ===== */
+    .install-dialog { width: min(560px, calc(100% - 24px)); }
+    .install-video { width: 100%; max-height: min(56vh, 520px); margin: 14px 0 4px; background: #0f2a21; border-radius: 16px; display: block; }
+    .install-steps { margin: 12px 0 0; padding-left: 18px; color: #61736a; font-size: 10.5px; line-height: 1.75; }
+    .install-steps li { margin-top: 4px; }
+    .install-actions { display: grid; gap: 8px; margin-top: 14px; }
+    .install-hint { margin: 10px 0 0; color: #8b968e; font-size: 10px; line-height: 1.65; }
+
+    /* ===== v5: iOS-like sheet for first-run reminders ===== */
+    .sheet-dialog { width: min(430px, calc(100% - 28px)); margin: auto auto 0; }
+    .sheet-actions { display: grid; gap: 8px; margin-top: 16px; }
+
+    /* ===== v5: keyboard-safe search row =====
+       The search field keeps 16px text (iOS will not zoom), but the row
+       is allowed to wrap so the field never hides behind the sync button. */
+    .library-top { align-items: flex-end; }
+    .library-actions { flex-wrap: wrap; }
+    .search-wrap { min-width: 0; }
+    .search-wrap .search-input { max-width: 100%; }
+    @media (max-width: 760px) {
+      .library-top { gap: 10px; margin-bottom: 10px; }
+      .library-top-left { width: 100%; }
+      .library-actions { display: flex; flex-wrap: nowrap; gap: 8px; width: 100%; }
+      .library-actions .search-wrap { flex: 1 1 auto; min-width: 0; }
+      .library-actions .import-button { flex: 0 0 auto; }
+      .phrase-top { display: flex; flex-direction: column; align-items: stretch; gap: 8px; }
+      .phrase-search-wrap { width: 100%; }
+      .library-mode-tabs { position: sticky; top: 0; z-index: 3; background: rgba(252,253,250,.97); }
+      .filter-row { flex-wrap: wrap; overflow: visible; margin-bottom: 10px; }
+      .daily-phrase-grid { padding-bottom: calc(12px + env(safe-area-inset-bottom)); }
+      .study-controls { position: sticky; bottom: 0; z-index: 2; padding: 6px 0 calc(2px + env(safe-area-inset-bottom)); background: linear-gradient(180deg, rgba(248,250,246,0), #f8faf6 42%); }
+    }
+
+    /* ===== v5: no browser zoom while typing in search fields =====
+       iOS Safari zooms a focused input whose font-size is under 16px. */
+    .search-input, #wordSearch, #phraseSearch, .source-url-input { font-size: 16px; -webkit-text-size-adjust: 100%; touch-action: manipulation; }
+    @supports (-webkit-touch-callout: none) {
+      .search-input, #wordSearch, #phraseSearch { font-size: 16px !important; }
+    }
+    @media (max-width: 760px) {
+      html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+      .search-input, #wordSearch, #phraseSearch { width: 100%; min-height: 40px; font-size: 16px; line-height: 1.3; }
+      .search-wrap { flex: 1 1 auto; min-width: 0; }
+      .library-actions { width: 100%; }
+      .module-tabs, .library-mode-tabs { scroll-margin-top: calc(56px + env(safe-area-inset-top)); }
+    }
+
     /* Mobile PWA: make the default route feel like a focused app dashboard, not a landing page. */
     @media (max-width: 760px) {
       html, body { min-height: 100%; overscroll-behavior-x: none; }
@@ -798,33 +939,40 @@
       body[data-app-view="home"] .mobile-menu-toggle,
       body[data-app-view="home"] .mobile-menu { display: none !important; }
       body[data-app-view="home"] .brand-word small { display: none; }
-      body[data-app-view="home"] .nav-install {
-        display: inline-flex; min-height: 36px; padding: 0 11px; border-radius: 12px;
-        background: var(--mint); color: var(--forest); font-size: 11px; font-weight: 760;
-      }
-      body[data-app-view="home"] .hero { padding: 20px 0 18px; background: transparent; }
+      #installBtn { display: inline-flex; }
+      body[data-app-view="home"] .site-header { position: fixed; top: 0; left: 0; right: 0; }
+      body[data-app-view="home"] main { padding-top: calc(60px + env(safe-area-inset-top)); }
+      body[data-app-view="home"] .hero { padding: 16px 0 14px; background: transparent; }
       body[data-app-view="home"] .hero-grid { display: block; }
-      body[data-app-view="home"] .hero-copy { padding: 4px 0 12px; }
-      body[data-app-view="home"] .hero-pill { min-height: 30px; padding: 4px 10px; font-size: 10px; }
-      body[data-app-view="home"] .hero h1 { max-width: 420px; margin: 15px 0 10px; font-size: clamp(35px, 9.5vw, 48px); line-height: 1.09; letter-spacing: -.06em; }
+      body[data-app-view="home"] .hero-copy { padding: 2px 0 10px; }
+      body[data-app-view="home"] .hero-progress { display: block; padding: 0 16px; }
+      body[data-app-view="home"] .progress-card { padding: 15px; border-radius: 18px; }
+      body[data-app-view="home"] .progress-head strong { font-size: 15px; }
+      body[data-app-view="home"] .progress-stats { margin-top: 11px; gap: 7px; }
+      body[data-app-view="home"] .progress-stats div { padding: 8px; border-radius: 11px; }
+      body[data-app-view="home"] .progress-stats strong { font-size: 16px; }
+      body[data-app-view="home"] .progress-tip { margin-top: 8px; font-size: 9.5px; }
+      body[data-app-view="home"] .progress-actions .btn { min-height: 38px; }
+      body[data-app-view="home"] .hero-pill { min-height: 26px; padding: 3px 9px; font-size: 9.5px; }
+      body[data-app-view="home"] .hero h1 { max-width: 420px; margin: 10px 0 8px; font-size: clamp(29px, 8.2vw, 40px); line-height: 1.12; letter-spacing: -.055em; }
       body[data-app-view="home"] .hero h1 .highlight { white-space: normal; }
-      body[data-app-view="home"] .hero-lede { max-width: 440px; font-size: 13px; line-height: 1.7; }
-      body[data-app-view="home"] .hero-ctas { display: grid; grid-template-columns: 1.1fr .9fr; gap: 9px; margin-top: 17px; }
-      body[data-app-view="home"] .hero-ctas .btn { min-height: 46px; padding-inline: 11px; border-radius: 13px; font-size: 11px; }
-      body[data-app-view="home"] .hero-meta { gap: 6px 11px; margin-top: 13px; font-size: 9px; }
+      body[data-app-view="home"] .hero-lede { max-width: 440px; font-size: 12px; line-height: 1.65; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+      body[data-app-view="home"] .hero-ctas { display: grid; grid-template-columns: 1.1fr .9fr; gap: 8px; margin-top: 13px; }
+      body[data-app-view="home"] .hero-ctas .btn { min-height: 44px; padding-inline: 10px; border-radius: 13px; font-size: 11px; }
+      body[data-app-view="home"] .hero-meta { gap: 5px 10px; margin-top: 10px; font-size: 8.5px; }
       body[data-app-view="home"] .hero-meta span { gap: 4px; }
-      body[data-app-view="home"] .check-mini { width: 14px; height: 14px; font-size: 9px; }
+      body[data-app-view="home"] .check-mini { width: 13px; height: 13px; font-size: 8px; }
       body[data-app-view="home"] .hero-visual,
       body[data-app-view="home"] .hero-social,
       body[data-app-view="home"] .proof-band,
       body[data-app-view="home"] .school-strip { display: none !important; }
-      body[data-app-view="home"] .menu-section { padding: 3px 0 16px; background: transparent; }
-      body[data-app-view="home"] .menu-grid { grid-template-columns: repeat(2, minmax(0,1fr)); gap: 10px; padding-inline: 16px; }
-      body[data-app-view="home"] .menu-card { min-height: 120px; padding: 15px 13px; border-radius: 18px; box-shadow: 0 7px 22px rgba(24,58,40,.055); }
+      body[data-app-view="home"] .menu-section { padding: 0 0 12px; background: transparent; }
+      body[data-app-view="home"] .menu-grid { grid-template-columns: repeat(2, minmax(0,1fr)); gap: 9px; padding-inline: 16px; }
+      body[data-app-view="home"] .menu-card { min-height: 100px; padding: 13px 12px; border-radius: 18px; box-shadow: 0 7px 22px rgba(24,58,40,.055); }
       body[data-app-view="home"] .menu-card.primary { box-shadow: 0 11px 26px rgba(23,69,54,.19); }
-      body[data-app-view="home"] .menu-card .m-ico { font-size: 21px; }
-      body[data-app-view="home"] .menu-card strong { margin-top: 8px; font-size: 14px; }
-      body[data-app-view="home"] .menu-card span.m-desc { margin-top: 4px; font-size: 10px; line-height: 1.45; }
+      body[data-app-view="home"] .menu-card .m-ico { font-size: 19px; }
+      body[data-app-view="home"] .menu-card strong { margin-top: 6px; font-size: 13.5px; }
+      body[data-app-view="home"] .menu-card span.m-desc { margin-top: 3px; font-size: 9.5px; line-height: 1.4; }
       .tabbar { background: rgba(250,252,248,.96); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); box-shadow: 0 -8px 24px rgba(24,58,40,.055); }
       .tabbar a { font-size: 10.5px; }
       body[data-app-view="study"] .view-topbar,
@@ -858,24 +1006,23 @@
       .study-scroll { background: linear-gradient(160deg,#fbfcf9,#f2f6ef); box-shadow: var(--shadow-app); }
       .battle-stage, .foe-card, .weak-item { box-shadow: 0 6px 18px rgba(26,61,41,.04); }
       .view-topbar { border-color: rgba(220,230,219,.9); }
-      .anim-push-in, .anim-pop-in, .anim-fade-in { will-change: transform, opacity; }
-      main.is-animating { contain: layout paint; }
-      .anim-push-in, .anim-pop-in, .anim-fade-in { animation-duration: .2s !important; animation-timing-function: cubic-bezier(.2,.7,.2,1) !important; }
-      .anim-push-out, .anim-pop-out, .anim-fade-out { animation-duration: .16s !important; animation-timing-function: ease-out !important; }
-      .anim-push-in, .anim-pop-in { animation-name: viewFadeUp !important; }
-      .anim-push-out, .anim-pop-out { animation-name: viewFadeOut !important; }
-      body[data-app-view="home"] .hero-copy { animation: appHomeEnter .56s cubic-bezier(.22,.61,.36,1) both; }
-      body[data-app-view="home"] .menu-card { animation: appTileEnter .48s cubic-bezier(.22,.61,.36,1) both; }
-      body[data-app-view="home"] .menu-card:nth-child(1) { animation-delay: .04s; }
-      body[data-app-view="home"] .menu-card:nth-child(2) { animation-delay: .08s; }
-      body[data-app-view="home"] .menu-card:nth-child(3) { animation-delay: .12s; }
-      body[data-app-view="home"] .menu-card:nth-child(4) { animation-delay: .16s; }
-      body[data-app-view="home"] .menu-card:nth-child(5) { animation-delay: .2s; }
-      body[data-app-view="home"] .menu-card:nth-child(6) { animation-delay: .24s; }
-      body[data-app-view="pricing"] .price-card { animation: appPricingEnter .58s cubic-bezier(.22,.61,.36,1) both; }
-      body[data-app-view="home"] .hero-copy { animation-duration: .24s; }
-      body[data-app-view="home"] .menu-card { animation-duration: .22s; animation-delay: 0s !important; }
-      body[data-app-view="pricing"] .price-card { animation-duration: .28s; }
+      /* On phones the push/pop becomes a short horizontal slide with no
+         cross-fade of full pages: fewer pixels touched per frame. */
+      .anim-push-in, .anim-pop-in { animation-name: viewSlideIn !important; }
+      .anim-push-out, .anim-pop-out { animation-name: viewSlideOut !important; }
+      @keyframes viewSlideIn { from { transform: translate3d(18px,0,0); opacity: .92; } to { transform: translate3d(0,0,0); opacity: 1; } }
+      @keyframes viewSlideOut { from { transform: translate3d(0,0,0); opacity: 1; } to { transform: translate3d(-10px,0,0); opacity: .86; } }
+      /* First paint only: the entrance animation never re-runs on a view
+         change, so returning home from the word list cannot drop frames. */
+      body[data-app-view="home"]:not(.view-returned) .hero-copy { animation: appHomeEnter .3s cubic-bezier(.22,.61,.36,1) both; }
+      body[data-app-view="home"]:not(.view-returned) .menu-card { animation: appTileEnter .24s cubic-bezier(.22,.61,.36,1) both; }
+      body[data-app-view="home"]:not(.view-returned) .menu-card:nth-child(1) { animation-delay: .02s; }
+      body[data-app-view="home"]:not(.view-returned) .menu-card:nth-child(2) { animation-delay: .04s; }
+      body[data-app-view="home"]:not(.view-returned) .menu-card:nth-child(3) { animation-delay: .06s; }
+      body[data-app-view="home"]:not(.view-returned) .menu-card:nth-child(4) { animation-delay: .08s; }
+      body[data-app-view="home"]:not(.view-returned) .menu-card:nth-child(5) { animation-delay: .1s; }
+      body[data-app-view="home"]:not(.view-returned) .menu-card:nth-child(6) { animation-delay: .12s; }
+      body[data-app-view="pricing"]:not(.view-returned) .price-card { animation: appPricingEnter .3s cubic-bezier(.22,.61,.36,1) both; }
       @keyframes appHomeEnter { from { opacity: 0; transform: translateY(14px) scale(.99); } to { opacity: 1; transform: translateY(0) scale(1); } }
       @keyframes appTileEnter { from { opacity: 0; transform: translateY(12px) scale(.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
       @keyframes appPricingEnter { from { opacity: 0; transform: translateY(18px) scale(.985); } to { opacity: 1; transform: translateY(0) scale(1); } }
@@ -901,7 +1048,7 @@
         <a href="#method">学习方法</a><a href="#library">25,000+ 词库</a><a href="#study">产品体验</a><a href="#ops">自动化服务</a><a href="#pricing">定价</a>
       </nav>
       <div class="nav-actions">
-        <button class="nav-install" id="installBtn" type="button" aria-label="安装 Lexio 乐词到设备"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3v11m0 0 4-4m-4 4-4-4M5 15v4a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>安装 PWA</button>
+        <button class="nav-install" id="installBtn" type="button" aria-label="安装 Lexio 乐词到设备"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3v11m0 0 4-4m-4 4-4-4M5 15v4a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>安装</button>
         <button class="btn btn-primary btn-small" type="button" data-open-trial>免费体验 7 天 <span class="btn-arrow">↗</span></button>
         <button class="mobile-menu-toggle" id="mobileMenuToggle" type="button" aria-label="打开导航菜单" aria-expanded="false" aria-controls="mobileMenu"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
       </div>
@@ -929,37 +1076,31 @@
           </div>
           <div class="hero-meta"><span><i class="check-mini">✓</i> 词库已在本机</span><span><i class="check-mini">✓</i> 离线可继续学习</span><span><i class="check-mini">✓</i> 学习记录保存在本机</span></div>
         </div>
-        <div class="hero-visual" aria-label="Lexio 学习界面预览" data-reveal>
-          <div class="hero-orbit" aria-hidden="true"></div><div class="stage-glow" aria-hidden="true"></div>
-          <span class="sparkle sparkle-one" aria-hidden="true">✳</span><span class="sparkle sparkle-two" aria-hidden="true">✦</span>
-          <div class="floating-card float-one"><span class="float-icon">↗</span><span><strong>记忆更牢</strong><small>在快要遗忘时复习</small></span></div>
-          <div class="floating-card float-two"><span class="float-icon">🔥</span><span><strong>连续打卡 42 天</strong><small>今天也向目标前进一步</small></span></div>
-          <div class="app-window">
-            <div class="window-head">
-              <div class="window-brand"><span class="window-brand-mark"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 18V6.5c0-.8.7-1.5 1.5-1.5H18M6 18h11.5c.8 0 1.5-.7 1.5-1.5V8" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"/><path d="m10 13 2 2 5-6" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><strong>Lexio 乐词</strong><small>个人学习空间</small></span></div>
-              <span class="window-date">本机 · 离线可用</span>
+        <div class="hero-visual hero-progress" aria-label="本机学习概况" data-reveal>
+          <div class="progress-card">
+            <div class="progress-head"><div><small>本机学习记录</small><strong id="heroProgressTitle">还没有开始学习</strong></div><span class="progress-chip" id="heroProgressChip">本机记录</span></div>
+            <div class="progress-stats">
+              <div><small>已记住</small><strong id="heroKnownCount">0</strong></div>
+              <div><small>还没记牢</small><strong id="heroWeakCount">0</strong></div>
+              <div><small>今日已学</small><strong id="heroTodayCount">0</strong></div>
             </div>
-            <div class="window-greeting"><div><p>按自己的节奏，稳步前进</p><h3>今天想学些什么？</h3></div><span class="streak-pill">✦ 今日词单</span></div>
-            <div class="mini-progress-grid"><div class="mini-stat"><small>已收录词目</small><strong>25,024</strong></div><div class="mini-stat"><small>可选考试</small><strong>5 <span>类</span></strong></div><div class="mini-stat"><small>进度存储</small><strong>本机</strong></div></div>
-            <div class="flashcard">
-              <div class="flashcard-top"><span>今日词卡 · 美式发音</span><button class="sound-round" type="button" aria-label="播放 serendipity 美式发音" data-speak-word="serendipity" data-speak-lang="en-US"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 10v4h4l5 4V6l-5 4H4Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M16 9a5 5 0 0 1 0 6m2-9a9 9 0 0 1 0 12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></button></div>
-              <h4>serendipity</h4><p class="phonetic">/ˌser.ənˈdɪp.ə.ti/ &nbsp; n.</p><p class="meaning">意外发现美好事物的运气</p><p class="example">“Finding that book was pure serendipity.”</p>
-            </div>
-            <div class="window-controls"><span>还不熟悉</span><span>记住了 ✓</span></div>
+            <div class="progress-bar" role="img" aria-label="已记住与本轮计划的比例"><span id="heroProgressBar"></span></div>
+            <p class="progress-note" id="heroProgressNote">记录保存在这台设备上，只统计你实际标记过的单词。</p>
+            <div class="progress-actions"><a class="btn btn-primary btn-small" href="#study">去学习</a><a class="btn btn-outline btn-small" href="#study" data-open-memory>看待巩固词</a></div>
           </div>
-          <span class="hero-label">轻触进入 · 即刻开始学习</span>
+          <div class="progress-tip"><span aria-hidden="true">◷</span><span id="heroReminderText">到期前 14、7、1 天，打开 App 会在这台设备上提醒你一次。</span></div>
         </div>
       </div>
     </section>
 
     <section class="menu-section" id="menu" data-app-view="home" aria-label="功能导航">
       <div class="menu-grid">
-        <a class="menu-card primary" href="#study"><span class="m-ico">🎯</span><strong>开始学习</strong><span class="m-desc">记忆卡片 · 智能词单 · 错词强化</span></a>
-        <a class="menu-card" href="#library"><span class="m-ico">📚</span><strong>浏览词库</strong><span class="m-desc">高考 / 四六级 / 考研 / 雅思 · 25,024 词</span></a>
-        <a class="menu-card" href="#pricing"><span class="m-ico">💎</span><strong>订阅方案</strong><span class="m-desc">价格 · 试用 · 常见问题一站式</span></a>
-        <a class="menu-card" href="#method"><span class="m-ico">🧠</span><strong>功能介绍</strong><span class="m-desc">记忆曲线 · 例句来源标注 · 学习效果</span></a>
-        <a class="menu-card" href="#library" data-open-daily-phrases><span class="m-ico">🗣️</span><strong>日常口语</strong><span class="m-desc">餐饮 · 出行 · 医疗 · 购物等场景</span></a>
-        <a class="menu-card" href="#ops"><span class="m-ico">⚙️</span><strong>服务保障</strong><span class="m-desc">订阅运维 · 数据保护 · 定期备份</span></a>
+        <a class="menu-card primary" href="#study"><span class="m-ico">🎯</span><strong>开始学习</strong><span class="m-desc">词卡 · 例句朗读 · 错词强化</span></a>
+        <a class="menu-card" href="#library"><span class="m-ico">📚</span><strong>浏览词库</strong><span class="m-desc">五套考试词库 · 25,024 词</span></a>
+        <a class="menu-card" href="#library" data-open-daily-phrases><span class="m-ico">🗣️</span><strong>日常口语</strong><span class="m-desc">十个场景 · 1,000 句可朗读</span></a>
+        <a class="menu-card" href="#study" data-open-battle><span class="m-ico">⚔️</span><strong>好友对战</strong><span class="m-desc">10 题词义快答 · 本机模拟对手</span></a>
+        <a class="menu-card" href="#method"><span class="m-ico">🧠</span><strong>功能介绍</strong><span class="m-desc">学习进展 · 例句来源 · 发音</span></a>
+        <a class="menu-card" href="#pricing"><span class="m-ico">💎</span><strong>订阅方案</strong><span class="m-desc">试用 · 价格 · 常见问题</span></a>
       </div>
     </section>
 
@@ -976,21 +1117,21 @@
     </section>
 
 
-    <section class="section features-section" id="method" data-app-view="about">
+    <section class="section features-section" id="method" data-app-view="home">
       <div class="container">
         <div class="section-heading" data-reveal><div class="eyebrow"><span class="dot"></span> A BETTER WAY TO LEARN</div><h2>不是背更多，<br>是每次复习都 <em>更聪明。</em></h2><p>把认知科学装进日常学习。Lexio 根据你的掌握程度安排复习，把有限的时间留给真正需要巩固的词。</p></div>
         <div class="feature-grid">
-          <article class="feature-card" data-reveal><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3 5 6v5c0 4.5 3 7.7 7 10 4-2.3 7-5.5 7-10V6l-7-3Z" stroke-width="1.8" stroke-linejoin="round"/><path d="M8.5 12.1 10.8 14l4.8-5" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h3>AI 记忆曲线</h3><p>算法追踪每个单词的掌握度，在遗忘临界点安排复习，让记忆保持得更久。</p><a class="card-link" href="#study">看看如何学习 <span>→</span></a></article>
+          <article class="feature-card" data-reveal><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3 5 6v5c0 4.5 3 7.7 7 10 4-2.3 7-5.5 7-10V6l-7-3Z" stroke-width="1.8" stroke-linejoin="round"/><path d="M8.5 12.1 10.8 14l4.8-5" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h3>真实学习进展</h3><p>按本机实际标记显示已记住与待巩固词数，不用虚构曲线或学习效果。</p><a class="card-link" href="#study">查看我的学习进度 <span>→</span></a></article>
           <article class="feature-card stagger-1" data-reveal><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v16H6.5A2.5 2.5 0 0 0 4 21V5.5Z" stroke-width="1.8" stroke-linejoin="round"/><path d="M4 17.5A2.5 2.5 0 0 1 6.5 15H20M8 7h8M8 10h5" stroke-width="1.8" stroke-linecap="round"/></svg></div><h3>考纲精准词库</h3><p>承接原站高考、四级、六级、考研与雅思词库结构，按目标考试规划学习路线。</p><a class="card-link" href="#library">浏览目标词库 <span>→</span></a></article>
-          <article class="feature-card stagger-2" data-reveal><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3.5 14.6 9l5.9.8-4.3 4.1 1 5.8-5.2-2.8-5.2 2.8 1-5.8-4.3-4.1L9.4 9 12 3.5Z" stroke-width="1.7" stroke-linejoin="round"/></svg></div><h3>例句来源 + 记忆线索</h3><p>词卡区分词典原句、原词库内容与自动生成的释义提示；通用复习提示不会伪装成词源或词根助记。</p><a class="card-link" href="#library">看词条示例 <span>→</span></a></article>
-          <article class="feature-card" data-reveal><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M4 10v4h4l5 4V6l-5 4H4Z" stroke-width="1.8" stroke-linejoin="round"/><path d="M16 9a5 5 0 0 1 0 6m2-9a9 9 0 0 1 0 12" stroke-width="1.8" stroke-linecap="round"/></svg></div><h3>英式 · 美式双音支持</h3><p>可切换英音、美音；在线时请求原站同款发音服务，离线或失败时使用设备本地英语语音。</p><a class="card-link" href="#study">试听学习卡片 <span>→</span></a></article>
-          <article class="feature-card stagger-1" data-reveal><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none"><path d="m13 2-9 12h7l-1 8 10-13h-7l1-7Z" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg></div><h3>游戏化闯关</h3><p>单词消消乐、限时拼写赛、好友对战，把枯燥的背诵变成每天期待的 15 分钟。</p><a class="card-link" href="#study">开始一次练习 <span>→</span></a></article>
-          <article class="feature-card stagger-2" data-reveal><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M4 19V5m0 14h17" stroke-width="1.8" stroke-linecap="round"/><path d="m7 15 4-4 3 2 6-7" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 6h4v4" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h3>学情报告</h3><p>每周查看学习时长、掌握词量与薄弱点；错词自动回到强化队列，进步有迹可循。</p><a class="card-link" href="#ops">了解学习闭环 <span>→</span></a></article>
+          <article class="feature-card stagger-2" data-reveal><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3.5 14.6 9l5.9.8-4.3 4.1 1 5.8-5.2-2.8-5.2 2.8 1-5.8-4.3-4.1L9.4 9 12 3.5Z" stroke-width="1.7" stroke-linejoin="round"/></svg></div><h3>例句来源 + 记忆线索</h3><p>词卡区分词典原句、原词库内容与自动生成的释义提示；点击下方按钮随机抽取带例句的词卡背面。</p><a class="card-link" href="#study" data-open-random-example>随机看一条例句 <span>→</span></a></article>
+          <article class="feature-card" data-reveal><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M4 10v4h4l5 4V6l-5 4H4Z" stroke-width="1.8" stroke-linejoin="round"/><path d="M16 9a5 5 0 0 1 0 6m2-9a9 9 0 0 1 0 12" stroke-width="1.8" stroke-linecap="round"/></svg></div><h3>英式 · 美式双音支持</h3><p>可切换英音、美音；单词发音优先尝试在线音频，失败后使用设备英语语音；例句由设备英语语音朗读。</p><a class="card-link" href="#study">试听学习卡片 <span>→</span></a></article>
+          <article class="feature-card stagger-1" data-reveal><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none"><path d="m13 2-9 12h7l-1 8 10-13h-7l1-7Z" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg></div><h3>游戏化闯关</h3><p>用 10 题限时词义挑战练习，当前对手为本机模拟角色，不是实时在线玩家。</p><a class="card-link" href="#study" data-open-battle>进入好友对战 <span>→</span></a></article>
+          <article class="feature-card stagger-2" data-reveal><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M4 19V5m0 14h17" stroke-width="1.8" stroke-linecap="round"/><path d="m7 15 4-4 3 2 6-7" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 6h4v4" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h3>学习进展</h3><p>按本机记录显示已记住与待巩固的词；标记为不熟的词会自动回到强化队列。</p><a class="card-link" href="#ops">了解学习闭环 <span>→</span></a></article>
         </div>
       </div>
     </section>
 
-    <section class="dark-section showcase-intro" data-app-view="about" aria-label="产品体验介绍">
+    <section class="dark-section showcase-intro" data-app-view="home" aria-label="产品体验介绍">
       <div class="container">
         <div class="section-heading" data-reveal><div class="eyebrow"><span class="dot"></span> PRODUCT EXPERIENCE</div><h2>打开 App 的每一分钟，<br><em>都在高效记忆。</em></h2><p>试试智能词单、记忆卡片和学习进度。此处是可交互的 PWA 体验版，当前学习状态保存在本设备。</p></div>
         <div class="study-side-copy" id="showcasePanel" role="tabpanel" data-reveal>
@@ -1015,7 +1156,7 @@
               <div class="library-top-left"><h3>词库内容中心 <span id="bankCountLabel" style="font-size:10px;color:#8b968e;font-weight:550">正在载入…</span></h3><p>搜索单词或释义，点「学习此词」直接跳到学习面板。</p></div>
               <div class="library-actions">
                 <label class="search-wrap"><span class="visually-hidden">搜索单词或释义</span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8" stroke="currentColor" stroke-width="1.8"/><path d="m16 16 4.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><input class="search-input" type="search" id="wordSearch" placeholder="搜索英文 / 中文" autocomplete="off"></label>
-                <button class="import-button" id="syncWordsBtn" type="button" aria-label="联网同步 GitHub 词库"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 16.6A4.3 4.3 0 0 0 18 8.5 6.3 6.3 0 0 0 6 9.8 3.5 3.5 0 0 0 6.5 17H18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="m12 11 0 8m0 0-3-3m3 3 3-3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>联网同步</button>
+                <button class="import-button" id="syncWordsBtn" type="button" aria-label="联网同步词库"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 16.6A4.3 4.3 0 0 0 18 8.5 6.3 6.3 0 0 0 6 9.8 3.5 3.5 0 0 0 6.5 17H18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="m12 11 0 8m0 0-3-3m3 3 3-3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>联网同步</button>
               </div>
             </div>
             <div class="filter-row" role="tablist" aria-label="按考试类型筛选词库">
@@ -1034,9 +1175,9 @@
     </section>
 
 
-    <section class="section library-intro" data-app-view="about" aria-label="词库介绍">
+    <section class="section library-intro" data-app-view="home" aria-label="词库介绍">
       <div class="container">
-        <div class="section-heading" data-reveal><div class="eyebrow"><span class="dot"></span> ONE LIBRARY, MANY GOALS</div><h2>从校内考试到留学，<br>让每个目标 <em>都有清晰路线。</em></h2><p>五大考试词库与 100 条精讲词已随 App 安装并保存在本机。可离线搜索学习；若 GitHub 上更新了词库，可从「联网同步」窗口获取最新内容。</p></div>
+        <div class="section-heading" data-reveal><div class="eyebrow"><span class="dot"></span> ONE LIBRARY, MANY GOALS</div><h2>从校内考试到留学，<br>让每个目标 <em>都有清晰路线。</em></h2><p>五大考试词库与 100 条精讲词已随 App 安装并保存在本机。可离线搜索、学习和朗读；需要更新词库时，用「联网同步」载入新的词库文件。</p></div>
 <div class="exam-grid">
           <article class="exam-card" style="--wash:#e5efd8" data-reveal><span class="exam-icon">高</span><strong>3,500 词</strong><h3>高考核心词</h3><p>高考大纲 · 真题高频</p></article>
           <article class="exam-card stagger-1" style="--wash:#f2ead5" data-reveal><span class="exam-icon">4</span><strong>4,500 词</strong><h3>大学英语四级</h3><p>CET-4 · 高频核心</p></article>
@@ -1045,7 +1186,7 @@
           <article class="exam-card stagger-4" style="--wash:#e9e3f2" data-reveal><span class="exam-icon">雅</span><strong>6,000 词</strong><h3>雅思核心词</h3><p>学术语境 · 话题拓展</p></article>
         </div>
         <div class="roots-panel" data-reveal><div class="roots-intro"><span class="eyebrow"><span class="dot"></span> WORD ROOT MINI-CLASS</span><h3>一个词根，<br>串起一整组单词。</h3><p>把零散词汇连成可理解的网络，背过一个，再遇见同族词就更容易。</p></div><div class="root-list"><div class="root-row"><strong>spect / spec</strong><span>看 · look</span><small>inspect · perspective · spectacular</small></div><div class="root-row"><strong>port</strong><span>携带 · carry</span><small>transport · support · portable</small></div><div class="root-row"><strong>mit / miss</strong><span>送、放 · send</span><small>submit · transmit · mission</small></div></div></div>
-        <div class="migration-note"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/><path d="M12 11v5m0-8h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span><strong>本机词库：</strong>25,024 条学习记录会在首次联网打开时自动写入 IndexedDB，之后离线可用。更新词条可提交到 GitHub，再通过「联网同步」窗口拉取最新 JSON。</span></div>
+        <div class="migration-note"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/><path d="M12 11v5m0-8h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span><strong>本机词库：</strong>25,024 条学习记录会在首次联网打开时自动写入 IndexedDB，之后离线可用。</span></div>
           <p class="library-footnote">预期字段支持 word / english、meaning / translation、phonetic、pos、example、category / exam、uk / us；保留源记录并映射到统一学习卡片。</p>
       </div>
     </section>
@@ -1057,7 +1198,7 @@
           <div class="study-panel is-active" data-study-panel="plan" role="tabpanel" aria-label="智能词单">
           <div class="study-app" data-reveal>
             <div class="study-app-top"><div class="study-app-brand"><span class="mini-logo"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M6 18V6.5c0-.8.7-1.5 1.5-1.5H18M6 18h11.5c.8 0 1.5-.7 1.5-1.5V8" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"/><path d="m10 13 2 2 5-6" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Lexio 学习空间<small id="studyDate">今日学习 · 15 分钟</small></span></div><span class="session-status"><i></i><span id="sessionStatusText">学习中</span></span><button class="study-control" type="button" id="returnLibraryBtn" hidden>← 返回词库</button></div>
-            <div class="study-stats"><div class="study-stat"><span>今日已掌握</span><strong id="knownCount">0</strong></div><div class="study-stat"><span>本轮计划</span><strong>30</strong></div><div class="study-stat"><span>连续学习</span><strong>7 <small style="font-size:9px;font-weight:550">天</small></strong></div></div>
+            <div class="study-stats"><div class="study-stat"><span>今天记住了</span><strong id="knownCount">0</strong></div><div class="study-stat"><span>还没记牢</span><strong id="weakCountInline">0</strong></div><div class="study-stat"><span>累计已记住</span><strong id="masteredAllCount">0</strong></div></div>
             <div class="study-meter" aria-label="今日学习进度"><span id="studyProgress"></span></div>
             <article class="study-word-card" id="studyCard" aria-live="polite">
               <div class="card-flip" id="wordCardFlip">
@@ -1088,7 +1229,16 @@
                 <div><div class="eyebrow"><span class="dot"></span> MEMORY ENGINE</div><h3>看过了，但还没记住的词</h3></div>
                 <span class="weak-badge" id="weakCount">0 个待巩固</span>
               </div>
-              <p class="panel-note">此面板只显示需要巩固的词：卡片上点「还不熟悉 · 再练一次」会加入这里，点「记住了 ✓」自动移出。这里只有复习清单，没有其他内容。</p>
+              <div class="memory-summary" id="memorySummary">
+                <div class="memory-stat"><small>已记住</small><strong id="memoryMastered">0</strong></div>
+                <div class="memory-stat"><small>没记牢</small><strong id="memoryWeak">0</strong></div>
+                <div class="memory-stat"><small>连续学习</small><strong><span id="studyStreak">0</span> <em>天</em></strong></div>
+              </div>
+              <div class="memory-curve" aria-label="最近 7 天的本机学习记录">
+                <div class="memory-curve-head"><strong>最近 7 天</strong><span id="memoryCurveNote">还没有学习记录</span></div>
+                <div class="memory-bars" id="memoryBars"></div>
+              </div>
+              <p class="panel-note">这里的数字全部来自这台设备的学习记录：卡片上点「记住了 ✓」计入已记住，点「还不熟悉 · 再练一次」计入没记牢。没有虚构的记忆曲线，也不含任何上传的数据。</p>
               <ul class="weak-list" id="weakList"></ul>
               <div class="panel-empty" id="weakEmpty">暂时没有薄弱词。继续学习，标记不熟的词会自动出现在这里。</div>
             </div>
@@ -1113,7 +1263,7 @@
                 <div class="battle-word" id="battleWord">准备好了吗？</div>
                 <div class="battle-options" id="battleOptions"></div>
               </div>
-              <p class="battle-msg" id="battleMsg">与 AI 对手进行 10 题词义快答，答对得分。正式版将支持邀请好友、房间对战与排行榜。</p>
+              <p class="battle-msg" id="battleMsg">与这台设备上的模拟对手进行 10 题词义快答，答对得分；不连服务器，也不需要好友在线。</p>
               <div class="battle-actions"><button class="study-control primary" id="battleStart" type="button">开始 10 题对战</button></div>
             </div>
           </div>
@@ -1123,56 +1273,56 @@
 
     <section class="ops-section" id="ops" data-app-view="pricing">
       <div class="container">
-        <div class="section-heading" data-reveal><div class="eyebrow"><span class="dot"></span> AUTOMATION BY DESIGN</div><h2>从首次体验到续订，<br>让服务 <em>顺畅自动运转。</em></h2><p>为正式上线预留清楚、透明的订阅生命周期。支付、提醒、权限和备份由后台自动化协同，减少人工跟单。</p></div>
+        <div class="section-heading" data-reveal><div class="eyebrow"><span class="dot"></span> AUTOMATION BY DESIGN</div><h2>从首次体验到续订，<br>让服务 <em>顺畅自动运转。</em></h2><p>试用计时、到期前本机提醒与订阅入口都写在这一版里；当前没有后台服务器，也没有自动续费扣款。</p></div>
         <div class="ops-panel" data-reveal>
-          <div class="ops-top"><div><h3>订阅与运维工作流</h3><p>以下是生产版运营设计蓝图。实际扣款、邮件通知、Webhook 与自动备份，需要在部署时连接支付服务商、数据库和通知渠道。</p></div><span class="ops-status"><i></i>流程已规划 · 等待接入服务</span></div>
+          <div class="ops-top"><div><h3>试用与提醒怎么运转</h3><p>这一版全部在本机完成：试用开始日、到期前提醒和订阅入口都不依赖服务器，也不会上传任何学习数据。</p></div><span class="ops-status"><i></i>本机计时 · 无需服务器</span></div>
           <div class="ops-flow">
             <article class="ops-step"><span class="ops-number">DAY 01</span><h4>开始 7 天体验</h4><p>创建账号、记录试用截止日，清楚展示续费价格与取消方式。</p></article>
-            <article class="ops-step"><span class="ops-number">DAY 05</span><h4>到期前提醒</h4><p>自动发送邮件 / 站内提醒，说明续费金额与管理入口。</p></article>
-            <article class="ops-step"><span class="ops-number">DAY 07</span><h4>安全结账续订</h4><p>由支付服务商托管结账，按运维配置的月付或年付方案续订。</p></article>
-            <article class="ops-step"><span class="ops-number">WEBHOOK</span><h4>同步会员权限</h4><p>支付结果通过签名校验的 Webhook 更新账号状态。</p></article>
-            <article class="ops-step"><span class="ops-number">AUTO</span><h4>失败重试与取消</h4><p>自动提醒、重试与宽限期；用户可随时管理或取消订阅。</p></article>
-            <article class="ops-step"><span class="ops-number">DAILY</span><h4>备份与健康检查</h4><p>定时备份数据，监控支付、同步、错误率与服务状态。</p></article>
+            <article class="ops-step"><span class="ops-number">14 / 7 / 1</span><h4>到期前本机提醒</h4><p>在到期前 14 天、7 天、1 天打开 App 时，由本机弹窗提醒，不发送邮件或短信。</p></article>
+            <article class="ops-step"><span class="ops-number">DAY 07</span><h4>体验结束</h4><p>由支付服务商托管结账，按运维配置的月付或年付方案续订。</p></article>
+            <article class="ops-step"><span class="ops-number">本机</span><h4>不采集数据</h4><p>没有账号体系，也没有远程同步；进度只写入这台设备的本地存储。</p></article>
+            <article class="ops-step"><span class="ops-number">随时</span><h4>查看或取消</h4><p>订阅入口常驻底部标签栏，随时可以查看方案、取消或继续学习。</p></article>
+            <article class="ops-step"><span class="ops-number">离线</span><h4>无网也能用</h4><p>词库、口语库与学习记录都在本机，断网时照样可以学习和朗读。</p></article>
           </div>
-          <div class="ops-bottom"><span><strong>数据保护：</strong>学习进度与词库独立存储，支持导出与定期备份。</span><span><strong>收费透明：</strong>试用期、续费金额、取消入口在付款前明确展示。</span></div>
+          <div class="ops-bottom"><span><strong>数据保护：</strong>学习进度与词库保存在本机 IndexedDB，不上传服务器。</span><span><strong>收费透明：</strong>试用天数和续费金额直接写在页面上，付款前不会自动扣款。</span></div>
         </div>
       </div>
     </section>
 
-    <section class="benefits-section" data-app-view="about" aria-labelledby="benefitsTitle">
+    <section class="benefits-section" data-app-view="home" aria-labelledby="benefitsTitle">
       <div class="container">
         <div class="section-heading" data-reveal><div class="eyebrow"><span class="dot"></span> PROGRESS THAT ADDS UP</div><h2 id="benefitsTitle">把时间花在刀刃上，<br>让努力 <em>真正转化为进步。</em></h2><p>把大目标拆成每天能完成的小步骤，学习节奏更可持续，复习重点也更清楚。</p></div>
         <div class="benefits-grid">
-          <article class="benefit" data-reveal><div class="benefit-number">15<span style="font-size:.47em;letter-spacing:-.02em"> 分钟</span></div><h3>每天轻松完成</h3><p>把课间、通勤和睡前的碎片时间，变成稳定积累。</p></article>
-          <article class="benefit stagger-1" data-reveal><div class="benefit-number">+23<span style="font-size:.47em;letter-spacing:-.02em">%</span></div><h3>成绩进步可追踪</h3><p>原站页面披露：连续使用 60 天的学生，词汇测试平均提升 23%。</p></article>
-          <article class="benefit stagger-2" data-reveal><div class="benefit-number">94<span style="font-size:.47em;letter-spacing:-.02em">%</span></div><h3>记忆保持更久</h3><p>原站披露的 30 天记忆保持率指标；实际效果会因学习习惯而异。</p></article>
+          <article class="benefit" data-reveal><div class="benefit-number">15<span style="font-size:.47em;letter-spacing:-.02em"> 分钟</span></div><h3>每天一小步</h3><p>课间、通勤和睡前的碎片时间，都能变成稳定积累。</p></article>
+          <article class="benefit stagger-1" data-reveal><div class="benefit-number">14 / 7 / 1</div><h3>到期前提醒</h3><p>试用结束前 14 天、7 天、1 天打开 App，会在这台设备上提醒你。</p></article>
+          <article class="benefit stagger-2" data-reveal><div class="benefit-number">100%</div><h3>记录留在本机</h3><p>词库、学习进度与口语句库都保存在本机，不上传服务器。</p></article>
         </div>
-        <p class="proof-note">以上学习效果数字沿用源页面展示信息，并非本演示版本的独立测量结果；上线前建议核验与补充依据。</p>
+        <p class="proof-note">以上三项都是本版本可以直接核对的功能设定，不是效果宣传，也没有用户成绩统计。</p>
       </div>
     </section>
 
-    <section class="section testimonials-section" id="stories" data-app-view="about">
+    <section class="section testimonials-section" id="stories" data-app-view="home">
       <div class="container">
-        <div class="section-heading" data-reveal><div class="eyebrow"><span class="dot"></span> STUDENT STORIES</div><h2>让每次努力，<br>都能 <em>看见回响。</em></h2><p>这些学习故事沿用原站的用户反馈文案；上线前请确认授权与真实性。</p></div>
+        <div class="section-heading" data-reveal><div class="eyebrow"><span class="dot"></span> WHAT LEARNERS ASK FOR</div><h2>把时间花在刀刃上，<br>让每天的努力 <em>都能看见。</em></h2><p>以下是我们收到的学习需求总结与对应的功能设计，不是虚构的用户评价，也不含任何未经确认的姓名、学校或成绩数据。</p></div>
         <div class="testimonial-grid">
-          <article class="testimonial" data-reveal><div class="stars" aria-label="5 星评价">★★★★★</div><blockquote>“以前抱着单词书从 abandon 背到放弃。用 Lexio 三个月，3500 考纲词过完两轮，阅读里遇到熟词的感觉真的不一样。”</blockquote><div class="person"><span class="person-avatar">林</span><span><strong>林晓雨</strong><small>高三学生 · 高考英语 142 分</small></span></div></article>
-          <article class="testimonial stagger-1" data-reveal><div class="stars" aria-label="5 星评价">★★★★★</div><blockquote>“好友对战和每日任务让背词没那么像硬撑。错词会自动回来复习，六级备考时不用再自己整理一堆表格。”</blockquote><div class="person"><span class="person-avatar">陈</span><span><strong>陈子豪</strong><small>大二学生 · 六级备考</small></span></div></article>
-          <article class="testimonial stagger-2" data-reveal><div class="stars" aria-label="5 星评价">★★★★★</div><blockquote>“考研词汇配上例句，背的时候顺便熟悉真题语境。最喜欢薄弱词自动强化，学习计划每天都很明确。”</blockquote><div class="person"><span class="person-avatar">王</span><span><strong>王梦琪</strong><small>考研学生 · 词汇打卡用户</small></span></div></article>
-          <article class="testimonial" data-reveal><div class="stars" aria-label="5 星评价">★★★★★</div><blockquote>“我是那种坐不住的人，但是闯关和连续打卡勋章让我停不下来。连续打卡 148 天，中考词汇早就滚瓜烂熟了。”</blockquote><div class="person"><span class="person-avatar">李</span><span><strong>李想</strong><small>初三学生 · 连续打卡用户</small></span></div></article>
-          <article class="testimonial stagger-1" data-reveal><div class="stars" aria-label="5 星评价">★★★★★</div><blockquote>“班级版的学情报告帮我精准定位每个学生的薄弱词，备课效率翻倍。整个班的平均词汇量一学期提升了 31%。”</blockquote><div class="person"><span class="person-avatar">赵</span><span><strong>赵老师</strong><small>重点中学英语教研组长</small></span></div></article>
-          <article class="testimonial stagger-2" data-reveal><div class="stars" aria-label="5 星评价">★★★★★</div><blockquote>“跟读评分功能像请了个私人外教，纠正了我一堆发音坏习惯。雅思听力口语都上了 7.5，面试时发音也更有信心。”</blockquote><div class="person"><span class="person-avatar">孙</span><span><strong>孙一诺</strong><small>高中生 · 雅思学习者</small></span></div></article>
+          <article class="testimonial" data-reveal><div class="quote-tag">需求 · 高考</div><blockquote>“想要一本知道我今天该背哪些词、明天该复习哪些词的词单，而不是又厚又背不完的单词书。”</blockquote><div class="person"><span class="person-avatar">词</span><span><strong>高频需求</strong><small>对应功能：智能词单 + 复习队列</small></span></div></article>
+          <article class="testimonial stagger-1" data-reveal><div class="quote-tag">需求 · 四六级</div><blockquote>“不想自己整理错词表。答错的词应该自动回到复习里，直到我真的记住。”</blockquote><div class="person"><span class="person-avatar">错</span><span><strong>高频需求</strong><small>对应功能：错词自动进入强化队列</small></span></div></article>
+          <article class="testimonial stagger-2" data-reveal><div class="quote-tag">需求 · 考研</div><blockquote>“背单词时要能听到整句例句，而不是只听一个单词的发音。”</blockquote><div class="person"><span class="person-avatar">听</span><span><strong>高频需求</strong><small>对应功能：词卡背面整句朗读</small></span></div></article>
+          <article class="testimonial" data-reveal><div class="quote-tag">需求 · 日常口语</div><blockquote>“生活、出行、看病这些场景的句子，最好中英对照，还能反复听。”</blockquote><div class="person"><span class="person-avatar">句</span><span><strong>高频需求</strong><small>对应功能：1,000 条场景句库</small></span></div></article>
+          <article class="testimonial stagger-1" data-reveal><div class="quote-tag">需求 · 老师</div><blockquote>“希望能按班级进度整理练习，也希望能拿到可以直接用的词表模板。”</blockquote><div class="person"><span class="person-avatar">师</span><span><strong>学校需求</strong><small>对应服务：模板与学习跟进服务</small></span></div></article>
+          <article class="testimonial stagger-2" data-reveal><div class="quote-tag">需求 · 发音</div><blockquote>“例句要能听清、听完整，英音美音最好都能切换。”</blockquote><div class="person"><span class="person-avatar">音</span><span><strong>高频需求</strong><small>对应功能：英式 / 美式发音切换</small></span></div></article>
         </div>
       </div>
     </section>
 
     <section class="pricing-section" id="pricing" data-app-view="pricing">
       <div class="container">
-        <div class="section-heading" data-reveal><div class="eyebrow"><span class="dot"></span> SIMPLE, STUDENT-FRIENDLY PRICING</div><h2>先完整体验 7 天，<br>再决定是否 <em>继续前进。</em></h2><p>价格透明，不隐藏自动续费。正式环境接入收款后，试用结束时按已授权的订阅方式续费。</p></div>
+        <div class="section-heading" data-reveal><div class="eyebrow"><span class="dot"></span> SIMPLE, STUDENT-FRIENDLY PRICING</div><h2>先完整体验 7 天，<br>再决定是否 <em>继续前进。</em></h2><p>价格、试用天数和提醒方式都写在下面。这一版不会自动扣款，也不会要求卡号。</p></div>
         <div class="pricing-layout">
-          <div class="trial-info-card" data-reveal><div><div class="eyebrow"><span class="dot"></span> 7-DAY FULL ACCESS</div><h3>给自己 7 天，感受真正高效的背词节奏。</h3><p>试用期间开放 Pro 学习体验。你可以自由探索词库、记忆卡片、英美音与学习报告。</p><div class="trial-timeline-mini"><div class="timeline-mini-row"><span>1</span>设置目标，开始第一组单词</div><div class="timeline-mini-row"><span>5</span>到期前收到清晰提醒</div><div class="timeline-mini-row"><span>7</span>按已授权方式续订，可提前取消</div></div></div><p class="trial-info-foot">正式上线时，将在开始试用前清楚展示付款方式、续费日期、<span id="trialInfoPrice">选定方案的价格</span>与取消入口。</p></div>
-          <div class="price-card" data-reveal><span class="popular-pill">✦ 学生 Pro · 全部学习功能</span><h3>Lexio Pro</h3><p class="price-desc">适合希望稳定提升词汇量的学生</p><div class="plan-switch" role="group" aria-label="选择订阅周期"><button class="plan-option active" type="button" data-plan-select="monthly" aria-pressed="true">连续包月</button><button class="plan-option" type="button" data-plan-select="annual" aria-pressed="false">连续包年 <b id="annualBadge">省 40%</b></button></div><div class="price"><strong id="priceAmount">¥15</strong><span id="pricePeriod">/ 月</span><span class="price-original" id="priceOriginal" hidden>¥180</span></div><p class="after-trial" id="priceTerms">前 7 天免费 · 之后 ¥15 / 月自动续费</p><p class="student-promo" id="studentPromo" hidden>🎓 凭学生证可享优惠（正式版需完成学生身份验证）</p><div class="price-divider"></div><ul class="plan-list"><li><span>✓</span>五大考试词库与自定义词单</li><li><span>✓</span>间隔复习、错词强化与每日学习计划</li><li><span>✓</span>例句来源标注、词族拓展与英美音发音</li><li><span>✓</span>学习统计、进度同步与离线 PWA</li><li><span>✓</span>随时管理或取消订阅</li></ul><button class="btn btn-primary" type="button" data-open-trial>免费体验 7 天 <span class="btn-arrow">↗</span></button><button class="btn btn-outline secondary-subscribe" type="button" id="directSubscribe">选择此方案并继续</button><p class="terms-small">正式版在试用前将明确显示续费日期、价格和取消入口。预览不会收款；价格由 <code>pricing.config.json</code> 提供，最终扣款金额必须由服务端确认。</p></div>
+          <div class="trial-info-card" data-reveal><div><div class="eyebrow"><span class="dot"></span> 7-DAY FULL ACCESS</div><h3>给自己 7 天，感受真正高效的背词节奏。</h3><p>试用期间开放 Pro 学习体验。你可以自由探索词库、记忆卡片、英美音与学习报告。</p><div class="trial-timeline-mini"><div class="timeline-mini-row"><span>1</span>设置目标，开始第一组单词</div><div class="timeline-mini-row"><span>3</span>到期前 2 周 / 1 周 / 1 天在本机提醒</div><div class="timeline-mini-row"><span>7</span>按已授权方式续订，可提前取消</div></div></div><p class="trial-info-foot">正式上线时，将在开始试用前清楚展示付款方式、续费日期、<span id="trialInfoPrice">选定方案的价格</span>与取消入口。</p></div>
+          <div class="price-card" data-reveal><span class="popular-pill">✦ 学生 Pro · 全部学习功能</span><h3>Lexio Pro</h3><p class="price-desc">适合希望稳定提升词汇量的学生</p><div class="plan-switch" role="group" aria-label="选择订阅周期"><button class="plan-option active" type="button" data-plan-select="monthly" aria-pressed="true">连续包月</button><button class="plan-option" type="button" data-plan-select="annual" aria-pressed="false">连续包年 <b id="annualBadge">省 40%</b></button></div><div class="price"><strong id="priceAmount">¥15</strong><span id="pricePeriod">/ 月</span><span class="price-original" id="priceOriginal" hidden>¥180</span></div><p class="after-trial" id="priceTerms">前 7 天免费体验 · 之后 ¥15 / 月（正式收款时按此价格，当前不扣款）</p><p class="student-promo" id="studentPromo" hidden>🎓 凭学生证可享优惠（正式版需完成学生身份验证）</p><div class="price-divider"></div><ul class="plan-list"><li><span>✓</span>五大考试词库与自定义词单</li><li><span>✓</span>间隔复习、错词强化与每日学习计划</li><li><span>✓</span>例句来源标注、词族拓展与英美音发音</li><li><span>✓</span>学习统计、进度同步与离线 PWA</li><li><span>✓</span>随时管理或取消订阅</li></ul><button class="btn btn-primary" type="button" data-open-trial>免费体验 7 天 <span class="btn-arrow">↗</span></button><button class="btn btn-outline secondary-subscribe" type="button" id="directSubscribe">选择此方案并继续</button><p class="terms-small">试用结束前会在这台设备上提醒你，付款前也会明确显示续费日期、价格和取消入口。当前预览不会收款。</p></div>
         </div>
-        <div class="team-row" data-reveal><div><h3>为老师、班级或学校采购？</h3><p>班级学习报告、教师管理与校本词库可作为后续团队版功能接入。</p></div><a href="#faq">查看团队版说明 <span aria-hidden="true">→</span></a></div>
+        <div class="team-row" data-reveal><div><h3>老师与学校：学习跟进服务</h3><p>我们面向中学、大学等学校提供学习跟进服务，并按学校需要提供词表模板、练习模板等教学模板；具体内容与范围可与学校沟通后确定。</p></div><a href="#faq">查看服务说明 <span aria-hidden="true">→</span></a></div>
       </div>
     </section>
 
@@ -1180,12 +1330,13 @@
       <div class="container faq-layout">
         <div class="faq-aside" data-reveal><h2>你想知道的，<br>都在这里。</h2><p>还有其他问题？把你的词库格式或上线需求告诉我们。</p><a href="#pricing">查看体验与定价 <span aria-hidden="true">↗</span></a></div>
         <div class="faq-list" data-reveal>
-          <details><summary>原站 25,000+ 单词已经迁移进来了吗？</summary><p>已核验原站公开 HTML 的内嵌词库数组，并打包为 25,024 条学习记录（五套考试列表共 25,000 条，另含 100 条精讲词；按原站逻辑替换 76 个重合条目并补入 24 个精讲新词）。首次联网打开时会自动写入本机 IndexedDB；GitHub 更新词库后，可通过「联网同步」窗口获取最新 JSON。相同拼写在不同考试列表中保留各自分类。</p></details>
-          <details><summary>7 天后会怎样收费？可以取消吗？</summary><p>正式产品先免费体验 7 天，之后按所选连续包月或连续包年方案自动续费。页面价格由运维配置文件提供，实际扣款金额必须由服务端确认；付款前会明确显示续费日期、金额和取消方式。当前预览只在本设备演示试用计时，不会发起真实扣款。</p></details>
+          <details><summary>学校、老师可以获得哪些支持？</summary><p>我们为中学、大学等学校提供学习跟进服务：可以按学校现有词表提供模板、按班级进度整理练习模板，并配合老师安排复习节奏。这些是我们可以提供的服务内容；具体合作方式、适用范围与效果，需要与学校沟通后确定，不以任何未经确认的学校名单或数据作宣传。</p></details>
+          <details><summary>词库里到底有多少词，存在哪里？</summary><p>词库合计 25,024 条学习记录（五套考试列表 25,000 条，另含 100 条精讲词；相同拼写在不同考试列表中分别保留）。首次联网打开时会自动写入本机 IndexedDB，之后可离线搜索与学习，学习记录也只保存在这台设备上。</p></details>
+          <details><summary>7 天试用结束后会怎样？</summary><p>这一版只在本机记录试用开始日期，并在到期前 14 天、7 天、1 天打开 App 时弹出提醒，不发短信、不发邮件。当前版本没有接入收银服务，不会自动扣款；付款前会明确显示续费日期、金额和取消方式。</p></details>
           <details><summary>支持哪些支付方式？</summary><p>支持多种方式支付，具体方式以正式结账页面为准。当前演示尚未接入真实收银服务，不会产生扣款。</p></details>
           <details><summary>它可以离线使用、添加到主屏幕吗？</summary><p>已配置 PWA manifest 和 Service Worker 应用外壳缓存；在 HTTPS 部署并由支持的浏览器访问后，可添加到主屏幕并以独立 App 窗口运行。词库与学习进度保存在本机 IndexedDB；首次联网完成缓存后即可离线使用。</p></details>
           <details><summary>原站的发音、例句和学习进度也能保留吗？</summary><p>已迁移英 / 美音标、词性、中文释义与考试分类。精讲内容保留原有资料；另有匹配到词典的真实句例/记忆法，以及明确标注的释义提示和通用复习提示。词库数据本身未内嵌音频文件；例句朗读直接调用设备 en-US 系统语音。公开 HTML 未包含个人学习进度，迁移进度仍需原站账号数据导出。</p></details>
-          <details><summary>自动运维目前包含什么？</summary><p>当前交付包含自动化运营流程设计与前端体验原型。实际定时提醒、扣款、续费失败重试、Webhook 权限同步、服务监控和数据库备份，需部署后端任务、数据库、邮件/通知服务和支付服务商才能真正运行。</p></details>
+          <details><summary>需要联网吗？能离线用吗？</summary><p>词库与日常口语句库都随 App 缓存到本机，断网也能查询、学习、朗读（朗读使用设备自带英语语音）。联网只在两种情况下需要：首次打开时下载词库、以及你主动点「联网同步」获取新词库。</p></details>
         </div>
       </div>
     </section>
@@ -1206,13 +1357,31 @@
   </footer>
 
   <dialog class="dialog" id="trialDialog" aria-labelledby="trialTitle">
-    <div class="dialog-content"><button class="dialog-close" type="button" data-close-dialog aria-label="关闭">×</button><span class="dialog-badge">✦ 7 天完整 Pro 体验</span><h2 id="trialTitle">给自己 7 天，<br>试试更聪明的记忆。</h2><p class="dialog-copy" id="trialCopy">体验期内可探索完整学习流程。正式版本需要在启用自动续订前绑定付款方式。</p><div class="dialog-timeline"><div class="dialog-day"><span>DAY 01</span><strong>开始学习，设置你的目标</strong></div><div class="dialog-day"><span>DAY 05</span><strong>到期前提醒续费信息</strong></div><div class="dialog-day"><span>DAY 07</span><strong id="trialPlanRenewal">按选定方案续订</strong></div></div><p class="dialog-notice"><strong>演示环境说明：</strong>点击开始只会在当前设备记录 7 天试用状态，不会要求卡号，也不会扣款。正式上线前需接入支付服务商并明确续费授权。</p><label class="agree-row"><input type="checkbox" id="trialAgree"><span id="trialConsentLabel">我已了解正式版试用结束后的续费价格和取消方式，并同意在本设备开始演示试用。</span></label><button class="btn btn-primary" type="button" id="confirmTrial" disabled>开始 7 天体验 <span class="btn-arrow">↗</span></button><button class="dialog-secondary" type="button" data-close-dialog>先浏览网站</button></div>
+    <div class="dialog-content"><button class="dialog-close" type="button" data-close-dialog aria-label="关闭">×</button><span class="dialog-badge">✦ 7 天完整 Pro 体验</span><h2 id="trialTitle">给自己 7 天，<br>试试更聪明的记忆。</h2><p class="dialog-copy" id="trialCopy">体验期内可探索完整学习流程。正式版本需要在启用自动续订前绑定付款方式。</p><div class="dialog-timeline"><div class="dialog-day"><span>DAY 01</span><strong>开始学习，设置你的目标</strong></div><div class="dialog-day"><span>到期前</span><strong>第 14 / 7 / 1 天在本机提醒</strong></div><div class="dialog-day"><span>DAY 07</span><strong id="trialPlanRenewal">按选定方案续订</strong></div></div><p class="dialog-notice"><strong>演示环境说明：</strong>点击开始只会在当前设备记录 7 天试用状态，不会要求卡号，也不会扣款。正式上线前需接入支付服务商并明确续费授权。</p><label class="agree-row"><input type="checkbox" id="trialAgree"><span id="trialConsentLabel">我已了解正式版试用结束后的续费价格和取消方式，并同意在本设备开始演示试用。</span></label><button class="btn btn-primary" type="button" id="confirmTrial" disabled>开始 7 天体验 <span class="btn-arrow">↗</span></button><button class="dialog-secondary" type="button" data-close-dialog>先浏览网站</button></div>
   </dialog>
   <dialog class="dialog" id="wordSourceDialog" aria-labelledby="wordSourceTitle">
-    <div class="dialog-content"><button class="dialog-close" type="button" data-close-dialog aria-label="关闭">×</button><span class="dialog-badge">WORD BANK · ONLINE SOURCE</span><h2 id="wordSourceTitle">从 GitHub 同步最新词库。</h2><p class="dialog-copy">粘贴 GitHub 文件的 Raw 直链（JSON 或 CSV），或你自己的同源 `/api/wordbank` 地址。同步成功后会替换此设备的词库，学习进度不变；词库仍会保存在本机，离线可用。</p><label for="wordSourceUrl" style="display:block;margin-top:16px;color:#526159;font-size:10px;font-weight:750">GitHub Raw / JSON 地址</label><input id="wordSourceUrl" class="source-url-input" type="url" inputmode="url" placeholder="https://raw.githubusercontent.com/用户名/仓库/分支/词库.json" autocomplete="url"><p class="dialog-notice">请使用 GitHub 的 Raw 文件链接，不要粘贴普通仓库页面。跨域直链需允许 CORS；链接只保存在此设备。手动导入已移除，词库由 App 自动载入或通过此窗口联网同步。</p><button class="btn btn-primary" type="button" id="saveWordSource">保存并开始同步 <span class="btn-arrow">↗</span></button><button class="dialog-secondary" type="button" id="clearWordSource">清除此设备地址</button><p class="pay-status" id="wordSourceStatus" role="status" aria-live="polite"></p></div>
+    <div class="dialog-content"><button class="dialog-close" type="button" data-close-dialog aria-label="关闭">×</button><span class="dialog-badge">WORD BANK · ONLINE SOURCE</span><h2 id="wordSourceTitle">同步一份新的词库。</h2><p class="dialog-copy">填写词库文件的直链（JSON 或 CSV），或同源 `/api/wordbank` 地址。同步成功后会替换这台设备上的词库，学习进度不会丢失，词库仍然离线可用。</p><label for="wordSourceUrl" style="display:block;margin-top:16px;color:#526159;font-size:10px;font-weight:750">词库文件直链</label><input id="wordSourceUrl" class="source-url-input" type="url" inputmode="url" placeholder="https://example.com/wordbank.json" autocomplete="url"><p class="dialog-notice">链接只保存在这台设备上。跨域直链需要对方服务器允许 CORS。词库由 App 自动载入，也可以在这个窗口联网同步。</p><button class="btn btn-primary" type="button" id="saveWordSource">保存并开始同步 <span class="btn-arrow">↗</span></button><button class="dialog-secondary" type="button" id="clearWordSource">清除此设备地址</button><p class="pay-status" id="wordSourceStatus" role="status" aria-live="polite"></p></div>
   </dialog>
   <dialog class="dialog" id="paymentDialog" aria-labelledby="paymentTitle">
     <div class="dialog-content"><button class="dialog-close" type="button" data-close-dialog aria-label="关闭">×</button><span class="dialog-badge">LEXIO PRO · 安全结账</span><h2 id="paymentTitle">继续你的学习计划。</h2><p class="dialog-copy">支持多种方式支付，具体可用选项以正式结账页面为准。当前演示不会收集付款信息。</p><div class="payment-box"><div class="payment-row"><span id="checkoutPlanLabel">Lexio Pro · 连续包月</span><strong id="checkoutAmount">¥15 / 月</strong></div><div class="payment-row"><span>试用政策</span><strong id="checkoutTrial">先体验 7 天</strong></div><div class="payment-row"><span>优惠</span><strong id="checkoutDiscount">按运维活动配置</strong></div><div class="payment-row"><span>取消方式</span><strong>账户内随时取消</strong></div></div><p class="dialog-notice">当前演示尚未接入真实收银服务，因此不会产生扣款。正式上线后由安全的服务端创建订单并校验支付结果。</p><button class="btn btn-primary" type="button" id="checkoutBtn">连接安全收银台 <span class="btn-arrow">↗</span></button><p class="pay-status" id="payStatus" role="status" aria-live="polite"></p><button class="dialog-secondary" type="button" data-close-dialog>返回</button></div>
+  </dialog>
+  <dialog class="dialog install-dialog" id="installDialog" aria-labelledby="installTitle">
+    <div class="dialog-content"><button class="dialog-close" type="button" data-close-dialog aria-label="关闭">×</button><span class="dialog-badge">安装到桌面</span><h2 id="installTitle">把 Lexio 装到手机上。</h2><p class="dialog-copy">安装后从桌面图标打开，全屏运行，词库与学习记录都留在本机。</p>
+      <video class="install-video" id="installVideo" controls playsinline preload="metadata" poster="./media/install-guide-poster.jpg">
+        <source src="./media/install-guide.mp4" type="video/mp4">
+        你的浏览器不支持视频播放。请按下方步骤手动添加。
+      </video>
+      <p class="install-hint">视频为示意图，按钮位置以你手机上的浏览器为准。</p>
+      <ol class="install-steps">
+        <li>安卓 Chrome / Edge：点右上角「三个点」菜单 →「安装应用」或「添加到主屏幕」。</li>
+        <li>iPhone / iPad Safari：点底部「分享」→「添加到主屏幕」→「添加」。</li>
+        <li>桌面出现 Lexio 图标后，点图标即可全屏打开。</li>
+      </ol>
+      <div class="install-actions"><button class="btn btn-primary" type="button" id="installNowBtn">立即安装</button><button class="dialog-secondary" type="button" data-close-dialog>稍后再说</button></div><p class="install-hint" id="installStatus" role="status"></p>
+    </div>
+  </dialog>
+  <dialog class="dialog sheet-dialog" id="reminderDialog" aria-labelledby="reminderTitle">
+    <div class="dialog-content"><span class="dialog-badge" id="reminderBadge">到期提醒</span><h2 id="reminderTitle">你的体验还有 1 天到期。</h2><p class="dialog-copy" id="reminderCopy"></p><div class="sheet-actions"><button class="btn btn-primary" type="button" id="reminderPayBtn">查看订阅方案</button><button class="dialog-secondary" type="button" id="reminderLaterBtn">稍后处理 · 今天不再提示</button></div><p class="install-hint">提醒只在这台设备上显示，不会发送短信或邮件。</p></div>
   </dialog>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
@@ -1439,6 +1608,7 @@
           bankReady=true;
           restoreStudyPosition();
           renderBank(meta);
+          updateStudyCard();
         } catch (error) {
           console.warn('Lexio local word storage unavailable; using browser fallback storage.', error);
           let fallbackMeta={wordCount:bank.length,isDemo:true,sourceFile:'当前演示词库'};
@@ -1530,7 +1700,7 @@
       const SHOWCASE_CONTENT = {
         plan:{headline:'每天醒来，<br><em>词单已为你排好。</em>',copy:'告诉 Lexio 你的考试目标和日期，系统拆解考纲词库，生成刚刚好的每日任务——不多到崩溃，不少到焦虑。',bullets:['按考试日期倒推每日词量。','新词与复习词智能配比。','漏打卡自动重排，不让任务堆积。']},
         memory:{headline:'在快要忘记时，<br><em>刚好再遇见。</em>',copy:'每次自测的反馈都会帮助系统判断掌握程度，逐步安排复习间隔，把时间花在真正需要巩固的单词上。',bullets:['每个词拥有独立复习状态。','错词自动加入强化队列。','按学习反馈调整复习节奏。']},
-        battle:{headline:'把每天 15 分钟，<br><em>变成有趣的挑战。</em>',copy:'用闯关、拼写赛和好友对战增加即时反馈。先体验核心学习卡片，社交挑战与排行榜可在后续版本接入。',bullets:['好友约战与班级排行榜。','拼写挑战，练习主动回忆。','连续打卡，记录每一点进步。']}
+        battle:{headline:'把每天 15 分钟，<br><em>变成有趣的挑战。</em>',copy:'用 10 题限时词义快答增加即时反馈。对手由本机随机生成，不是实时在线玩家；对战结果不会上传。',bullets:['每局固定 10 题，答错自动进复习。','词义快答练习主动回忆。','本机对战，不需要注册账号。']}
       };
       function selectShowcaseTab(key) {
         const content=SHOWCASE_CONTENT[key] || SHOWCASE_CONTENT.plan;
@@ -1543,6 +1713,11 @@
       }
       let gridShown = 0;
       const GRID_PAGE_SIZE = 100;
+      let searchTimer = null;
+      function debounceRenderGrid() {
+        clearTimeout(searchTimer);
+        searchTimer = setTimeout(() => renderWordGrid(true), 90);
+      }
       function renderWordGrid(resetPage) {
         if (resetPage) gridShown = 0;
         const query = ($('#wordSearch').value || '').trim().toLowerCase();
@@ -1623,11 +1798,17 @@
       }
       function setLibraryMode(mode) {
         const phrases=mode==='phrases';
+        const wordPanel=$('#wordBankMode'), phrasePanel=$('#dailyPhrasesMode');
+        if((phrases && !phrasePanel.hidden) || (!phrases && !wordPanel.hidden)) return;
         $$('[data-library-mode]').forEach(button=>{const selected=button.dataset.libraryMode===(phrases?'phrases':'words');button.setAttribute('aria-selected',String(selected));});
-        $('#wordBankMode').classList.toggle('is-active',!phrases);
-        $('#wordBankMode').hidden=phrases;
-        $('#dailyPhrasesMode').classList.toggle('is-active',phrases);
-        $('#dailyPhrasesMode').hidden=!phrases;
+        const incoming=phrases?phrasePanel:wordPanel, outgoing=phrases?wordPanel:phrasePanel;
+        outgoing.hidden=true;
+        outgoing.classList.remove('is-active','panel-in');
+        incoming.hidden=false;
+        incoming.classList.add('is-active');
+        incoming.classList.remove('panel-in');
+        void incoming.offsetWidth;
+        incoming.classList.add('panel-in');
         if(phrases) loadDailyPhrases();
       }
       function parseCSV(text) {
@@ -1717,6 +1898,111 @@
       }
       let dailyStats = loadDailyStats();
       function persistStats() { try { localStorage.setItem('lexio.dailyStats',JSON.stringify(dailyStats)); } catch(_) {} }
+      /* ---------- real local progress ---------- */
+      const MASTERED_KEY = 'lexio.masteredWords';
+      const HISTORY_KEY = 'lexio.studyHistory';
+      function readJSONArray(key) {
+        try { const v = JSON.parse(localStorage.getItem(key) || '[]'); return Array.isArray(v) ? v.filter(Boolean) : []; } catch (_) { return []; }
+      }
+      function writeJSON(key, value) { try { localStorage.setItem(key, JSON.stringify(value)); } catch (_) {} }
+      function masteredWords() { return readJSONArray(MASTERED_KEY); }
+      function markMastered(word, on) {
+        if (!word) return;
+        const list = masteredWords();
+        const i = list.indexOf(word);
+        if (on && i < 0) list.push(word);
+        else if (!on && i >= 0) list.splice(i, 1);
+        else return;
+        writeJSON(MASTERED_KEY, list);
+        bumpHistory(on ? 'known' : null);
+      }
+      function bumpHistory(kind) {
+        if (!kind) return;
+        const today = new Date();
+        const key = `${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}-${String(today.getDate()).padStart(2,'0')}`;
+        const history = readJSONArray(HISTORY_KEY);
+        const row = history.find(item => item && item.day === key) || { day: key, known: 0, again: 0 };
+        if (!history.includes(row)) history.push(row);
+        row[kind] = (Number(row[kind]) || 0) + 1;
+        writeJSON(HISTORY_KEY, history.slice(-90));
+      }
+      function studyStreak() {
+        const days = new Set(readJSONArray(HISTORY_KEY).map(item => item && item.day).filter(Boolean));
+        let streak = 0;
+        const cursor = new Date();
+        for (;;) {
+          const key = `${cursor.getFullYear()}-${String(cursor.getMonth()+1).padStart(2,'0')}-${String(cursor.getDate()).padStart(2,'0')}`;
+          if (!days.has(key)) break;
+          streak++;
+          cursor.setDate(cursor.getDate() - 1);
+        }
+        return streak;
+      }
+      let progressRendering = false;
+      function updateProgressUI() {
+        if (progressRendering) return;
+        progressRendering = true;
+        try { updateProgressUIImpl(); } finally { progressRendering = false; }
+      }
+      function updateProgressUIImpl() {
+        const mastered = masteredWords().length;
+        const weak = (typeof window.__lexioWeakCount === 'function') ? window.__lexioWeakCount() : 0;
+        const todayKnown = Number(dailyStats && dailyStats.known) || 0;
+        const todayAgain = Number(dailyStats && dailyStats.again) || 0;
+        const target = 30;
+        if ($('#knownCount')) $('#knownCount').textContent = todayKnown.toLocaleString();
+        if ($('#weakCountInline')) $('#weakCountInline').textContent = weak.toLocaleString();
+        if ($('#masteredAllCount')) $('#masteredAllCount').textContent = mastered.toLocaleString();
+        if ($('#studyProgress')) $('#studyProgress').style.width = `${Math.min(100, (todayKnown / target) * 100)}%`;
+        const studyDate = $('#studyDate');
+        if (studyDate) studyDate.textContent = `今日学习 · ${new Intl.DateTimeFormat('zh-CN',{month:'long',day:'numeric'}).format(new Date())}`;
+        const streakEl = $('#studyStreak');
+        if (streakEl) streakEl.textContent = String(studyStreak());
+        if ($('#memoryMastered')) $('#memoryMastered').textContent = mastered.toLocaleString();
+        if ($('#memoryWeak')) $('#memoryWeak').textContent = weak.toLocaleString();
+        const bars = $('#memoryBars');
+        if (bars) {
+          const history = readJSONArray(HISTORY_KEY);
+          const byDay = new Map(history.map(row => [row && row.day, Math.max(Number(row && row.known) || 0, Number(row && row.again) || 0)]));
+          const cells = [];
+          let total = 0;
+          for (let back = 6; back >= 0; back--) {
+            const day = new Date(); day.setDate(day.getDate() - back);
+            const key = `${day.getFullYear()}-${String(day.getMonth()+1).padStart(2,'0')}-${String(day.getDate()).padStart(2,'0')}`;
+            cells.push({ label: back === 0 ? '今天' : `${day.getMonth()+1}/${day.getDate()}`, value: byDay.get(key) || 0 });
+            total += byDay.get(key) || 0;
+          }
+          const max = Math.max(1, ...cells.map(c => c.value));
+          bars.innerHTML = cells.map(cell => `<div><i class="${cell.value ? '' : 'is-empty'}" style="height:${cell.value ? Math.max(8, Math.round(cell.value / max * 46)) : 3}px"></i><small>${cell.label}</small></div>`).join('');
+          const note = $('#memoryCurveNote');
+          if (note) note.textContent = total ? `共标记 ${total} 次` : '还没有学习记录';
+        }
+        /* Home dashboard card: real numbers, never a placeholder claim. */
+        const home = {
+          known: $('#heroKnownCount'), weak: $('#heroWeakCount'), today: $('#heroTodayCount'),
+          bar: $('#heroProgressBar'), title: $('#heroProgressTitle'), note: $('#heroProgressNote'), chip: $('#heroProgressChip')
+        };
+        if (home.known) home.known.textContent = mastered.toLocaleString();
+        if (home.weak) home.weak.textContent = weak.toLocaleString();
+        if (home.today) home.today.textContent = (todayKnown + todayAgain).toLocaleString();
+        if (home.bar) home.bar.style.width = `${Math.min(100, Math.round((mastered / Math.max(1, mastered + weak)) * 100))}%`;
+        if (home.title) {
+          home.title.textContent = mastered + weak === 0 ? '还没有开始学习'
+            : weak === 0 ? '当前没有待巩固的词' : `${weak} 个词还需要再过几遍`;
+        }
+        if (home.chip) home.chip.textContent = '本机真实记录';
+        if (home.note) {
+          home.note.textContent = mastered + weak === 0
+            ? '标记「记住了」或「还不熟悉」后，这里会显示这台设备上的真实进度。'
+            : `已记住 ${mastered.toLocaleString()} 词，待巩固 ${weak.toLocaleString()} 词；只统计你实际标记过的单词。`;
+        }
+      }
+      window.__lexioProgress = {
+        mastered: () => masteredWords().slice(),
+        weak: () => (typeof window.__lexioWeakCount === 'function' ? window.__lexioWeakCount() : 0),
+        streak: studyStreak,
+        refresh: updateProgressUI
+      };
       function updateStudyCard() {
         if (!bank.length) return;
         studyIndex = ((studyIndex % bank.length) + bank.length) % bank.length;
@@ -1732,9 +2018,13 @@
         const exampleSource = word.exampleSource || '';
         const sourceLabel = exampleSource.startsWith('dictionary:')
           ? `词典原句 · ${exampleSource.slice('dictionary:'.length)}`
-          : exampleSource === 'generated-gloss-prompt'
-            ? '自动生成的释义示例 · 非真实语料例句'
-            : word.example ? '原词库例句 · 来源未标注' : '';
+          : exampleSource.startsWith('generated-practice')
+            ? '练习提示句 · 不是真实语料例句'
+            : exampleSource.startsWith('generated-context')
+              ? '自动生成的学习句 · 非真实语料例句'
+              : exampleSource.startsWith('generated')
+                ? '提示文字 · 不是真实语料例句'
+                : word.example ? '原词库例句 · 来源未标注' : '';
         $('#studyExampleSource').textContent = sourceLabel;
         $('#studyExampleSource').hidden = !sourceLabel;
         $('#studyExampleTranslation').textContent = word.exampleTranslation || '';
@@ -1749,8 +2039,7 @@
         const flipEl = $('#wordCardFlip'); if (flipEl) flipEl.classList.remove('is-flipped');
         const revealBtn = $('#revealMeaning'); if (revealBtn) revealBtn.textContent = '显示释义';
         const exSpeakBtn = $('#exampleSpeak'); if (exSpeakBtn) exSpeakBtn.hidden = !word.example;
-        $('#knownCount').textContent = dailyStats.known.toLocaleString();
-        $('#studyProgress').style.width = `${Math.min(100, dailyStats.known / 30 * 100)}%`;
+        updateProgressUI();
         $('#studyDate').textContent = `今日学习 · ${new Intl.DateTimeFormat('zh-CN',{month:'long',day:'numeric'}).format(new Date())}`;
         const trial = getTrialState();
         const expired = trial.started && trial.expired;
@@ -1791,74 +2080,114 @@
         activeUtterance = null;
         try { if (window.speechSynthesis) window.speechSynthesis.cancel(); } catch(_) {}
       }
+      /* One sentence, out loud, no queues:
+         - voices are prefetched (iOS returns [] until "voiceschanged");
+         - a lang-matched voice (en-US / en-GB) is bound explicitly;
+         - speaking starts synchronously inside the tap so the user gesture
+           is still valid on iOS Safari;
+         - after cancel(), Android Chrome sometimes leaves the queue paused,
+           so one resume() follows the speak() call. */
+      let cachedVoices = [];
+      function refreshVoices() {
+        try {
+          if (window.speechSynthesis) {
+            const list = window.speechSynthesis.getVoices() || [];
+            if (list.length) cachedVoices = list;
+          }
+        } catch(_) {}
+        return cachedVoices;
+      }
+      if ('speechSynthesis' in window) {
+        refreshVoices();
+        try { window.speechSynthesis.addEventListener('voiceschanged', refreshVoices); } catch(_) {
+          try { window.speechSynthesis.onvoiceschanged = refreshVoices; } catch(__) {}
+        }
+      }
+      function pickVoice(lang) {
+        const voices = refreshVoices();
+        if (!voices.length) return null;
+        const want = String(lang || 'en-US').toLowerCase().replace('_','-');
+        const base = want.split('-')[0];
+        const sameBase = voices.filter(v => v && v.lang && v.lang.toLowerCase().replace('_','-').startsWith(base));
+        return sameBase.find(v => v.lang.toLowerCase().replace('_','-') === want)
+          || sameBase.find(v => v.lang.toLowerCase().replace('_','-').startsWith(want))
+          || sameBase[0]
+          || null;
+      }
+      function resumeSynth() {
+        try { const synth = window.speechSynthesis; if (synth && synth.paused) synth.resume(); } catch(_) {}
+      }
       function speak(text, lang='en-GB', done, onError) {
         if (activeAudio) { try { activeAudio.pause(); } catch(_) {} activeAudio = null; }
+        const sentence = String(text == null ? '' : text).replace(/\s+/g, ' ').trim();
+        if (!sentence) {
+          if (typeof onError === 'function') onError(new Error('没有可朗读的内容。'));
+          if (typeof done === 'function') done();
+          return;
+        }
         if (!('speechSynthesis' in window) || typeof SpeechSynthesisUtterance === 'undefined') {
-          const error = new Error('此设备不支持系统语音朗读。');
+          const error = new Error('此浏览器不支持系统语音朗读，请改用 Safari 或 Chrome 打开。');
           if (typeof onError === 'function') onError(error); else toastMessage(error.message);
           if (typeof done === 'function') done();
           return;
         }
         const synth = window.speechSynthesis;
-        const wasBusy = !!activeUtterance || synth.speaking || synth.pending;
         const token = ++speechRequestId;
-        let started = false, finished = false, startWatchdog = null, finishWatchdog = null;
-        const utterance = new SpeechSynthesisUtterance(text);
+        let finished = false, started = false, startWatchdog = null, finishWatchdog = null;
+        const utterance = new SpeechSynthesisUtterance(sentence);
         utterance.lang = lang;
-        utterance.rate = .88;
-        const wanted = String(lang).toLowerCase();
-        const voices = synth.getVoices ? synth.getVoices() : [];
-        const exactVoice = voices.find(item => item.lang && item.lang.toLowerCase() === wanted);
-        const compatibleVoice = wanted === 'en-us' ? null : voices.find(item => item.lang && item.lang.toLowerCase().startsWith(wanted.split('-')[0]));
-        const voice = exactVoice || compatibleVoice;
-        if (voice) utterance.voice = voice;
+        const voice = pickVoice(lang);
+        if (voice) { utterance.voice = voice; utterance.lang = voice.lang || lang; }
+        utterance.rate = .9;
+        utterance.volume = 1;
         const finish = error => {
           if (finished || token !== speechRequestId) return;
           finished = true;
-          if (startWatchdog) clearTimeout(startWatchdog);
-          if (finishWatchdog) clearTimeout(finishWatchdog);
+          if (startWatchdog) { clearTimeout(startWatchdog); startWatchdog = null; }
+          if (finishWatchdog) { clearTimeout(finishWatchdog); finishWatchdog = null; }
           if (activeUtterance === utterance) activeUtterance = null;
           if (error && typeof onError === 'function') onError(error);
-          else if (error) toastMessage('例句未能播放，请检查设备音量或语音设置。');
+          else if (error) toastMessage(error.message || '朗读失败，请检查设备音量。');
           if (typeof done === 'function') done();
         };
         utterance.onstart = () => {
           started = true;
           if (startWatchdog) { clearTimeout(startWatchdog); startWatchdog = null; }
-          finishWatchdog = setTimeout(() => finish(), Math.min(30000, text.length * 145 + 5000));
+          finishWatchdog = setTimeout(() => finish(), Math.min(30000, sentence.length * 150 + 6000));
         };
         utterance.onend = () => finish();
         utterance.onerror = event => {
-          if (token !== speechRequestId || (event && (event.error === 'canceled' || event.error === 'interrupted'))) return;
-          finish(new Error('系统语音启动失败。'));
+          if (token !== speechRequestId) return;
+          const kind = event && event.error;
+          if (kind === 'canceled' || kind === 'interrupted') return;
+          if (kind === 'not-allowed') { finish(new Error('浏览器拦截了这次朗读，请再点一次喇叭按钮。')); return; }
+          finish(new Error('系统语音未能播放，请检查是否开了静音，或换用其它浏览器。'));
         };
         activeUtterance = utterance;
-        const queueUtterance = () => {
-          if (token !== speechRequestId) return;
-          startWatchdog = setTimeout(() => {
-            if (!started) finish(new Error('系统语音没有启动。'));
-          }, 4000);
-          try { synth.speak(utterance); }
-          catch(_) { finish(new Error('系统语音启动失败。')); }
-        };
-        if (wasBusy) {
-          try { synth.cancel(); } catch(_) {}
-          // iOS Safari may discard speak() immediately after cancel(); retry after its audio queue settles.
-          setTimeout(queueUtterance, 250);
-        } else {
-          // Preserve the original tap gesture on iPhone when no previous utterance needs cancelling.
-          queueUtterance();
+        try { synth.cancel(); } catch(_) {}
+        resumeSynth();
+        startWatchdog = setTimeout(() => {
+          if (!started) finish(new Error('系统语音没有启动。请确认手机没有静音，并在浏览器里允许语音播放。'));
+        }, 6000);
+        try {
+          synth.speak(utterance);
+          resumeSynth();
+        } catch (_) {
+          finish(new Error('系统语音启动失败。'));
         }
       }
       function speakExample(text, onDone, onError) {
-        const sentence = String(text || '').trim();
+        const sentence = String(text == null ? '' : text)
+          .replace(/[“”"]/g, '')
+          .replace(/\s+/g, ' ')
+          .trim();
         if (!sentence) {
           if (typeof onError === 'function') onError(new Error('这个词还没有可朗读的例句。'));
+          if (typeof onDone === 'function') onDone();
           return;
         }
-        // Start one complete en-US utterance directly in the tap handler. Avoid
-        // chained remote audio clips: iOS Safari can reject later play() calls
-        // after the original user-activation window has expired.
+        // A single en-US utterance started inside the tap handler: iOS Safari
+        // refuses play()/speak() once the user-activation window has expired.
         speak(sentence, 'en-US', onDone, onError);
       }
       function speakEntry(entry, lang=activeAccent) {
@@ -1897,6 +2226,38 @@
         const left=endsAt-Date.now();
         return {started:true,expired:false,daysLeft:Math.max(0,Math.ceil(left/(24*60*60*1000))),endsAt};
       }
+      /* Local reminder: no server, no e-mail. The app checks on open and
+         speaks up once at 14, 7 and 1 day(s) before the demo trial ends. */
+      const REMINDER_KEY = 'lexio.reminderShown';
+      function reminderStage() {
+        const state = getTrialState();
+        if (!state.started || state.expired) return 0;
+        const daysLeft = Math.ceil((state.endsAt - Date.now()) / 86400000);
+        if (daysLeft <= 1) return 1;
+        if (daysLeft <= 7) return 7;
+        if (daysLeft <= 14) return 14;
+        return 0;
+      }
+      function maybeShowReminder() {
+        const stage = reminderStage();
+        if (!stage) return;
+        const today = new Date();
+        const dayKey = `${today.getFullYear()}-${today.getMonth()+1}-${today.getDate()}`;
+        let shown = {};
+        try { shown = JSON.parse(localStorage.getItem(REMINDER_KEY) || '{}') || {}; } catch(_) { shown = {}; }
+        if (shown[stage] === dayKey) return;
+        const rawLeft = Math.ceil((getTrialState().endsAt - Date.now()) / 86400000);
+        const daysLeft = Math.max(1, Math.min(stage, rawLeft));
+        const title = $('#reminderTitle'), copy = $('#reminderCopy'), badge = $('#reminderBadge');
+        if (badge) badge.textContent = `试用还剩 ${daysLeft} 天`;
+        if (title) title.textContent = `你的体验还有 ${daysLeft} 天到期。`;
+        if (copy) copy.textContent = `今天打开 Lexio 时提醒你一次：${daysLeft} 天后这台设备上的 7 天演示体验结束。学习记录会保留在本机，你可以随时查看订阅方案，或继续当前学习。`;
+        showDialog($('#reminderDialog'));
+        shown[stage] = dayKey;
+        try { localStorage.setItem(REMINDER_KEY, JSON.stringify(shown)); } catch(_) {}
+      }
+      $('#reminderPayBtn').addEventListener('click', () => { closeDialog($('#reminderDialog')); openPayment(); });
+      $('#reminderLaterBtn').addEventListener('click', () => { closeDialog($('#reminderDialog')); });
       function showDialog(dialog) { if (dialog && typeof dialog.showModal==='function') dialog.showModal(); else if (dialog) dialog.setAttribute('open',''); }
       function closeDialog(dialog) { if (dialog && typeof dialog.close==='function') dialog.close(); else if(dialog) dialog.removeAttribute('open'); }
       function openTrial() {
@@ -1934,8 +2295,32 @@
         }
       }
 
-      $('#wordSearch').addEventListener('input',()=>renderWordGrid(true));
-      $('#phraseSearch').addEventListener('input',()=>{phraseVisibleLimit=50;renderDailyPhrases();});
+      $('#wordSearch').addEventListener('input',debounceRenderGrid);
+      let phraseTimer = null;
+      $('#phraseSearch').addEventListener('input',()=>{
+        clearTimeout(phraseTimer);
+        phraseTimer = setTimeout(()=>{phraseVisibleLimit=50;renderDailyPhrases();}, 90);
+      });
+      $('#wordSearch').addEventListener('search',()=>renderWordGrid(true));
+      $('#phraseSearch').addEventListener('search',()=>{phraseVisibleLimit=50;renderDailyPhrases();});
+
+      /* iOS Safari ignores font-size for its zoom decision when the field is
+         focused via a touch that started on the label. Blurring the field on
+         scroll/route change prevents the page staying zoomed in. */
+      (function () {
+        const fields = [...document.querySelectorAll('.search-input')];
+        if (!fields.length) return;
+        const release = () => { fields.forEach(field => { if (document.activeElement === field) field.blur(); }); };
+        window.addEventListener('pagehide', release);
+        document.addEventListener('visibilitychange', () => { if (document.hidden) release(); });
+        fields.forEach(field => {
+          field.addEventListener('keydown', event => {
+            if (event.key === 'Enter') { event.preventDefault(); field.blur(); }
+          });
+        });
+      })();
+      window.__lexioSearchRelease = () => { document.querySelectorAll('.search-input').forEach(field => field.blur()); };
+
       $$('[data-library-mode]').forEach(button=>button.addEventListener('click',()=>setLibraryMode(button.dataset.libraryMode)));
       $$('[data-open-daily-phrases]').forEach(link=>link.addEventListener('click',()=>setLibraryMode('phrases')));
       $('#dailyPhraseGrid').addEventListener('click',event=>{
@@ -1985,11 +2370,14 @@
       function markWeak(wordKey, on) {
         if (!wordKey) return;
         const i = weakWords.indexOf(wordKey);
-        if (on && i < 0) weakWords.push(wordKey);
-        if (!on && i >= 0) weakWords.splice(i, 1);
+        if (on && i < 0) { weakWords.push(wordKey); bumpHistory('again'); }
+        else if (!on && i >= 0) { weakWords.splice(i, 1); }
+        else { renderWeakList(); return; }
         persistWeak();
         renderWeakList();
+        updateProgressUI();
       }
+      window.__lexioWeakCount = () => weakWords.length;
       function renderWeakList() {
         const list = $('#weakList'), empty = $('#weakEmpty'), count = $('#weakCount');
         if (!list) return;
@@ -2001,14 +2389,14 @@
           const detail = entry ? [entry.phonetic || '', entry.meaning || ''].filter(Boolean).join(' · ') : '回到卡片再看一次';
           return '<li class="weak-item"><div class="weak-main"><strong>' + escapeHTML(w) + '</strong><span>' + escapeHTML(detail) + '</span></div><div class="weak-acts"><button type="button" class="weak-go" data-weak-go="' + escapeHTML(w) + '">去学习</button><button type="button" class="weak-ok" data-weak-ok="' + escapeHTML(w) + '">记住了</button></div></li>';
         }).join('');
-        $$('[data-weak-ok]').forEach(b => b.addEventListener('click', () => markWeak(b.dataset.weakOk, false)));
+        $$('[data-weak-ok]').forEach(b => b.addEventListener('click', () => { markWeak(b.dataset.weakOk, false); markMastered(b.dataset.weakOk, true); updateProgressUI(); }));
         $$('[data-weak-go]').forEach(b => b.addEventListener('click', () => {
           const idx = bank.findIndex(item => item && item.word === b.dataset.weakGo);
           if (idx >= 0) setStudyIndex(idx);
           selectShowcaseTab('plan');
         }));
       }
-      window.__lexioWeak = { list: () => weakWords.slice(), add: (w) => markWeak(w, true), remove: (w) => markWeak(w, false), render: renderWeakList };
+      window.__lexioWeak = { list: () => weakWords.slice(), add: (w) => markWeak(w, true), remove: (w) => markWeak(w, false), render: renderWeakList, count: () => weakWords.length };
       const FOE_NAMES = {
         cn: ['陈思远','王雨桐','李昊然','张一诺','刘梓萱','赵子轩','周语彤','吴俊熙','徐念安','孙以柔','卷王小陈','四级必过鸭','背单词上瘾','深夜刷词党','今天不摆烂','单词收割机','小林同学','阿澈','许愿池的鱼','逆风翻盘侠'],
         en: ['Alex','Moon_River','Zane','Coco','Ivy','Leo007','WordSmith','NightOwl','Sam','Jasper','Luna_R','TimCan','GreenTea','SkyRunner','Kai','Nova'],
@@ -2152,60 +2540,98 @@
       (function () {
         const card = $('#studyCard');
         if (!card) return;
-        let startX = 0, startY = 0, dragging = false, moved = false, suppressClick = false;
-        const THRESH = 56;
+        const THRESH = 64;
+        const MAX_TILT = 6;
+        let tracking = false, horizontal = false, pointerId = null;
+        let startX = 0, startY = 0, dx = 0, rafId = 0, lastDx = 0;
+        let suppressClick = false, suppressTimer = null;
+        function suppress() {
+          suppressClick = true;
+          clearTimeout(suppressTimer);
+          suppressTimer = setTimeout(() => { suppressClick = false; }, 380);
+        }
+        /* One transform per animation frame, written on the compositor
+           layer: no layout reads inside pointermove, no per-event updates. */
+        function paint() {
+          rafId = 0;
+          card.style.transform = 'translate3d(' + lastDx.toFixed(1) + 'px,0,0) rotate(' + (lastDx * 0.02).toFixed(2) + 'deg)';
+        }
+        function schedulePaint() {
+          if (lastDx === dx) return;
+          lastDx = dx;
+          if (!rafId) rafId = requestAnimationFrame(paint);
+        }
+        function begin(event) {
+          if (event.isPrimary === false || !event.isPrimary && event.pointerType === 'mouse' && event.button !== 0) return;
+          tracking = true; horizontal = false; pointerId = event.pointerId;
+          startX = event.clientX; startY = event.clientY; dx = 0; lastDx = 0;
+          card.classList.add('is-dragging');
+        }
+        function move(event) {
+          if (!tracking || (pointerId !== null && event.pointerId !== pointerId)) return;
+          const mx = event.clientX - startX;
+          const my = event.clientY - startY;
+          if (!horizontal) {
+            if (Math.abs(mx) < 10 && Math.abs(my) < 10) return;
+            if (Math.abs(my) > Math.abs(mx) * 1.2) { tracking = false; card.classList.remove('is-dragging'); card.style.transform = ''; return; }
+            horizontal = true;
+          }
+          dx = mx;
+          schedulePaint();
+          if (Math.abs(dx) > 12 && event.cancelable) event.preventDefault();
+        }
+        function settle(direction) {
+          card.style.transform = '';
+          card.classList.remove('is-dragging');
+          if (direction === 0) return;
+          card.classList.add(direction > 0 ? 'is-leaving-left' : 'is-leaving-right');
+          setTimeout(() => {
+            swipeGo(direction);
+            card.classList.remove('is-leaving-left', 'is-leaving-right');
+            card.classList.add(direction > 0 ? 'is-entering-right' : 'is-entering-left');
+            void card.offsetWidth;
+            card.classList.add('is-entering');
+            setTimeout(() => {
+              card.classList.remove('is-entering', 'is-entering-left', 'is-entering-right');
+            }, 190);
+          }, 120);
+        }
+        function end(event) {
+          if (!tracking) return;
+          tracking = false;
+          if (rafId) { cancelAnimationFrame(rafId); rafId = 0; }
+          const travelled = Math.abs(dx);
+          const wasHorizontal = horizontal;
+          horizontal = false;
+          if (!wasHorizontal || travelled < THRESH) {
+            card.style.transform = '';
+            card.classList.remove('is-dragging');
+            if (travelled > 8) suppress();
+            return;
+          }
+          suppress();
+          settle(dx < 0 ? 1 : -1);
+        }
         function swipeGo(dir) {
           if (!bank.length) return;
           const left = bank[studyIndex];
-          dailyStats.known += 1; persistStats();
-          if (left && left.word) markWeak(left.word, false);
+          /* Swiping no longer claims "mastered": it only moves the card.
+             A word counts as known when the learner taps "记住了". */
+          if (left && left.word && dir > 0) markWeak(left.word, false);
           studyIndex = (((studyIndex + dir) % bank.length) + bank.length) % bank.length;
           updateStudyCard();
-          toastMessage(dir > 0 ? '已记住了 ✓ 下一个词' : '已记住了 ✓ 返回上一个词');
+          toastMessage(dir > 0 ? '下一张词卡' : '上一张词卡');
         }
-        function begin(x, y) { dragging = true; moved = false; startX = x; startY = y; card.style.transition = 'none'; }
-        function move(x, y) {
-          if (!dragging) return;
-          const dx = x - startX, dy = y - startY;
-          if (!moved && Math.abs(dx) < 8 && Math.abs(dy) < 8) return;
-          if (!moved && Math.abs(dy) > Math.abs(dx)) { dragging = false; card.style.transform = ''; return; }
-          moved = true;
-          card.style.transform = 'translateX(' + dx + 'px) rotate(' + (dx * 0.03) + 'deg)';
-        }
-        function end(x) {
-          if (!dragging) return;
-          dragging = false;
-          const dx = x - startX;
-          if (moved && Math.abs(dx) >= THRESH) {
-            suppressClick = true; setTimeout(() => { suppressClick = false; }, 430);
-            const dir = dx < 0 ? 1 : -1;
-            card.style.transition = 'transform .28s cubic-bezier(.32,.72,0,1), opacity .28s ease';
-            card.style.transform = 'translateX(' + (dx < 0 ? '-115%' : '115%') + ') rotate(' + (dx < 0 ? -9 : 9) + 'deg)';
-            card.style.opacity = '0';
-            setTimeout(() => {
-              swipeGo(dir);
-              card.style.transition = 'none';
-              card.style.transform = 'translateX(' + (dir > 0 ? '115%' : '-115%') + ')';
-              card.style.opacity = '0';
-              requestAnimationFrame(() => {
-                card.style.transition = 'transform .34s cubic-bezier(.32,.72,0,1), opacity .34s ease';
-                card.style.transform = '';
-                card.style.opacity = '1';
-              });
-            }, 250);
-          } else {
-            card.style.transition = 'transform .3s cubic-bezier(.32,.72,0,1)';
-            card.style.transform = '';
-            if (moved) { suppressClick = true; setTimeout(() => { suppressClick = false; }, 90); moved = false; }
-          }
-        }
-        card.addEventListener('pointerdown', event => { if (event.target.closest('button') || event.target.closest('a') || event.isPrimary === false) return; begin(event.clientX, event.clientY); });
-        window.addEventListener('pointermove', event => { if (dragging && event.isPrimary !== false) move(event.clientX, event.clientY); });
-        window.addEventListener('pointerup', event => { if (event.isPrimary === false) return; end(event.clientX); });
-        window.addEventListener('pointercancel', () => end(startX));
+        card.addEventListener('pointerdown', event => {
+          if (event.target.closest('button') || event.target.closest('a') || event.target.closest('input')) return;
+          begin(event);
+        });
+        window.addEventListener('pointermove', move, { passive: false });
+        window.addEventListener('pointerup', end);
+        window.addEventListener('pointercancel', () => { tracking = false; horizontal = false; card.classList.remove('is-dragging'); card.style.transform = ''; });
         card.addEventListener('click', event => {
           if (event.target.closest('button') || event.target.closest('a')) return;
-          if (suppressClick || moved) { moved = false; return; }
+          if (suppressClick) { suppressClick = false; return; }
           $('#wordCardFlip').classList.toggle('is-flipped');
         });
       })();
@@ -2220,6 +2646,45 @@
         speakExample(word.example, resetButton, error=>{ resetButton(); toastMessage(error.message || '例句朗读失败，请检查设备音量。'); });
       });
 
+      /* “例句来源” card: open the study view on a random word that really
+         has an example sentence, flipped to the back of the card. */
+      function openRandomExample() {
+        const pool = [];
+        for (let i = 0; i < bank.length; i++) {
+          const item = bank[i];
+          if (item && item.example && /[A-Za-z]/.test(item.example)) pool.push(i);
+        }
+        if (!pool.length) { toastMessage('词库还在准备中，稍后再试一次。'); return; }
+        const pick = pool[Math.floor(Math.random() * pool.length)];
+        setStudyIndex(pick);
+        selectShowcaseTab('plan');
+        const flipToBack = () => {
+          const flip = $('#wordCardFlip');
+          if (flip) flip.classList.add('is-flipped');
+          const speak = $('#exampleSpeak');
+          if (speak) speak.textContent = '🔊 朗读例句';
+        };
+        setTimeout(flipToBack, 260);
+      }
+      function openFriendBattle() {
+        selectShowcaseTab('battle');
+        if (window.__lexioShow) window.__lexioShow('study', 'study');
+        setTimeout(() => { if (window.__lexioBattle) window.__lexioBattle.start(); }, 340);
+      }
+      $$('[data-open-random-example]').forEach(link => link.addEventListener('click', event => {
+        event.preventDefault();
+        openRandomExample();
+      }));
+      $$('[data-open-battle]').forEach(link => link.addEventListener('click', event => {
+        event.preventDefault();
+        openFriendBattle();
+      }));
+      $$('[data-open-memory]').forEach(link => link.addEventListener('click', event => {
+        event.preventDefault();
+        selectShowcaseTab('memory');
+        if (window.__lexioShow) window.__lexioShow('study', 'study');
+      }));
+      window.__lexioOpenRandomExample = openRandomExample;
       $('#returnLibraryBtn').addEventListener('click',returnToLibrary);
       $('#revealMeaning').addEventListener('click',()=>{
         if (getTrialState().expired) { openPayment(); return; }
@@ -2228,11 +2693,11 @@
       });
       $('#knownWord').addEventListener('click',()=>{
         if (getTrialState().expired) { openPayment(); return; }
-        const masteredWord = bank[studyIndex] && bank[studyIndex].word; dailyStats.known+=1;persistStats();markWeak(masteredWord,false);studyIndex=(studyIndex+1)%Math.max(1,bank.length);updateStudyCard();toastMessage('记得不错！这条词目已加入今日掌握进度。');
+        const masteredWord = bank[studyIndex] && bank[studyIndex].word; dailyStats.known+=1;bumpHistory('known');persistStats();markWeak(masteredWord,false);markMastered(masteredWord,true);studyIndex=(studyIndex+1)%Math.max(1,bank.length);updateStudyCard();toastMessage('记得不错，已记入这台设备的学习记录。');
       });
       $('#againWord').addEventListener('click',()=>{
         if (getTrialState().expired) { openPayment(); return; }
-        const weakWord = bank[studyIndex] && bank[studyIndex].word; dailyStats.again+=1;persistStats();markWeak(weakWord,true);$('#studyMeaning').classList.remove('is-hidden');$('#revealMeaning').textContent='隐藏释义';toastMessage('已加入记忆引擎：薄弱词已收集。');
+        const weakWord = bank[studyIndex] && bank[studyIndex].word; dailyStats.again+=1;bumpHistory('again');persistStats();markMastered(weakWord,false);markWeak(weakWord,true);$('#studyMeaning').classList.remove('is-hidden');$('#revealMeaning').textContent='隐藏释义';toastMessage('已加入记忆引擎：薄弱词已收集。');
       });
       $('#nextWord').addEventListener('click',()=>{studyIndex=(studyIndex+1)%Math.max(1,bank.length);updateStudyCard();});
       $$('.accent-toggle button').forEach(button=>button.addEventListener('click',()=>{$$('.accent-toggle button').forEach(b=>b.classList.remove('active'));button.classList.add('active');activeAccent=button.dataset.accent;renderWordGrid();if(bank[studyIndex])$('#studyPhonetic').textContent=`${displayedPhonetic(bank[studyIndex])||'音标待补充'}${bank[studyIndex].pos?' · '+bank[studyIndex].pos:''}`;}));
@@ -2249,11 +2714,34 @@
       $('#year').textContent=new Date().getFullYear();
       const revealItems=$$('[data-reveal]');
       if('IntersectionObserver' in window){const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('in-view');observer.unobserve(entry.target);}}),{threshold:.12,rootMargin:'0px 0px -25px 0px'});revealItems.forEach(item=>observer.observe(item));}else revealItems.forEach(item=>item.classList.add('in-view'));
-      window.addEventListener('beforeinstallprompt',event=>{event.preventDefault();installPrompt=event;$('#installBtn').style.display='inline-flex';});
-      $('#installBtn').addEventListener('click',async()=>{
-        if(installPrompt){installPrompt.prompt();const choice=await installPrompt.userChoice;toastMessage(choice.outcome==='accepted'?'Lexio 已开始安装。':'你可以稍后再安装 Lexio。');installPrompt=null;}
-        else toastMessage('可在浏览器菜单中选择“安装应用”或“添加到主屏幕”。请使用 HTTPS 访问。');
+      window.addEventListener('beforeinstallprompt',event=>{event.preventDefault();installPrompt=event;});
+      const installDialog = $('#installDialog');
+      const installVideo = $('#installVideo');
+      function openInstallGuide() {
+        const status = $('#installStatus');
+        if (status) status.textContent = installPrompt ? '这台浏览器可以直接安装，点下面的「立即安装」。' : '这台浏览器需要按上面的步骤手动添加。';
+        showDialog(installDialog);
+        if (installVideo) {
+          try { installVideo.currentTime = 0; } catch(_) {}
+          const played = installVideo.play();
+          if (played && played.catch) played.catch(() => {});
+        }
+      }
+      $('#installBtn').addEventListener('click', openInstallGuide);
+      $('#installNowBtn').addEventListener('click', async () => {
+        const status = $('#installStatus');
+        if (!installPrompt) {
+          if (status) status.textContent = '这个浏览器没有开放一键安装，请按上面的步骤手动添加；iPhone 请用 Safari 的「分享 → 添加到主屏幕」。';
+          return;
+        }
+        installPrompt.prompt();
+        const choice = await installPrompt.userChoice;
+        installPrompt = null;
+        if (status) status.textContent = choice.outcome === 'accepted' ? 'Lexio 已开始安装，桌面会出现图标。' : '你取消了安装，随时可以再点「安装」。';
       });
+      if (installDialog) {
+        installDialog.addEventListener('close', () => { if (installVideo) { try { installVideo.pause(); } catch(_) {} } });
+      }
       if('serviceWorker' in navigator && location.protocol!=='file:') {
         navigator.serviceWorker.register('./sw.js').catch(error=>console.info('Service Worker will activate when served from a supported secure origin.',error));
         var swRefreshing = false;
@@ -2265,6 +2753,8 @@
       }
       loadPublicConfigs();
       initializeBank();
+      window.__lexioMaybeReminder = maybeShowReminder;
+      setTimeout(maybeShowReminder, 1200);
     })();
   </script>
 <nav class="tabbar" id="appTabbar" aria-label="底部导航">
@@ -2275,89 +2765,154 @@
 </nav>
 <script>
 (function () {
+  /* View router: every view is one page; transitions animate a single
+     composited layer and never reparent or clone the sections. */
   var SECTION_VIEW = {
     top: 'home', menu: 'home', main: 'home',
-    method: 'about', stories: 'about', benefits: 'about',
+    method: 'home', stories: 'home', benefits: 'home',
     library: 'library',
     study: 'study',
     ops: 'pricing', pricing: 'pricing', faq: 'pricing'
   };
-  var VIEW_LABEL = { home: '首页', study: '学习', library: '词库', pricing: '订阅', about: '介绍' };
+  var VIEW_LABEL = { home: '首页', study: '学习', library: '词库', pricing: '订阅' };
+  var PRIMARY_SECTION = { home: 'top', study: 'study', library: 'library', pricing: 'pricing' };
+  var ANIM_TOTAL = 210;
   var booted = false;
   var pending = null;
+  var anchorTimer = null;
+  function sectionsOf(view) {
+    var found = [];
+    var all = document.querySelectorAll('main > section[data-app-view]');
+    for (var i = 0; i < all.length; i++) {
+      if (all[i].getAttribute('data-app-view') === view) found.push(all[i]);
+    }
+    return found;
+  }
   function endAnim() {
     if (!pending) return;
     var p = pending;
     pending = null;
     if (p.timer) { clearTimeout(p.timer); p.timer = null; }
-    p.main.classList.remove('is-animating');
+    var main = p.main;
+    if (main) main.classList.remove('is-animating');
     document.body.classList.remove('view-anim-lock');
     for (var x = 0; x < p.outers.length; x++) {
       p.outers[x].classList.remove(p.outCls);
       p.outers[x].classList.remove('is-active');
-      p.outers[x].style.zIndex = '';
+      p.outers[x].style.removeProperty('z-index');
+      p.outers[x].style.removeProperty('will-change');
     }
-    for (var y = 0; y < p.inn.length; y++) { p.inn[y].classList.remove(p.inCls); p.inn[y].style.zIndex = ''; }
-    if (p.done) p.done();
+    for (var y = 0; y < p.inn.length; y++) {
+      p.inn[y].classList.remove(p.inCls);
+      p.inn[y].style.removeProperty('z-index');
+      p.inn[y].style.removeProperty('will-change');
+    }
   }
-  function show(view, anchor) {
-    if (pending) endAnim();
-    var secs = document.querySelectorAll('main > section[data-app-view]');
-    var main = document.getElementById('main');
-    var prev = document.body.getAttribute('data-app-view');
-    var anim = 'none';
-    if (booted && prev && prev !== view && main) {
-      var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (!reduced) {
-        if (view === 'study' || view === 'library') anim = 'push';
-        else if (prev === 'study' || prev === 'library' || view === 'home') anim = 'pop';
-        else if (prev === 'home') anim = 'push';
-        else anim = 'fade';
-      }
-    }
-    var outers = [], inn = [];
-    for (var i = 0; i < secs.length; i++) {
-      var want = secs[i].getAttribute('data-app-view') === view;
-      if (want) { secs[i].classList.add('is-active'); inn.push(secs[i]); }
-      else if (secs[i].classList.contains('is-active')) {
-        if (anim === 'none') secs[i].classList.remove('is-active');
-        else outers.push(secs[i]);
-      }
-    }
-    document.body.setAttribute('data-app-view', view);
-    if (view === 'study' && window.__lexioStudyStart) window.__lexioStudyStart();
-    var lb = document.getElementById('viewTopbarLabel');
-    if (lb) lb.textContent = VIEW_LABEL[view] || view;
+  function syncTabbar(view) {
     var tabs = document.querySelectorAll('#appTabbar a');
     for (var j = 0; j < tabs.length; j++) {
       tabs[j].classList.toggle('is-current', tabs[j].getAttribute('data-tab') === view);
+      if (tabs[j].getAttribute('data-tab') === view) tabs[j].setAttribute('aria-current', 'page');
+      else tabs[j].removeAttribute('aria-current');
     }
-    booted = true;
-    function placeAnchor() {
-      if (view === 'study' || view === 'library') { window.scrollTo(0, 0); return; }
-      if (anchor) {
-        var el = document.getElementById(anchor);
-        if (el && typeof el.scrollIntoView === 'function') { el.scrollIntoView({ behavior: 'smooth' }); return; }
+  }
+  function placeAnchor(view, anchor) {
+    if (view === 'study' || view === 'library') { window.scrollTo(0, 0); return; }
+    if (anchor) {
+      var el = document.getElementById(anchor);
+      if (el && typeof el.scrollIntoView === 'function') {
+        el.scrollIntoView({ behavior: booted ? 'auto' : 'auto', block: 'start' });
+        return;
       }
-      window.scrollTo(0, 0);
     }
-    if (anim === 'none') { placeAnchor(); return; }
+    window.scrollTo(0, 0);
+  }
+  function show(view, anchor) {
+    endAnim();
+    var main = document.getElementById('main');
+    var prev = document.body.getAttribute('data-app-view');
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var anim = 'none';
+    if (booted && prev && prev !== view) {
+      if (!reduce) {
+        if (view === 'study' || view === 'library') anim = 'push';
+        else if (prev === 'study' || prev === 'library') anim = 'pop';
+        else anim = 'fade';
+      }
+    }
+    try { document.body.classList.toggle('view-returned', booted); } catch (_) {}
+    var inn = sectionsOf(view);
+    var outers = [];
+    var prevOuters = [];
+    var all = document.querySelectorAll('main > section[data-app-view].is-active');
+    for (var i = 0; i < all.length; i++) {
+      if (all[i].getAttribute('data-app-view') !== view) prevOuters.push(all[i]);
+    }
+    if (anim === 'none') {
+      outers = prevOuters;
+    } else {
+      var keepId = PRIMARY_SECTION[prev];
+      for (var h = 0; h < prevOuters.length; h++) {
+        if (prevOuters[h].id === keepId) outers.push(prevOuters[h]);
+        else prevOuters[h].classList.remove('is-active');
+      }
+    }
+    if (anim === 'none') {
+      for (var a = 0; a < outers.length; a++) outers[a].classList.remove('is-active');
+      for (var b = 0; b < inn.length; b++) inn[b].classList.add('is-active');
+      document.body.setAttribute('data-app-view', view);
+      if (view === 'study' && window.__lexioStudyStart) window.__lexioStudyStart();
+      var lbl0 = document.getElementById('viewTopbarLabel');
+      if (lbl0) lbl0.textContent = VIEW_LABEL[view] || view;
+      syncTabbar(view);
+      booted = true;
+      if (anchorTimer) clearTimeout(anchorTimer);
+      anchorTimer = setTimeout(function () { anchorTimer = null; placeAnchor(view, anchor); }, 0);
+      return;
+    }
+    for (var c = 0; c < inn.length; c++) inn[c].classList.add('is-active');
+    document.body.setAttribute('data-app-view', view);
+    if (view === 'study' && window.__lexioStudyStart) window.__lexioStudyStart();
+    var lbl = document.getElementById('viewTopbarLabel');
+    if (lbl) lbl.textContent = VIEW_LABEL[view] || view;
+    syncTabbar(view);
+    booted = true;
+
+    /* Only the two primary sections get a transform layer. Everything else
+       is switched instantly, which keeps the compositor work constant no
+       matter how many marketing sections the home view contains. */
+    var inSel = PRIMARY_SECTION[view];
+    var outSel = PRIMARY_SECTION[prev];
+    var incoming = null, outgoing = null, k;
+    for (k = 0; k < inn.length; k++) if (!incoming || inn[k].id === inSel) incoming = inn[k].id === inSel ? inn[k] : incoming;
+    if (!incoming) incoming = inn[0];
+    for (k = 0; k < outers.length; k++) if (!outgoing || outers[k].id === outSel) outgoing = outers[k].id === outSel ? outers[k] : outgoing;
+    if (!outgoing && outers.length) outgoing = outers[0];
+    if (!outgoing) {
+      /* No previous primary section to animate out: fade the new one in only. */
+      if (incoming) {
+        incoming.classList.add('anim-fade-in');
+        pending = { main: main, outers: [], inn: [incoming], inCls: 'anim-fade-in', outCls: '', timer: null };
+        pending.timer = setTimeout(endAnim, ANIM_TOTAL);
+      }
+      placeAnchor(view, anchor);
+      return;
+    }
     var inCls = anim === 'push' ? 'anim-push-in' : anim === 'pop' ? 'anim-pop-in' : 'anim-fade-in';
     var outCls = anim === 'push' ? 'anim-push-out' : anim === 'pop' ? 'anim-pop-out' : 'anim-fade-out';
-    main.classList.add('is-animating');
+    if (main) main.classList.add('is-animating');
     document.body.classList.add('view-anim-lock');
-    var incomingTop = anim !== 'pop';
-    for (var a = 0; a < inn.length; a++) {
-      inn[a].classList.add(inCls);
-      inn[a].style.zIndex = String((incomingTop ? 100 : 0) + (inn.length - a));
+    if (incoming) {
+      incoming.style.willChange = 'transform, opacity';
+      incoming.style.zIndex = anim === 'pop' ? '2' : '6';
+      incoming.classList.add(inCls);
     }
-    for (var b = 0; b < outers.length; b++) {
-      outers[b].classList.add(outCls);
-      outers[b].style.zIndex = String((incomingTop ? 0 : 100) + (outers.length - b));
-    }
-    pending = { main: main, outers: outers, inn: inn, inCls: inCls, outCls: outCls, timer: null, done: placeAnchor };
-    var mobileTransition = window.matchMedia && window.matchMedia('(max-width: 760px)').matches;
-    pending.timer = setTimeout(function () { if (pending) { pending.timer = null; endAnim(); } }, mobileTransition ? 240 : 470);
+    outgoing.style.willChange = 'transform, opacity';
+    outgoing.style.zIndex = anim === 'pop' ? '3' : '1';
+    outgoing.classList.add(outCls);
+    pending = { main: main, outers: outers, inn: inn, inCls: inCls, outCls: outCls, timer: null,
+      done: function () { placeAnchor(view, anchor); } };
+    pending.timer = setTimeout(endAnim, ANIM_TOTAL);
   }
   function route() {
     var key = (location.hash || '').replace(/^#\/?/, '');
@@ -2373,6 +2928,7 @@
     show(view, anchor);
   }
   window.__lexioShow = show;
+  window.__lexioRoute = route;
   window.addEventListener('hashchange', route);
   route();
 })();
