@@ -8,7 +8,7 @@
      these Apple-specific tags are what actually make it open without chrome. -->
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="乐词">
   <meta name="application-name" content="Lexio 乐词">
   <meta name="theme-color" content="#f7f8f4">
@@ -59,7 +59,7 @@
     .section-heading h2 em, .hero h1 em { color: var(--forest-2); font-style: normal; }
     .section-heading p { max-width: 620px; margin: 19px auto 0; color: var(--muted); font-size: 16px; line-height: 1.8; }
     .section-kicker { color: var(--forest-2); font-size: 11px; font-weight: 800; letter-spacing: .15em; text-transform: uppercase; }
-    .site-header { position: sticky; top: 0; z-index: 50; height: 76px; background: rgba(247,248,244,.84); border-bottom: 1px solid rgba(225,232,224,.75); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); }
+    .site-header { position: sticky; top: 0; z-index: 50; height: 76px; background: rgba(247,248,244,.84); border-bottom: 1px solid rgba(225,232,224,.75); backdrop-filter: none; -webkit-backdrop-filter: none; }
     .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 100%; gap: 24px; }
     .brand { display: inline-flex; align-items: center; gap: 10px; flex: 0 0 auto; }
     .brand-mark { display: grid; place-items: center; width: 38px; height: 38px; background: var(--forest); color: var(--leaf); border-radius: 13px; box-shadow: 0 6px 16px rgba(22,63,50,.18); }
@@ -117,7 +117,7 @@
     .hero-orbit:before { inset: 11%; }
     .hero-orbit:after { inset: 23%; }
     .stage-glow { position: absolute; top: 13%; left: 14%; width: 72%; height: 72%; border-radius: 50%; background: radial-gradient(circle, rgba(217,235,195,.85), rgba(224,239,217,.3) 54%, transparent 72%); filter: blur(4px); }
-    .app-window { position: relative; z-index: 2; width: min(430px, 82%); padding: 22px; background: rgba(255,255,255,.88); border: 1px solid rgba(255,255,255,.92); border-radius: 26px; box-shadow: 0 30px 90px rgba(32,68,45,.17), inset 0 1px 0 rgba(255,255,255,.8); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); transform: rotate(-1.5deg); animation: card-float 7s ease-in-out infinite; }
+    .app-window { position: relative; z-index: 2; width: min(430px, 82%); padding: 22px; background: rgba(255,255,255,.88); border: 1px solid rgba(255,255,255,.92); border-radius: 26px; box-shadow: 0 30px 90px rgba(32,68,45,.17), inset 0 1px 0 rgba(255,255,255,.8); backdrop-filter: none; -webkit-backdrop-filter: none; transform: rotate(-1.5deg); animation: card-float 7s ease-in-out infinite; }
     .window-head { display: flex; align-items: center; justify-content: space-between; padding-bottom: 18px; border-bottom: 1px solid #edf0eb; }
     .window-brand { display: flex; align-items: center; gap: 9px; }
     .window-brand-mark { display: grid; place-items: center; width: 30px; height: 30px; color: var(--leaf); background: var(--forest); border-radius: 10px; }
@@ -146,7 +146,7 @@
     .window-controls { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 11px; }
     .window-controls span { display: grid; place-items: center; min-height: 34px; border: 1px solid #e8ede6; border-radius: 11px; color: #6d7971; background: white; font-size: 10px; font-weight: 700; }
     .window-controls span:last-child { color: var(--forest); background: var(--leaf); border-color: var(--leaf); }
-    .floating-card { position: absolute; z-index: 4; display: flex; align-items: center; gap: 10px; padding: 12px 14px; background: rgba(255,255,255,.88); border: 1px solid rgba(255,255,255,.95); border-radius: 15px; box-shadow: var(--shadow-small); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); animation: float-soft 5.5s ease-in-out infinite; }
+    .floating-card { position: absolute; z-index: 4; display: flex; align-items: center; gap: 10px; padding: 12px 14px; background: rgba(255,255,255,.88); border: 1px solid rgba(255,255,255,.95); border-radius: 15px; box-shadow: var(--shadow-small); backdrop-filter: none; -webkit-backdrop-filter: none; animation: float-soft 5.5s ease-in-out infinite; }
     .floating-card strong { display: block; color: var(--ink); font-size: 12px; line-height: 1.3; }
     .floating-card small { display: block; margin-top: 2px; color: #849088; font-size: 9px; }
     .float-icon { display: grid; place-items: center; width: 32px; height: 32px; background: #eef4df; border-radius: 11px; color: var(--forest); font-size: 16px; }
@@ -341,7 +341,7 @@
     .ops-status i { width: 7px; height: 7px; background: #8cb658; border-radius: 50%; box-shadow: 0 0 0 4px rgba(140,182,88,.12); }
     .ops-flow { display: grid; grid-template-columns: repeat(6, 1fr); gap: 9px; align-items: stretch; }
     .ops-step { position: relative; min-height: 142px; padding: 15px 13px; background: white; border: 1px solid #e4eae1; border-radius: 15px; }
-    .ops-step:not(:last-child):after { position: absolute; top: 26px; right: -9px; z-index: 2; content: "›"; display: grid; place-items: center; width: 18px; height: 18px; color: #789066; background: #edf3e7; border: 2px solid #f2f6ef; border-radius: 50%; font-size: 14px; font-weight: 800; }
+    .ops-step:not(:last-child):before { position: absolute; top: 26px; right: -9px; z-index: 2; content: "›"; display: grid; place-items: center; width: 18px; height: 18px; color: #789066; background: #edf3e7; border: 2px solid #f2f6ef; border-radius: 50%; font-size: 14px; font-weight: 800; }
     .ops-number { display: inline-block; margin-bottom: 17px; color: #8aa45f; font-size: 10px; font-weight: 850; letter-spacing: .08em; }
     .ops-step h4 { margin: 0 0 5px; color: var(--ink); font-size: 12px; line-height: 1.4; }
     .ops-step p { margin: 0; color: #879189; font-size: 9px; line-height: 1.55; }
@@ -445,7 +445,7 @@
     .footer-bottom .legal-links { display: flex; gap: 16px; }
     .footer-bottom a:hover { color: white; }
     .dialog { width: min(520px, calc(100% - 28px)); max-height: min(90vh, 730px); padding: 0; overflow: auto; border: 1px solid rgba(255,255,255,.8); border-radius: 23px; color: var(--ink); background: #fbfcf8; box-shadow: 0 32px 100px rgba(0,0,0,.28); }
-    .dialog::backdrop { background: rgba(12,31,22,.57); backdrop-filter: blur(7px); }
+    .dialog::backdrop { background: rgba(12,31,22,.57); backdrop-filter: none; }
     .dialog-content { padding: 28px; }
     .dialog-close { display: grid; place-items: center; width: 32px; height: 32px; margin-left: auto; color: #748078; background: white; border: 1px solid #e6ebe4; border-radius: 50%; cursor: pointer; font-size: 17px; }
     .dialog-badge { display: inline-flex; align-items: center; gap: 6px; margin-top: 2px; padding: 6px 9px; color: #526e3d; background: #edf5e5; border-radius: 999px; font-size: 9px; font-weight: 800; }
@@ -481,7 +481,7 @@
       .hero-visual { min-height: 500px; }
       .exam-grid { grid-template-columns: repeat(3,1fr); }
       .ops-flow { grid-template-columns: repeat(3,1fr); }
-      .ops-step:nth-child(3):after { display: none; }
+      .ops-step:nth-child(3):before { display: none; }
       .workbench { gap: 35px; }
     }
     @media (max-width: 820px) {
@@ -597,8 +597,8 @@
       .ops-top h3 { font-size: 19px; }
       .ops-flow { grid-template-columns: 1fr 1fr; gap: 8px; }
       .ops-step { min-height: 126px; padding: 13px 11px; }
-      .ops-step:nth-child(2):after, .ops-step:nth-child(4):after { display: none; }
-      .ops-step:nth-child(3):after { display: grid; }
+      .ops-step:nth-child(2):before, .ops-step:nth-child(4):before { display: none; }
+      .ops-step:nth-child(3):before { display: grid; }
       .ops-number { margin-bottom: 13px; }
       .benefits-section { padding: 74px 0; }
       .benefits-grid { grid-template-columns: 1fr; margin-top: 25px; }
@@ -646,7 +646,7 @@
       .word-grid { grid-template-columns: 1fr; }
       .ops-flow { grid-template-columns: 1fr; }
       .ops-step { min-height: auto; }
-      .ops-step:after { display: none !important; }
+      .ops-step:before { display: none !important; }
     }
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
@@ -688,7 +688,7 @@
     .menu-card.primary { background: var(--forest); border-color: var(--forest); }
     .menu-card.primary strong { color: var(--leaf); }
     .menu-card.primary span.m-desc { color: #cfe0d4; }
-    .tabbar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 90; display: flex; background: rgba(255,255,255,.97); backdrop-filter: blur(12px); border-top: 1px solid var(--line); padding: 7px 10px calc(7px + env(safe-area-inset-bottom)); }
+    .tabbar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 90; display: flex; background: rgba(255,255,255,.97); backdrop-filter: none; border-top: 1px solid var(--line); padding: 7px 10px calc(7px + env(safe-area-inset-bottom)); }
     .tabbar a { flex: 1; text-align: center; text-decoration: none; color: var(--muted); font-size: 11.5px; padding: 5px 2px 4px; border-radius: 14px; -webkit-tap-highlight-color: transparent; }
     .tabbar a .t-ico { display: block; font-size: 19px; line-height: 1.25; margin-bottom: 1px; }
     .tabbar a.is-current { color: var(--forest); font-weight: 800; background: var(--mint); }
@@ -706,7 +706,7 @@
       display: flex; max-width: none; margin: 0; height: 54px; box-sizing: border-box;
       align-items: center; padding: 0 16px;
       background: rgba(247,248,244,.97); border-bottom: 1px solid var(--line);
-      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      backdrop-filter: none; -webkit-backdrop-filter: none;
     }
     body[data-app-view="study"] .view-topbar .back { box-shadow: none; }
     main > section[data-app-view="study"].is-active,
@@ -1140,7 +1140,7 @@
       body[data-app-view="home"] .menu-card .m-ico { font-size: 19px; }
       body[data-app-view="home"] .menu-card strong { margin-top: 6px; font-size: 13.5px; }
       body[data-app-view="home"] .menu-card span.m-desc { margin-top: 3px; font-size: 9.5px; line-height: 1.4; }
-      .tabbar { background: rgba(250,252,248,.96); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); box-shadow: 0 -8px 24px rgba(24,58,40,.055); }
+      .tabbar { background: rgba(250,252,248,.96); backdrop-filter: none; -webkit-backdrop-filter: none; box-shadow: 0 -8px 24px rgba(24,58,40,.055); }
       .tabbar a { font-size: 10.5px; }
       body[data-app-view="study"] .view-topbar,
       body[data-app-view="library"] .view-topbar {
@@ -1157,7 +1157,7 @@
         position: fixed; top: 0; left: 0; right: 0; z-index: 95; display: flex;
         width: 100%; max-width: none; height: calc(54px + env(safe-area-inset-top));
         margin: 0; padding: env(safe-area-inset-top) 16px 0; background: rgba(248,250,246,.97);
-        border-bottom: 1px solid var(--line); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+        border-bottom: 1px solid var(--line); backdrop-filter: none; -webkit-backdrop-filter: none;
       }
       body[data-app-view="pricing"] main { padding-top: calc(54px + env(safe-area-inset-top)); }
       body[data-app-view="pricing"] .pricing-section { background: linear-gradient(155deg,#eef5e9 0%,#f7f8f2 52%,#f3eee5 100%); }
@@ -1201,16 +1201,12 @@
     #studyCard { will-change: auto; }
     #wordCardFlip { height: clamp(220px,36dvh,296px); grid-template-rows: minmax(0,1fr); transform: none; transition: none; }
     #wordCardFlip .card-face { min-height: 0; transform: none; }
-    #wordCardFlip .card-front { overflow: hidden; touch-action: none; }
+    #wordCardFlip .card-front { overflow: hidden; touch-action: pan-y; }
     #wordCardFlip .card-back { overflow-y: auto; justify-content: flex-start; touch-action: pan-y; }
     #wordCardFlip:not(.is-flipped) .card-back, #wordCardFlip.is-flipped .card-front { display: none; }
     #backMeaning { margin: 7px 0 0; font-weight: 650; }
     .filter-row[role="tablist"] { flex-wrap: nowrap; overflow-x: auto; }
     .filter-chip { flex-shrink: 0; }
-    :is(.showcase-card,.menu-card,.progress-card,.feature-card,.price-card,.trial-info-card,.phrase-tag-board,.library-panel,.study-app,.study-scroll,.study-word-card,.word-tile,.phrase-tile,.battle-stage,.weak-item,.foe-card,.testimonial,.dialog-content,.memory-curve,.benefit-card) {
-      background-image: linear-gradient(var(--forest),var(--leaf)),linear-gradient(var(--forest),var(--leaf));
-      background-position: left center,right center; background-repeat: no-repeat; background-size: 3px 100%;
-    }
     .showcase-card:before { display: none; }
     @media (max-width:760px) {
       body[data-app-view] .study-shell, body[data-app-view] .library-shell { width: 100%; max-width: none; padding-inline: max(6px,env(safe-area-inset-left)) max(6px,env(safe-area-inset-right)); }
@@ -1219,6 +1215,43 @@
     }
     #progress { width: 100%; }
     .library-mode-panel.panel-in { animation: none; }
+    /* Semantic colors stay consistent across tabs; rails are painted on a
+       separate border layer so they never replace a card's own background. */
+    body { --rail-top:#18745f; --rail-bottom:#d2e886; }
+    body[data-app-view="library"] { --rail-top:#286da1; --rail-bottom:#82d5c6; }
+    body[data-app-view="study"] { --rail-top:#326a75; --rail-bottom:#bada7b; }
+    body[data-app-view="pricing"] { --rail-top:#785093; --rail-bottom:#e9bd8d; }
+    body[data-app-view="progress"] { --rail-top:#965733; --rail-bottom:#e8c968; background:#fbf7ef; }
+    body :is(.site-header,.view-topbar,.tabbar) { box-shadow:none !important; }
+    body[data-app-view] :is(.site-header,.view-topbar,.tabbar,.mobile-menu) { background-color:#fff !important; }
+    .hero-grid .hero-ctas .btn-outline { background-color:#eaf3fa; color:#24546d; }
+    #library .library-panel { background-color:#f3f8fb; }
+    .filter-chip.active { background:#24546d; color:white; }
+    #study .battle-stage { background-color:#f3f8fa; }
+    #pricing .plan-option.active { background:#583e6c; color:#fff; }
+    :is(.menu-card,.feature-card,.exam-card,.phrase-tag-board,.showcase-card,.roots-panel,.testimonial,.migration-note,.ops-panel,.ops-step,.faq-list details,.record-card,.record-metrics>div,.progress-card,.library-panel,.word-tile,.phrase-item,.study-app,.study-scroll,.study-word-card,.battle-stage,.weak-item,.foe-card,.memory-curve,.price-card,.trial-info-card,.dialog-content,.benefit,.trial-banner,.panel-empty,.phrase-empty,.dialog-notice,.dialog-timeline,.price-life span,.progress-stats>div,.trial-timeline-mini,.team-row) { position:relative; }
+    :is(.menu-card,.feature-card,.exam-card,.phrase-tag-board,.showcase-card,.roots-panel,.testimonial,.migration-note,.ops-panel,.ops-step,.faq-list details,.record-card,.record-metrics>div,.progress-card,.library-panel,.word-tile,.phrase-item,.study-app,.study-scroll,.study-word-card,.battle-stage,.weak-item,.foe-card,.memory-curve,.price-card,.trial-info-card,.dialog-content,.benefit,.trial-banner,.panel-empty,.phrase-empty,.dialog-notice,.dialog-timeline,.price-life span,.progress-stats>div,.trial-timeline-mini,.team-row)::after {
+      content:""; position:absolute; inset:0; width:auto; height:auto; border-radius:inherit; pointer-events:none; padding-inline:3px;
+      background:linear-gradient(180deg,var(--rail-top),var(--rail-bottom));
+      -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0); -webkit-mask-composite:xor;
+      mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0); mask-composite:exclude;
+    }
+    .record-shell { width:min(100% - 32px,740px); margin:auto; padding:24px 0 48px; }
+    .record-shell h1 { font-size:clamp(28px,5vw,42px); letter-spacing:-.045em; margin:6px 0; }
+    .record-shell p { color:#605d52; line-height:1.65; }
+    .record-metrics { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
+    .record-metrics>div,.record-card { padding:16px; border:1px solid #e4ddcd; border-radius:18px; background:white; }
+    .record-metrics>div:nth-child(1) { background:#eaf5e8; } .record-metrics>div:nth-child(2) { background:#fcf0df; } .record-metrics>div:nth-child(3) { background:#e9f0fa; }
+    .record-metrics strong { display:block; font-size:22px; } .record-card { margin-top:14px; }
+    .record-card h2 { margin:0; font-size:19px; } .record-card p { font-size:14px; }
+    #recordDays { list-style:none; padding:0; display:grid; gap:8px; }
+    #recordDays li { display:grid; grid-template-columns:4em 1fr 4em; align-items:center; font-size:13px; } #recordDays meter { width:100%; } #recordDays b { text-align:right; }
+    body[data-app-view="progress"] .site-header { display:none; }
+    body[data-app-view="progress"] .view-topbar { position:sticky; top:0; z-index:10; padding:calc(10px + env(safe-area-inset-top)) 16px 10px; border-bottom:1px solid var(--line); }
+    body[data-app-view="home"] .menu-card:nth-child(2) { background-color:#edf6fa; --rail-top:#236c91; }
+    body[data-app-view="home"] .menu-card:nth-child(3) { background-color:#fff4df; --rail-top:#95591e; }
+    body[data-app-view="home"] .menu-card:nth-child(4) { background-color:#f1edfa; --rail-top:#765790; }
+    #study .back-speak { color:#155776; background-color:#e5f3fa; }
   </style>
 </head>
 <body>
@@ -1262,7 +1295,7 @@
           <div class="hero-meta"><span><i class="check-mini">✓</i> 词库已在本机</span><span><i class="check-mini">✓</i> 离线可继续学习</span><span><i class="check-mini">✓</i> 学习记录保存在本机</span></div>
         </div>
         <div class="hero-visual hero-progress" aria-label="本机学习概况" data-reveal>
-          <div class="progress-card" id="progress" tabindex="-1">
+          <div class="progress-card" id="progressSummary">
             <div class="progress-head"><div><small>本机学习记录</small><strong id="heroProgressTitle">还没有开始学习</strong></div><span class="progress-chip" id="heroProgressChip">本机记录</span></div>
             <div class="progress-stats">
               <div><small>已记住</small><strong id="heroKnownCount">0</strong></div>
@@ -1271,10 +1304,23 @@
             </div>
             <div class="progress-bar" role="img" aria-label="已记住的词占全部标记过的词的比例"><span id="heroProgressBar"></span></div>
             <p class="progress-note" id="heroProgressNote">记录保存在这台设备上，只统计你实际标记过的单词。</p>
-            <div class="progress-actions"><a class="btn btn-primary btn-small" href="#study">去学习</a><a class="btn btn-outline btn-small" href="#study" data-open-memory>看待巩固词</a></div>
+            <div class="progress-actions"><a class="btn btn-outline btn-small" href="#progress">学习记录 →</a><a class="btn btn-primary btn-small" href="#study">去学习</a><a class="btn btn-outline btn-small" href="#study" data-open-memory>看待巩固词</a></div>
           </div>
           <div class="progress-tip"><span aria-hidden="true">◷</span><span id="heroReminderText">到期前 14、7、1 天，打开 App 会在这台设备上提醒你一次。</span></div>
         </div>
+      </div>
+    </section>
+
+    <section id="progress" data-app-view="progress" aria-labelledby="recordTitle">
+      <div class="record-shell">
+        <header><span class="eyebrow">LEARNING JOURNAL</span><h1 id="recordTitle">本机学习记录</h1><p>看看这段时间记住了什么，以及哪些词还需要练习。</p></header>
+        <div class="record-metrics">
+          <div><small>累计已记住</small><strong id="recordKnown">0</strong></div>
+          <div><small>待巩固</small><strong id="recordWeak">0</strong></div>
+          <div><small>连续学习</small><strong id="recordStreak">0 天</strong></div>
+        </div>
+        <article class="record-card"><h2>近七天</h2><p>每天在词卡上标记「记住了」和「还不熟悉」的次数</p><ol id="recordDays"></ol></article>
+        <article class="record-card"><h2>最近记住的词</h2><p id="recordWords"></p><a class="card-link" href="#study">继续学习 →</a></article>
       </div>
     </section>
 
@@ -1406,7 +1452,7 @@
                   <div class="study-word-top"><span id="studyCategory">TODAY'S WORD · 01</span><span id="studyPosition">01 / 24</span></div>
                   <div class="study-word-main"><div><h3 id="studyWord">serendipity</h3><p class="phonetic" id="studyPhonetic">/ˌser.ənˈdɪp.ə.ti/ · n.</p></div><button class="sound-round" type="button" id="studySpeak" aria-label="播放单词发音"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 10v4h4l5 4V6l-5 4H4Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M16 9a5 5 0 0 1 0 6m2-9a9 9 0 0 1 0 12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></button></div>
                   <p class="study-meaning is-hidden" id="studyMeaning">点击“显示释义”进行自测。</p>
-                  <p class="card-flip-hint" id="cardFlipHint">轻点卡片 · 翻到背面看例句 🔄</p>
+                  <p class="card-flip-hint" id="cardFlipHint">轻点翻面 · 左滑记住 · 右滑返回</p>
                 </div>
                 <div class="card-face card-back" id="cardBack">
                   <div class="card-back-label"><span>EXAMPLE · 例句</span><span>轻点翻回 ↺</span></div>
@@ -1483,7 +1529,7 @@
             <article class="ops-step"><span class="ops-number">DAY 07</span><h4>体验结束</h4><p>由支付服务商托管结账，按运维配置的月付或年付方案续订。</p></article>
             <article class="ops-step"><span class="ops-number">本机</span><h4>不采集数据</h4><p>没有账号体系，也没有远程同步；进度只写入这台设备的本地存储。</p></article>
             <article class="ops-step"><span class="ops-number">随时</span><h4>查看或取消</h4><p>订阅入口常驻底部标签栏，随时可以查看方案、取消或继续学习。</p></article>
-            <article class="ops-step"><span class="ops-number">离线</span><h4>无网也能用</h4><p>词库、口语库与学习记录都在本机，断网时照样可以学习和朗读。</p></article>
+            <article class="ops-step"><span class="ops-number">离线</span><h4>无网也能用</h4><p>词库、口语和记录保存在本机。离线可以学习；朗读需设备已安装英语语音。</p></article>
           </div>
           <div class="ops-bottom"><span><strong>数据保护：</strong>学习进度与词库保存在这台设备上，换手机前请留意备份。</span><span><strong>收费透明：</strong>试用天数和续费金额直接写在页面上，付款前不会自动扣款。</span></div>
         </div>
@@ -1536,8 +1582,8 @@
           <details><summary>7 天试用结束后会怎样？</summary><p>这一版只在本机记录试用开始日期，并在到期前 14 天、7 天、1 天打开 App 时弹出提醒，不发短信、不发邮件。当前版本没有接入收银服务，不会自动扣款；付款前会明确显示续费日期、金额和取消方式。</p></details>
           <details><summary>支持哪些支付方式？</summary><p>支持多种方式支付，具体方式以正式结账页面为准。当前演示尚未接入真实收银服务，不会产生扣款。</p></details>
           <details><summary>它可以离线使用、添加到主屏幕吗？</summary><p>可以。用手机浏览器打开后，按页面里的「安装」引导添加到主屏幕，就能像普通 App 一样全屏打开；首次联网打开后即可离线使用。</p></details>
-          <details><summary>原站的发音、例句和学习进度也能保留吗？</summary><p>已迁移英 / 美音标、词性、中文释义与考试分类。精讲内容保留原有资料；另有匹配到词典的真实句例/记忆法，以及明确标注的释义提示和通用复习提示。词库数据本身未内嵌音频文件；例句朗读直接调用设备 en-US 系统语音。公开 HTML 未包含个人学习进度，迁移进度仍需原站账号数据导出。</p></details>
-          <details><summary>需要联网吗？能离线用吗？</summary><p>词库与日常口语句库都随 App 缓存到本机，断网也能查询、学习、朗读（朗读使用设备自带英语语音）。联网只在两种情况下需要：首次打开时下载词库、以及你主动点「联网同步」获取新词库。</p></details>
+          <details><summary>原站的发音、例句和学习进度也能保留吗？</summary><p>已迁移英 / 美音标、词性、中文释义与考试分类。精讲内容保留原有资料；另有匹配到词典的真实句例/记忆法，以及明确标注的释义提示和通用复习提示。词库数据本身未内嵌音频文件；朗读优先播放原有音源的录音，离线或加载失败时尝试设备英语语音。公开 HTML 未包含个人学习进度，迁移进度仍需原站账号数据导出。</p></details>
+          <details><summary>需要联网吗？能离线用吗？</summary><p>词库与日常口语句库都随 App 缓存到本机，断网也能查询和学习。首次载入、主动同步词库和播放原音录音需要网络；离线朗读取决于设备是否已安装英语语音。</p></details>
         </div>
       </div>
     </section>
@@ -1635,7 +1681,7 @@
       let activePhraseCategory = '全部';
       let phraseVisibleLimit = 50;
       let activeAccent = 'en-US';
-      let activeAudio = null;
+      let activeAudio = null, onAudioStop = null;
       let activeUtterance = null;
       let speechRequestId = 0;
       let toastTimer = null;
@@ -2227,9 +2273,13 @@
         if ($('#memoryMastered')) $('#memoryMastered').textContent = mastered.toLocaleString();
         if ($('#memoryWeak')) $('#memoryWeak').textContent = weak.toLocaleString();
         const bars = $('#memoryBars');
+        $('#recordKnown').textContent = mastered.toLocaleString();
+        $('#recordWeak').textContent = weak.toLocaleString();
+        $('#recordStreak').textContent = studyStreak() + ' 天';
+        $('#recordWords').textContent = masteredWords().slice(-20).reverse().join(' · ') || '还没有记录。在学习页左滑词卡或点「记住了」，第一个词就会出现在这里。';
         if (bars) {
           const history = readJSONArray(HISTORY_KEY);
-          const byDay = new Map(history.map(row => [row && row.day, Math.max(Number(row && row.known) || 0, Number(row && row.again) || 0)]));
+          const byDay = new Map(history.map(row => [row && row.day, (Number(row && row.known) || 0) + (Number(row && row.again) || 0)]));
           const cells = [];
           let total = 0;
           for (let back = 6; back >= 0; back--) {
@@ -2239,6 +2289,7 @@
             total += byDay.get(key) || 0;
           }
           const max = Math.max(1, ...cells.map(c => c.value));
+          $('#recordDays').innerHTML = cells.map(({label,value}) => `<li><span>${label}</span><meter min="0" max="${max}" value="${value}"></meter><b>${value} 次</b></li>`).join('');
           bars.innerHTML = cells.map(cell => `<div><i class="${cell.value ? '' : 'is-empty'}" style="height:${cell.value ? Math.max(8, Math.round(cell.value / max * 46)) : 3}px"></i><small>${cell.label}</small></div>`).join('');
           const note = $('#memoryCurveNote');
           if (note) note.textContent = total ? `共标记 ${total} 次` : '还没有学习记录';
@@ -2359,6 +2410,8 @@
       }
       function stopSpeech() {
         speechRequestId += 1;
+        const cleanup=onAudioStop; onAudioStop=null;
+        if(cleanup) cleanup();
         if (activeAudio) { try { activeAudio.pause(); } catch(_) {} activeAudio = null; }
         activeUtterance = null;
         try { if (window.speechSynthesis) window.speechSynthesis.cancel(); } catch(_) {}
@@ -2519,32 +2572,37 @@
           if (typeof onDone === 'function') onDone();
           return;
         }
-        // A single en-US utterance started inside the tap handler: iOS Safari
-        // refuses play()/speak() once the user-activation window has expired.
-        speak(sentence, 'en-US', onDone, onError, 0.75);
+        playPronunciation(sentence, 'en-US', 0.75, '', onDone, onError);
       }
       function speakEntry(entry, lang=activeAccent) {
-        if(!entry || !entry.word) return;
+        if (!entry || !entry.word) return;
+        playPronunciation(entry.word, lang, 1, lang==='en-GB' ? entry.uk : entry.us);
+      }
+      // Use the original word recording service for both accents. Start play()
+      // synchronously in the tap; only switch to device TTS if playback fails.
+      function playPronunciation(text, lang, rate, supplied, done, onError) {
         stopSpeech();
-        if (lang === 'en-US' && 'speechSynthesis' in window) { speak(entry.word, lang); return; }
-        const suppliedAudio=lang==='en-GB' ? entry.uk : entry.us;
-        const type=lang==='en-US' ? 2 : 1;
-        const source=suppliedAudio || `https://dict.youdao.com/dictvoice?audio=${encodeURIComponent(entry.word)}&type=${type}`;
-        if(source && typeof Audio!=='undefined') {
-          try {
-            const url=new URL(source,window.location.href);
-            if(!['http:','https:'].includes(url.protocol)) throw new Error('Unsupported audio URL');
-            if(activeAudio){activeAudio.pause();activeAudio=null;}
-            if('speechSynthesis' in window) window.speechSynthesis.cancel();
-            const audio=new Audio(url.href);
-            activeAudio=audio;
-            const fallback=()=>{if(activeAudio!==audio)return;activeAudio=null;speak(entry.word,lang);};
-            audio.addEventListener('error',fallback,{once:true});
-            audio.play().catch(fallback);
-            return;
-          } catch(_) {}
-        }
-        speak(entry.word,lang);
+        let audio, timer, complete=false;
+        const finish=()=>{ if(complete)return; complete=true; clearTimeout(timer); onAudioStop=null; if(done)done(); };
+        onAudioStop=finish;
+        const fallback=()=>{
+          if(complete || (audio && activeAudio!==audio))return;
+          clearTimeout(timer);
+          if(audio){activeAudio=null; try{audio.pause();}catch(_){} }
+          speak(text, lang, finish, onError, rate);
+        };
+        if (navigator.onLine === false) { fallback(); return; }
+        try {
+          const source=new URL(supplied || 'https://dict.youdao.com/dictvoice?type='+(lang==='en-GB'?1:2)+'&audio='+encodeURIComponent(text),location.href);
+          if(!/^https?:$/.test(source.protocol))throw Error('Unsupported audio URL');
+          audio=new Audio(source.href); activeAudio=audio;
+          audio.defaultPlaybackRate=audio.playbackRate=rate;
+          audio.addEventListener('playing',()=>clearTimeout(timer),{once:true});
+          audio.addEventListener('ended',()=>{if(activeAudio===audio){activeAudio=null;finish();}},{once:true});
+          audio.addEventListener('error',fallback,{once:true});
+          timer=setTimeout(fallback,4000);
+          const started=audio.play(); if(started && started.catch)started.catch(fallback);
+        } catch(_){fallback();}
       }
       function toastMessage(message) {
         toast.textContent = message;
@@ -2855,7 +2913,32 @@
       $('#directSubscribe').addEventListener('click',openPayment);
             $('#studySpeak').addEventListener('click',()=>{const word=bank[studyIndex];if(word)speakEntry(word,activeAccent);});
       (function () {
-        $('#studyCard').addEventListener('click', event => {
+        const card = $('#studyCard');
+        let drag = null, blockClickUntil = 0;
+        card.addEventListener('pointerdown', e => {
+          if (e.isPrimary === false || e.button > 0 || e.target.closest('button,a,input')) return;
+          drag = {id:e.pointerId, x:e.clientX, y:e.clientY, horizontal:false};
+        });
+        window.addEventListener('pointermove', e => {
+          if (!drag || e.pointerId !== drag.id) return;
+          const dx=e.clientX-drag.x, dy=e.clientY-drag.y;
+          if (!drag.horizontal && Math.abs(dy)>10 && Math.abs(dy)>=Math.abs(dx)) { drag=null; blockClickUntil=performance.now()+350; return; }
+          if (Math.abs(dx)>12 && Math.abs(dx)>1.4*Math.abs(dy)) drag.horizontal=true;
+          if (drag.horizontal) card.style.transform=`translateX(${Math.max(-60,Math.min(60,dx*0.35))}px)`;
+        });
+        function finishDrag(e) {
+          if (!drag || e.pointerId !== drag.id) return;
+          const {x,y,horizontal}=drag; drag=null; card.style.transform='';
+          if (horizontal) blockClickUntil=performance.now()+350;
+          const dx=e.clientX-x;
+          if (e.type==='pointercancel' || !horizontal || Math.abs(dx)<56 || Math.abs(dx)<1.4*Math.abs(e.clientY-y) || !bank.length) return;
+          if (dx<0) $('#knownWord').click();
+          else { studyIndex=(studyIndex+bank.length-1)%bank.length; updateStudyCard(); }
+        }
+        window.addEventListener('pointerup', finishDrag);
+        window.addEventListener('pointercancel', finishDrag);
+        card.addEventListener('click', event => {
+          if (performance.now()<blockClickUntil) return;
           if (event.target.closest('a,button,input')) return;
           $('#wordCardFlip').classList.toggle('is-flipped');
         });
@@ -2866,7 +2949,7 @@
         if(!word || !word.example){ toastMessage('这个词还没有例句。'); return; }
         if(btn.dataset.speaking==='1'){ stopSpeech(); btn.dataset.speaking='0'; btn.textContent='🔊 朗读例句'; return; }
         btn.dataset.speaking='1'; btn.textContent='⏸ 停止朗读';
-        toastMessage('正在调用设备的美式语音朗读整句…');
+        toastMessage('正在播放美式例句…');
         const resetButton=()=>{ btn.dataset.speaking='0'; btn.textContent='🔊 朗读例句'; };
         speakExample(word.example, resetButton, error=>{ resetButton(); toastMessage(error.message || '例句朗读失败，请检查设备音量。'); });
       });
@@ -2926,7 +3009,7 @@
       });
       $('#nextWord').addEventListener('click',()=>{studyIndex=(studyIndex+1)%Math.max(1,bank.length);updateStudyCard();});
       $$('.accent-toggle button').forEach(button=>button.addEventListener('click',()=>{$$('.accent-toggle button').forEach(b=>b.classList.remove('active'));button.classList.add('active');activeAccent=button.dataset.accent;renderWordGrid();if(bank[studyIndex])$('#studyPhonetic').textContent=`${displayedPhonetic(bank[studyIndex])||'音标待补充'}${bank[studyIndex].pos?' · '+bank[studyIndex].pos:''}`;}));
-      $$('[data-speak-word]').forEach(button=>button.addEventListener('click',()=>speak(button.dataset.speakWord,button.dataset.speakLang||'en-GB')));
+      $$('[data-speak-word]').forEach(button=>button.addEventListener('click',()=>speakEntry({word:button.dataset.speakWord},button.dataset.speakLang||'en-US')));
       $$('[data-open-trial]').forEach(button=>button.addEventListener('click',()=>{const mobile=$('#mobileMenu');if(mobile)mobile.classList.remove('open');$('#mobileMenuToggle').setAttribute('aria-expanded','false');openTrial();}));
       $('#trialAgree').addEventListener('change',event=>{$('#confirmTrial').disabled=!event.target.checked;});
       $('#confirmTrial').addEventListener('click',startDemoTrial);
@@ -2986,6 +3069,7 @@
   <a href="#top" data-tab="home"><span class="t-ico">🏠</span>首页</a>
   <a href="#study" data-tab="study"><span class="t-ico">🎯</span>学习</a>
   <a href="#library" data-tab="library"><span class="t-ico">📚</span>词库</a>
+  <a href="#progress" data-tab="progress"><span class="t-ico">◷</span>记录</a>
   <a href="#pricing" data-tab="pricing"><span class="t-ico">💎</span>订阅</a>
 </nav>
 <script>
@@ -2994,12 +3078,12 @@
      composited layer and never reparent or clone the sections. */
   var SECTION_VIEW = {
     top: 'home', menu: 'home', main: 'home',
-    progress: 'home', method: 'home', stories: 'home', benefits: 'home',
+    method: 'home', stories: 'home', benefits: 'home',
     library: 'library',
     study: 'study',
     ops: 'pricing', pricing: 'pricing', faq: 'pricing'
   };
-  var VIEW_LABEL = { home: '首页', study: '学习', library: '词库', pricing: '订阅' };
+  var VIEW_LABEL = { progress: '学习记录', home: '首页', study: '学习', library: '词库', pricing: '订阅' };
   var booted = false;
   function syncTabbar(view) {
     var tabs = document.querySelectorAll('#appTabbar a');

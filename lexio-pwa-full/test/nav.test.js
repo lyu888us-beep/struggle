@@ -113,7 +113,7 @@ function animClean() {
 
   // ---------- 2. 底部导航 ----------
   const tabs = [...doc.querySelectorAll('#appTabbar a')];
-  check('底部导航 4 个标签', tabs.length === 4);
+  check('底部导航 5 个标签，含独立记录页', tabs.length === 5 && !!doc.querySelector('[data-tab=progress]'));
   check('首页标签默认高亮', tabs.find((t) => t.dataset.tab === 'home').classList.contains('is-current'));
 
   // ---------- 3. 进入学习：动画 + 全屏锁定 ----------
@@ -143,6 +143,10 @@ function animClean() {
   check('点击卡片 → 翻到背面', cardFlip.classList.contains('is-flipped'));
   doc.getElementById('studySpeak').click();
   await sleep(30);
+  check('词卡默认使用原美式录音，单词正常速度',new URL(window.__lastAudio.src).searchParams.get('type')==='2' && window.__lastAudio.playbackRate===1);
+  doc.querySelector('[data-accent="en-GB"]').click(); doc.querySelector('#studySpeak').click();
+  check('英式录音入口不变',new URL(window.__lastAudio.src).searchParams.get('type')==='1');
+  doc.querySelector('[data-accent="en-US"]').click();
   check('点发音按钮不触发翻面', cardFlip.classList.contains('is-flipped'));
   doc.getElementById('studyCard').click();
   await sleep(30);
@@ -153,10 +157,10 @@ function animClean() {
   const audioCountBeforeSentence = (window.__audioInstances || []).length;
   exampleSpeakButton.click();
   await sleep(30);
-  const exampleUtterance = window.__lastUtterance;
-  check('例句直接启动完整 en-US 系统语音', !!exampleUtterance &&
-    exampleUtterance.lang === 'en-US' && exampleUtterance.text.length > 20 && exampleUtterance.text.includes(' '));
-  check('例句朗读不依赖异步逐词音频请求', (window.__audioInstances || []).length === audioCountBeforeSentence);
+  const sampleAudio = window.__lastAudio;
+  const sourceURL = new URL(sampleAudio.src);
+  check('例句走原美式音源、整句 0.75 倍速',sourceURL.hostname==='dict.youdao.com' && sourceURL.searchParams.get('type')==='2' && sourceURL.searchParams.get('audio').includes(' ') && sampleAudio.playbackRate===0.75);
+  check('例句只请求一段音频',window.__audioInstances.length===audioCountBeforeSentence+1);
   exampleSpeakButton.click(); // stop the mocked utterance and leave no timer behind
 
   // 释义自测开关
@@ -189,8 +193,8 @@ function animClean() {
   fire('pointerup', window, 120, 400);
   await sleep(520);
   const pos1 = doc.getElementById('studyPosition').textContent;
-  check('正面滑动不会换卡', pos1 === pos0, `${pos0} → ${pos1}`);
-  check('滑动本身不再冒充“已记住”', parseInt((doc.getElementById('knownCount').textContent || '0').replace(/\D/g, ''), 10) === known0,
+  check('左滑进入下一词', pos1 !== pos0, `${pos0} → ${pos1}`);
+  check('左滑恰好记录一次', parseInt((doc.getElementById('knownCount').textContent || '0').replace(/\D/g, ''), 10) === known0 + 1,
     `known=${doc.getElementById('knownCount').textContent}`);
   // 滑动是纯导航：既不能标记已掌握，也不能把薄弱词从复习队列里删掉
   if (window.__lexioWeak) {
@@ -202,8 +206,8 @@ function animClean() {
       fire('pointermove', window, 200, 400);
       fire('pointerup', window, 200, 400);
       await sleep(520);
-      check('滑动不会把薄弱词从复习队列里删掉',
-        window.__lexioWeak.count() === weakBefore && window.__lexioWeak.list().includes(weakWord),
+      check('左滑移出待复习并记入掌握',
+        window.__lexioWeak.count() === weakBefore - 1 && window.__lexioProgress.mastered().includes(weakWord),
         `weak ${weakBefore} → ${window.__lexioWeak.count()}`);
       fire('pointerdown', doc.getElementById('studyCard'), 200, 400);
       fire('pointermove', window, 300, 400);
@@ -230,9 +234,9 @@ function animClean() {
   doc.getElementById('knownWord').click();
   await sleep(80);
   const masteredNow = window.__lexioProgress ? window.__lexioProgress.mastered().length : -1;
-  check('点“记住了”才计入已掌握，并写入本机记录',
-    parseInt((doc.getElementById('knownCount').textContent || '0').replace(/\D/g, ''), 10) === known0 + 1 &&
-    masteredNow === 1 && window.localStorage.getItem('lexio.masteredWords') !== null,
+  check('按钮与左滑共用记忆记录，右滑不计数',
+    parseInt((doc.getElementById('knownCount').textContent || '0').replace(/\D/g, ''), 10) === known0 + 3 &&
+    masteredNow === 2 && window.localStorage.getItem('lexio.masteredWords') !== null,
     `known=${doc.getElementById('knownCount').textContent} mastered=${masteredNow}`);
   check('首页进度卡显示同一份真实数据',
     doc.getElementById('heroKnownCount').textContent === String(masteredNow) &&
@@ -271,11 +275,11 @@ function animClean() {
     cssText.includes('body[data-app-view="home"] .hero-copy,\n    body[data-app-view="home"] .menu-card,\n    body[data-app-view="pricing"] .price-card { animation: none !important; }') &&
     !cssText.includes('.menu-card:nth-child(1) { animation-delay') &&
     cssText.includes('main > section[data-app-view] .stagger-1,'));
-  for (const view of ['library','study','pricing','home']) {
+  for (const view of ['library','study','pricing','progress','home']) {
     window.__lexioShow(view);
     check('连续点按不叠页、不丢导航：'+view, viewNames().every(name=>name===view) && viewNames().length>0 && animClean());
   }
-  check('进度链接直接定位本机记录', doc.querySelector('a[href="#progress"]').textContent.includes('查看我的学习进度') && doc.querySelector('#progress').textContent.includes('本机学习记录'));
+  check('进度链接直接定位本机记录', doc.querySelector('.feature-card a[href="#progress"]').textContent.includes('查看我的学习进度') && doc.querySelector('#progress').textContent.includes('本机学习记录'));
   check('释义未揭晓时完全不显示(透明,非马赛克)',
     cssText.includes('.study-meaning.is-hidden { color: transparent;'));
   check('学习词卡与词库滚动容器有上下圆角和安全区留白',
@@ -285,11 +289,11 @@ function animClean() {
     cssText.includes('data-app-view="library"].is-active > .container { height: 100%;') &&
     cssText.includes('padding: 12px 0 calc(12px + env(safe-area-inset-bottom))'));
   const pageHtml = doc.documentElement.outerHTML;
-  check('例句朗读直接使用完整 en-US 系统语音，避免异步音频链',
-    pageHtml.includes("speak(sentence, 'en-US', onDone, onError, 0.75)") &&
+  check('例句首选完整 en-US 录音，避免异步音频链',
+    pageHtml.includes("playPronunciation(sentence, 'en-US', 0.75, '', onDone, onError)") &&
     !pageHtml.includes('function speakExample(text, onDone, onError) {\n        const sentence = String(text || \'\').trim();\n        const matches ='));
   check('例句朗读按钮和状态明确标记美式发音',
-    pageHtml.includes('使用美式发音播放例句') && pageHtml.includes('正在调用设备的美式语音朗读整句'));
+    pageHtml.includes('使用美式发音播放例句') && pageHtml.includes('正在播放美式例句'));
   check('页面移除原站跳转及外部 Arena 联系链接',
     !pageHtml.includes('原站入口') && !pageHtml.includes('arena.site') && !doc.querySelector('a[href^="https://"]'));
   check('支付宣传统一为“支持多种方式支付”且不展示个人结算承诺',
@@ -307,8 +311,8 @@ function animClean() {
     cssText.includes('@keyframes appHomeEnter') && cssText.includes('@keyframes appPricingEnter') &&
     cssText.includes('@keyframes pricePop') && cssText.includes('.price strong.is-changing') &&
     cssText.includes('prefers-reduced-motion: reduce'));
-  check('Service Worker 升到 v19 并预缓存口语句库与安装引导视频',
-    swSource.includes("CACHE_NAME = 'lexio-shell-v19-school-race'") &&
+  check('Service Worker 升到 v20 并预缓存口语句库与安装引导视频',
+    swSource.includes("CACHE_NAME = 'lexio-shell-v20-audio-journal'") &&
     swSource.includes("'./data/daily-conversation.json'") &&
     swSource.includes("'./media/install-guide.mp4'") &&
     pageHtml.includes('controllerchange') && pageHtml.includes('swRefreshing'));
@@ -524,9 +528,11 @@ function animClean() {
     !!pharmacyPhrase && pharmacyPhrase.textContent.includes('pharmacy nearby'));
   pharmacyPhrase.querySelector('[data-phrase-speak]').click();
   await sleep(30);
-  check('日常口语句朗读使用 en-US 系统语音', !!window.__lastUtterance &&
-    window.__lastUtterance.lang === 'en-US' && window.__lastUtterance.text.includes('pharmacy'));
-  if (window.__lastUtterance && window.__lastUtterance.onend) window.__lastUtterance.onend();
+  const phraseAudio=window.__lastAudio, phraseURL=new URL(phraseAudio.src);
+  check('口语句沿用原美式音频与 0.75 倍速', phraseURL.searchParams.get('type')==='2' && phraseURL.searchParams.get('audio').includes('pharmacy') && phraseAudio.playbackRate===0.75);
+  phraseAudio.emit('error');
+  check('网络音频失败转入美式系统语音', window.__lastUtterance.lang==='en-US' && window.__lastUtterance.rate===0.75 && window.__lastUtterance.text.includes('pharmacy'));
+  window.__lastUtterance.onend();
   window.speechSynthesis.speaking = false;
   phraseSearch.value = '';
   phraseSearch.dispatchEvent(new window.Event('input', {bubbles:true}));
@@ -651,6 +657,7 @@ function animClean() {
       url: 'http://localhost/', runScripts: 'dangerously', pretendToBeVisual: true,
       virtualConsole: vc,
       beforeParse(w2) {
+        w2.Audio = undefined; // exercise offline device-voice fallback
         w2.SpeechSynthesisUtterance = function (t) { this.text = t; };
         w2.speechSynthesis = {
           speaking: false, pending: false, paused: false,
@@ -682,7 +689,7 @@ function animClean() {
   }
 
   check('词卡例句朗读会去掉中文引号并整句交给 en-US 语音',
-    html.includes("replace(/[“”\"]/g, '')") && html.includes("speak(sentence, 'en-US', onDone, onError, 0.75)"));
+    html.includes("replace(/[“”\"]/g, '')") && html.includes("playPronunciation(sentence, 'en-US', 0.75, '', onDone, onError)"));
   check('内置词库逐词有记忆线索/复习提示', missingMnemonics === 0 &&
     bundledWords.filter((word) => word.mnemonicSource === 'generated-recall-cue').length > 0,
     `missing=${missingMnemonics}`);
