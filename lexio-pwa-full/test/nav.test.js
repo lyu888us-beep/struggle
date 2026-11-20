@@ -158,7 +158,8 @@ function animClean() {
   Object.defineProperty(window.navigator,'serviceWorker',{configurable:true,value:{controller:{}}});
   exampleSpeakButton.click();
   await sleep(30);
-  check('未配音示例卡仅显示文字，不尝试朗读',exampleSpeakButton.disabled && exampleSpeakButton.textContent.includes('暂无录音') && window.__audioInstances.length===audioCountBeforeSentence);
+  check('示例词库也能播放所选配音',!exampleSpeakButton.disabled && /media\/voice\/.+\.mp3$/.test(window.__lastAudio.src) && window.__audioInstances.length===audioCountBeforeSentence+1);
+  window.__lastAudio.emit('ended');
 
   // 释义自测开关
   const meaningEl = doc.getElementById('studyMeaning');
@@ -308,8 +309,8 @@ function animClean() {
     cssText.includes('@keyframes appHomeEnter') && cssText.includes('@keyframes appPricingEnter') &&
     cssText.includes('@keyframes pricePop') && cssText.includes('.price strong.is-changing') &&
     cssText.includes('prefers-reduced-motion: reduce'));
-  check('Service Worker 升到 v27 并预缓存口语句库与安装引导视频',
-    swSource.includes("CACHE_NAME = 'lexio-shell-v27-study-glow'") &&
+  check('Service Worker 升到 v28 并预缓存口语句库与安装引导视频',
+    swSource.includes("CACHE_NAME = 'lexio-shell-v28-listen-light'") &&
     swSource.includes("'./data/daily-conversation.json'") &&
     swSource.includes("'./media/install-guide.mp4'") &&
     pageHtml.includes('controllerchange') && pageHtml.includes('swRefreshing'));

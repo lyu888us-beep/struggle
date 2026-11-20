@@ -1384,11 +1384,29 @@
     body[data-app-view] .menu-card:nth-child(2){--wash:#e5eff7;--glow:#76a7c3;}
     body[data-app-view] .menu-card:nth-child(3){--wash:#fbf0df;--glow:#c49a64;}
     body[data-app-view] .menu-card:nth-child(4){--wash:#eee9f6;--glow:#a78bb8;}
-    @keyframes edgeBreath {0%,100%{background-position:0 0,0% 50%;box-shadow:0 0 0 transparent;}
-      50%{background-position:0 0,100% 50%;box-shadow:0 0 6px color-mix(in srgb,var(--glow) 35%,transparent);}}
-    @media(prefers-reduced-motion:no-preference){
-      body[data-app-view] :is(.demo-tab,.library-mode-tab,.catalog .shelf-link,.menu-card){animation:edgeBreath 5s ease-in-out infinite;}
+    /* Glow the edge and its pilot light, never the text or the whole control. */
+    body[data-app-view] :is(.demo-tab,.library-mode-tab){
+      --lamp:#16bb98; --lamp-halo:rgba(21,187,147,.55); --glow:#159d83; --glow-end:#acde53;
+      border-width:2px; padding-inline:clamp(6px,2.4vw,16px); min-height:42px;
     }
+    body[data-app-view] #dailyPhrasesTab {--lamp:#a67af2;--lamp-halo:rgba(155,112,224,.55);--glow:#9164d1;--glow-end:#f1aea4;}
+    body[data-app-view] :is(.demo-tab,.library-mode-tab)::before {
+      content:''; display:inline-block; vertical-align:middle; margin-inline-end:5px;
+      inline-size:7px; block-size:7px; border-radius:50%; background:var(--lamp);
+      box-shadow:0 0 3px 1px var(--lamp-halo);
+    }
+    @keyframes edgeBreath {
+      0%,100%{background-position:0 0,0% 50%;box-shadow:inset 0 0 0 0 transparent,0 0 1px transparent;}
+      50%{background-position:0 0,100% 50%;box-shadow:inset 0 0 0 1px var(--glow),0 0 8px 2px var(--lamp-halo,rgba(60,164,132,.44));}
+    }
+    @keyframes pilotBreath {0%,100%{opacity:.55;transform:scale(.75);}50%{opacity:1;transform:scale(1.15);box-shadow:0 0 7px 2px var(--lamp-halo);}}
+    @media(prefers-reduced-motion:no-preference){
+      body[data-app-view] :is(.demo-tab,.library-mode-tab,.catalog .shelf-link,.menu-card){animation:edgeBreath 2.6s ease-in-out infinite;}
+      body[data-app-view] :is(.demo-tab,.library-mode-tab)::before {animation:pilotBreath 2.6s ease-in-out infinite;}
+    }
+    .voice-lab {display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px;margin:12px 0;border-radius:14px;background:#e7f3ed;color:#21473d;}
+    .voice-lab small {display:block;color:#3e6155;}
+    .back-actions {flex-wrap:wrap;gap:8px;}
   </style>
 </head>
 <body>
@@ -1533,7 +1551,7 @@
             <div class="word-grid" id="wordGrid" aria-live="polite"><div class="empty-state">正在准备词库…</div></div>
           </div>
           <div class="library-mode-panel" id="dailyPhrasesMode" role="tabpanel" aria-labelledby="dailyPhrasesTab" hidden>
-            <div class="catalog phrase-catalog" id="phraseCatalog"><svg class="pocket-art" aria-hidden="true" viewBox="0 0 60 56"><path d="M8 31L7 8L24 16Q31 13 39 17L52 8L52 31Q54 46 30 50Q9 45 8 31Z" fill="#d98557"/><path d="M11 14L12 24L19 19ZM47 15L41 20L48 24Z" fill="#98524c"/><path d="M9 31Q20 27 30 40Q41 26 52 31Q50 46 30 50Q13 45 9 31Z" fill="#fff0d7"/><path d="M16 30Q20 34 24 30M36 30Q40 34 44 30" fill="none" stroke="#643f39" stroke-width="2.5"/><path d="M26 40Q30 37 34 40L30 44Z" fill="#533b37"/></svg><small>LEXIO FIELD NOTES　 /　02</small><h3>选择练习场景</h3><p>按场景开口练习，或回到自己的复习夹。</p><div id="phraseCategories"></div></div>
+            <div class="catalog phrase-catalog" id="phraseCatalog"><svg class="pocket-art" aria-hidden="true" viewBox="0 0 60 56"><path d="M8 31L7 8L24 16Q31 13 39 17L52 8L52 31Q54 46 30 50Q9 45 8 31Z" fill="#d98557"/><path d="M11 14L12 24L19 19ZM47 15L41 20L48 24Z" fill="#98524c"/><path d="M9 31Q20 27 30 40Q41 26 52 31Q50 46 30 50Q13 45 9 31Z" fill="#fff0d7"/><path d="M16 30Q20 34 24 30M36 30Q40 34 44 30" fill="none" stroke="#643f39" stroke-width="2.5"/><path d="M26 40Q30 37 34 40L30 44Z" fill="#533b37"/></svg><small>LEXIO FIELD NOTES　 /　02</small><h3>选择练习场景</h3><p>按场景开口练习，或回到自己的复习夹。</p><div class="voice-lab"><div><strong>所选音色 · 有声练习</strong><small>只列出可以直接听的原句</small></div><button type="button" id="enterVoiced">进入练听 ›</button></div><div id="phraseCategories"></div></div>
             <div class="list-crumb"><button data-up="dailyPhrasesMode">‹ 口语目录</button><b id="phraseCrumb"></b></div>
             <div class="phrase-top"><div><h3>日常口语场景句</h3><p>生活、出行、工作、医疗等常用表达；医疗句仅供语言练习。带喇叭的句子可听所选配音。</p></div><label class="search-wrap phrase-search-wrap"><span class="visually-hidden">搜索口语句子</span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8" stroke="currentColor" stroke-width="1.8"/><path d="m16 16 4.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><input class="search-input" type="search" id="phraseSearch" placeholder="搜索英文、中文或场景" autocomplete="off"></label></div>
             <label class="recorded-filter"><input id="recordedOnly" type="checkbox"> 只看已配音</label>
@@ -1600,7 +1618,7 @@
                   <p class="study-example" id="studyExample">先试着回忆，再揭晓释义。能主动想起，记忆才会更牢。</p>
                   <p class="study-example-translation" id="studyExampleTranslation" hidden></p>
                   <p class="study-mnemonic" id="studyMnemonic" hidden></p>
-                  <div class="back-actions"><button class="back-speak" id="exampleSpeak" type="button" aria-label="使用美式发音播放例句">🔊 朗读例句</button> </div>
+                  <div class="back-actions"><button class="back-speak" id="exampleSpeak" type="button" aria-label="使用美式发音播放例句">🔊 朗读例句</button><button class="back-speak" id="tryVoicedCard" type="button" hidden>去练有录音的例句 ›</button></div>
                 </div>
               </div>
             </article>
@@ -2521,6 +2539,7 @@
           exSpeakBtn.title = exampleIsPhrase ? '这是词典短语，不是完整句子：请用上方单词发音。' : exSpeakBtn.disabled ? '这句暂无所选音色的录音' : '使用所选音色朗读整句';
           exSpeakBtn.textContent = exSpeakBtn.disabled ? (exampleIsPhrase ? '词典短语' : '本句暂无录音') : '🔊 朗读例句';
           exSpeakBtn.dataset.speaking = '0';
+          $('#tryVoicedCard').hidden=!exSpeakBtn.disabled && !exSpeakBtn.hidden;
         }
         updateProgressUI();
         $('#studyDate').textContent = `今日学习 · ${new Intl.DateTimeFormat('zh-CN',{month:'long',day:'numeric'}).format(new Date())}`;
@@ -2741,7 +2760,125 @@
         "Read one paragraph at a time so your brain can absorb the new words.": "card-11",
         "You can accomplish your weekly word goal by studying fifteen minutes a day.": "card-12",
         "Acknowledge your mistakes first, and then correct them with targeted review.": "card-13",
-        "It takes about two weeks to adapt to a new study schedule.": "card-14"
+        "It takes about two weeks to adapt to a new study schedule.": "card-14",
+        "I really appreciate your help.": "s-61eebcc4f149d257",
+        "Excuse me, how do I get to the nearest subway station?": "s-e6855285c174f56d",
+        "Let me make sure I understood you correctly.": "s-41f12d9e73831d6e",
+        "Thanks for inviting me, but I can't make it tonight.": "s-e40c20cb58450a17",
+        "It's nice to meet you. I'm visiting from China.": "s-a89d22611821be4f",
+        "What time do you close today?": "s-8d413edff6a2189b",
+        "It was great talking with you. Have a good one!": "s-ee5ec6830267c6d6",
+        "Finding that little book was pure serendipity.": "s-ad6bc4bb47060387",
+        "Never abandon a goal just because the path is difficult.": "s-e41ebecf6274d1d0",
+        "Small daily habits help students achieve lasting progress.": "s-9f9641d531114fbc",
+        "I'd like the grilled chicken, please.": "s-95a7ebac84a26258",
+        "What would you recommend for someone who's here for the first time?": "s-0602c5e6559ea5da",
+        "Could you make it without onions?": "s-4c8c082d61460318",
+        "I have a peanut allergy. Does this dish contain peanuts?": "s-022adef34c2968ab",
+        "Can I get this to go?": "s-c05ff8beeffd771b",
+        "Could we have some more water, please?": "s-773ed0a8a937424b",
+        "Could we have the check, please?": "s-685f080ea0007777",
+        "Could we split the bill?": "s-00ea3529f6942511",
+        "I ordered a coffee, but I haven't received it yet.": "s-e1ed9b7a9c994997",
+        "A resilient learner treats mistakes as useful feedback.": "s-808bfc3491559a7a",
+        "A sustainable study routine is better than a short burst of effort.": "s-251de9171638659e",
+        "She kept meticulous notes while preparing for the exam.": "s-33c6528e65f5586b",
+        "Do you have this in a smaller size?": "s-47e830190e3e9880",
+        "Where can I try this on?": "s-20b7714c4e6e240f",
+        "Does this come in black?": "s-c13d375aa79ec1f9",
+        "I'm just looking, thank you.": "s-696f99971bb85781",
+        "Can I pay by card?": "s-73a8c75d9fc0608c",
+        "Could I get a receipt, please?": "s-b9462adb598fd238",
+        "I'd like to return this. I still have the receipt.": "s-76089f8f59599eb5",
+        "Is this on sale?": "s-3247e60ab592b24f",
+        "Could I have a bag, please?": "s-e741e657b7e3d4cc",
+        "Genuine curiosity makes new words easier to remember.": "s-166eae95100b0cf6",
+        "We perceive a word more clearly when we meet it in context.": "s-f8b504158869c57e",
+        "The report offers fresh insight into how students learn.": "s-cdacc9472d5559a3",
+        "About how much will the ride cost?": "s-48db8a5ab190125f",
+        "Does this bus go to the city center?": "s-61ebb501204f20f0",
+        "Where should I transfer for the blue line?": "s-b2c9a48adbb1f134",
+        "I'd like a one-way ticket to Richmond, please.": "s-e7a782613c71232b",
+        "Could you let me know when we get to my stop?": "s-a84d55c18a746383",
+        "Is it within walking distance?": "s-293e1c76091c6f5c",
+        "Is the train running on time?": "s-79418272797280e4",
+        "Which platform does the next train leave from?": "s-aa1a2447fdc4d3d0",
+        "Where can I park nearby?": "s-25f364cb7372199f",
+        "A clear plan is an efficient way to prepare for a test.": "s-492c8474ad167f19",
+        "Consistent practice can make a significant difference.": "s-9c905d4a5a92e597",
+        "Reviewing difficult words is crucial to long-term progress.": "s-7ec73a482fda1969",
+        "What time is check-in?": "s-d94815a082b655ad",
+        "Would it be possible to check out an hour later?": "s-1e59a22f6e3034cb",
+        "The air conditioner in my room isn't working.": "s-d0c812a12e505dbf",
+        "Could I get a couple of extra towels?": "s-fe434fccdf756bc3",
+        "Is breakfast included in the room rate?": "s-240bd461b8e9ee3c",
+        "Could you tell me the Wi-Fi password?": "s-1677c4de349ce084",
+        "Could you store my bags until this afternoon?": "s-f6b6d642905b5d27",
+        "Do you have a quieter room available?": "s-2de0a612bc09e0bb",
+        "Could you call a taxi for me?": "s-0b8bbccc6e941f6f",
+        "If you persist with a steady routine, your confidence will grow.": "s-41abe0685dca6227",
+        "Your learning strategy can evolve as your goals change.": "s-1239f3b5b4c99fb4",
+        "With regular review, progress becomes an almost inevitable result.": "s-9e30b9be3553685b",
+        "Could you check this bag through to my final destination?": "s-cbe92c565b16d849",
+        "Where is gate B twelve?": "s-d9279f19b4c7952f",
+        "How long is the flight delay expected to be?": "s-e3a23e76115c4634",
+        "I'm here for a business meeting with our local team.": "s-aee9cafb388a841c",
+        "Does 10 a.m. still work for everyone?": "s-bf41594e6881edef",
+        "This is my colleague, Alex, who works with me on the project.": "s-6e3901179fba81ba",
+        "Could you email me the presentation after the meeting?": "s-9957c4f53747dd08",
+        "Is there an earlier flight I could switch to?": "s-b5acea071e286dcc",
+        "I'm traveling for work and will be here for four days.": "s-0310ffed1fc785d4",
+        "Each candidate was given thirty minutes to complete the task.": "s-03330ab0fff55c56",
+        "Students must interpret the evidence before choosing an answer.": "s-f41f0d8c8c423152",
+        "The outcome depends on how consistently you practise.": "s-26d337e80f55c27d",
+        "I'd like to make an appointment with a doctor.": "s-19d3459978935313",
+        "I've had a sore throat and a fever since yesterday.": "s-6e2d3a6b3fca406b",
+        "How often should I take this medicine?": "s-c197d05216a41c9c",
+        "I'm allergic to penicillin.": "s-c72438acbacf0171",
+        "Could this medicine make me feel drowsy?": "s-ef3d0dd5630375e0",
+        "I feel dizzy and a little short of breath.": "s-cf2fc260bdb371bf",
+        "Do you accept my health insurance?": "s-5e60d3b215cc83f8",
+        "When will the test results be ready?": "s-5faf0a504f7cecf2",
+        "Should I take this with food or on an empty stomach?": "s-08929af5fc30b3c0",
+        "It was a brilliant solution to a surprisingly simple problem.": "s-0ada36f7e290fa2b",
+        "Every review is an opportunity to strengthen a memory.": "s-e576b819d172827c",
+        "Good sleep improves our capacity to focus and learn.": "s-dc1e24301d8ed438",
+        "From my perspective, we should focus on the main issue first.": "s-da4c09565648ab8b",
+        "Could you clarify what you mean by the deadline?": "s-2ebf255bb408a0bb",
+        "The project is on schedule, and we've finished the first stage.": "s-fd2c428bffdabad4",
+        "One option would be to test the idea with a small group first.": "s-877b22b93367f803",
+        "Could you give me a moment to check the numbers?": "s-894490614e61de31",
+        "I'll send a summary and follow up tomorrow.": "s-b00247732c37b936",
+        "That sounds good to me. Let's move forward with it.": "s-24b383891a4ff62e",
+        "I see your point, but I have a different concern.": "s-36560128298fc7ed",
+        "Thanks, everyone. I'll share the action items shortly.": "s-4ddd10d0ecc26edf",
+        "Examples can enhance your understanding of a new word.": "s-34d0d4e65a26eef0",
+        "The final paragraph conveys the author’s main message.": "s-e10d03bb011150d4",
+        "Try to allocate fifteen minutes a day for vocabulary review.": "s-42152db615fe6416",
+        "May I ask who's calling?": "s-8763691c7b23f42f",
+        "Could you hold for a moment, please?": "s-6acc648f8d79bb6f",
+        "Could you ask him to call me back when he's free?": "s-849f87756bacb10c",
+        "Could we reschedule our appointment for Friday?": "s-1b02d5de3da1f995",
+        "I'd like to confirm my appointment for tomorrow morning.": "s-e24726b23f75d71d",
+        "I'm having trouble hearing you. Could you speak up a little?": "s-27540948bef85ff6",
+        "Could you text me the address?": "s-c10e5e477abfbe18",
+        "I'm running about ten minutes late. I'm sorry.": "s-d8aeac602e294c2d",
+        "Thanks for your time. Talk to you soon.": "s-bc731f8fea435dbf",
+        "Who would be the best person to speak with?": "s-598fe3f9fe1e96bc",
+        "I got your contact details from a colleague.": "s-aab1af08c479d8b7",
+        "What does your team focus on?": "s-031a442100bf439b",
+        "Please call an ambulance. Someone is injured.": "s-000261f34f350057",
+        "Where is the nearest police station?": "s-179c204e4845b519",
+        "I've lost my passport. Where should I report it?": "s-fb64d28d1373a723",
+        "I don't speak English well. Could you find someone who speaks Chinese?": "s-e249ff6cf6b052b2",
+        "I'm at the main entrance on Granby Street.": "s-8229eb4febdde346",
+        "I need medical help right away.": "s-82af2f1e5cfe0e9e",
+        "Could you help me contact my country's embassy?": "s-a0e932f761ab5d1a",
+        "Where is the nearest emergency exit?": "s-03642c92eeb04a9a",
+        "Could you write that down for me?": "s-08135d529f031b08",
+        "May I have your business card?": "s-35e42879623b1f91",
+        "Let me introduce you to our sales manager.": "s-67e51461a6307e95",
+        "I look forward to working with you.": "s-4244d2c7e3a79ead"
 };
       function recordingFor(text) {
         const key=String(text||'').trim();
@@ -2923,6 +3060,7 @@
       renderPhraseCategories();
       document.addEventListener('click',e=>{if(e.target.closest('a[data-tab="library"],.menu-card[href="#library"]:not([data-open-daily-phrases])'))showCatalog('words');});
       $$('[data-open-daily-phrases]').forEach(link=>link.addEventListener('click',()=>showCatalog('phrases')));
+      $('#enterVoiced').onclick=()=>{$('#recordedOnly').checked=true;openPhraseList('全部');};
       $('#recordedOnly').onchange=()=>{phraseVisibleLimit=50;renderDailyPhrases();};
       $('#dailyPhraseGrid').addEventListener('click',event=>{
         const mark=event.target.closest('[data-mark]');
@@ -3217,9 +3355,9 @@
         const pool = [];
         for (let i = 0; i < bank.length; i++) {
           const item = bank[i];
-          if (item && item.example && /[A-Za-z]/.test(item.example)) pool.push(i);
+          if (item && recordingFor(item.example)) pool.push(i);
         }
-        if (!pool.length) { toastMessage('词库还在准备中，稍后再试一次。'); return; }
+        if (!pool.length) { toastMessage('当前词库没有匹配录音，可到日常口语的「有声练习」试听。'); return; }
         const pick = pool[Math.floor(Math.random() * pool.length)];
         setStudyIndex(pick);
         selectShowcaseTab('plan');
@@ -3229,6 +3367,7 @@
         };
         setTimeout(flipToBack, 260);
       }
+      $('#tryVoicedCard').onclick=openRandomExample;
       function openFriendBattle() {
         selectShowcaseTab('battle');
         if (window.__lexioShow) window.__lexioShow('study', 'study');
