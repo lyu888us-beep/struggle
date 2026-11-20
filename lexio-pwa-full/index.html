@@ -202,6 +202,29 @@
     .root-row span { display: block; margin-top: 3px; color: #88948c; font-size: 9px; }
     .root-row small { display: block; margin-top: 11px; color: #52645a; font-size: 9px; line-height: 1.5; }
     .library-panel { padding: 22px; border: 1px solid rgba(255,255,255,.88); border-radius: 23px; background: rgba(255,255,255,.79); box-shadow: 0 12px 40px rgba(41,72,46,.05); }
+    .library-mode-tabs { display: flex; gap: 7px; flex: 0 0 auto; margin-bottom: 12px; padding: 4px; border-radius: 13px; background: #edf2e9; }
+    .library-mode-tab { flex: 1; min-height: 35px; border: 0; border-radius: 10px; color: #718074; background: transparent; font-size: 11px; font-weight: 760; cursor: pointer; }
+    .library-mode-tab[aria-selected="true"] { color: #fff; background: var(--forest); box-shadow: 0 3px 10px rgba(24,63,48,.16); }
+    .library-mode-panel { display: none; flex: 1 1 auto; flex-direction: column; min-height: 0; overflow: hidden; }
+    .library-mode-panel.is-active { display: flex; }
+    .phrase-top { display: flex; flex: 0 0 auto; align-items: center; justify-content: space-between; gap: 12px; margin: 0 0 12px; }
+    .phrase-top h3 { margin: 0; color: var(--ink); font-size: 15px; }
+    .phrase-top p { margin: 3px 0 0; color: #849087; font-size: 10px; }
+    .phrase-search-wrap { flex: 0 1 280px; }
+    .phrase-chips { display: flex; flex: 0 0 auto; gap: 7px; overflow-x: auto; padding: 2px 1px 9px; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+    .phrase-chips::-webkit-scrollbar { display: none; }
+    .phrase-chip { flex: 0 0 auto; min-height: 30px; padding: 0 11px; border: 1px solid #e4ebe1; border-radius: 999px; color: #718074; background: #fff; font-size: 10px; font-weight: 700; cursor: pointer; }
+    .phrase-chip[aria-pressed="true"] { color: #fff; background: var(--forest); border-color: var(--forest); }
+    .phrase-count { flex: 0 0 auto; margin: 0 0 7px; color: #8a958d; font-size: 9px; }
+    .daily-phrase-grid { display: grid; flex: 1 1 auto; min-height: 0; grid-template-columns: 1fr; gap: 8px; overflow-y: auto; align-content: start; padding: 1px 2px 12px; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }
+    .phrase-item { display: grid; grid-template-columns: minmax(0,1fr) 38px; align-items: center; gap: 10px; padding: 12px 13px; border: 1px solid #e7ece5; border-radius: 14px; background: #fff; }
+    .phrase-item-main { min-width: 0; }
+    .phrase-item-meta { display: flex; align-items: center; gap: 6px; margin-bottom: 5px; color: #819087; font-size: 9px; }
+    .phrase-item-meta b { padding: 3px 7px; border-radius: 999px; color: #48634f; background: #edf4e5; font-weight: 730; }
+    .phrase-en { margin: 0; color: var(--ink); font-size: 13px; font-weight: 670; line-height: 1.5; }
+    .phrase-zh { margin: 3px 0 0; color: #748076; font-size: 11px; line-height: 1.5; }
+    .phrase-speak { width: 36px; height: 36px; border: 0; border-radius: 12px; color: var(--forest); background: #edf4e5; font-size: 16px; cursor: pointer; }
+    .phrase-empty { grid-column: 1 / -1; padding: 22px; color: #839087; text-align: center; font-size: 11px; }
     .library-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 17px; }
     .library-top-left h3 { margin: 0; color: var(--ink); font-size: 16px; letter-spacing: -.03em; }
     .library-top-left p { margin: 2px 0 0; color: #859087; font-size: 10px; }
@@ -528,6 +551,8 @@
       .library-panel { padding: 14px; border-radius: 17px; }
       .library-top { align-items: flex-start; flex-direction: column; gap: 12px; }
       .library-actions { width: 100%; }
+      .phrase-top { align-items: stretch; flex-direction: column; gap: 8px; }
+      .phrase-search-wrap { flex: 0 0 auto; }
       .search-wrap { flex: 1; }
       .search-input { width: 100%; }
       .import-button { padding-inline: 9px; white-space: nowrap; font-size: 9px; }
@@ -649,19 +674,23 @@
       position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 40;
       margin: 0; padding: 54px 0 0; overflow: hidden;
     }
-    .study-shell { display: flex; flex-direction: column; height: 100%; min-height: 0; padding-top: 12px; }
+    main > section[data-app-view="study"].is-active > .container,
+    main > section[data-app-view="library"].is-active > .container { height: 100%; min-height: 0; }
+    .study-shell { display: flex; box-sizing: border-box; flex-direction: column; height: 100%; min-height: 0; padding: 12px 0 calc(12px + env(safe-area-inset-bottom)); }
     .study-shell .demo-tabs { flex: 0 0 auto; margin: 0 0 10px; }
     .study-panels { position: relative; flex: 1 1 auto; min-height: 0; }
     .study-panel { position: absolute; inset: 0; display: none; overflow: hidden; }
     .study-panel.is-active { display: block; }
     .study-panel[data-study-panel="plan"] .study-app {
-      height: 100%; width: 100%; max-width: 600px; margin: 0 auto;
-      overflow-y: auto; -webkit-overflow-scrolling: touch;
+      box-sizing: border-box; height: 100%; width: 100%; max-width: 600px; margin: 0 auto;
+      overflow-y: auto; overscroll-behavior: contain; scroll-padding-bottom: calc(18px + env(safe-area-inset-bottom));
+      padding-bottom: calc(18px + env(safe-area-inset-bottom)); border: 1px solid rgba(255,255,255,.75); border-radius: 24px;
+      -webkit-overflow-scrolling: touch;
     }
     .study-scroll {
       height: 100%; box-sizing: border-box; overflow-y: auto; -webkit-overflow-scrolling: touch;
       background: #f8faf6; color: var(--ink); border: 1px solid rgba(255,255,255,.44);
-      border-radius: 24px; padding: 18px; box-shadow: 0 28px 80px rgba(0,0,0,.2);
+      border-radius: 24px; padding: 18px 18px calc(18px + env(safe-area-inset-bottom)); box-shadow: 0 28px 80px rgba(0,0,0,.2);
     }
     .panel-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
     .panel-head .eyebrow { color: #7a8a7e; }
@@ -712,8 +741,8 @@
     @keyframes viewFadeOut { from { opacity: 1; } to { opacity: 0; } }
 
     /* ===== v4: library app lock, 3D word-card flip, real-feel battle ===== */
-    .library-shell { display: flex; flex-direction: column; height: 100%; min-height: 0; padding-top: 12px; }
-    .library-shell .library-panel { flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; overflow: hidden; margin: 0; }
+    .library-shell { display: flex; box-sizing: border-box; flex-direction: column; height: 100%; min-height: 0; padding: 12px 0 calc(12px + env(safe-area-inset-bottom)); }
+    .library-shell .library-panel { box-sizing: border-box; flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; overflow: hidden; margin: 0; border-radius: 24px; }
     .library-shell .library-top, .library-shell .filter-row { flex: 0 0 auto; }
     .library-shell .word-grid { flex: 1 1 auto; min-height: 0; overflow-y: auto; -webkit-overflow-scrolling: touch; align-content: start; padding: 2px 2px 10px; }
     .study-word-card { perspective: 1200px; }
@@ -829,6 +858,11 @@
       .battle-stage, .foe-card, .weak-item { box-shadow: 0 6px 18px rgba(26,61,41,.04); }
       .view-topbar { border-color: rgba(220,230,219,.9); }
       .anim-push-in, .anim-pop-in, .anim-fade-in { will-change: transform, opacity; }
+      main.is-animating { contain: layout paint; }
+      .anim-push-in, .anim-pop-in, .anim-fade-in { animation-duration: .2s !important; animation-timing-function: cubic-bezier(.2,.7,.2,1) !important; }
+      .anim-push-out, .anim-pop-out, .anim-fade-out { animation-duration: .16s !important; animation-timing-function: ease-out !important; }
+      .anim-push-in, .anim-pop-in { animation-name: viewFadeUp !important; }
+      .anim-push-out, .anim-pop-out { animation-name: viewFadeOut !important; }
       body[data-app-view="home"] .hero-copy { animation: appHomeEnter .56s cubic-bezier(.22,.61,.36,1) both; }
       body[data-app-view="home"] .menu-card { animation: appTileEnter .48s cubic-bezier(.22,.61,.36,1) both; }
       body[data-app-view="home"] .menu-card:nth-child(1) { animation-delay: .04s; }
@@ -838,6 +872,9 @@
       body[data-app-view="home"] .menu-card:nth-child(5) { animation-delay: .2s; }
       body[data-app-view="home"] .menu-card:nth-child(6) { animation-delay: .24s; }
       body[data-app-view="pricing"] .price-card { animation: appPricingEnter .58s cubic-bezier(.22,.61,.36,1) both; }
+      body[data-app-view="home"] .hero-copy { animation-duration: .24s; }
+      body[data-app-view="home"] .menu-card { animation-duration: .22s; animation-delay: 0s !important; }
+      body[data-app-view="pricing"] .price-card { animation-duration: .28s; }
       @keyframes appHomeEnter { from { opacity: 0; transform: translateY(14px) scale(.99); } to { opacity: 1; transform: translateY(0) scale(1); } }
       @keyframes appTileEnter { from { opacity: 0; transform: translateY(12px) scale(.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
       @keyframes appPricingEnter { from { opacity: 0; transform: translateY(18px) scale(.985); } to { opacity: 1; transform: translateY(0) scale(1); } }
@@ -920,7 +957,7 @@
         <a class="menu-card" href="#library"><span class="m-ico">📚</span><strong>浏览词库</strong><span class="m-desc">高考 / 四六级 / 考研 / 雅思 · 25,024 词</span></a>
         <a class="menu-card" href="#pricing"><span class="m-ico">💎</span><strong>订阅方案</strong><span class="m-desc">价格 · 试用 · 常见问题一站式</span></a>
         <a class="menu-card" href="#method"><span class="m-ico">🧠</span><strong>功能介绍</strong><span class="m-desc">记忆曲线 · 例句来源标注 · 学习效果</span></a>
-        <a class="menu-card" href="#stories"><span class="m-ico">💬</span><strong>学生故事</strong><span class="m-desc">来自备考学生的真实反馈</span></a>
+        <a class="menu-card" href="#library" data-open-daily-phrases><span class="m-ico">🗣️</span><strong>日常口语</strong><span class="m-desc">餐饮 · 出行 · 医疗 · 购物等场景</span></a>
         <a class="menu-card" href="#ops"><span class="m-ico">⚙️</span><strong>服务保障</strong><span class="m-desc">订阅运维 · 数据保护 · 定期备份</span></a>
       </div>
     </section>
@@ -937,9 +974,6 @@
       </div>
     </section>
 
-    <section class="school-strip" data-app-view="home" aria-label="原站展示的学校使用名单">
-      <div class="container"><p>全国 2,000+ 所学校师生的共同选择</p><div class="school-track" aria-label="清华附中、人大附中、复旦附中、杭州外国语、深圳中学、成都七中、南京外国语、华师一附中、上海中学、衡水中学"><span>清华附中</span><span>人大附中</span><span>复旦附中</span><span>杭州外国语</span><span>深圳中学</span><span>成都七中</span><span>南京外国语</span><span>华师一附中</span><span>上海中学</span><span>衡水中学</span><span aria-hidden="true">清华附中</span><span aria-hidden="true">人大附中</span><span aria-hidden="true">复旦附中</span><span aria-hidden="true">杭州外国语</span><span aria-hidden="true">深圳中学</span><span aria-hidden="true">成都七中</span><span aria-hidden="true">南京外国语</span><span aria-hidden="true">华师一附中</span><span aria-hidden="true">上海中学</span><span aria-hidden="true">衡水中学</span></div><small>学校名称沿用原站页面展示内容，正式发布前请核验使用授权。</small></div>
-    </section>
 
     <section class="section features-section" id="method" data-app-view="about">
       <div class="container">
@@ -971,17 +1005,29 @@
     <section class="section library-section" id="library" data-app-view="library">
       <div class="container library-shell">
         <div class="library-panel" data-reveal>
-          <div class="library-top">
-            <div class="library-top-left"><h3>词库内容中心 <span id="bankCountLabel" style="font-size:10px;color:#8b968e;font-weight:550">正在载入…</span></h3><p>搜索单词或释义，点「学习此词」直接跳到学习面板。</p></div>
-            <div class="library-actions">
-              <label class="search-wrap"><span class="visually-hidden">搜索单词或释义</span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8" stroke="currentColor" stroke-width="1.8"/><path d="m16 16 4.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><input class="search-input" type="search" id="wordSearch" placeholder="搜索英文 / 中文" autocomplete="off"></label>
-              <button class="import-button" id="syncWordsBtn" type="button" aria-label="联网同步 GitHub 词库"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 16.6A4.3 4.3 0 0 0 18 8.5 6.3 6.3 0 0 0 6 9.8 3.5 3.5 0 0 0 6.5 17H18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="m12 11 0 8m0 0-3-3m3 3 3-3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>联网同步</button>
+          <div class="library-mode-tabs" role="tablist" aria-label="选择词库类型">
+            <button class="library-mode-tab" id="wordLibraryTab" type="button" role="tab" aria-selected="true" data-library-mode="words">考试单词</button>
+            <button class="library-mode-tab" id="dailyPhrasesTab" type="button" role="tab" aria-selected="false" data-library-mode="phrases">日常口语</button>
+          </div>
+          <div class="library-mode-panel is-active" id="wordBankMode" role="tabpanel" aria-labelledby="wordLibraryTab">
+            <div class="library-top">
+              <div class="library-top-left"><h3>词库内容中心 <span id="bankCountLabel" style="font-size:10px;color:#8b968e;font-weight:550">正在载入…</span></h3><p>搜索单词或释义，点「学习此词」直接跳到学习面板。</p></div>
+              <div class="library-actions">
+                <label class="search-wrap"><span class="visually-hidden">搜索单词或释义</span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8" stroke="currentColor" stroke-width="1.8"/><path d="m16 16 4.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><input class="search-input" type="search" id="wordSearch" placeholder="搜索英文 / 中文" autocomplete="off"></label>
+                <button class="import-button" id="syncWordsBtn" type="button" aria-label="联网同步 GitHub 词库"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 16.6A4.3 4.3 0 0 0 18 8.5 6.3 6.3 0 0 0 6 9.8 3.5 3.5 0 0 0 6.5 17H18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="m12 11 0 8m0 0-3-3m3 3 3-3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>联网同步</button>
+              </div>
             </div>
+            <div class="filter-row" role="tablist" aria-label="按考试类型筛选词库">
+              <button class="filter-chip active" type="button" role="tab" aria-selected="true" data-filter="all">全部词条</button><button class="filter-chip" type="button" role="tab" aria-selected="false" data-filter="高考">高考</button><button class="filter-chip" type="button" role="tab" aria-selected="false" data-filter="CET-4">四级</button><button class="filter-chip" type="button" role="tab" aria-selected="false" data-filter="CET-6">六级</button><button class="filter-chip" type="button" role="tab" aria-selected="false" data-filter="考研">考研</button><button class="filter-chip" type="button" role="tab" aria-selected="false" data-filter="雅思">雅思</button>
+            </div>
+            <div class="word-grid" id="wordGrid" aria-live="polite"><div class="empty-state">正在准备词库…</div></div>
           </div>
-          <div class="filter-row" role="tablist" aria-label="按考试类型筛选词库">
-            <button class="filter-chip active" type="button" role="tab" aria-selected="true" data-filter="all">全部词条</button><button class="filter-chip" type="button" role="tab" aria-selected="false" data-filter="高考">高考</button><button class="filter-chip" type="button" role="tab" aria-selected="false" data-filter="CET-4">四级</button><button class="filter-chip" type="button" role="tab" aria-selected="false" data-filter="CET-6">六级</button><button class="filter-chip" type="button" role="tab" aria-selected="false" data-filter="考研">考研</button><button class="filter-chip" type="button" role="tab" aria-selected="false" data-filter="雅思">雅思</button>
+          <div class="library-mode-panel" id="dailyPhrasesMode" role="tabpanel" aria-labelledby="dailyPhrasesTab" hidden>
+            <div class="phrase-top"><div><h3>日常口语场景句</h3><p>生活、出行、工作、医疗等常用表达；医疗句仅供语言练习。点击喇叭朗读。</p></div><label class="search-wrap phrase-search-wrap"><span class="visually-hidden">搜索口语句子</span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8" stroke="currentColor" stroke-width="1.8"/><path d="m16 16 4.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><input class="search-input" type="search" id="phraseSearch" placeholder="搜索英文、中文或场景" autocomplete="off"></label></div>
+            <div class="phrase-chips" id="phraseCategories" role="tablist" aria-label="按日常场景筛选"></div>
+            <p class="phrase-count" id="phraseCount" aria-live="polite">正在载入口语句库…</p>
+            <div class="daily-phrase-grid" id="dailyPhraseGrid" aria-live="polite"><div class="phrase-empty">正在准备日常口语句库…</div></div>
           </div>
-          <div class="word-grid" id="wordGrid" aria-live="polite"><div class="empty-state">正在准备词库…</div></div>
         </div>
       </div>
     </section>
@@ -1125,7 +1171,7 @@
           <div class="trial-info-card" data-reveal><div><div class="eyebrow"><span class="dot"></span> 7-DAY FULL ACCESS</div><h3>给自己 7 天，感受真正高效的背词节奏。</h3><p>试用期间开放 Pro 学习体验。你可以自由探索词库、记忆卡片、英美音与学习报告。</p><div class="trial-timeline-mini"><div class="timeline-mini-row"><span>1</span>设置目标，开始第一组单词</div><div class="timeline-mini-row"><span>5</span>到期前收到清晰提醒</div><div class="timeline-mini-row"><span>7</span>按已授权方式续订，可提前取消</div></div></div><p class="trial-info-foot">正式上线时，将在开始试用前清楚展示付款方式、续费日期、<span id="trialInfoPrice">选定方案的价格</span>与取消入口。</p></div>
           <div class="price-card" data-reveal><span class="popular-pill">✦ 学生 Pro · 全部学习功能</span><h3>Lexio Pro</h3><p class="price-desc">适合希望稳定提升词汇量的学生</p><div class="plan-switch" role="group" aria-label="选择订阅周期"><button class="plan-option active" type="button" data-plan-select="monthly" aria-pressed="true">连续包月</button><button class="plan-option" type="button" data-plan-select="annual" aria-pressed="false">连续包年 <b id="annualBadge">省 40%</b></button></div><div class="price"><strong id="priceAmount">¥15</strong><span id="pricePeriod">/ 月</span><span class="price-original" id="priceOriginal" hidden>¥180</span></div><p class="after-trial" id="priceTerms">前 7 天免费 · 之后 ¥15 / 月自动续费</p><p class="student-promo" id="studentPromo" hidden>🎓 凭学生证可享优惠（正式版需完成学生身份验证）</p><div class="price-divider"></div><ul class="plan-list"><li><span>✓</span>五大考试词库与自定义词单</li><li><span>✓</span>间隔复习、错词强化与每日学习计划</li><li><span>✓</span>例句来源标注、词族拓展与英美音发音</li><li><span>✓</span>学习统计、进度同步与离线 PWA</li><li><span>✓</span>随时管理或取消订阅</li></ul><button class="btn btn-primary" type="button" data-open-trial>免费体验 7 天 <span class="btn-arrow">↗</span></button><button class="btn btn-outline secondary-subscribe" type="button" id="directSubscribe">选择此方案并继续</button><p class="terms-small">正式版在试用前将明确显示续费日期、价格和取消入口。预览不会收款；价格由 <code>pricing.config.json</code> 提供，最终扣款金额必须由服务端确认。</p></div>
         </div>
-        <div class="team-row" data-reveal><div><h3>为老师、班级或学校采购？</h3><p>班级学习报告、教师管理与校本词库可作为后续团队版功能接入。</p></div><a href="https://01a168c5-657e-7ae5-9c33-ae71a4937a8b.arena.site/?embed=true#cta" target="_blank" rel="noopener noreferrer">联系团队版 <span aria-hidden="true">→</span></a></div>
+        <div class="team-row" data-reveal><div><h3>为老师、班级或学校采购？</h3><p>班级学习报告、教师管理与校本词库可作为后续团队版功能接入。</p></div><a href="#faq">查看团队版说明 <span aria-hidden="true">→</span></a></div>
       </div>
     </section>
 
@@ -1135,7 +1181,7 @@
         <div class="faq-list" data-reveal>
           <details><summary>原站 25,000+ 单词已经迁移进来了吗？</summary><p>已核验原站公开 HTML 的内嵌词库数组，并打包为 25,024 条学习记录（五套考试列表共 25,000 条，另含 100 条精讲词；按原站逻辑替换 76 个重合条目并补入 24 个精讲新词）。首次联网打开时会自动写入本机 IndexedDB；GitHub 更新词库后，可通过「联网同步」窗口获取最新 JSON。相同拼写在不同考试列表中保留各自分类。</p></details>
           <details><summary>7 天后会怎样收费？可以取消吗？</summary><p>正式产品先免费体验 7 天，之后按所选连续包月或连续包年方案自动续费。页面价格由运维配置文件提供，实际扣款金额必须由服务端确认；付款前会明确显示续费日期、金额和取消方式。当前预览只在本设备演示试用计时，不会发起真实扣款。</p></details>
-          <details><summary>可以使用微信支付、支付宝，并把收入结算给我吗？</summary><p>页面已设计微信支付 / 支付宝选择入口，但尚未连接商户。正式接入时需使用你名下的商户账号，服务端创建订单并验签支付回调，收款再按商户平台规则结算到你的账户。支付密钥只放在服务端密钥管理中。</p></details>
+          <details><summary>支持哪些支付方式？</summary><p>支持多种方式支付，具体方式以正式结账页面为准。当前演示尚未接入真实收银服务，不会产生扣款。</p></details>
           <details><summary>它可以离线使用、添加到主屏幕吗？</summary><p>已配置 PWA manifest 和 Service Worker 应用外壳缓存；在 HTTPS 部署并由支持的浏览器访问后，可添加到主屏幕并以独立 App 窗口运行。词库与学习进度保存在本机 IndexedDB；首次联网完成缓存后即可离线使用。</p></details>
           <details><summary>原站的发音、例句和学习进度也能保留吗？</summary><p>已迁移英 / 美音标、词性、中文释义与考试分类。精讲内容保留原有资料；另有匹配到词典的真实句例/记忆法，以及明确标注的释义提示和通用复习提示。词库数据本身未内嵌音频文件；例句朗读直接调用设备 en-US 系统语音。公开 HTML 未包含个人学习进度，迁移进度仍需原站账号数据导出。</p></details>
           <details><summary>自动运维目前包含什么？</summary><p>当前交付包含自动化运营流程设计与前端体验原型。实际定时提醒、扣款、续费失败重试、Webhook 权限同步、服务监控和数据库备份，需部署后端任务、数据库、邮件/通知服务和支付服务商才能真正运行。</p></details>
@@ -1152,7 +1198,7 @@
     <div class="container">
       <div class="footer-main">
         <div><a class="brand" href="#top" aria-label="Lexio 乐词回到首页"><span class="brand-mark"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 18V6.5c0-.8.7-1.5 1.5-1.5H18M6 18h11.5c.8 0 1.5-.7 1.5-1.5V8" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"/><path d="m10 13 2 2 5-6" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="brand-word">Lexio<small>乐词 · LEARN IN FLOW</small></span></a><p class="footer-blurb">为每一次考试，也为每一个更好的自己。用科学节奏，把单词稳稳记住。</p></div>
-        <div class="footer-links"><div class="footer-col"><h3>探索 Lexio</h3><a href="#method">学习方法</a><a href="#library">目标词库</a><a href="#study">学习体验</a></div><div class="footer-col"><h3>了解更多</h3><a href="#pricing">订阅计划</a><a href="#faq">常见问题</a><a href="#ops">自动化运维</a></div><div class="footer-col"><h3>支持</h3><a href="#faq">联系与支持</a><a href="#faq">数据迁移</a><a href="#pricing">订阅与取消</a><a href="https://01a168c5-657e-7ae5-9c33-ae71a4937a8b.arena.site/" target="_blank" rel="noopener noreferrer">原站入口 ↗</a></div></div>
+        <div class="footer-links"><div class="footer-col"><h3>探索 Lexio</h3><a href="#method">学习方法</a><a href="#library">目标词库</a><a href="#study">学习体验</a></div><div class="footer-col"><h3>了解更多</h3><a href="#pricing">订阅计划</a><a href="#faq">常见问题</a><a href="#ops">自动化运维</a></div><div class="footer-col"><h3>支持</h3><a href="#faq">联系与支持</a><a href="#faq">数据迁移</a><a href="#pricing">订阅与取消</a></div></div>
       </div>
       <div class="footer-bottom"><span>© <span id="year"></span> Lexio 乐词 · PWA 概念交付</span><span class="legal-links"><a href="#faq">隐私说明</a><a href="#faq">服务条款</a><a href="#top">回到顶部 ↑</a></span></div>
     </div>
@@ -1165,7 +1211,7 @@
     <div class="dialog-content"><button class="dialog-close" type="button" data-close-dialog aria-label="关闭">×</button><span class="dialog-badge">WORD BANK · ONLINE SOURCE</span><h2 id="wordSourceTitle">从 GitHub 同步最新词库。</h2><p class="dialog-copy">粘贴 GitHub 文件的 Raw 直链（JSON 或 CSV），或你自己的同源 `/api/wordbank` 地址。同步成功后会替换此设备的词库，学习进度不变；词库仍会保存在本机，离线可用。</p><label for="wordSourceUrl" style="display:block;margin-top:16px;color:#526159;font-size:10px;font-weight:750">GitHub Raw / JSON 地址</label><input id="wordSourceUrl" class="source-url-input" type="url" inputmode="url" placeholder="https://raw.githubusercontent.com/用户名/仓库/分支/词库.json" autocomplete="url"><p class="dialog-notice">请使用 GitHub 的 Raw 文件链接，不要粘贴普通仓库页面。跨域直链需允许 CORS；链接只保存在此设备。手动导入已移除，词库由 App 自动载入或通过此窗口联网同步。</p><button class="btn btn-primary" type="button" id="saveWordSource">保存并开始同步 <span class="btn-arrow">↗</span></button><button class="dialog-secondary" type="button" id="clearWordSource">清除此设备地址</button><p class="pay-status" id="wordSourceStatus" role="status" aria-live="polite"></p></div>
   </dialog>
   <dialog class="dialog" id="paymentDialog" aria-labelledby="paymentTitle">
-    <div class="dialog-content"><button class="dialog-close" type="button" data-close-dialog aria-label="关闭">×</button><span class="dialog-badge">LEXIO PRO · 安全结账</span><h2 id="paymentTitle">继续你的学习计划。</h2><p class="dialog-copy">选择支付方式。正式结账将在支付服务商托管页面完成；付款信息不会保存在此网页中。</p><div class="provider-grid" role="group" aria-label="选择支付方式"><button class="provider-choice active" type="button" data-provider-select="wechat" aria-pressed="true"><span class="provider-icon">微</span>微信支付</button><button class="provider-choice" type="button" data-provider-select="alipay" aria-pressed="false"><span class="provider-icon">支</span>支付宝</button></div><div class="payment-box"><div class="payment-row"><span id="checkoutPlanLabel">Lexio Pro · 连续包月</span><strong id="checkoutAmount">¥15 / 月</strong></div><div class="payment-row"><span>试用政策</span><strong id="checkoutTrial">先体验 7 天</strong></div><div class="payment-row"><span>优惠</span><strong id="checkoutDiscount">按运维活动配置</strong></div><div class="payment-row"><span>取消方式</span><strong>账户内随时取消</strong></div></div><p class="dialog-notice">当前演示尚未连接微信支付 / 支付宝商户，因此不会产生真实扣款。正式版由服务端按方案 ID 创建订单、校验支付回调并结算到你的商户账户；密钥只保存在服务端。</p><button class="btn btn-primary" type="button" id="checkoutBtn">连接安全收银台 <span class="btn-arrow">↗</span></button><p class="pay-status" id="payStatus" role="status" aria-live="polite"></p><button class="dialog-secondary" type="button" data-close-dialog>返回</button></div>
+    <div class="dialog-content"><button class="dialog-close" type="button" data-close-dialog aria-label="关闭">×</button><span class="dialog-badge">LEXIO PRO · 安全结账</span><h2 id="paymentTitle">继续你的学习计划。</h2><p class="dialog-copy">支持多种方式支付，具体可用选项以正式结账页面为准。当前演示不会收集付款信息。</p><div class="payment-box"><div class="payment-row"><span id="checkoutPlanLabel">Lexio Pro · 连续包月</span><strong id="checkoutAmount">¥15 / 月</strong></div><div class="payment-row"><span>试用政策</span><strong id="checkoutTrial">先体验 7 天</strong></div><div class="payment-row"><span>优惠</span><strong id="checkoutDiscount">按运维活动配置</strong></div><div class="payment-row"><span>取消方式</span><strong>账户内随时取消</strong></div></div><p class="dialog-notice">当前演示尚未接入真实收银服务，因此不会产生扣款。正式上线后由安全的服务端创建订单并校验支付结果。</p><button class="btn btn-primary" type="button" id="checkoutBtn">连接安全收银台 <span class="btn-arrow">↗</span></button><p class="pay-status" id="payStatus" role="status" aria-live="polite"></p><button class="dialog-secondary" type="button" data-close-dialog>返回</button></div>
   </dialog>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
@@ -1208,10 +1254,14 @@
       const DB_META = 'meta';
       const BUNDLED_CONTENT_VERSION = 'example-mnemonic-2026-11-v1';
       let db = null;
+      let bankReady = false;
       let bank = SAMPLE_WORDS.map((w, i) => normalizeWord(w, i));
       let activeFilter = 'all';
       let studyIndex = 0;
       let libraryReturnContext = null;
+      let dailyPhraseBank = [];
+      let dailyPhraseLoad = null;
+      let activePhraseCategory = '全部';
       let activeAccent = 'en-GB';
       let activeAudio = null;
       let activeUtterance = null;
@@ -1219,7 +1269,6 @@
       let toastTimer = null;
       let installPrompt = null;
       let selectedPlanId = 'monthly';
-      let selectedProvider = 'wechat';
       let wordSourceConfig = {sourceUrl:'',format:'auto',expectedCount:25000};
       const pricingConfig = {currency:'CNY',trialDays:7,defaultPlan:'monthly',plans:[{id:'monthly',name:'连续包月',amount:15,period:'月',originalAmount:15,discountPercent:0,tag:'灵活续订',description:'每月自动续费，可随时取消'},{id:'annual',name:'连续包年',amount:108,period:'年',originalAmount:180,discountPercent:40,tag:'省 40%',description:'按年订阅，折合约 ¥9 / 月'}],studentPromotion:{enabled:true,discountPercent:15,label:'学生证可享 85 折',requiresVerification:true}};
       const trialDialog = $('#trialDialog');
@@ -1310,6 +1359,14 @@
         await idbSetMeta({key:'bank', activeStore:targetStore, importedAt:new Date().toISOString(), sourceFile:meta && meta.sourceFile || '示例词库', wordCount:words.length, isDemo:!!(meta && meta.isDemo), contentVersion:meta && meta.contentVersion || null});
         await new Promise((resolve, reject) => { const tx = db.transaction(oldStore,'readwrite'); tx.objectStore(oldStore).clear(); tx.oncomplete = resolve; tx.onerror = () => reject(tx.error); });
       }
+      function restoreStudyPosition() {
+        try {
+          const savedId=localStorage.getItem('lexio.lastStudyWordId');
+          if(!savedId) return;
+          const index=bank.findIndex(word=>word.id===savedId);
+          if(index>=0) studyIndex=index;
+        } catch(_) {}
+      }
       async function mergeBundledStudyContent(meta) {
         const response = await fetch('./data/original-site-wordbank.json', {cache:'no-store'});
         if (!response.ok) throw new Error(`内置词库更新失败（HTTP ${response.status}）。`);
@@ -1377,6 +1434,8 @@
               console.warn('Bundled examples/memory cues could not be merged; keeping the existing bank.', contentUpdateError);
             }
           }
+          bankReady=true;
+          restoreStudyPosition();
           renderBank(meta);
         } catch (error) {
           console.warn('Lexio local word storage unavailable; using browser fallback storage.', error);
@@ -1386,6 +1445,8 @@
             if(Array.isArray(cached) && cached.length){bank=cached.map((item,index)=>normalizeWord(item,index)).filter(Boolean);fallbackMeta={wordCount:bank.length,isDemo:false,sourceFile:'本机词库'};}
           } catch(_) {}
           if(!bank.length) bank=SAMPLE_WORDS.map((w,i)=>normalizeWord(w,i)).filter(Boolean);
+          bankReady=true;
+          restoreStudyPosition();
           renderBank(fallbackMeta);
           $('#storageStatus').textContent = fallbackMeta.isDemo ? '示例词库 · 浏览器临时状态' : `${bank.length.toLocaleString()} 词 · 本地保存`;
         }
@@ -1508,6 +1569,56 @@
           grid.appendChild(more);
         }
       }
+      function renderPhraseCategories() {
+        const root=$('#phraseCategories');
+        if(!root) return;
+        const categories=['全部',...(dailyPhraseBank && dailyPhraseBank.length ? [...new Set(dailyPhraseBank.map(item=>item.category).filter(Boolean))] : [])];
+        root.innerHTML=categories.map(category=>`<button class="phrase-chip" type="button" role="tab" aria-pressed="${category===activePhraseCategory}" data-phrase-category="${escapeHTML(category)}">${escapeHTML(category)}</button>`).join('');
+        root.querySelectorAll('[data-phrase-category]').forEach(button=>button.addEventListener('click',()=>{
+          activePhraseCategory=button.dataset.phraseCategory;
+          renderPhraseCategories();
+          renderDailyPhrases();
+        }));
+      }
+      function renderDailyPhrases() {
+        const grid=$('#dailyPhraseGrid');
+        const count=$('#phraseCount');
+        if(!grid || !count) return;
+        const query=($('#phraseSearch').value||'').trim().toLowerCase();
+        const filtered=dailyPhraseBank.filter(item=>(activePhraseCategory==='全部'||item.category===activePhraseCategory)&&(!query||`${item.en} ${item.zh} ${item.scene} ${item.category}`.toLowerCase().includes(query)));
+        count.textContent=`显示 ${filtered.length} / ${dailyPhraseBank.length} 条场景句`;
+        if(!filtered.length){grid.innerHTML='<div class="phrase-empty">没有找到匹配的表达，试试其他关键词或场景。</div>';return;}
+        grid.innerHTML=filtered.map(item=>`<article class="phrase-item"><div class="phrase-item-main"><div class="phrase-item-meta"><b>${escapeHTML(item.category)}</b><span>${escapeHTML(item.scene)}</span></div><p class="phrase-en">${escapeHTML(item.en)}</p><p class="phrase-zh">${escapeHTML(item.zh)}</p></div><button class="phrase-speak" type="button" aria-label="朗读：${escapeHTML(item.en)}" data-phrase-speak="${escapeHTML(item.id)}">🔊</button></article>`).join('');
+      }
+      async function loadDailyPhrases() {
+        if(dailyPhraseLoad) return dailyPhraseLoad;
+        dailyPhraseLoad=(async()=>{
+          try{
+            const response=await fetch('./data/daily-conversation.json',{cache:'force-cache'});
+            if(!response.ok) throw new Error(`HTTP ${response.status}`);
+            const payload=await response.json();
+            dailyPhraseBank=Array.isArray(payload.phrases)?payload.phrases.filter(item=>item&&item.en&&item.zh):[];
+            activePhraseCategory='全部';
+            renderPhraseCategories();
+            renderDailyPhrases();
+          }catch(error){
+            $('#phraseCount').textContent='日常口语句库暂时无法载入。请先联网打开一次，或稍后重试。';
+            $('#dailyPhraseGrid').innerHTML='<div class="phrase-empty">本地句库载入失败。</div>';
+            dailyPhraseLoad=null;
+            console.warn('Could not load bundled daily conversation phrases.',error);
+          }
+        })();
+        return dailyPhraseLoad;
+      }
+      function setLibraryMode(mode) {
+        const phrases=mode==='phrases';
+        $$('[data-library-mode]').forEach(button=>{const selected=button.dataset.libraryMode===(phrases?'phrases':'words');button.setAttribute('aria-selected',String(selected));});
+        $('#wordBankMode').classList.toggle('is-active',!phrases);
+        $('#wordBankMode').hidden=phrases;
+        $('#dailyPhrasesMode').classList.toggle('is-active',phrases);
+        $('#dailyPhrasesMode').hidden=!phrases;
+        if(phrases) loadDailyPhrases();
+      }
       function parseCSV(text) {
         const rows=[]; let row=[]; let cell=''; let quoted=false;
         for (let i=0;i<text.length;i++) { const c=text[i]; if (quoted) { if(c==='"' && text[i+1]==='"'){cell+='"';i++;} else if(c==='"'){quoted=false;} else cell+=c; } else if(c==='"'){quoted=true;} else if(c===','){row.push(cell);cell='';} else if(c==='\n'){row.push(cell);rows.push(row);row=[];cell='';} else if(c!=='\r'){cell+=c;} }
@@ -1600,6 +1711,7 @@
         studyIndex = ((studyIndex % bank.length) + bank.length) % bank.length;
         const word = bank[studyIndex];
         $('#studyWord').textContent = word.word;
+        try { if(localStorage.getItem('lexio.studyStarted')==='1') localStorage.setItem('lexio.lastStudyWordId', word.id); } catch(_) {}
         $('#studyPhonetic').textContent = `${displayedPhonetic(word) || '音标待补充'}${word.pos ? ' · '+word.pos : ''}`;
         $('#studyCategory').textContent = `${(word.category || 'TODAY’S WORD').toUpperCase()} · WORD`;
         $('#studyPosition').textContent = `${String(studyIndex+1).padStart(2,'0')} / ${String(bank.length).padStart(2,'0')}`;
@@ -1634,7 +1746,15 @@
         $('#expiredBanner').hidden = !expired;
         $('#sessionStatusText').textContent = '全功能版 · 学习中';
       }
-      function setStudyIndex(index) { studyIndex = index; updateStudyCard(); if (window.__lexioShow) { window.__lexioShow('study','study'); } else { document.querySelector('#study').scrollIntoView({behavior:'smooth'}); } }
+      function persistStudyPosition() {
+        try {
+          localStorage.setItem('lexio.studyStarted','1');
+          if(bankReady && bank[studyIndex]) localStorage.setItem('lexio.lastStudyWordId',bank[studyIndex].id);
+        } catch(_) {}
+      }
+      window.__lexioStudyStart = persistStudyPosition;
+      function setStudyIndex(index) { studyIndex = index; persistStudyPosition(); updateStudyCard(); if (window.__lexioShow) { window.__lexioShow('study','study'); } else { document.querySelector('#study').scrollIntoView({behavior:'smooth'}); } }
+      window.__lexioStudy = { current:()=>bank[studyIndex] || null, goTo:setStudyIndex, restore:()=>{restoreStudyPosition();updateStudyCard();} };
       function returnToLibrary() {
         const context = libraryReturnContext;
         if (!context) return;
@@ -1643,9 +1763,11 @@
           else document.querySelector('#library').scrollIntoView({behavior:'smooth'});
           setTimeout(() => {
             const index = bank.findIndex(word => word.id === context.wordId);
+            const grid=$('#wordGrid');
+            if(grid) grid.scrollTop=context.gridScrollTop || 0;
             const button = [...document.querySelectorAll('#wordGrid [data-word-open]')].find(item => Number(item.dataset.wordIndex) === index);
             const tile = button && button.closest('.word-tile');
-            if (tile) window.scrollTo(0, Math.max(0, window.scrollY + tile.getBoundingClientRect().top - context.viewportTop));
+            if (tile && grid) grid.scrollTop=Math.max(0,grid.scrollTop + tile.getBoundingClientRect().top - context.viewportTop);
             libraryReturnContext = null;
             $('#returnLibraryBtn').hidden = true;
           }, 520);
@@ -1791,7 +1913,7 @@
         const status=$('#payStatus');
         status.textContent='正在连接结账服务…';
         try {
-          const response=await fetch('/api/checkout',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({plan:selectedPlanId,provider:selectedProvider})});
+          const response=await fetch('/api/checkout',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({plan:selectedPlanId})});
           const data=await response.json().catch(()=>({}));
           if(response.ok && data.url) { window.location.assign(data.url); return; }
           throw new Error(data.message || '支付接口尚未配置。');
@@ -1802,6 +1924,19 @@
       }
 
       $('#wordSearch').addEventListener('input',()=>renderWordGrid(true));
+      $('#phraseSearch').addEventListener('input',renderDailyPhrases);
+      $$('[data-library-mode]').forEach(button=>button.addEventListener('click',()=>setLibraryMode(button.dataset.libraryMode)));
+      $$('[data-open-daily-phrases]').forEach(link=>link.addEventListener('click',()=>setLibraryMode('phrases')));
+      $('#dailyPhraseGrid').addEventListener('click',event=>{
+        const button=event.target.closest('[data-phrase-speak]');
+        if(!button) return;
+        if(button.dataset.speaking==='1'){stopSpeech();button.dataset.speaking='0';button.textContent='🔊';return;}
+        const phrase=dailyPhraseBank.find(item=>item.id===button.dataset.phraseSpeak);
+        if(!phrase) return;
+        button.dataset.speaking='1';button.textContent='⏸';
+        const reset=()=>{button.dataset.speaking='0';button.textContent='🔊';};
+        speak(phrase.en,'en-US',reset,error=>{reset();toastMessage(error.message||'口语句朗读失败，请检查设备语音设置。');});
+      });
       $$('.filter-chip').forEach(button=>button.addEventListener('click',()=>{
         $$('.filter-chip').forEach(item=>{item.classList.remove('active');item.setAttribute('aria-selected','false');});
         button.classList.add('active');button.setAttribute('aria-selected','true');activeFilter=button.dataset.filter;renderWordGrid(true);
@@ -1814,7 +1949,7 @@
           const index=Number(openButton.dataset.wordIndex);
           if(Number.isFinite(index) && bank[index]){
             const tile=openButton.closest('.word-tile');
-            libraryReturnContext={wordId:bank[index].id,viewportTop:tile ? tile.getBoundingClientRect().top : 0};
+            libraryReturnContext={wordId:bank[index].id,gridScrollTop:$('#wordGrid').scrollTop,viewportTop:tile ? tile.getBoundingClientRect().top : 0};
             $('#returnLibraryBtn').hidden=false;
             setStudyIndex(index);
           }
@@ -1948,6 +2083,8 @@
             if (o === cur) { battle.me += 1; b.classList.add('right'); }
             else {
               b.classList.add('wrong');
+              markWeak(cur.word, true);
+              toastMessage('答错的单词已加入记忆引擎复习。');
               $$('.battle-opt').forEach(x => { if (x.textContent === (cur.meaning || cur.word)) x.classList.add('right'); });
             }
             $('#battleMyScore').textContent = battle.me;
@@ -1996,10 +2133,9 @@
           battleT(() => { battleRound(); }, 1100);
         }, 1300 + Math.random() * 1500);
       });
-      window.__lexioBattle = { start: () => $('#battleStart').click(), nextName: pickFoeName, foe: () => battle.foe, stats: () => ({ questionIndex: battle.i, answered: battle.answered, total: battle.q.length, over: battle.over }) };
+      window.__lexioBattle = { start: () => $('#battleStart').click(), nextName: pickFoeName, foe: () => battle.foe, question: () => { const item=battle.q[battle.i]; return item ? {word:item.word,meaning:item.meaning} : null; }, stats: () => ({ questionIndex: battle.i, answered: battle.answered, total: battle.q.length, over: battle.over }) };
       renderWeakList();
       $$('[data-demo-tab]').forEach(button=>button.addEventListener('click',()=>selectShowcaseTab(button.dataset.demoTab)));
-      $$('.provider-choice').forEach(button=>button.addEventListener('click',()=>{selectedProvider=button.dataset.providerSelect;$$('.provider-choice').forEach(item=>{const active=item===button;item.classList.toggle('active',active);item.setAttribute('aria-pressed',String(active));});}));
       $('#directSubscribe').addEventListener('click',openPayment);
             $('#studySpeak').addEventListener('click',()=>{const word=bank[studyIndex];if(word)speakEntry(word,activeAccent);});
       (function () {
@@ -2178,6 +2314,7 @@
       }
     }
     document.body.setAttribute('data-app-view', view);
+    if (view === 'study' && window.__lexioStudyStart) window.__lexioStudyStart();
     var lb = document.getElementById('viewTopbarLabel');
     if (lb) lb.textContent = VIEW_LABEL[view] || view;
     var tabs = document.querySelectorAll('#appTabbar a');
@@ -2208,12 +2345,16 @@
       outers[b].style.zIndex = String((incomingTop ? 0 : 100) + (outers.length - b));
     }
     pending = { main: main, outers: outers, inn: inn, inCls: inCls, outCls: outCls, timer: null, done: placeAnchor };
-    pending.timer = setTimeout(function () { if (pending) { pending.timer = null; endAnim(); } }, 470);
+    var mobileTransition = window.matchMedia && window.matchMedia('(max-width: 760px)').matches;
+    pending.timer = setTimeout(function () { if (pending) { pending.timer = null; endAnim(); } }, mobileTransition ? 240 : 470);
   }
   function route() {
     var key = (location.hash || '').replace(/^#\/?/, '');
     var view, anchor = null;
-    if (key === '' ) { view = 'home'; }
+    if (key === '' ) {
+      var resumeId=''; try { resumeId=localStorage.getItem('lexio.studyStarted')==='1' ? localStorage.getItem('lexio.lastStudyWordId') || '' : ''; } catch(_) {}
+      view = resumeId ? 'study' : 'home';
+    }
     else if (key === 'main') { view = 'home'; anchor = 'top'; }
     else if (VIEW_LABEL[key]) { view = key; }
     else if (SECTION_VIEW[key]) { view = SECTION_VIEW[key]; anchor = key; }

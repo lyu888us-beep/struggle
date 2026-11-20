@@ -34,6 +34,13 @@ const dom = new JSDOM(html, {
       pause() {}
     }
     window.Audio = MockAudio;
+    window.fetch = (url) => {
+      if (String(url).includes('daily-conversation.json')) {
+        const phrases = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'daily-conversation.json'), 'utf8'));
+        return Promise.resolve({ ok:true, json:()=>Promise.resolve(phrases) });
+      }
+      return Promise.reject(new Error('Network disabled in test environment'));
+    };
     window.SpeechSynthesisUtterance = function (text) { this.text = text; this.lang = ''; this.rate = 1; };
     window.speechSynthesis = {
       speaking: false,
@@ -87,7 +94,8 @@ function animClean() {
 
   // ---------- 1. 默认首页 ----------
   check('默认进入首页', doc.body.getAttribute('data-app-view') === 'home');
-  check('首页分组激活', viewNames().every((v) => v === 'home') && viewNames().length >= 5,
+  check('首次访问不把未开始的默认卡误当作学习断点', window.localStorage.getItem('lexio.studyStarted') === null);
+  check('首页分组激活', viewNames().every((v) => v === 'home') && viewNames().length >= 4,
     `active=${viewNames().length}`);
   check('首屏无动画残留', animClean());
   const cards = [...doc.querySelectorAll('.menu-card')];
@@ -102,6 +110,8 @@ function animClean() {
   await setHashSettled('#study');
   check('#study → 学习视图', doc.body.getAttribute('data-app-view') === 'study' &&
     doc.getElementById('study').classList.contains('is-active'));
+  check('进入学习后开始保存本机学习断点', window.localStorage.getItem('lexio.studyStarted') === '1' &&
+    !!window.localStorage.getItem('lexio.lastStudyWordId'));
   check('动画结束后无残留', animClean());
   check('无关板块已隐藏',
     !doc.getElementById('method').classList.contains('is-active') &&
@@ -216,12 +226,27 @@ function animClean() {
      'backdrop-filter: none !important'].every((frag) => cssText.includes(frag)));
   check('释义未揭晓时完全不显示(透明,非马赛克)',
     cssText.includes('.study-meaning.is-hidden { color: transparent;'));
+  check('学习词卡与词库滚动容器有上下圆角和安全区留白',
+    cssText.includes('box-sizing: border-box; height: 100%; width: 100%; max-width: 600px;') &&
+    cssText.includes('padding-bottom: calc(18px + env(safe-area-inset-bottom))') &&
+    cssText.includes('library-shell .library-panel { box-sizing: border-box;') &&
+    cssText.includes('data-app-view="library"].is-active > .container { height: 100%;') &&
+    cssText.includes('padding: 12px 0 calc(12px + env(safe-area-inset-bottom))'));
+  check('手机页面切换使用短淡入并收窄动画占用时间',
+    cssText.includes('main.is-animating { contain: layout paint; }') &&
+    cssText.includes('animation-duration: .2s !important') &&
+    html.includes('mobileTransition ? 240 : 470'));
   const pageHtml = doc.documentElement.outerHTML;
   check('例句朗读直接使用完整 en-US 系统语音，避免异步音频链',
     pageHtml.includes("speak(sentence, 'en-US', onDone, onError)") &&
     !pageHtml.includes('function speakExample(text, onDone, onError) {\n        const sentence = String(text || \'\').trim();\n        const matches ='));
   check('例句朗读按钮和状态明确标记美式发音',
     pageHtml.includes('使用美式发音播放例句') && pageHtml.includes('正在调用设备的美式语音朗读整句'));
+  check('页面移除原站跳转及外部 Arena 联系链接',
+    !pageHtml.includes('原站入口') && !pageHtml.includes('arena.site') && !doc.querySelector('a[href^="https://"]'));
+  check('支付宣传统一为“支持多种方式支付”且不展示个人结算承诺',
+    pageHtml.includes('支持多种方式支付') && !pageHtml.includes('结算给我') &&
+    !pageHtml.includes('微信支付、支付宝'));
   check('不再显示/绑定手动导入，保留联网同步入口和 GitHub Raw 对话框',
     !pageHtml.includes('importWordsBtn') && !pageHtml.includes('wordFile') && !pageHtml.includes('function importFile') &&
     !!doc.getElementById('syncWordsBtn') && !!doc.getElementById('wordSourceDialog') &&
@@ -234,8 +259,9 @@ function animClean() {
     cssText.includes('@keyframes appHomeEnter') && cssText.includes('@keyframes appPricingEnter') &&
     cssText.includes('@keyframes pricePop') && cssText.includes('.price strong.is-changing') &&
     cssText.includes('prefers-reduced-motion: reduce'));
-  check('新版 Service Worker 缓存将旧 PWA 更新到 v12',
-    swSource.includes("CACHE_NAME = 'lexio-shell-v12-example-voice-library-return'") &&
+  check('新版 Service Worker 缓存将旧 PWA 更新到 v13 并预缓存口语库',
+    swSource.includes("CACHE_NAME = 'lexio-shell-v13-conversations-resume-motion'") &&
+    swSource.includes("'./data/daily-conversation.json'") &&
     pageHtml.includes('controllerchange') && pageHtml.includes('swRefreshing'));
 
   // ---------- 5. 三子面板 ----------
@@ -336,12 +362,14 @@ function animClean() {
     st = doc.getElementById('battleState').textContent;
   }
   check('对战固定 10 道题', /\/ 10 题/.test(st), st);
-  const optBtn = doc.querySelector('.battle-opt:not([disabled])');
-  check('第 1 题选项可点', !!optBtn, st);
+  const battleQuestion = battleApi.question();
+  const optBtn = [...doc.querySelectorAll('.battle-opt:not([disabled])')].find(option => option.textContent !== battleQuestion.meaning);
+  check('第 1 题错误选项可点', !!optBtn, st);
   if (optBtn) optBtn.click();
   await sleep(900);
   const st2 = doc.getElementById('battleState').textContent;
   check('我答完立即换下一题（不等对手作答）', /第 2 \/ 10/.test(st2), st2);
+  check('对战答错词自动进入记忆引擎', weakApi.list().includes(battleQuestion.word), battleQuestion.word);
 
   // 连打到第 10 题并结算 —— 杜绝“只有7题”
   let deepOk = true, deepLabel = st2;
@@ -415,6 +443,32 @@ function animClean() {
     !doc.getElementById('exportBankBtn') && typeof window.__lexioExportBank === 'undefined' &&
     !lib.textContent.includes('下载词库') &&
     doc.documentElement.outerHTML.includes('original-site-wordbank.json'));
+  doc.getElementById('dailyPhrasesTab').click();
+  await sleep(50);
+  check('日常口语库离线资源已载入并覆盖多个场景',
+    doc.querySelectorAll('#dailyPhraseGrid .phrase-item').length === 100 &&
+    doc.querySelectorAll('#phraseCategories [data-phrase-category]').length === 11 &&
+    doc.getElementById('phraseCount').textContent.includes('100'));
+  const phraseSearch = doc.getElementById('phraseSearch');
+  phraseSearch.value = 'pharmacy';
+  phraseSearch.dispatchEvent(new window.Event('input', {bubbles:true}));
+  await sleep(20);
+  const pharmacyPhrase = doc.querySelector('#dailyPhraseGrid .phrase-item');
+  check('日常口语可以按英文/中文/场景搜索',
+    !!pharmacyPhrase && pharmacyPhrase.textContent.includes('pharmacy nearby'));
+  pharmacyPhrase.querySelector('[data-phrase-speak]').click();
+  await sleep(30);
+  check('日常口语句朗读使用 en-US 系统语音', !!window.__lastUtterance &&
+    window.__lastUtterance.lang === 'en-US' && window.__lastUtterance.text.includes('pharmacy'));
+  if (window.__lastUtterance && window.__lastUtterance.onend) window.__lastUtterance.onend();
+  window.speechSynthesis.speaking = false;
+  phraseSearch.value = '';
+  phraseSearch.dispatchEvent(new window.Event('input', {bubbles:true}));
+  const medicalChip = [...doc.querySelectorAll('#phraseCategories [data-phrase-category]')].find(button => button.dataset.phraseCategory === '医疗药房');
+  medicalChip.click();
+  check('日常口语按医疗场景过滤', doc.querySelectorAll('#dailyPhraseGrid .phrase-item').length === 10);
+  doc.querySelector('#phraseCategories [data-phrase-category="全部"]').click();
+  doc.getElementById('wordLibraryTab').click();
   const tilesAll = doc.querySelectorAll('#wordGrid .word-tile');
   check('词库全量显示(无9条上限) — 24条全部渲染',
     tilesAll.length === 24 && !doc.getElementById('wordGrid').textContent.includes('前 9'),
@@ -432,6 +486,8 @@ function animClean() {
   if (tilesGk.length) {
     const selectedTile = tilesGk[0];
     const selectedWord = selectedTile.querySelector('h4').textContent;
+    const wordGrid = doc.getElementById('wordGrid');
+    wordGrid.scrollTop = 230;
     let tileTop = 137;
     selectedTile.getBoundingClientRect = () => ({top:tileTop, bottom:tileTop + 100, left:0, right:200, width:200, height:100});
     window.scrollY = 500;
@@ -448,8 +504,8 @@ function animClean() {
     check('返回词库后保留原筛选和所选词位置',
       doc.body.getAttribute('data-app-view') === 'library' && chipGk.classList.contains('active') &&
       [...doc.querySelectorAll('#wordGrid .word-tile h4')].some((heading) => heading.textContent === selectedWord) &&
-      Math.abs((tileTop - window.scrollY) - 137) < 1 && returnButton.hidden,
-      `word=${selectedWord} scrollY=${window.scrollY} calls=${scrollCalls.length}`);
+      Math.abs((tileTop - (wordGrid.scrollTop - 230)) - 137) < 1 && returnButton.hidden,
+      `word=${selectedWord} gridScrollTop=${wordGrid.scrollTop} calls=${scrollCalls.length}`);
   }
   const chipAll = [...doc.querySelectorAll('.filter-chip')].find((b) => b.dataset.filter === 'all');
   if (chipAll) chipAll.click();
@@ -469,7 +525,24 @@ function animClean() {
   const secs = [...doc.querySelectorAll('main > section')];
   check('所有板块都归组', secs.every((s) => s.hasAttribute('data-app-view')),
     `${secs.length} sections`);
+  const resumeWord = window.__lexioStudy.current();
+  window.__lexioStudy.goTo(0);
+  window.localStorage.setItem('lexio.lastStudyWordId', resumeWord.id);
+  window.__lexioStudy.restore();
+  check('学习卡断点按稳定词条 ID 保存并恢复',
+    window.__lexioStudy.current().id === resumeWord.id && window.localStorage.getItem('lexio.lastStudyWordId') === resumeWord.id,
+    `word=${resumeWord.word}`);
+  window.location.hash = '';
+  await sleep(550);
+  check('下次无指定路由启动时回到上次学习卡',
+    doc.body.getAttribute('data-app-view') === 'study' && doc.getElementById('studyWord').textContent === resumeWord.word,
+    `resumed=${doc.getElementById('studyWord').textContent}`);
 
+  const conversation = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'daily-conversation.json'), 'utf8'));
+  check('离线口语库含多场景、有中英句子且 ID 唯一',
+    conversation.phrases.length === 100 && new Set(conversation.phrases.map(item=>item.id)).size === 100 &&
+    conversation.phrases.every(item=>item.en && item.zh && item.scene) && conversation.categories.length === 10,
+    `phrases=${conversation.phrases.length} scenes=${conversation.categories.length}`);
   const bundled = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'original-site-wordbank.json'), 'utf8'));
   const bundledWords = bundled.books.flatMap((book) => book.words || []);
   const missingExamples = bundledWords.filter((word) => !String(word.example || '').trim()).length;

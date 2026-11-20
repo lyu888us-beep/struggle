@@ -1,5 +1,5 @@
 /* Lexio 乐词 PWA shell cache. Bump the cache version whenever app assets change. */
-const CACHE_NAME = 'lexio-shell-v12-example-voice-library-return';
+const CACHE_NAME = 'lexio-shell-v13-conversations-resume-motion';
 const SHELL_URLS = [
   './',
   './index.html',
@@ -7,6 +7,7 @@ const SHELL_URLS = [
   './pricing.config.json',
   './wordbank.config.json',
   './data/original-site-wordbank.json',
+  './data/daily-conversation.json',
   './icon.svg',
   './icon-192.png',
   './icon-512.png'
