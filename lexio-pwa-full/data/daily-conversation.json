@@ -1,0 +1,7019 @@
+{
+  "version": "2.0.0",
+  "title": "日常英语口语场景库",
+  "sourceNote": "本项目整理编写的本地英语学习语料：保留原有100条场景表达，新增900条按场景任务搭配常见句型组合的练习表达，共1000条，覆盖10类日常场景。医疗药房内容仅用于语言练习，不构成医疗建议。",
+  "categories": [
+    "日常交流",
+    "餐饮点单",
+    "购物",
+    "交通出行",
+    "酒店住宿",
+    "机场与出差",
+    "医疗药房",
+    "工作沟通",
+    "电话预约",
+    "紧急求助"
+  ],
+  "phrases": [
+    {
+      "id": "daily-01",
+      "category": "日常交流",
+      "scene": "打招呼",
+      "en": "Hi, how's your day going?",
+      "zh": "嗨，今天过得怎么样？"
+    },
+    {
+      "id": "daily-02",
+      "category": "日常交流",
+      "scene": "礼貌回应",
+      "en": "Pretty well, thanks for asking. How about you?",
+      "zh": "挺好的，谢谢关心。你呢？"
+    },
+    {
+      "id": "daily-03",
+      "category": "日常交流",
+      "scene": "请求重复",
+      "en": "Sorry, could you say that again a little more slowly?",
+      "zh": "不好意思，可以再慢一点说一遍吗？"
+    },
+    {
+      "id": "daily-04",
+      "category": "日常交流",
+      "scene": "表达感谢",
+      "en": "I really appreciate your help.",
+      "zh": "真的很感谢你的帮助。"
+    },
+    {
+      "id": "daily-05",
+      "category": "日常交流",
+      "scene": "询问方向",
+      "en": "Excuse me, how do I get to the nearest subway station?",
+      "zh": "请问最近的地铁站怎么走？"
+    },
+    {
+      "id": "daily-06",
+      "category": "日常交流",
+      "scene": "确认听懂",
+      "en": "Let me make sure I understood you correctly.",
+      "zh": "我确认一下自己有没有听对。"
+    },
+    {
+      "id": "daily-07",
+      "category": "日常交流",
+      "scene": "礼貌拒绝",
+      "en": "Thanks for inviting me, but I can't make it tonight.",
+      "zh": "谢谢你邀请我，不过我今晚去不了。"
+    },
+    {
+      "id": "daily-08",
+      "category": "日常交流",
+      "scene": "自我介绍",
+      "en": "It's nice to meet you. I'm visiting from China.",
+      "zh": "很高兴认识你。我从中国来这里访问。"
+    },
+    {
+      "id": "daily-09",
+      "category": "日常交流",
+      "scene": "询问营业时间",
+      "en": "What time do you close today?",
+      "zh": "你们今天几点关门？"
+    },
+    {
+      "id": "daily-10",
+      "category": "日常交流",
+      "scene": "告别",
+      "en": "It was great talking with you. Have a good one!",
+      "zh": "和你聊天很愉快。祝你今天顺利！"
+    },
+    {
+      "id": "food-01",
+      "category": "餐饮点单",
+      "scene": "入座",
+      "en": "Could we get a table for two, please?",
+      "zh": "麻烦给我们安排一张两人桌。"
+    },
+    {
+      "id": "food-02",
+      "category": "餐饮点单",
+      "scene": "点餐",
+      "en": "I'd like the grilled chicken, please.",
+      "zh": "我想要一份烤鸡，谢谢。"
+    },
+    {
+      "id": "food-03",
+      "category": "餐饮点单",
+      "scene": "询问推荐",
+      "en": "What would you recommend for someone who's here for the first time?",
+      "zh": "第一次来这里的话，你推荐什么？"
+    },
+    {
+      "id": "food-04",
+      "category": "餐饮点单",
+      "scene": "饮食要求",
+      "en": "Could you make it without onions?",
+      "zh": "可以不加洋葱吗？"
+    },
+    {
+      "id": "food-05",
+      "category": "餐饮点单",
+      "scene": "食物过敏",
+      "en": "I have a peanut allergy. Does this dish contain peanuts?",
+      "zh": "我对花生过敏。这道菜里有花生吗？"
+    },
+    {
+      "id": "food-06",
+      "category": "餐饮点单",
+      "scene": "外带",
+      "en": "Can I get this to go?",
+      "zh": "这个可以打包带走吗？"
+    },
+    {
+      "id": "food-07",
+      "category": "餐饮点单",
+      "scene": "加水",
+      "en": "Could we have some more water, please?",
+      "zh": "麻烦再给我们一些水。"
+    },
+    {
+      "id": "food-08",
+      "category": "餐饮点单",
+      "scene": "结账",
+      "en": "Could we have the check, please?",
+      "zh": "麻烦结一下账。"
+    },
+    {
+      "id": "food-09",
+      "category": "餐饮点单",
+      "scene": "分开付款",
+      "en": "Could we split the bill?",
+      "zh": "我们可以分开结账吗？"
+    },
+    {
+      "id": "food-10",
+      "category": "餐饮点单",
+      "scene": "确认订单",
+      "en": "I ordered a coffee, but I haven't received it yet.",
+      "zh": "我点了一杯咖啡，但还没有拿到。"
+    },
+    {
+      "id": "shop-01",
+      "category": "购物",
+      "scene": "询问价格",
+      "en": "How much is this?",
+      "zh": "这个多少钱？"
+    },
+    {
+      "id": "shop-02",
+      "category": "购物",
+      "scene": "寻找商品",
+      "en": "Do you have this in a smaller size?",
+      "zh": "这个有小一码的吗？"
+    },
+    {
+      "id": "shop-03",
+      "category": "购物",
+      "scene": "试穿",
+      "en": "Where can I try this on?",
+      "zh": "我可以在哪里试穿？"
+    },
+    {
+      "id": "shop-04",
+      "category": "购物",
+      "scene": "寻找颜色",
+      "en": "Does this come in black?",
+      "zh": "这个有黑色的吗？"
+    },
+    {
+      "id": "shop-05",
+      "category": "购物",
+      "scene": "比较商品",
+      "en": "I'm just looking, thank you.",
+      "zh": "我只是先看看，谢谢。"
+    },
+    {
+      "id": "shop-06",
+      "category": "购物",
+      "scene": "付款",
+      "en": "Can I pay by card?",
+      "zh": "我可以刷卡付款吗？"
+    },
+    {
+      "id": "shop-07",
+      "category": "购物",
+      "scene": "索要收据",
+      "en": "Could I get a receipt, please?",
+      "zh": "可以给我一张收据吗？"
+    },
+    {
+      "id": "shop-08",
+      "category": "购物",
+      "scene": "退换货",
+      "en": "I'd like to return this. I still have the receipt.",
+      "zh": "我想退掉这个，收据还在。"
+    },
+    {
+      "id": "shop-09",
+      "category": "购物",
+      "scene": "询问折扣",
+      "en": "Is this on sale?",
+      "zh": "这个在打折吗？"
+    },
+    {
+      "id": "shop-10",
+      "category": "购物",
+      "scene": "购物袋",
+      "en": "Could I have a bag, please?",
+      "zh": "可以给我一个袋子吗？"
+    },
+    {
+      "id": "transport-01",
+      "category": "交通出行",
+      "scene": "打车",
+      "en": "Could you take me to this address, please?",
+      "zh": "麻烦送我到这个地址。"
+    },
+    {
+      "id": "transport-02",
+      "category": "交通出行",
+      "scene": "确认车费",
+      "en": "About how much will the ride cost?",
+      "zh": "这趟大概要多少钱？"
+    },
+    {
+      "id": "transport-03",
+      "category": "交通出行",
+      "scene": "公交线路",
+      "en": "Does this bus go to the city center?",
+      "zh": "这辆公交车去市中心吗？"
+    },
+    {
+      "id": "transport-04",
+      "category": "交通出行",
+      "scene": "地铁换乘",
+      "en": "Where should I transfer for the blue line?",
+      "zh": "我要去哪里换乘蓝线？"
+    },
+    {
+      "id": "transport-05",
+      "category": "交通出行",
+      "scene": "买车票",
+      "en": "I'd like a one-way ticket to Richmond, please.",
+      "zh": "麻烦买一张去里士满的单程票。"
+    },
+    {
+      "id": "transport-06",
+      "category": "交通出行",
+      "scene": "确认站点",
+      "en": "Could you let me know when we get to my stop?",
+      "zh": "到我的站时可以提醒我一下吗？"
+    },
+    {
+      "id": "transport-07",
+      "category": "交通出行",
+      "scene": "问路",
+      "en": "Is it within walking distance?",
+      "zh": "走路能到吗？"
+    },
+    {
+      "id": "transport-08",
+      "category": "交通出行",
+      "scene": "列车延误",
+      "en": "Is the train running on time?",
+      "zh": "火车会准点吗？"
+    },
+    {
+      "id": "transport-09",
+      "category": "交通出行",
+      "scene": "找站台",
+      "en": "Which platform does the next train leave from?",
+      "zh": "下一班车从哪个站台发车？"
+    },
+    {
+      "id": "transport-10",
+      "category": "交通出行",
+      "scene": "停车",
+      "en": "Where can I park nearby?",
+      "zh": "附近哪里可以停车？"
+    },
+    {
+      "id": "hotel-01",
+      "category": "酒店住宿",
+      "scene": "办理入住",
+      "en": "I have a reservation under the name Chen.",
+      "zh": "我用陈这个名字预订了房间。"
+    },
+    {
+      "id": "hotel-02",
+      "category": "酒店住宿",
+      "scene": "询问入住时间",
+      "en": "What time is check-in?",
+      "zh": "几点可以办理入住？"
+    },
+    {
+      "id": "hotel-03",
+      "category": "酒店住宿",
+      "scene": "申请延迟退房",
+      "en": "Would it be possible to check out an hour later?",
+      "zh": "可以晚一小时退房吗？"
+    },
+    {
+      "id": "hotel-04",
+      "category": "酒店住宿",
+      "scene": "房间问题",
+      "en": "The air conditioner in my room isn't working.",
+      "zh": "我房间的空调坏了。"
+    },
+    {
+      "id": "hotel-05",
+      "category": "酒店住宿",
+      "scene": "请求毛巾",
+      "en": "Could I get a couple of extra towels?",
+      "zh": "可以再给我几条毛巾吗？"
+    },
+    {
+      "id": "hotel-06",
+      "category": "酒店住宿",
+      "scene": "询问早餐",
+      "en": "Is breakfast included in the room rate?",
+      "zh": "房价包含早餐吗？"
+    },
+    {
+      "id": "hotel-07",
+      "category": "酒店住宿",
+      "scene": "连接网络",
+      "en": "Could you tell me the Wi-Fi password?",
+      "zh": "可以告诉我无线网密码吗？"
+    },
+    {
+      "id": "hotel-08",
+      "category": "酒店住宿",
+      "scene": "寄存行李",
+      "en": "Could you store my bags until this afternoon?",
+      "zh": "可以帮我把行李存到今天下午吗？"
+    },
+    {
+      "id": "hotel-09",
+      "category": "酒店住宿",
+      "scene": "要求安静房间",
+      "en": "Do you have a quieter room available?",
+      "zh": "还有安静一些的房间吗？"
+    },
+    {
+      "id": "hotel-10",
+      "category": "酒店住宿",
+      "scene": "叫出租车",
+      "en": "Could you call a taxi for me?",
+      "zh": "可以帮我叫一辆出租车吗？"
+    },
+    {
+      "id": "travel-01",
+      "category": "机场与出差",
+      "scene": "值机",
+      "en": "I'd like to check in for my flight to Seattle.",
+      "zh": "我想办理飞往西雅图航班的值机。"
+    },
+    {
+      "id": "travel-02",
+      "category": "机场与出差",
+      "scene": "托运行李",
+      "en": "Could you check this bag through to my final destination?",
+      "zh": "可以把这件行李直挂到我的最终目的地吗？"
+    },
+    {
+      "id": "travel-03",
+      "category": "机场与出差",
+      "scene": "寻找登机口",
+      "en": "Where is gate B twelve?",
+      "zh": "B12 登机口在哪里？"
+    },
+    {
+      "id": "travel-04",
+      "category": "机场与出差",
+      "scene": "航班延误",
+      "en": "How long is the flight delay expected to be?",
+      "zh": "预计航班会延误多久？"
+    },
+    {
+      "id": "travel-05",
+      "category": "机场与出差",
+      "scene": "出差寒暄",
+      "en": "I'm here for a business meeting with our local team.",
+      "zh": "我来这里和当地团队开商务会议。"
+    },
+    {
+      "id": "travel-06",
+      "category": "机场与出差",
+      "scene": "确认会议时间",
+      "en": "Does 10 a.m. still work for everyone?",
+      "zh": "上午十点大家还方便吗？"
+    },
+    {
+      "id": "travel-07",
+      "category": "机场与出差",
+      "scene": "介绍同事",
+      "en": "This is my colleague, Alex, who works with me on the project.",
+      "zh": "这是我的同事 Alex，他和我一起负责这个项目。"
+    },
+    {
+      "id": "travel-08",
+      "category": "机场与出差",
+      "scene": "请求发送资料",
+      "en": "Could you email me the presentation after the meeting?",
+      "zh": "会议结束后可以把演示文稿发邮件给我吗？"
+    },
+    {
+      "id": "travel-09",
+      "category": "机场与出差",
+      "scene": "改签",
+      "en": "Is there an earlier flight I could switch to?",
+      "zh": "我可以改签到更早的航班吗？"
+    },
+    {
+      "id": "travel-10",
+      "category": "机场与出差",
+      "scene": "海关",
+      "en": "I'm traveling for work and will be here for four days.",
+      "zh": "我来出差，会在这里待四天。"
+    },
+    {
+      "id": "medical-01",
+      "category": "医疗药房",
+      "scene": "挂号",
+      "en": "I'd like to make an appointment with a doctor.",
+      "zh": "我想预约看医生。"
+    },
+    {
+      "id": "medical-02",
+      "category": "医疗药房",
+      "scene": "描述症状",
+      "en": "I've had a sore throat and a fever since yesterday.",
+      "zh": "我从昨天开始喉咙痛并且发烧。"
+    },
+    {
+      "id": "medical-03",
+      "category": "医疗药房",
+      "scene": "询问药房",
+      "en": "Is there a pharmacy nearby?",
+      "zh": "附近有药房吗？"
+    },
+    {
+      "id": "medical-04",
+      "category": "医疗药房",
+      "scene": "询问用法",
+      "en": "How often should I take this medicine?",
+      "zh": "这个药应该多久服用一次？"
+    },
+    {
+      "id": "medical-05",
+      "category": "医疗药房",
+      "scene": "说明过敏史",
+      "en": "I'm allergic to penicillin.",
+      "zh": "我对青霉素过敏。"
+    },
+    {
+      "id": "medical-06",
+      "category": "医疗药房",
+      "scene": "询问副作用",
+      "en": "Could this medicine make me feel drowsy?",
+      "zh": "这种药会让我犯困吗？"
+    },
+    {
+      "id": "medical-07",
+      "category": "医疗药房",
+      "scene": "身体不适",
+      "en": "I feel dizzy and a little short of breath.",
+      "zh": "我觉得头晕，还有点喘不过气。"
+    },
+    {
+      "id": "medical-08",
+      "category": "医疗药房",
+      "scene": "保险",
+      "en": "Do you accept my health insurance?",
+      "zh": "你们接受我的医疗保险吗？"
+    },
+    {
+      "id": "medical-09",
+      "category": "医疗药房",
+      "scene": "检查结果",
+      "en": "When will the test results be ready?",
+      "zh": "检查结果什么时候能出来？"
+    },
+    {
+      "id": "medical-10",
+      "category": "医疗药房",
+      "scene": "药物说明",
+      "en": "Should I take this with food or on an empty stomach?",
+      "zh": "这个药应该随餐服用还是空腹服用？"
+    },
+    {
+      "id": "work-01",
+      "category": "工作沟通",
+      "scene": "开始会议",
+      "en": "Shall we get started?",
+      "zh": "我们开始吧？"
+    },
+    {
+      "id": "work-02",
+      "category": "工作沟通",
+      "scene": "表达观点",
+      "en": "From my perspective, we should focus on the main issue first.",
+      "zh": "在我看来，我们应该先关注主要问题。"
+    },
+    {
+      "id": "work-03",
+      "category": "工作沟通",
+      "scene": "请求澄清",
+      "en": "Could you clarify what you mean by the deadline?",
+      "zh": "可以说明一下你说的截止时间具体是什么吗？"
+    },
+    {
+      "id": "work-04",
+      "category": "工作沟通",
+      "scene": "汇报进度",
+      "en": "The project is on schedule, and we've finished the first stage.",
+      "zh": "项目进度正常，第一阶段已经完成。"
+    },
+    {
+      "id": "work-05",
+      "category": "工作沟通",
+      "scene": "提出建议",
+      "en": "One option would be to test the idea with a small group first.",
+      "zh": "一种做法是先找一小组人测试这个想法。"
+    },
+    {
+      "id": "work-06",
+      "category": "工作沟通",
+      "scene": "请求稍等",
+      "en": "Could you give me a moment to check the numbers?",
+      "zh": "可以给我一点时间核对这些数字吗？"
+    },
+    {
+      "id": "work-07",
+      "category": "工作沟通",
+      "scene": "安排跟进",
+      "en": "I'll send a summary and follow up tomorrow.",
+      "zh": "我会发一份摘要，并在明天跟进。"
+    },
+    {
+      "id": "work-08",
+      "category": "工作沟通",
+      "scene": "表达同意",
+      "en": "That sounds good to me. Let's move forward with it.",
+      "zh": "我觉得这个方案不错，我们就按这个推进。"
+    },
+    {
+      "id": "work-09",
+      "category": "工作沟通",
+      "scene": "表达暂不同意",
+      "en": "I see your point, but I have a different concern.",
+      "zh": "我理解你的观点，不过我有另一个顾虑。"
+    },
+    {
+      "id": "work-10",
+      "category": "工作沟通",
+      "scene": "结束会议",
+      "en": "Thanks, everyone. I'll share the action items shortly.",
+      "zh": "谢谢大家。我稍后会分享后续行动事项。"
+    },
+    {
+      "id": "phone-01",
+      "category": "电话预约",
+      "scene": "接听电话",
+      "en": "Hello, this is Mei speaking.",
+      "zh": "你好，我是 Mei。"
+    },
+    {
+      "id": "phone-02",
+      "category": "电话预约",
+      "scene": "询问对方身份",
+      "en": "May I ask who's calling?",
+      "zh": "请问您是哪位？"
+    },
+    {
+      "id": "phone-03",
+      "category": "电话预约",
+      "scene": "暂时离开",
+      "en": "Could you hold for a moment, please?",
+      "zh": "请稍等一下好吗？"
+    },
+    {
+      "id": "phone-04",
+      "category": "电话预约",
+      "scene": "留下信息",
+      "en": "Could you ask him to call me back when he's free?",
+      "zh": "他方便时可以请他给我回个电话吗？"
+    },
+    {
+      "id": "phone-05",
+      "category": "电话预约",
+      "scene": "改约时间",
+      "en": "Could we reschedule our appointment for Friday?",
+      "zh": "我们可以把预约改到星期五吗？"
+    },
+    {
+      "id": "phone-06",
+      "category": "电话预约",
+      "scene": "确认时间",
+      "en": "I'd like to confirm my appointment for tomorrow morning.",
+      "zh": "我想确认一下明天上午的预约。"
+    },
+    {
+      "id": "phone-07",
+      "category": "电话预约",
+      "scene": "说明听不清",
+      "en": "I'm having trouble hearing you. Could you speak up a little?",
+      "zh": "我听不太清，可以稍微大声一点吗？"
+    },
+    {
+      "id": "phone-08",
+      "category": "电话预约",
+      "scene": "询问地址",
+      "en": "Could you text me the address?",
+      "zh": "可以把地址发短信给我吗？"
+    },
+    {
+      "id": "phone-09",
+      "category": "电话预约",
+      "scene": "说明迟到",
+      "en": "I'm running about ten minutes late. I'm sorry.",
+      "zh": "我大概要晚到十分钟，抱歉。"
+    },
+    {
+      "id": "phone-10",
+      "category": "电话预约",
+      "scene": "结束通话",
+      "en": "Thanks for your time. Talk to you soon.",
+      "zh": "谢谢你抽时间。回头再联系。"
+    },
+    {
+      "id": "emergency-01",
+      "category": "紧急求助",
+      "scene": "请求帮助",
+      "en": "I need help. Could you call the police?",
+      "zh": "我需要帮助。你可以报警吗？"
+    },
+    {
+      "id": "emergency-02",
+      "category": "紧急求助",
+      "scene": "呼叫急救",
+      "en": "Please call an ambulance. Someone is injured.",
+      "zh": "请叫救护车，有人受伤了。"
+    },
+    {
+      "id": "emergency-03",
+      "category": "紧急求助",
+      "scene": "找警察局",
+      "en": "Where is the nearest police station?",
+      "zh": "最近的警察局在哪里？"
+    },
+    {
+      "id": "emergency-04",
+      "category": "紧急求助",
+      "scene": "丢失物品",
+      "en": "I've lost my passport. Where should I report it?",
+      "zh": "我的护照丢了，应该去哪里报失？"
+    },
+    {
+      "id": "emergency-05",
+      "category": "紧急求助",
+      "scene": "寻求翻译",
+      "en": "I don't speak English well. Could you find someone who speaks Chinese?",
+      "zh": "我英语不太好，可以帮我找一位会中文的人吗？"
+    },
+    {
+      "id": "emergency-06",
+      "category": "紧急求助",
+      "scene": "说明位置",
+      "en": "I'm at the main entrance on Granby Street.",
+      "zh": "我在格兰比街的主入口。"
+    },
+    {
+      "id": "emergency-07",
+      "category": "紧急求助",
+      "scene": "需要医生",
+      "en": "I need medical help right away.",
+      "zh": "我现在马上需要医疗帮助。"
+    },
+    {
+      "id": "emergency-08",
+      "category": "紧急求助",
+      "scene": "联系使馆",
+      "en": "Could you help me contact my country's embassy?",
+      "zh": "可以帮我联系我国家的大使馆吗？"
+    },
+    {
+      "id": "emergency-09",
+      "category": "紧急求助",
+      "scene": "询问安全出口",
+      "en": "Where is the nearest emergency exit?",
+      "zh": "最近的紧急出口在哪里？"
+    },
+    {
+      "id": "emergency-10",
+      "category": "紧急求助",
+      "scene": "说明听不懂",
+      "en": "Could you write that down for me?",
+      "zh": "可以帮我把那句话写下来吗？"
+    },
+    {
+      "id": "phrase-0001",
+      "category": "日常交流",
+      "scene": "初次见面",
+      "en": "I need to introduce myself to the group.",
+      "zh": "我需要向大家做自我介绍。"
+    },
+    {
+      "id": "phrase-0002",
+      "category": "日常交流",
+      "scene": "初次见面",
+      "en": "Could you help me introduce myself to the group?",
+      "zh": "能帮我向大家做自我介绍吗？"
+    },
+    {
+      "id": "phrase-0003",
+      "category": "日常交流",
+      "scene": "初次见面",
+      "en": "I'd like to introduce myself to the group, please.",
+      "zh": "麻烦帮我向大家做自我介绍。"
+    },
+    {
+      "id": "phrase-0004",
+      "category": "日常交流",
+      "scene": "初次见面",
+      "en": "Is it possible to introduce myself to the group?",
+      "zh": "可以向大家做自我介绍吗？"
+    },
+    {
+      "id": "phrase-0005",
+      "category": "日常交流",
+      "scene": "初次见面",
+      "en": "I'm trying to introduce myself to the group.",
+      "zh": "我正在尝试向大家做自我介绍。"
+    },
+    {
+      "id": "phrase-0006",
+      "category": "日常交流",
+      "scene": "初次见面",
+      "en": "I was hoping to introduce myself to the group.",
+      "zh": "我希望能向大家做自我介绍。"
+    },
+    {
+      "id": "phrase-0007",
+      "category": "日常交流",
+      "scene": "初次见面",
+      "en": "Do you know how I can introduce myself to the group?",
+      "zh": "你知道我怎么才能向大家做自我介绍吗？"
+    },
+    {
+      "id": "phrase-0008",
+      "category": "日常交流",
+      "scene": "初次见面",
+      "en": "Could I introduce myself to the group?",
+      "zh": "我可以向大家做自我介绍吗？"
+    },
+    {
+      "id": "phrase-0009",
+      "category": "日常交流",
+      "scene": "初次见面",
+      "en": "I'd appreciate it if you could help me introduce myself to the group.",
+      "zh": "如果你能帮我向大家做自我介绍，我会很感激。"
+    },
+    {
+      "id": "phrase-0010",
+      "category": "日常交流",
+      "scene": "认识新朋友",
+      "en": "I need to find out your name.",
+      "zh": "我需要了解一下你的名字。"
+    },
+    {
+      "id": "phrase-0011",
+      "category": "日常交流",
+      "scene": "认识新朋友",
+      "en": "Could you help me find out your name?",
+      "zh": "能帮我了解一下你的名字吗？"
+    },
+    {
+      "id": "phrase-0012",
+      "category": "日常交流",
+      "scene": "认识新朋友",
+      "en": "I'd like to find out your name, please.",
+      "zh": "麻烦帮我了解一下你的名字。"
+    },
+    {
+      "id": "phrase-0013",
+      "category": "日常交流",
+      "scene": "认识新朋友",
+      "en": "Is it possible to find out your name?",
+      "zh": "可以了解一下你的名字吗？"
+    },
+    {
+      "id": "phrase-0014",
+      "category": "日常交流",
+      "scene": "认识新朋友",
+      "en": "I'm trying to find out your name.",
+      "zh": "我正在尝试了解一下你的名字。"
+    },
+    {
+      "id": "phrase-0015",
+      "category": "日常交流",
+      "scene": "认识新朋友",
+      "en": "I was hoping to find out your name.",
+      "zh": "我希望能了解一下你的名字。"
+    },
+    {
+      "id": "phrase-0016",
+      "category": "日常交流",
+      "scene": "认识新朋友",
+      "en": "Do you know how I can find out your name?",
+      "zh": "你知道我怎么才能了解一下你的名字吗？"
+    },
+    {
+      "id": "phrase-0017",
+      "category": "日常交流",
+      "scene": "认识新朋友",
+      "en": "Could I find out your name?",
+      "zh": "我可以了解一下你的名字吗？"
+    },
+    {
+      "id": "phrase-0018",
+      "category": "日常交流",
+      "scene": "认识新朋友",
+      "en": "I'd appreciate it if you could help me find out your name.",
+      "zh": "如果你能帮我了解一下你的名字，我会很感激。"
+    },
+    {
+      "id": "phrase-0019",
+      "category": "日常交流",
+      "scene": "听不清楚",
+      "en": "I need to ask you to repeat that.",
+      "zh": "我需要请你重复一遍。"
+    },
+    {
+      "id": "phrase-0020",
+      "category": "日常交流",
+      "scene": "听不清楚",
+      "en": "Could you help me ask you to repeat that?",
+      "zh": "能帮我请你重复一遍吗？"
+    },
+    {
+      "id": "phrase-0021",
+      "category": "日常交流",
+      "scene": "听不清楚",
+      "en": "I'd like to ask you to repeat that, please.",
+      "zh": "麻烦帮我请你重复一遍。"
+    },
+    {
+      "id": "phrase-0022",
+      "category": "日常交流",
+      "scene": "听不清楚",
+      "en": "Is it possible to ask you to repeat that?",
+      "zh": "可以请你重复一遍吗？"
+    },
+    {
+      "id": "phrase-0023",
+      "category": "日常交流",
+      "scene": "听不清楚",
+      "en": "I'm trying to ask you to repeat that.",
+      "zh": "我正在尝试请你重复一遍。"
+    },
+    {
+      "id": "phrase-0024",
+      "category": "日常交流",
+      "scene": "听不清楚",
+      "en": "I was hoping to ask you to repeat that.",
+      "zh": "我希望能请你重复一遍。"
+    },
+    {
+      "id": "phrase-0025",
+      "category": "日常交流",
+      "scene": "听不清楚",
+      "en": "Do you know how I can ask you to repeat that?",
+      "zh": "你知道我怎么才能请你重复一遍吗？"
+    },
+    {
+      "id": "phrase-0026",
+      "category": "日常交流",
+      "scene": "听不清楚",
+      "en": "Could I ask you to repeat that?",
+      "zh": "我可以请你重复一遍吗？"
+    },
+    {
+      "id": "phrase-0027",
+      "category": "日常交流",
+      "scene": "听不清楚",
+      "en": "I'd appreciate it if you could help me ask you to repeat that.",
+      "zh": "如果你能帮我请你重复一遍，我会很感激。"
+    },
+    {
+      "id": "phrase-0028",
+      "category": "日常交流",
+      "scene": "问路",
+      "en": "I need to ask for directions to the station.",
+      "zh": "我需要询问去车站的路线。"
+    },
+    {
+      "id": "phrase-0029",
+      "category": "日常交流",
+      "scene": "问路",
+      "en": "Could you help me ask for directions to the station?",
+      "zh": "能帮我询问去车站的路线吗？"
+    },
+    {
+      "id": "phrase-0030",
+      "category": "日常交流",
+      "scene": "问路",
+      "en": "I'd like to ask for directions to the station, please.",
+      "zh": "麻烦帮我询问去车站的路线。"
+    },
+    {
+      "id": "phrase-0031",
+      "category": "日常交流",
+      "scene": "问路",
+      "en": "Is it possible to ask for directions to the station?",
+      "zh": "可以询问去车站的路线吗？"
+    },
+    {
+      "id": "phrase-0032",
+      "category": "日常交流",
+      "scene": "问路",
+      "en": "I'm trying to ask for directions to the station.",
+      "zh": "我正在尝试询问去车站的路线。"
+    },
+    {
+      "id": "phrase-0033",
+      "category": "日常交流",
+      "scene": "问路",
+      "en": "I was hoping to ask for directions to the station.",
+      "zh": "我希望能询问去车站的路线。"
+    },
+    {
+      "id": "phrase-0034",
+      "category": "日常交流",
+      "scene": "问路",
+      "en": "Do you know how I can ask for directions to the station?",
+      "zh": "你知道我怎么才能询问去车站的路线吗？"
+    },
+    {
+      "id": "phrase-0035",
+      "category": "日常交流",
+      "scene": "问路",
+      "en": "Could I ask for directions to the station?",
+      "zh": "我可以询问去车站的路线吗？"
+    },
+    {
+      "id": "phrase-0036",
+      "category": "日常交流",
+      "scene": "问路",
+      "en": "I'd appreciate it if you could help me ask for directions to the station.",
+      "zh": "如果你能帮我询问去车站的路线，我会很感激。"
+    },
+    {
+      "id": "phrase-0037",
+      "category": "日常交流",
+      "scene": "闲聊",
+      "en": "I need to make small talk about the weather.",
+      "zh": "我需要聊聊天气。"
+    },
+    {
+      "id": "phrase-0038",
+      "category": "日常交流",
+      "scene": "闲聊",
+      "en": "Could you help me make small talk about the weather?",
+      "zh": "能帮我聊聊天气吗？"
+    },
+    {
+      "id": "phrase-0039",
+      "category": "日常交流",
+      "scene": "闲聊",
+      "en": "I'd like to make small talk about the weather, please.",
+      "zh": "麻烦帮我聊聊天气。"
+    },
+    {
+      "id": "phrase-0040",
+      "category": "日常交流",
+      "scene": "闲聊",
+      "en": "Is it possible to make small talk about the weather?",
+      "zh": "可以聊聊天气吗？"
+    },
+    {
+      "id": "phrase-0041",
+      "category": "日常交流",
+      "scene": "闲聊",
+      "en": "I'm trying to make small talk about the weather.",
+      "zh": "我正在尝试聊聊天气。"
+    },
+    {
+      "id": "phrase-0042",
+      "category": "日常交流",
+      "scene": "闲聊",
+      "en": "I was hoping to make small talk about the weather.",
+      "zh": "我希望能聊聊天气。"
+    },
+    {
+      "id": "phrase-0043",
+      "category": "日常交流",
+      "scene": "闲聊",
+      "en": "Do you know how I can make small talk about the weather?",
+      "zh": "你知道我怎么才能聊聊天气吗？"
+    },
+    {
+      "id": "phrase-0044",
+      "category": "日常交流",
+      "scene": "闲聊",
+      "en": "Could I make small talk about the weather?",
+      "zh": "我可以聊聊天气吗？"
+    },
+    {
+      "id": "phrase-0045",
+      "category": "日常交流",
+      "scene": "闲聊",
+      "en": "I'd appreciate it if you could help me make small talk about the weather.",
+      "zh": "如果你能帮我聊聊天气，我会很感激。"
+    },
+    {
+      "id": "phrase-0046",
+      "category": "日常交流",
+      "scene": "调整计划",
+      "en": "I need to reschedule our plans for tomorrow.",
+      "zh": "我需要把计划改到明天。"
+    },
+    {
+      "id": "phrase-0047",
+      "category": "日常交流",
+      "scene": "调整计划",
+      "en": "Could you help me reschedule our plans for tomorrow?",
+      "zh": "能帮我把计划改到明天吗？"
+    },
+    {
+      "id": "phrase-0048",
+      "category": "日常交流",
+      "scene": "调整计划",
+      "en": "I'd like to reschedule our plans for tomorrow, please.",
+      "zh": "麻烦帮我把计划改到明天。"
+    },
+    {
+      "id": "phrase-0049",
+      "category": "日常交流",
+      "scene": "调整计划",
+      "en": "Is it possible to reschedule our plans for tomorrow?",
+      "zh": "可以把计划改到明天吗？"
+    },
+    {
+      "id": "phrase-0050",
+      "category": "日常交流",
+      "scene": "调整计划",
+      "en": "I'm trying to reschedule our plans for tomorrow.",
+      "zh": "我正在尝试把计划改到明天。"
+    },
+    {
+      "id": "phrase-0051",
+      "category": "日常交流",
+      "scene": "调整计划",
+      "en": "I was hoping to reschedule our plans for tomorrow.",
+      "zh": "我希望能把计划改到明天。"
+    },
+    {
+      "id": "phrase-0052",
+      "category": "日常交流",
+      "scene": "调整计划",
+      "en": "Do you know how I can reschedule our plans for tomorrow?",
+      "zh": "你知道我怎么才能把计划改到明天吗？"
+    },
+    {
+      "id": "phrase-0053",
+      "category": "日常交流",
+      "scene": "调整计划",
+      "en": "Could I reschedule our plans for tomorrow?",
+      "zh": "我可以把计划改到明天吗？"
+    },
+    {
+      "id": "phrase-0054",
+      "category": "日常交流",
+      "scene": "调整计划",
+      "en": "I'd appreciate it if you could help me reschedule our plans for tomorrow.",
+      "zh": "如果你能帮我把计划改到明天，我会很感激。"
+    },
+    {
+      "id": "phrase-0055",
+      "category": "日常交流",
+      "scene": "表达歉意",
+      "en": "I need to apologize for being late.",
+      "zh": "我需要为迟到道歉。"
+    },
+    {
+      "id": "phrase-0056",
+      "category": "日常交流",
+      "scene": "表达歉意",
+      "en": "Could you help me apologize for being late?",
+      "zh": "能帮我为迟到道歉吗？"
+    },
+    {
+      "id": "phrase-0057",
+      "category": "日常交流",
+      "scene": "表达歉意",
+      "en": "I'd like to apologize for being late, please.",
+      "zh": "麻烦帮我为迟到道歉。"
+    },
+    {
+      "id": "phrase-0058",
+      "category": "日常交流",
+      "scene": "表达歉意",
+      "en": "Is it possible to apologize for being late?",
+      "zh": "可以为迟到道歉吗？"
+    },
+    {
+      "id": "phrase-0059",
+      "category": "日常交流",
+      "scene": "表达歉意",
+      "en": "I'm trying to apologize for being late.",
+      "zh": "我正在尝试为迟到道歉。"
+    },
+    {
+      "id": "phrase-0060",
+      "category": "日常交流",
+      "scene": "表达歉意",
+      "en": "I was hoping to apologize for being late.",
+      "zh": "我希望能为迟到道歉。"
+    },
+    {
+      "id": "phrase-0061",
+      "category": "日常交流",
+      "scene": "表达歉意",
+      "en": "Do you know how I can apologize for being late?",
+      "zh": "你知道我怎么才能为迟到道歉吗？"
+    },
+    {
+      "id": "phrase-0062",
+      "category": "日常交流",
+      "scene": "表达歉意",
+      "en": "Could I apologize for being late?",
+      "zh": "我可以为迟到道歉吗？"
+    },
+    {
+      "id": "phrase-0063",
+      "category": "日常交流",
+      "scene": "表达歉意",
+      "en": "I'd appreciate it if you could help me apologize for being late.",
+      "zh": "如果你能帮我为迟到道歉，我会很感激。"
+    },
+    {
+      "id": "phrase-0064",
+      "category": "日常交流",
+      "scene": "寻求推荐",
+      "en": "I need to ask you for a local recommendation.",
+      "zh": "我需要向你请教本地推荐。"
+    },
+    {
+      "id": "phrase-0065",
+      "category": "日常交流",
+      "scene": "寻求推荐",
+      "en": "Could you help me ask you for a local recommendation?",
+      "zh": "能帮我向你请教本地推荐吗？"
+    },
+    {
+      "id": "phrase-0066",
+      "category": "日常交流",
+      "scene": "寻求推荐",
+      "en": "I'd like to ask you for a local recommendation, please.",
+      "zh": "麻烦帮我向你请教本地推荐。"
+    },
+    {
+      "id": "phrase-0067",
+      "category": "日常交流",
+      "scene": "寻求推荐",
+      "en": "Is it possible to ask you for a local recommendation?",
+      "zh": "可以向你请教本地推荐吗？"
+    },
+    {
+      "id": "phrase-0068",
+      "category": "日常交流",
+      "scene": "寻求推荐",
+      "en": "I'm trying to ask you for a local recommendation.",
+      "zh": "我正在尝试向你请教本地推荐。"
+    },
+    {
+      "id": "phrase-0069",
+      "category": "日常交流",
+      "scene": "寻求推荐",
+      "en": "I was hoping to ask you for a local recommendation.",
+      "zh": "我希望能向你请教本地推荐。"
+    },
+    {
+      "id": "phrase-0070",
+      "category": "日常交流",
+      "scene": "寻求推荐",
+      "en": "Do you know how I can ask you for a local recommendation?",
+      "zh": "你知道我怎么才能向你请教本地推荐吗？"
+    },
+    {
+      "id": "phrase-0071",
+      "category": "日常交流",
+      "scene": "寻求推荐",
+      "en": "Could I ask you for a local recommendation?",
+      "zh": "我可以向你请教本地推荐吗？"
+    },
+    {
+      "id": "phrase-0072",
+      "category": "日常交流",
+      "scene": "寻求推荐",
+      "en": "I'd appreciate it if you could help me ask you for a local recommendation.",
+      "zh": "如果你能帮我向你请教本地推荐，我会很感激。"
+    },
+    {
+      "id": "phrase-0073",
+      "category": "日常交流",
+      "scene": "表达祝贺",
+      "en": "I need to congratulate you on your new job.",
+      "zh": "我需要祝贺你找到新工作。"
+    },
+    {
+      "id": "phrase-0074",
+      "category": "日常交流",
+      "scene": "表达祝贺",
+      "en": "Could you help me congratulate you on your new job?",
+      "zh": "能帮我祝贺你找到新工作吗？"
+    },
+    {
+      "id": "phrase-0075",
+      "category": "日常交流",
+      "scene": "表达祝贺",
+      "en": "I'd like to congratulate you on your new job, please.",
+      "zh": "麻烦帮我祝贺你找到新工作。"
+    },
+    {
+      "id": "phrase-0076",
+      "category": "日常交流",
+      "scene": "表达祝贺",
+      "en": "Is it possible to congratulate you on your new job?",
+      "zh": "可以祝贺你找到新工作吗？"
+    },
+    {
+      "id": "phrase-0077",
+      "category": "日常交流",
+      "scene": "表达祝贺",
+      "en": "I'm trying to congratulate you on your new job.",
+      "zh": "我正在尝试祝贺你找到新工作。"
+    },
+    {
+      "id": "phrase-0078",
+      "category": "日常交流",
+      "scene": "表达祝贺",
+      "en": "I was hoping to congratulate you on your new job.",
+      "zh": "我希望能祝贺你找到新工作。"
+    },
+    {
+      "id": "phrase-0079",
+      "category": "日常交流",
+      "scene": "表达祝贺",
+      "en": "Do you know how I can congratulate you on your new job?",
+      "zh": "你知道我怎么才能祝贺你找到新工作吗？"
+    },
+    {
+      "id": "phrase-0080",
+      "category": "日常交流",
+      "scene": "表达祝贺",
+      "en": "Could I congratulate you on your new job?",
+      "zh": "我可以祝贺你找到新工作吗？"
+    },
+    {
+      "id": "phrase-0081",
+      "category": "日常交流",
+      "scene": "表达祝贺",
+      "en": "I'd appreciate it if you could help me congratulate you on your new job.",
+      "zh": "如果你能帮我祝贺你找到新工作，我会很感激。"
+    },
+    {
+      "id": "phrase-0082",
+      "category": "日常交流",
+      "scene": "告别",
+      "en": "I need to say goodbye before I leave.",
+      "zh": "我需要在离开前向你道别。"
+    },
+    {
+      "id": "phrase-0083",
+      "category": "日常交流",
+      "scene": "告别",
+      "en": "Could you help me say goodbye before I leave?",
+      "zh": "能帮我在离开前向你道别吗？"
+    },
+    {
+      "id": "phrase-0084",
+      "category": "日常交流",
+      "scene": "告别",
+      "en": "I'd like to say goodbye before I leave, please.",
+      "zh": "麻烦帮我在离开前向你道别。"
+    },
+    {
+      "id": "phrase-0085",
+      "category": "日常交流",
+      "scene": "告别",
+      "en": "Is it possible to say goodbye before I leave?",
+      "zh": "可以在离开前向你道别吗？"
+    },
+    {
+      "id": "phrase-0086",
+      "category": "日常交流",
+      "scene": "告别",
+      "en": "I'm trying to say goodbye before I leave.",
+      "zh": "我正在尝试在离开前向你道别。"
+    },
+    {
+      "id": "phrase-0087",
+      "category": "日常交流",
+      "scene": "告别",
+      "en": "I was hoping to say goodbye before I leave.",
+      "zh": "我希望能在离开前向你道别。"
+    },
+    {
+      "id": "phrase-0088",
+      "category": "日常交流",
+      "scene": "告别",
+      "en": "Do you know how I can say goodbye before I leave?",
+      "zh": "你知道我怎么才能在离开前向你道别吗？"
+    },
+    {
+      "id": "phrase-0089",
+      "category": "日常交流",
+      "scene": "告别",
+      "en": "Could I say goodbye before I leave?",
+      "zh": "我可以在离开前向你道别吗？"
+    },
+    {
+      "id": "phrase-0090",
+      "category": "日常交流",
+      "scene": "告别",
+      "en": "I'd appreciate it if you could help me say goodbye before I leave.",
+      "zh": "如果你能帮我在离开前向你道别，我会很感激。"
+    },
+    {
+      "id": "phrase-0091",
+      "category": "餐饮点单",
+      "scene": "预订座位",
+      "en": "I need to book a table for two.",
+      "zh": "我需要预订一张两人桌。"
+    },
+    {
+      "id": "phrase-0092",
+      "category": "餐饮点单",
+      "scene": "预订座位",
+      "en": "Could you help me book a table for two?",
+      "zh": "能帮我预订一张两人桌吗？"
+    },
+    {
+      "id": "phrase-0093",
+      "category": "餐饮点单",
+      "scene": "预订座位",
+      "en": "I'd like to book a table for two, please.",
+      "zh": "麻烦帮我预订一张两人桌。"
+    },
+    {
+      "id": "phrase-0094",
+      "category": "餐饮点单",
+      "scene": "预订座位",
+      "en": "Is it possible to book a table for two?",
+      "zh": "可以预订一张两人桌吗？"
+    },
+    {
+      "id": "phrase-0095",
+      "category": "餐饮点单",
+      "scene": "预订座位",
+      "en": "I'm trying to book a table for two.",
+      "zh": "我正在尝试预订一张两人桌。"
+    },
+    {
+      "id": "phrase-0096",
+      "category": "餐饮点单",
+      "scene": "预订座位",
+      "en": "I was hoping to book a table for two.",
+      "zh": "我希望能预订一张两人桌。"
+    },
+    {
+      "id": "phrase-0097",
+      "category": "餐饮点单",
+      "scene": "预订座位",
+      "en": "Do you know how I can book a table for two?",
+      "zh": "你知道我怎么才能预订一张两人桌吗？"
+    },
+    {
+      "id": "phrase-0098",
+      "category": "餐饮点单",
+      "scene": "预订座位",
+      "en": "Could I book a table for two?",
+      "zh": "我可以预订一张两人桌吗？"
+    },
+    {
+      "id": "phrase-0099",
+      "category": "餐饮点单",
+      "scene": "预订座位",
+      "en": "I'd appreciate it if you could help me book a table for two.",
+      "zh": "如果你能帮我预订一张两人桌，我会很感激。"
+    },
+    {
+      "id": "phrase-0100",
+      "category": "餐饮点单",
+      "scene": "查看菜单",
+      "en": "I need to see the menu.",
+      "zh": "我需要看一下菜单。"
+    },
+    {
+      "id": "phrase-0101",
+      "category": "餐饮点单",
+      "scene": "查看菜单",
+      "en": "Could you help me see the menu?",
+      "zh": "能帮我看一下菜单吗？"
+    },
+    {
+      "id": "phrase-0102",
+      "category": "餐饮点单",
+      "scene": "查看菜单",
+      "en": "I'd like to see the menu, please.",
+      "zh": "麻烦帮我看一下菜单。"
+    },
+    {
+      "id": "phrase-0103",
+      "category": "餐饮点单",
+      "scene": "查看菜单",
+      "en": "Is it possible to see the menu?",
+      "zh": "可以看一下菜单吗？"
+    },
+    {
+      "id": "phrase-0104",
+      "category": "餐饮点单",
+      "scene": "查看菜单",
+      "en": "I'm trying to see the menu.",
+      "zh": "我正在尝试看一下菜单。"
+    },
+    {
+      "id": "phrase-0105",
+      "category": "餐饮点单",
+      "scene": "查看菜单",
+      "en": "I was hoping to see the menu.",
+      "zh": "我希望能看一下菜单。"
+    },
+    {
+      "id": "phrase-0106",
+      "category": "餐饮点单",
+      "scene": "查看菜单",
+      "en": "Do you know how I can see the menu?",
+      "zh": "你知道我怎么才能看一下菜单吗？"
+    },
+    {
+      "id": "phrase-0107",
+      "category": "餐饮点单",
+      "scene": "查看菜单",
+      "en": "Could I see the menu?",
+      "zh": "我可以看一下菜单吗？"
+    },
+    {
+      "id": "phrase-0108",
+      "category": "餐饮点单",
+      "scene": "查看菜单",
+      "en": "I'd appreciate it if you could help me see the menu.",
+      "zh": "如果你能帮我看一下菜单，我会很感激。"
+    },
+    {
+      "id": "phrase-0109",
+      "category": "餐饮点单",
+      "scene": "点素食",
+      "en": "I need to order a vegetarian meal.",
+      "zh": "我需要点一份素食。"
+    },
+    {
+      "id": "phrase-0110",
+      "category": "餐饮点单",
+      "scene": "点素食",
+      "en": "Could you help me order a vegetarian meal?",
+      "zh": "能帮我点一份素食吗？"
+    },
+    {
+      "id": "phrase-0111",
+      "category": "餐饮点单",
+      "scene": "点素食",
+      "en": "I'd like to order a vegetarian meal, please.",
+      "zh": "麻烦帮我点一份素食。"
+    },
+    {
+      "id": "phrase-0112",
+      "category": "餐饮点单",
+      "scene": "点素食",
+      "en": "Is it possible to order a vegetarian meal?",
+      "zh": "可以点一份素食吗？"
+    },
+    {
+      "id": "phrase-0113",
+      "category": "餐饮点单",
+      "scene": "点素食",
+      "en": "I'm trying to order a vegetarian meal.",
+      "zh": "我正在尝试点一份素食。"
+    },
+    {
+      "id": "phrase-0114",
+      "category": "餐饮点单",
+      "scene": "点素食",
+      "en": "I was hoping to order a vegetarian meal.",
+      "zh": "我希望能点一份素食。"
+    },
+    {
+      "id": "phrase-0115",
+      "category": "餐饮点单",
+      "scene": "点素食",
+      "en": "Do you know how I can order a vegetarian meal?",
+      "zh": "你知道我怎么才能点一份素食吗？"
+    },
+    {
+      "id": "phrase-0116",
+      "category": "餐饮点单",
+      "scene": "点素食",
+      "en": "Could I order a vegetarian meal?",
+      "zh": "我可以点一份素食吗？"
+    },
+    {
+      "id": "phrase-0117",
+      "category": "餐饮点单",
+      "scene": "点素食",
+      "en": "I'd appreciate it if you could help me order a vegetarian meal.",
+      "zh": "如果你能帮我点一份素食，我会很感激。"
+    },
+    {
+      "id": "phrase-0118",
+      "category": "餐饮点单",
+      "scene": "询问食材",
+      "en": "I need to ask what ingredients are in this dish.",
+      "zh": "我需要询问这道菜含有哪些食材。"
+    },
+    {
+      "id": "phrase-0119",
+      "category": "餐饮点单",
+      "scene": "询问食材",
+      "en": "Could you help me ask what ingredients are in this dish?",
+      "zh": "能帮我询问这道菜含有哪些食材吗？"
+    },
+    {
+      "id": "phrase-0120",
+      "category": "餐饮点单",
+      "scene": "询问食材",
+      "en": "I'd like to ask what ingredients are in this dish, please.",
+      "zh": "麻烦帮我询问这道菜含有哪些食材。"
+    },
+    {
+      "id": "phrase-0121",
+      "category": "餐饮点单",
+      "scene": "询问食材",
+      "en": "Is it possible to ask what ingredients are in this dish?",
+      "zh": "可以询问这道菜含有哪些食材吗？"
+    },
+    {
+      "id": "phrase-0122",
+      "category": "餐饮点单",
+      "scene": "询问食材",
+      "en": "I'm trying to ask what ingredients are in this dish.",
+      "zh": "我正在尝试询问这道菜含有哪些食材。"
+    },
+    {
+      "id": "phrase-0123",
+      "category": "餐饮点单",
+      "scene": "询问食材",
+      "en": "I was hoping to ask what ingredients are in this dish.",
+      "zh": "我希望能询问这道菜含有哪些食材。"
+    },
+    {
+      "id": "phrase-0124",
+      "category": "餐饮点单",
+      "scene": "询问食材",
+      "en": "Do you know how I can ask what ingredients are in this dish?",
+      "zh": "你知道我怎么才能询问这道菜含有哪些食材吗？"
+    },
+    {
+      "id": "phrase-0125",
+      "category": "餐饮点单",
+      "scene": "询问食材",
+      "en": "Could I ask what ingredients are in this dish?",
+      "zh": "我可以询问这道菜含有哪些食材吗？"
+    },
+    {
+      "id": "phrase-0126",
+      "category": "餐饮点单",
+      "scene": "询问食材",
+      "en": "I'd appreciate it if you could help me ask what ingredients are in this dish.",
+      "zh": "如果你能帮我询问这道菜含有哪些食材，我会很感激。"
+    },
+    {
+      "id": "phrase-0127",
+      "category": "餐饮点单",
+      "scene": "提出忌口",
+      "en": "I need to ask for this dish without onions.",
+      "zh": "我需要请店家做这道不加洋葱。"
+    },
+    {
+      "id": "phrase-0128",
+      "category": "餐饮点单",
+      "scene": "提出忌口",
+      "en": "Could you help me ask for this dish without onions?",
+      "zh": "能帮我请店家做这道不加洋葱吗？"
+    },
+    {
+      "id": "phrase-0129",
+      "category": "餐饮点单",
+      "scene": "提出忌口",
+      "en": "I'd like to ask for this dish without onions, please.",
+      "zh": "麻烦帮我请店家做这道不加洋葱。"
+    },
+    {
+      "id": "phrase-0130",
+      "category": "餐饮点单",
+      "scene": "提出忌口",
+      "en": "Is it possible to ask for this dish without onions?",
+      "zh": "可以请店家做这道不加洋葱吗？"
+    },
+    {
+      "id": "phrase-0131",
+      "category": "餐饮点单",
+      "scene": "提出忌口",
+      "en": "I'm trying to ask for this dish without onions.",
+      "zh": "我正在尝试请店家做这道不加洋葱。"
+    },
+    {
+      "id": "phrase-0132",
+      "category": "餐饮点单",
+      "scene": "提出忌口",
+      "en": "I was hoping to ask for this dish without onions.",
+      "zh": "我希望能请店家做这道不加洋葱。"
+    },
+    {
+      "id": "phrase-0133",
+      "category": "餐饮点单",
+      "scene": "提出忌口",
+      "en": "Do you know how I can ask for this dish without onions?",
+      "zh": "你知道我怎么才能请店家做这道不加洋葱吗？"
+    },
+    {
+      "id": "phrase-0134",
+      "category": "餐饮点单",
+      "scene": "提出忌口",
+      "en": "Could I ask for this dish without onions?",
+      "zh": "我可以请店家做这道不加洋葱吗？"
+    },
+    {
+      "id": "phrase-0135",
+      "category": "餐饮点单",
+      "scene": "提出忌口",
+      "en": "I'd appreciate it if you could help me ask for this dish without onions.",
+      "zh": "如果你能帮我请店家做这道不加洋葱，我会很感激。"
+    },
+    {
+      "id": "phrase-0136",
+      "category": "餐饮点单",
+      "scene": "续水",
+      "en": "I need to ask for a refill of water.",
+      "zh": "我需要请店员续一下水。"
+    },
+    {
+      "id": "phrase-0137",
+      "category": "餐饮点单",
+      "scene": "续水",
+      "en": "Could you help me ask for a refill of water?",
+      "zh": "能帮我请店员续一下水吗？"
+    },
+    {
+      "id": "phrase-0138",
+      "category": "餐饮点单",
+      "scene": "续水",
+      "en": "I'd like to ask for a refill of water, please.",
+      "zh": "麻烦帮我请店员续一下水。"
+    },
+    {
+      "id": "phrase-0139",
+      "category": "餐饮点单",
+      "scene": "续水",
+      "en": "Is it possible to ask for a refill of water?",
+      "zh": "可以请店员续一下水吗？"
+    },
+    {
+      "id": "phrase-0140",
+      "category": "餐饮点单",
+      "scene": "续水",
+      "en": "I'm trying to ask for a refill of water.",
+      "zh": "我正在尝试请店员续一下水。"
+    },
+    {
+      "id": "phrase-0141",
+      "category": "餐饮点单",
+      "scene": "续水",
+      "en": "I was hoping to ask for a refill of water.",
+      "zh": "我希望能请店员续一下水。"
+    },
+    {
+      "id": "phrase-0142",
+      "category": "餐饮点单",
+      "scene": "续水",
+      "en": "Do you know how I can ask for a refill of water?",
+      "zh": "你知道我怎么才能请店员续一下水吗？"
+    },
+    {
+      "id": "phrase-0143",
+      "category": "餐饮点单",
+      "scene": "续水",
+      "en": "Could I ask for a refill of water?",
+      "zh": "我可以请店员续一下水吗？"
+    },
+    {
+      "id": "phrase-0144",
+      "category": "餐饮点单",
+      "scene": "续水",
+      "en": "I'd appreciate it if you could help me ask for a refill of water.",
+      "zh": "如果你能帮我请店员续一下水，我会很感激。"
+    },
+    {
+      "id": "phrase-0145",
+      "category": "餐饮点单",
+      "scene": "更换配菜",
+      "en": "I need to change the side dish.",
+      "zh": "我需要更换配菜。"
+    },
+    {
+      "id": "phrase-0146",
+      "category": "餐饮点单",
+      "scene": "更换配菜",
+      "en": "Could you help me change the side dish?",
+      "zh": "能帮我更换配菜吗？"
+    },
+    {
+      "id": "phrase-0147",
+      "category": "餐饮点单",
+      "scene": "更换配菜",
+      "en": "I'd like to change the side dish, please.",
+      "zh": "麻烦帮我更换配菜。"
+    },
+    {
+      "id": "phrase-0148",
+      "category": "餐饮点单",
+      "scene": "更换配菜",
+      "en": "Is it possible to change the side dish?",
+      "zh": "可以更换配菜吗？"
+    },
+    {
+      "id": "phrase-0149",
+      "category": "餐饮点单",
+      "scene": "更换配菜",
+      "en": "I'm trying to change the side dish.",
+      "zh": "我正在尝试更换配菜。"
+    },
+    {
+      "id": "phrase-0150",
+      "category": "餐饮点单",
+      "scene": "更换配菜",
+      "en": "I was hoping to change the side dish.",
+      "zh": "我希望能更换配菜。"
+    },
+    {
+      "id": "phrase-0151",
+      "category": "餐饮点单",
+      "scene": "更换配菜",
+      "en": "Do you know how I can change the side dish?",
+      "zh": "你知道我怎么才能更换配菜吗？"
+    },
+    {
+      "id": "phrase-0152",
+      "category": "餐饮点单",
+      "scene": "更换配菜",
+      "en": "Could I change the side dish?",
+      "zh": "我可以更换配菜吗？"
+    },
+    {
+      "id": "phrase-0153",
+      "category": "餐饮点单",
+      "scene": "更换配菜",
+      "en": "I'd appreciate it if you could help me change the side dish.",
+      "zh": "如果你能帮我更换配菜，我会很感激。"
+    },
+    {
+      "id": "phrase-0154",
+      "category": "餐饮点单",
+      "scene": "结账",
+      "en": "I need to split the bill between us.",
+      "zh": "我需要把账单分开结算。"
+    },
+    {
+      "id": "phrase-0155",
+      "category": "餐饮点单",
+      "scene": "结账",
+      "en": "Could you help me split the bill between us?",
+      "zh": "能帮我把账单分开结算吗？"
+    },
+    {
+      "id": "phrase-0156",
+      "category": "餐饮点单",
+      "scene": "结账",
+      "en": "I'd like to split the bill between us, please.",
+      "zh": "麻烦帮我把账单分开结算。"
+    },
+    {
+      "id": "phrase-0157",
+      "category": "餐饮点单",
+      "scene": "结账",
+      "en": "Is it possible to split the bill between us?",
+      "zh": "可以把账单分开结算吗？"
+    },
+    {
+      "id": "phrase-0158",
+      "category": "餐饮点单",
+      "scene": "结账",
+      "en": "I'm trying to split the bill between us.",
+      "zh": "我正在尝试把账单分开结算。"
+    },
+    {
+      "id": "phrase-0159",
+      "category": "餐饮点单",
+      "scene": "结账",
+      "en": "I was hoping to split the bill between us.",
+      "zh": "我希望能把账单分开结算。"
+    },
+    {
+      "id": "phrase-0160",
+      "category": "餐饮点单",
+      "scene": "结账",
+      "en": "Do you know how I can split the bill between us?",
+      "zh": "你知道我怎么才能把账单分开结算吗？"
+    },
+    {
+      "id": "phrase-0161",
+      "category": "餐饮点单",
+      "scene": "结账",
+      "en": "Could I split the bill between us?",
+      "zh": "我可以把账单分开结算吗？"
+    },
+    {
+      "id": "phrase-0162",
+      "category": "餐饮点单",
+      "scene": "结账",
+      "en": "I'd appreciate it if you could help me split the bill between us.",
+      "zh": "如果你能帮我把账单分开结算，我会很感激。"
+    },
+    {
+      "id": "phrase-0163",
+      "category": "餐饮点单",
+      "scene": "打包",
+      "en": "I need to get the rest of my meal to go.",
+      "zh": "我需要把剩下的餐点打包。"
+    },
+    {
+      "id": "phrase-0164",
+      "category": "餐饮点单",
+      "scene": "打包",
+      "en": "Could you help me get the rest of my meal to go?",
+      "zh": "能帮我把剩下的餐点打包吗？"
+    },
+    {
+      "id": "phrase-0165",
+      "category": "餐饮点单",
+      "scene": "打包",
+      "en": "I'd like to get the rest of my meal to go, please.",
+      "zh": "麻烦帮我把剩下的餐点打包。"
+    },
+    {
+      "id": "phrase-0166",
+      "category": "餐饮点单",
+      "scene": "打包",
+      "en": "Is it possible to get the rest of my meal to go?",
+      "zh": "可以把剩下的餐点打包吗？"
+    },
+    {
+      "id": "phrase-0167",
+      "category": "餐饮点单",
+      "scene": "打包",
+      "en": "I'm trying to get the rest of my meal to go.",
+      "zh": "我正在尝试把剩下的餐点打包。"
+    },
+    {
+      "id": "phrase-0168",
+      "category": "餐饮点单",
+      "scene": "打包",
+      "en": "I was hoping to get the rest of my meal to go.",
+      "zh": "我希望能把剩下的餐点打包。"
+    },
+    {
+      "id": "phrase-0169",
+      "category": "餐饮点单",
+      "scene": "打包",
+      "en": "Do you know how I can get the rest of my meal to go?",
+      "zh": "你知道我怎么才能把剩下的餐点打包吗？"
+    },
+    {
+      "id": "phrase-0170",
+      "category": "餐饮点单",
+      "scene": "打包",
+      "en": "Could I get the rest of my meal to go?",
+      "zh": "我可以把剩下的餐点打包吗？"
+    },
+    {
+      "id": "phrase-0171",
+      "category": "餐饮点单",
+      "scene": "打包",
+      "en": "I'd appreciate it if you could help me get the rest of my meal to go.",
+      "zh": "如果你能帮我把剩下的餐点打包，我会很感激。"
+    },
+    {
+      "id": "phrase-0172",
+      "category": "餐饮点单",
+      "scene": "反馈餐点问题",
+      "en": "I need to tell the server that my meal is cold.",
+      "zh": "我需要告诉服务员餐点凉了。"
+    },
+    {
+      "id": "phrase-0173",
+      "category": "餐饮点单",
+      "scene": "反馈餐点问题",
+      "en": "Could you help me tell the server that my meal is cold?",
+      "zh": "能帮我告诉服务员餐点凉了吗？"
+    },
+    {
+      "id": "phrase-0174",
+      "category": "餐饮点单",
+      "scene": "反馈餐点问题",
+      "en": "I'd like to tell the server that my meal is cold, please.",
+      "zh": "麻烦帮我告诉服务员餐点凉了。"
+    },
+    {
+      "id": "phrase-0175",
+      "category": "餐饮点单",
+      "scene": "反馈餐点问题",
+      "en": "Is it possible to tell the server that my meal is cold?",
+      "zh": "可以告诉服务员餐点凉了吗？"
+    },
+    {
+      "id": "phrase-0176",
+      "category": "餐饮点单",
+      "scene": "反馈餐点问题",
+      "en": "I'm trying to tell the server that my meal is cold.",
+      "zh": "我正在尝试告诉服务员餐点凉了。"
+    },
+    {
+      "id": "phrase-0177",
+      "category": "餐饮点单",
+      "scene": "反馈餐点问题",
+      "en": "I was hoping to tell the server that my meal is cold.",
+      "zh": "我希望能告诉服务员餐点凉了。"
+    },
+    {
+      "id": "phrase-0178",
+      "category": "餐饮点单",
+      "scene": "反馈餐点问题",
+      "en": "Do you know how I can tell the server that my meal is cold?",
+      "zh": "你知道我怎么才能告诉服务员餐点凉了吗？"
+    },
+    {
+      "id": "phrase-0179",
+      "category": "餐饮点单",
+      "scene": "反馈餐点问题",
+      "en": "Could I tell the server that my meal is cold?",
+      "zh": "我可以告诉服务员餐点凉了吗？"
+    },
+    {
+      "id": "phrase-0180",
+      "category": "餐饮点单",
+      "scene": "反馈餐点问题",
+      "en": "I'd appreciate it if you could help me tell the server that my meal is cold.",
+      "zh": "如果你能帮我告诉服务员餐点凉了，我会很感激。"
+    },
+    {
+      "id": "phrase-0181",
+      "category": "购物",
+      "scene": "寻找尺码",
+      "en": "I need to find this shirt in my size.",
+      "zh": "我需要找一件合我尺码的这款衬衫。"
+    },
+    {
+      "id": "phrase-0182",
+      "category": "购物",
+      "scene": "寻找尺码",
+      "en": "Could you help me find this shirt in my size?",
+      "zh": "能帮我找一件合我尺码的这款衬衫吗？"
+    },
+    {
+      "id": "phrase-0183",
+      "category": "购物",
+      "scene": "寻找尺码",
+      "en": "I'd like to find this shirt in my size, please.",
+      "zh": "麻烦帮我找一件合我尺码的这款衬衫。"
+    },
+    {
+      "id": "phrase-0184",
+      "category": "购物",
+      "scene": "寻找尺码",
+      "en": "Is it possible to find this shirt in my size?",
+      "zh": "可以找一件合我尺码的这款衬衫吗？"
+    },
+    {
+      "id": "phrase-0185",
+      "category": "购物",
+      "scene": "寻找尺码",
+      "en": "I'm trying to find this shirt in my size.",
+      "zh": "我正在尝试找一件合我尺码的这款衬衫。"
+    },
+    {
+      "id": "phrase-0186",
+      "category": "购物",
+      "scene": "寻找尺码",
+      "en": "I was hoping to find this shirt in my size.",
+      "zh": "我希望能找一件合我尺码的这款衬衫。"
+    },
+    {
+      "id": "phrase-0187",
+      "category": "购物",
+      "scene": "寻找尺码",
+      "en": "Do you know how I can find this shirt in my size?",
+      "zh": "你知道我怎么才能找一件合我尺码的这款衬衫吗？"
+    },
+    {
+      "id": "phrase-0188",
+      "category": "购物",
+      "scene": "寻找尺码",
+      "en": "Could I find this shirt in my size?",
+      "zh": "我可以找一件合我尺码的这款衬衫吗？"
+    },
+    {
+      "id": "phrase-0189",
+      "category": "购物",
+      "scene": "寻找尺码",
+      "en": "I'd appreciate it if you could help me find this shirt in my size.",
+      "zh": "如果你能帮我找一件合我尺码的这款衬衫，我会很感激。"
+    },
+    {
+      "id": "phrase-0190",
+      "category": "购物",
+      "scene": "试穿",
+      "en": "I need to try this jacket on.",
+      "zh": "我需要试穿这件夹克。"
+    },
+    {
+      "id": "phrase-0191",
+      "category": "购物",
+      "scene": "试穿",
+      "en": "Could you help me try this jacket on?",
+      "zh": "能帮我试穿这件夹克吗？"
+    },
+    {
+      "id": "phrase-0192",
+      "category": "购物",
+      "scene": "试穿",
+      "en": "I'd like to try this jacket on, please.",
+      "zh": "麻烦帮我试穿这件夹克。"
+    },
+    {
+      "id": "phrase-0193",
+      "category": "购物",
+      "scene": "试穿",
+      "en": "Is it possible to try this jacket on?",
+      "zh": "可以试穿这件夹克吗？"
+    },
+    {
+      "id": "phrase-0194",
+      "category": "购物",
+      "scene": "试穿",
+      "en": "I'm trying to try this jacket on.",
+      "zh": "我正在尝试试穿这件夹克。"
+    },
+    {
+      "id": "phrase-0195",
+      "category": "购物",
+      "scene": "试穿",
+      "en": "I was hoping to try this jacket on.",
+      "zh": "我希望能试穿这件夹克。"
+    },
+    {
+      "id": "phrase-0196",
+      "category": "购物",
+      "scene": "试穿",
+      "en": "Do you know how I can try this jacket on?",
+      "zh": "你知道我怎么才能试穿这件夹克吗？"
+    },
+    {
+      "id": "phrase-0197",
+      "category": "购物",
+      "scene": "试穿",
+      "en": "Could I try this jacket on?",
+      "zh": "我可以试穿这件夹克吗？"
+    },
+    {
+      "id": "phrase-0198",
+      "category": "购物",
+      "scene": "试穿",
+      "en": "I'd appreciate it if you could help me try this jacket on.",
+      "zh": "如果你能帮我试穿这件夹克，我会很感激。"
+    },
+    {
+      "id": "phrase-0199",
+      "category": "购物",
+      "scene": "询问价格",
+      "en": "I need to check the price of this item.",
+      "zh": "我需要查看这件商品的价格。"
+    },
+    {
+      "id": "phrase-0200",
+      "category": "购物",
+      "scene": "询问价格",
+      "en": "Could you help me check the price of this item?",
+      "zh": "能帮我查看这件商品的价格吗？"
+    },
+    {
+      "id": "phrase-0201",
+      "category": "购物",
+      "scene": "询问价格",
+      "en": "I'd like to check the price of this item, please.",
+      "zh": "麻烦帮我查看这件商品的价格。"
+    },
+    {
+      "id": "phrase-0202",
+      "category": "购物",
+      "scene": "询问价格",
+      "en": "Is it possible to check the price of this item?",
+      "zh": "可以查看这件商品的价格吗？"
+    },
+    {
+      "id": "phrase-0203",
+      "category": "购物",
+      "scene": "询问价格",
+      "en": "I'm trying to check the price of this item.",
+      "zh": "我正在尝试查看这件商品的价格。"
+    },
+    {
+      "id": "phrase-0204",
+      "category": "购物",
+      "scene": "询问价格",
+      "en": "I was hoping to check the price of this item.",
+      "zh": "我希望能查看这件商品的价格。"
+    },
+    {
+      "id": "phrase-0205",
+      "category": "购物",
+      "scene": "询问价格",
+      "en": "Do you know how I can check the price of this item?",
+      "zh": "你知道我怎么才能查看这件商品的价格吗？"
+    },
+    {
+      "id": "phrase-0206",
+      "category": "购物",
+      "scene": "询问价格",
+      "en": "Could I check the price of this item?",
+      "zh": "我可以查看这件商品的价格吗？"
+    },
+    {
+      "id": "phrase-0207",
+      "category": "购物",
+      "scene": "询问价格",
+      "en": "I'd appreciate it if you could help me check the price of this item.",
+      "zh": "如果你能帮我查看这件商品的价格，我会很感激。"
+    },
+    {
+      "id": "phrase-0208",
+      "category": "购物",
+      "scene": "询问折扣",
+      "en": "I need to ask whether there is a discount.",
+      "zh": "我需要询问是否有折扣。"
+    },
+    {
+      "id": "phrase-0209",
+      "category": "购物",
+      "scene": "询问折扣",
+      "en": "Could you help me ask whether there is a discount?",
+      "zh": "能帮我询问是否有折扣吗？"
+    },
+    {
+      "id": "phrase-0210",
+      "category": "购物",
+      "scene": "询问折扣",
+      "en": "I'd like to ask whether there is a discount, please.",
+      "zh": "麻烦帮我询问是否有折扣。"
+    },
+    {
+      "id": "phrase-0211",
+      "category": "购物",
+      "scene": "询问折扣",
+      "en": "Is it possible to ask whether there is a discount?",
+      "zh": "可以询问是否有折扣吗？"
+    },
+    {
+      "id": "phrase-0212",
+      "category": "购物",
+      "scene": "询问折扣",
+      "en": "I'm trying to ask whether there is a discount.",
+      "zh": "我正在尝试询问是否有折扣。"
+    },
+    {
+      "id": "phrase-0213",
+      "category": "购物",
+      "scene": "询问折扣",
+      "en": "I was hoping to ask whether there is a discount.",
+      "zh": "我希望能询问是否有折扣。"
+    },
+    {
+      "id": "phrase-0214",
+      "category": "购物",
+      "scene": "询问折扣",
+      "en": "Do you know how I can ask whether there is a discount?",
+      "zh": "你知道我怎么才能询问是否有折扣吗？"
+    },
+    {
+      "id": "phrase-0215",
+      "category": "购物",
+      "scene": "询问折扣",
+      "en": "Could I ask whether there is a discount?",
+      "zh": "我可以询问是否有折扣吗？"
+    },
+    {
+      "id": "phrase-0216",
+      "category": "购物",
+      "scene": "询问折扣",
+      "en": "I'd appreciate it if you could help me ask whether there is a discount.",
+      "zh": "如果你能帮我询问是否有折扣，我会很感激。"
+    },
+    {
+      "id": "phrase-0217",
+      "category": "购物",
+      "scene": "更换商品",
+      "en": "I need to exchange this for a different size.",
+      "zh": "我需要把这件换成另一个尺码。"
+    },
+    {
+      "id": "phrase-0218",
+      "category": "购物",
+      "scene": "更换商品",
+      "en": "Could you help me exchange this for a different size?",
+      "zh": "能帮我把这件换成另一个尺码吗？"
+    },
+    {
+      "id": "phrase-0219",
+      "category": "购物",
+      "scene": "更换商品",
+      "en": "I'd like to exchange this for a different size, please.",
+      "zh": "麻烦帮我把这件换成另一个尺码。"
+    },
+    {
+      "id": "phrase-0220",
+      "category": "购物",
+      "scene": "更换商品",
+      "en": "Is it possible to exchange this for a different size?",
+      "zh": "可以把这件换成另一个尺码吗？"
+    },
+    {
+      "id": "phrase-0221",
+      "category": "购物",
+      "scene": "更换商品",
+      "en": "I'm trying to exchange this for a different size.",
+      "zh": "我正在尝试把这件换成另一个尺码。"
+    },
+    {
+      "id": "phrase-0222",
+      "category": "购物",
+      "scene": "更换商品",
+      "en": "I was hoping to exchange this for a different size.",
+      "zh": "我希望能把这件换成另一个尺码。"
+    },
+    {
+      "id": "phrase-0223",
+      "category": "购物",
+      "scene": "更换商品",
+      "en": "Do you know how I can exchange this for a different size?",
+      "zh": "你知道我怎么才能把这件换成另一个尺码吗？"
+    },
+    {
+      "id": "phrase-0224",
+      "category": "购物",
+      "scene": "更换商品",
+      "en": "Could I exchange this for a different size?",
+      "zh": "我可以把这件换成另一个尺码吗？"
+    },
+    {
+      "id": "phrase-0225",
+      "category": "购物",
+      "scene": "更换商品",
+      "en": "I'd appreciate it if you could help me exchange this for a different size.",
+      "zh": "如果你能帮我把这件换成另一个尺码，我会很感激。"
+    },
+    {
+      "id": "phrase-0226",
+      "category": "购物",
+      "scene": "退货退款",
+      "en": "I need to return this item for a refund.",
+      "zh": "我需要退掉这件商品并申请退款。"
+    },
+    {
+      "id": "phrase-0227",
+      "category": "购物",
+      "scene": "退货退款",
+      "en": "Could you help me return this item for a refund?",
+      "zh": "能帮我退掉这件商品并申请退款吗？"
+    },
+    {
+      "id": "phrase-0228",
+      "category": "购物",
+      "scene": "退货退款",
+      "en": "I'd like to return this item for a refund, please.",
+      "zh": "麻烦帮我退掉这件商品并申请退款。"
+    },
+    {
+      "id": "phrase-0229",
+      "category": "购物",
+      "scene": "退货退款",
+      "en": "Is it possible to return this item for a refund?",
+      "zh": "可以退掉这件商品并申请退款吗？"
+    },
+    {
+      "id": "phrase-0230",
+      "category": "购物",
+      "scene": "退货退款",
+      "en": "I'm trying to return this item for a refund.",
+      "zh": "我正在尝试退掉这件商品并申请退款。"
+    },
+    {
+      "id": "phrase-0231",
+      "category": "购物",
+      "scene": "退货退款",
+      "en": "I was hoping to return this item for a refund.",
+      "zh": "我希望能退掉这件商品并申请退款。"
+    },
+    {
+      "id": "phrase-0232",
+      "category": "购物",
+      "scene": "退货退款",
+      "en": "Do you know how I can return this item for a refund?",
+      "zh": "你知道我怎么才能退掉这件商品并申请退款吗？"
+    },
+    {
+      "id": "phrase-0233",
+      "category": "购物",
+      "scene": "退货退款",
+      "en": "Could I return this item for a refund?",
+      "zh": "我可以退掉这件商品并申请退款吗？"
+    },
+    {
+      "id": "phrase-0234",
+      "category": "购物",
+      "scene": "退货退款",
+      "en": "I'd appreciate it if you could help me return this item for a refund.",
+      "zh": "如果你能帮我退掉这件商品并申请退款，我会很感激。"
+    },
+    {
+      "id": "phrase-0235",
+      "category": "购物",
+      "scene": "比较颜色",
+      "en": "I need to compare these two colors.",
+      "zh": "我需要比较这两种颜色。"
+    },
+    {
+      "id": "phrase-0236",
+      "category": "购物",
+      "scene": "比较颜色",
+      "en": "Could you help me compare these two colors?",
+      "zh": "能帮我比较这两种颜色吗？"
+    },
+    {
+      "id": "phrase-0237",
+      "category": "购物",
+      "scene": "比较颜色",
+      "en": "I'd like to compare these two colors, please.",
+      "zh": "麻烦帮我比较这两种颜色。"
+    },
+    {
+      "id": "phrase-0238",
+      "category": "购物",
+      "scene": "比较颜色",
+      "en": "Is it possible to compare these two colors?",
+      "zh": "可以比较这两种颜色吗？"
+    },
+    {
+      "id": "phrase-0239",
+      "category": "购物",
+      "scene": "比较颜色",
+      "en": "I'm trying to compare these two colors.",
+      "zh": "我正在尝试比较这两种颜色。"
+    },
+    {
+      "id": "phrase-0240",
+      "category": "购物",
+      "scene": "比较颜色",
+      "en": "I was hoping to compare these two colors.",
+      "zh": "我希望能比较这两种颜色。"
+    },
+    {
+      "id": "phrase-0241",
+      "category": "购物",
+      "scene": "比较颜色",
+      "en": "Do you know how I can compare these two colors?",
+      "zh": "你知道我怎么才能比较这两种颜色吗？"
+    },
+    {
+      "id": "phrase-0242",
+      "category": "购物",
+      "scene": "比较颜色",
+      "en": "Could I compare these two colors?",
+      "zh": "我可以比较这两种颜色吗？"
+    },
+    {
+      "id": "phrase-0243",
+      "category": "购物",
+      "scene": "比较颜色",
+      "en": "I'd appreciate it if you could help me compare these two colors.",
+      "zh": "如果你能帮我比较这两种颜色，我会很感激。"
+    },
+    {
+      "id": "phrase-0244",
+      "category": "购物",
+      "scene": "询问库存",
+      "en": "I need to check whether this is in stock.",
+      "zh": "我需要确认这件商品是否有货。"
+    },
+    {
+      "id": "phrase-0245",
+      "category": "购物",
+      "scene": "询问库存",
+      "en": "Could you help me check whether this is in stock?",
+      "zh": "能帮我确认这件商品是否有货吗？"
+    },
+    {
+      "id": "phrase-0246",
+      "category": "购物",
+      "scene": "询问库存",
+      "en": "I'd like to check whether this is in stock, please.",
+      "zh": "麻烦帮我确认这件商品是否有货。"
+    },
+    {
+      "id": "phrase-0247",
+      "category": "购物",
+      "scene": "询问库存",
+      "en": "Is it possible to check whether this is in stock?",
+      "zh": "可以确认这件商品是否有货吗？"
+    },
+    {
+      "id": "phrase-0248",
+      "category": "购物",
+      "scene": "询问库存",
+      "en": "I'm trying to check whether this is in stock.",
+      "zh": "我正在尝试确认这件商品是否有货。"
+    },
+    {
+      "id": "phrase-0249",
+      "category": "购物",
+      "scene": "询问库存",
+      "en": "I was hoping to check whether this is in stock.",
+      "zh": "我希望能确认这件商品是否有货。"
+    },
+    {
+      "id": "phrase-0250",
+      "category": "购物",
+      "scene": "询问库存",
+      "en": "Do you know how I can check whether this is in stock?",
+      "zh": "你知道我怎么才能确认这件商品是否有货吗？"
+    },
+    {
+      "id": "phrase-0251",
+      "category": "购物",
+      "scene": "询问库存",
+      "en": "Could I check whether this is in stock?",
+      "zh": "我可以确认这件商品是否有货吗？"
+    },
+    {
+      "id": "phrase-0252",
+      "category": "购物",
+      "scene": "询问库存",
+      "en": "I'd appreciate it if you could help me check whether this is in stock.",
+      "zh": "如果你能帮我确认这件商品是否有货，我会很感激。"
+    },
+    {
+      "id": "phrase-0253",
+      "category": "购物",
+      "scene": "礼品包装",
+      "en": "I need to have this wrapped as a gift.",
+      "zh": "我需要把这件商品包装成礼物。"
+    },
+    {
+      "id": "phrase-0254",
+      "category": "购物",
+      "scene": "礼品包装",
+      "en": "Could you help me have this wrapped as a gift?",
+      "zh": "能帮我把这件商品包装成礼物吗？"
+    },
+    {
+      "id": "phrase-0255",
+      "category": "购物",
+      "scene": "礼品包装",
+      "en": "I'd like to have this wrapped as a gift, please.",
+      "zh": "麻烦帮我把这件商品包装成礼物。"
+    },
+    {
+      "id": "phrase-0256",
+      "category": "购物",
+      "scene": "礼品包装",
+      "en": "Is it possible to have this wrapped as a gift?",
+      "zh": "可以把这件商品包装成礼物吗？"
+    },
+    {
+      "id": "phrase-0257",
+      "category": "购物",
+      "scene": "礼品包装",
+      "en": "I'm trying to have this wrapped as a gift.",
+      "zh": "我正在尝试把这件商品包装成礼物。"
+    },
+    {
+      "id": "phrase-0258",
+      "category": "购物",
+      "scene": "礼品包装",
+      "en": "I was hoping to have this wrapped as a gift.",
+      "zh": "我希望能把这件商品包装成礼物。"
+    },
+    {
+      "id": "phrase-0259",
+      "category": "购物",
+      "scene": "礼品包装",
+      "en": "Do you know how I can have this wrapped as a gift?",
+      "zh": "你知道我怎么才能把这件商品包装成礼物吗？"
+    },
+    {
+      "id": "phrase-0260",
+      "category": "购物",
+      "scene": "礼品包装",
+      "en": "Could I have this wrapped as a gift?",
+      "zh": "我可以把这件商品包装成礼物吗？"
+    },
+    {
+      "id": "phrase-0261",
+      "category": "购物",
+      "scene": "礼品包装",
+      "en": "I'd appreciate it if you could help me have this wrapped as a gift.",
+      "zh": "如果你能帮我把这件商品包装成礼物，我会很感激。"
+    },
+    {
+      "id": "phrase-0262",
+      "category": "购物",
+      "scene": "索要收据",
+      "en": "I need to get a receipt for my purchase.",
+      "zh": "我需要拿一张购物收据。"
+    },
+    {
+      "id": "phrase-0263",
+      "category": "购物",
+      "scene": "索要收据",
+      "en": "Could you help me get a receipt for my purchase?",
+      "zh": "能帮我拿一张购物收据吗？"
+    },
+    {
+      "id": "phrase-0264",
+      "category": "购物",
+      "scene": "索要收据",
+      "en": "I'd like to get a receipt for my purchase, please.",
+      "zh": "麻烦帮我拿一张购物收据。"
+    },
+    {
+      "id": "phrase-0265",
+      "category": "购物",
+      "scene": "索要收据",
+      "en": "Is it possible to get a receipt for my purchase?",
+      "zh": "可以拿一张购物收据吗？"
+    },
+    {
+      "id": "phrase-0266",
+      "category": "购物",
+      "scene": "索要收据",
+      "en": "I'm trying to get a receipt for my purchase.",
+      "zh": "我正在尝试拿一张购物收据。"
+    },
+    {
+      "id": "phrase-0267",
+      "category": "购物",
+      "scene": "索要收据",
+      "en": "I was hoping to get a receipt for my purchase.",
+      "zh": "我希望能拿一张购物收据。"
+    },
+    {
+      "id": "phrase-0268",
+      "category": "购物",
+      "scene": "索要收据",
+      "en": "Do you know how I can get a receipt for my purchase?",
+      "zh": "你知道我怎么才能拿一张购物收据吗？"
+    },
+    {
+      "id": "phrase-0269",
+      "category": "购物",
+      "scene": "索要收据",
+      "en": "Could I get a receipt for my purchase?",
+      "zh": "我可以拿一张购物收据吗？"
+    },
+    {
+      "id": "phrase-0270",
+      "category": "购物",
+      "scene": "索要收据",
+      "en": "I'd appreciate it if you could help me get a receipt for my purchase.",
+      "zh": "如果你能帮我拿一张购物收据，我会很感激。"
+    },
+    {
+      "id": "phrase-0271",
+      "category": "交通出行",
+      "scene": "购买车票",
+      "en": "I need to buy a ticket to the city center.",
+      "zh": "我需要买一张去市中心的票。"
+    },
+    {
+      "id": "phrase-0272",
+      "category": "交通出行",
+      "scene": "购买车票",
+      "en": "Could you help me buy a ticket to the city center?",
+      "zh": "能帮我买一张去市中心的票吗？"
+    },
+    {
+      "id": "phrase-0273",
+      "category": "交通出行",
+      "scene": "购买车票",
+      "en": "I'd like to buy a ticket to the city center, please.",
+      "zh": "麻烦帮我买一张去市中心的票。"
+    },
+    {
+      "id": "phrase-0274",
+      "category": "交通出行",
+      "scene": "购买车票",
+      "en": "Is it possible to buy a ticket to the city center?",
+      "zh": "可以买一张去市中心的票吗？"
+    },
+    {
+      "id": "phrase-0275",
+      "category": "交通出行",
+      "scene": "购买车票",
+      "en": "I'm trying to buy a ticket to the city center.",
+      "zh": "我正在尝试买一张去市中心的票。"
+    },
+    {
+      "id": "phrase-0276",
+      "category": "交通出行",
+      "scene": "购买车票",
+      "en": "I was hoping to buy a ticket to the city center.",
+      "zh": "我希望能买一张去市中心的票。"
+    },
+    {
+      "id": "phrase-0277",
+      "category": "交通出行",
+      "scene": "购买车票",
+      "en": "Do you know how I can buy a ticket to the city center?",
+      "zh": "你知道我怎么才能买一张去市中心的票吗？"
+    },
+    {
+      "id": "phrase-0278",
+      "category": "交通出行",
+      "scene": "购买车票",
+      "en": "Could I buy a ticket to the city center?",
+      "zh": "我可以买一张去市中心的票吗？"
+    },
+    {
+      "id": "phrase-0279",
+      "category": "交通出行",
+      "scene": "购买车票",
+      "en": "I'd appreciate it if you could help me buy a ticket to the city center.",
+      "zh": "如果你能帮我买一张去市中心的票，我会很感激。"
+    },
+    {
+      "id": "phrase-0280",
+      "category": "交通出行",
+      "scene": "询问站台",
+      "en": "I need to find out which platform the train leaves from.",
+      "zh": "我需要确认列车从哪个站台出发。"
+    },
+    {
+      "id": "phrase-0281",
+      "category": "交通出行",
+      "scene": "询问站台",
+      "en": "Could you help me find out which platform the train leaves from?",
+      "zh": "能帮我确认列车从哪个站台出发吗？"
+    },
+    {
+      "id": "phrase-0282",
+      "category": "交通出行",
+      "scene": "询问站台",
+      "en": "I'd like to find out which platform the train leaves from, please.",
+      "zh": "麻烦帮我确认列车从哪个站台出发。"
+    },
+    {
+      "id": "phrase-0283",
+      "category": "交通出行",
+      "scene": "询问站台",
+      "en": "Is it possible to find out which platform the train leaves from?",
+      "zh": "可以确认列车从哪个站台出发吗？"
+    },
+    {
+      "id": "phrase-0284",
+      "category": "交通出行",
+      "scene": "询问站台",
+      "en": "I'm trying to find out which platform the train leaves from.",
+      "zh": "我正在尝试确认列车从哪个站台出发。"
+    },
+    {
+      "id": "phrase-0285",
+      "category": "交通出行",
+      "scene": "询问站台",
+      "en": "I was hoping to find out which platform the train leaves from.",
+      "zh": "我希望能确认列车从哪个站台出发。"
+    },
+    {
+      "id": "phrase-0286",
+      "category": "交通出行",
+      "scene": "询问站台",
+      "en": "Do you know how I can find out which platform the train leaves from?",
+      "zh": "你知道我怎么才能确认列车从哪个站台出发吗？"
+    },
+    {
+      "id": "phrase-0287",
+      "category": "交通出行",
+      "scene": "询问站台",
+      "en": "Could I find out which platform the train leaves from?",
+      "zh": "我可以确认列车从哪个站台出发吗？"
+    },
+    {
+      "id": "phrase-0288",
+      "category": "交通出行",
+      "scene": "询问站台",
+      "en": "I'd appreciate it if you could help me find out which platform the train leaves from.",
+      "zh": "如果你能帮我确认列车从哪个站台出发，我会很感激。"
+    },
+    {
+      "id": "phrase-0289",
+      "category": "交通出行",
+      "scene": "交通卡充值",
+      "en": "I need to reload my transit card.",
+      "zh": "我需要给交通卡充值。"
+    },
+    {
+      "id": "phrase-0290",
+      "category": "交通出行",
+      "scene": "交通卡充值",
+      "en": "Could you help me reload my transit card?",
+      "zh": "能帮我给交通卡充值吗？"
+    },
+    {
+      "id": "phrase-0291",
+      "category": "交通出行",
+      "scene": "交通卡充值",
+      "en": "I'd like to reload my transit card, please.",
+      "zh": "麻烦帮我给交通卡充值。"
+    },
+    {
+      "id": "phrase-0292",
+      "category": "交通出行",
+      "scene": "交通卡充值",
+      "en": "Is it possible to reload my transit card?",
+      "zh": "可以给交通卡充值吗？"
+    },
+    {
+      "id": "phrase-0293",
+      "category": "交通出行",
+      "scene": "交通卡充值",
+      "en": "I'm trying to reload my transit card.",
+      "zh": "我正在尝试给交通卡充值。"
+    },
+    {
+      "id": "phrase-0294",
+      "category": "交通出行",
+      "scene": "交通卡充值",
+      "en": "I was hoping to reload my transit card.",
+      "zh": "我希望能给交通卡充值。"
+    },
+    {
+      "id": "phrase-0295",
+      "category": "交通出行",
+      "scene": "交通卡充值",
+      "en": "Do you know how I can reload my transit card?",
+      "zh": "你知道我怎么才能给交通卡充值吗？"
+    },
+    {
+      "id": "phrase-0296",
+      "category": "交通出行",
+      "scene": "交通卡充值",
+      "en": "Could I reload my transit card?",
+      "zh": "我可以给交通卡充值吗？"
+    },
+    {
+      "id": "phrase-0297",
+      "category": "交通出行",
+      "scene": "交通卡充值",
+      "en": "I'd appreciate it if you could help me reload my transit card.",
+      "zh": "如果你能帮我给交通卡充值，我会很感激。"
+    },
+    {
+      "id": "phrase-0298",
+      "category": "交通出行",
+      "scene": "叫车",
+      "en": "I need to call a taxi to this address.",
+      "zh": "我需要叫一辆出租车去这个地址。"
+    },
+    {
+      "id": "phrase-0299",
+      "category": "交通出行",
+      "scene": "叫车",
+      "en": "Could you help me call a taxi to this address?",
+      "zh": "能帮我叫一辆出租车去这个地址吗？"
+    },
+    {
+      "id": "phrase-0300",
+      "category": "交通出行",
+      "scene": "叫车",
+      "en": "I'd like to call a taxi to this address, please.",
+      "zh": "麻烦帮我叫一辆出租车去这个地址。"
+    },
+    {
+      "id": "phrase-0301",
+      "category": "交通出行",
+      "scene": "叫车",
+      "en": "Is it possible to call a taxi to this address?",
+      "zh": "可以叫一辆出租车去这个地址吗？"
+    },
+    {
+      "id": "phrase-0302",
+      "category": "交通出行",
+      "scene": "叫车",
+      "en": "I'm trying to call a taxi to this address.",
+      "zh": "我正在尝试叫一辆出租车去这个地址。"
+    },
+    {
+      "id": "phrase-0303",
+      "category": "交通出行",
+      "scene": "叫车",
+      "en": "I was hoping to call a taxi to this address.",
+      "zh": "我希望能叫一辆出租车去这个地址。"
+    },
+    {
+      "id": "phrase-0304",
+      "category": "交通出行",
+      "scene": "叫车",
+      "en": "Do you know how I can call a taxi to this address?",
+      "zh": "你知道我怎么才能叫一辆出租车去这个地址吗？"
+    },
+    {
+      "id": "phrase-0305",
+      "category": "交通出行",
+      "scene": "叫车",
+      "en": "Could I call a taxi to this address?",
+      "zh": "我可以叫一辆出租车去这个地址吗？"
+    },
+    {
+      "id": "phrase-0306",
+      "category": "交通出行",
+      "scene": "叫车",
+      "en": "I'd appreciate it if you could help me call a taxi to this address.",
+      "zh": "如果你能帮我叫一辆出租车去这个地址，我会很感激。"
+    },
+    {
+      "id": "phrase-0307",
+      "category": "交通出行",
+      "scene": "确认下车站",
+      "en": "I need to find out where I should get off.",
+      "zh": "我需要确认我应该在哪一站下车。"
+    },
+    {
+      "id": "phrase-0308",
+      "category": "交通出行",
+      "scene": "确认下车站",
+      "en": "Could you help me find out where I should get off?",
+      "zh": "能帮我确认我应该在哪一站下车吗？"
+    },
+    {
+      "id": "phrase-0309",
+      "category": "交通出行",
+      "scene": "确认下车站",
+      "en": "I'd like to find out where I should get off, please.",
+      "zh": "麻烦帮我确认我应该在哪一站下车。"
+    },
+    {
+      "id": "phrase-0310",
+      "category": "交通出行",
+      "scene": "确认下车站",
+      "en": "Is it possible to find out where I should get off?",
+      "zh": "可以确认我应该在哪一站下车吗？"
+    },
+    {
+      "id": "phrase-0311",
+      "category": "交通出行",
+      "scene": "确认下车站",
+      "en": "I'm trying to find out where I should get off.",
+      "zh": "我正在尝试确认我应该在哪一站下车。"
+    },
+    {
+      "id": "phrase-0312",
+      "category": "交通出行",
+      "scene": "确认下车站",
+      "en": "I was hoping to find out where I should get off.",
+      "zh": "我希望能确认我应该在哪一站下车。"
+    },
+    {
+      "id": "phrase-0313",
+      "category": "交通出行",
+      "scene": "确认下车站",
+      "en": "Do you know how I can find out where I should get off?",
+      "zh": "你知道我怎么才能确认我应该在哪一站下车吗？"
+    },
+    {
+      "id": "phrase-0314",
+      "category": "交通出行",
+      "scene": "确认下车站",
+      "en": "Could I find out where I should get off?",
+      "zh": "我可以确认我应该在哪一站下车吗？"
+    },
+    {
+      "id": "phrase-0315",
+      "category": "交通出行",
+      "scene": "确认下车站",
+      "en": "I'd appreciate it if you could help me find out where I should get off.",
+      "zh": "如果你能帮我确认我应该在哪一站下车，我会很感激。"
+    },
+    {
+      "id": "phrase-0316",
+      "category": "交通出行",
+      "scene": "错过列车",
+      "en": "I need to report that I missed my train.",
+      "zh": "我需要说明我错过了火车。"
+    },
+    {
+      "id": "phrase-0317",
+      "category": "交通出行",
+      "scene": "错过列车",
+      "en": "Could you help me report that I missed my train?",
+      "zh": "能帮我说明我错过了火车吗？"
+    },
+    {
+      "id": "phrase-0318",
+      "category": "交通出行",
+      "scene": "错过列车",
+      "en": "I'd like to report that I missed my train, please.",
+      "zh": "麻烦帮我说明我错过了火车。"
+    },
+    {
+      "id": "phrase-0319",
+      "category": "交通出行",
+      "scene": "错过列车",
+      "en": "Is it possible to report that I missed my train?",
+      "zh": "可以说明我错过了火车吗？"
+    },
+    {
+      "id": "phrase-0320",
+      "category": "交通出行",
+      "scene": "错过列车",
+      "en": "I'm trying to report that I missed my train.",
+      "zh": "我正在尝试说明我错过了火车。"
+    },
+    {
+      "id": "phrase-0321",
+      "category": "交通出行",
+      "scene": "错过列车",
+      "en": "I was hoping to report that I missed my train.",
+      "zh": "我希望能说明我错过了火车。"
+    },
+    {
+      "id": "phrase-0322",
+      "category": "交通出行",
+      "scene": "错过列车",
+      "en": "Do you know how I can report that I missed my train?",
+      "zh": "你知道我怎么才能说明我错过了火车吗？"
+    },
+    {
+      "id": "phrase-0323",
+      "category": "交通出行",
+      "scene": "错过列车",
+      "en": "Could I report that I missed my train?",
+      "zh": "我可以说明我错过了火车吗？"
+    },
+    {
+      "id": "phrase-0324",
+      "category": "交通出行",
+      "scene": "错过列车",
+      "en": "I'd appreciate it if you could help me report that I missed my train.",
+      "zh": "如果你能帮我说明我错过了火车，我会很感激。"
+    },
+    {
+      "id": "phrase-0325",
+      "category": "交通出行",
+      "scene": "寄存行李",
+      "en": "I need to store my luggage near the station.",
+      "zh": "我需要把行李寄存在车站附近。"
+    },
+    {
+      "id": "phrase-0326",
+      "category": "交通出行",
+      "scene": "寄存行李",
+      "en": "Could you help me store my luggage near the station?",
+      "zh": "能帮我把行李寄存在车站附近吗？"
+    },
+    {
+      "id": "phrase-0327",
+      "category": "交通出行",
+      "scene": "寄存行李",
+      "en": "I'd like to store my luggage near the station, please.",
+      "zh": "麻烦帮我把行李寄存在车站附近。"
+    },
+    {
+      "id": "phrase-0328",
+      "category": "交通出行",
+      "scene": "寄存行李",
+      "en": "Is it possible to store my luggage near the station?",
+      "zh": "可以把行李寄存在车站附近吗？"
+    },
+    {
+      "id": "phrase-0329",
+      "category": "交通出行",
+      "scene": "寄存行李",
+      "en": "I'm trying to store my luggage near the station.",
+      "zh": "我正在尝试把行李寄存在车站附近。"
+    },
+    {
+      "id": "phrase-0330",
+      "category": "交通出行",
+      "scene": "寄存行李",
+      "en": "I was hoping to store my luggage near the station.",
+      "zh": "我希望能把行李寄存在车站附近。"
+    },
+    {
+      "id": "phrase-0331",
+      "category": "交通出行",
+      "scene": "寄存行李",
+      "en": "Do you know how I can store my luggage near the station?",
+      "zh": "你知道我怎么才能把行李寄存在车站附近吗？"
+    },
+    {
+      "id": "phrase-0332",
+      "category": "交通出行",
+      "scene": "寄存行李",
+      "en": "Could I store my luggage near the station?",
+      "zh": "我可以把行李寄存在车站附近吗？"
+    },
+    {
+      "id": "phrase-0333",
+      "category": "交通出行",
+      "scene": "寄存行李",
+      "en": "I'd appreciate it if you could help me store my luggage near the station.",
+      "zh": "如果你能帮我把行李寄存在车站附近，我会很感激。"
+    },
+    {
+      "id": "phrase-0334",
+      "category": "交通出行",
+      "scene": "无障碍出行",
+      "en": "I need to find an accessible route to the platform.",
+      "zh": "我需要找一条方便无障碍通行的路线去站台。"
+    },
+    {
+      "id": "phrase-0335",
+      "category": "交通出行",
+      "scene": "无障碍出行",
+      "en": "Could you help me find an accessible route to the platform?",
+      "zh": "能帮我找一条方便无障碍通行的路线去站台吗？"
+    },
+    {
+      "id": "phrase-0336",
+      "category": "交通出行",
+      "scene": "无障碍出行",
+      "en": "I'd like to find an accessible route to the platform, please.",
+      "zh": "麻烦帮我找一条方便无障碍通行的路线去站台。"
+    },
+    {
+      "id": "phrase-0337",
+      "category": "交通出行",
+      "scene": "无障碍出行",
+      "en": "Is it possible to find an accessible route to the platform?",
+      "zh": "可以找一条方便无障碍通行的路线去站台吗？"
+    },
+    {
+      "id": "phrase-0338",
+      "category": "交通出行",
+      "scene": "无障碍出行",
+      "en": "I'm trying to find an accessible route to the platform.",
+      "zh": "我正在尝试找一条方便无障碍通行的路线去站台。"
+    },
+    {
+      "id": "phrase-0339",
+      "category": "交通出行",
+      "scene": "无障碍出行",
+      "en": "I was hoping to find an accessible route to the platform.",
+      "zh": "我希望能找一条方便无障碍通行的路线去站台。"
+    },
+    {
+      "id": "phrase-0340",
+      "category": "交通出行",
+      "scene": "无障碍出行",
+      "en": "Do you know how I can find an accessible route to the platform?",
+      "zh": "你知道我怎么才能找一条方便无障碍通行的路线去站台吗？"
+    },
+    {
+      "id": "phrase-0341",
+      "category": "交通出行",
+      "scene": "无障碍出行",
+      "en": "Could I find an accessible route to the platform?",
+      "zh": "我可以找一条方便无障碍通行的路线去站台吗？"
+    },
+    {
+      "id": "phrase-0342",
+      "category": "交通出行",
+      "scene": "无障碍出行",
+      "en": "I'd appreciate it if you could help me find an accessible route to the platform.",
+      "zh": "如果你能帮我找一条方便无障碍通行的路线去站台，我会很感激。"
+    },
+    {
+      "id": "phrase-0343",
+      "category": "交通出行",
+      "scene": "确认车费",
+      "en": "I need to check the fare before I get on.",
+      "zh": "我需要上车前确认一下车费。"
+    },
+    {
+      "id": "phrase-0344",
+      "category": "交通出行",
+      "scene": "确认车费",
+      "en": "Could you help me check the fare before I get on?",
+      "zh": "能帮我上车前确认一下车费吗？"
+    },
+    {
+      "id": "phrase-0345",
+      "category": "交通出行",
+      "scene": "确认车费",
+      "en": "I'd like to check the fare before I get on, please.",
+      "zh": "麻烦帮我上车前确认一下车费。"
+    },
+    {
+      "id": "phrase-0346",
+      "category": "交通出行",
+      "scene": "确认车费",
+      "en": "Is it possible to check the fare before I get on?",
+      "zh": "可以上车前确认一下车费吗？"
+    },
+    {
+      "id": "phrase-0347",
+      "category": "交通出行",
+      "scene": "确认车费",
+      "en": "I'm trying to check the fare before I get on.",
+      "zh": "我正在尝试上车前确认一下车费。"
+    },
+    {
+      "id": "phrase-0348",
+      "category": "交通出行",
+      "scene": "确认车费",
+      "en": "I was hoping to check the fare before I get on.",
+      "zh": "我希望能上车前确认一下车费。"
+    },
+    {
+      "id": "phrase-0349",
+      "category": "交通出行",
+      "scene": "确认车费",
+      "en": "Do you know how I can check the fare before I get on?",
+      "zh": "你知道我怎么才能上车前确认一下车费吗？"
+    },
+    {
+      "id": "phrase-0350",
+      "category": "交通出行",
+      "scene": "确认车费",
+      "en": "Could I check the fare before I get on?",
+      "zh": "我可以上车前确认一下车费吗？"
+    },
+    {
+      "id": "phrase-0351",
+      "category": "交通出行",
+      "scene": "确认车费",
+      "en": "I'd appreciate it if you could help me check the fare before I get on.",
+      "zh": "如果你能帮我上车前确认一下车费，我会很感激。"
+    },
+    {
+      "id": "phrase-0352",
+      "category": "交通出行",
+      "scene": "确认目的地",
+      "en": "I need to confirm that this bus goes downtown.",
+      "zh": "我需要确认这辆公交车开往市中心。"
+    },
+    {
+      "id": "phrase-0353",
+      "category": "交通出行",
+      "scene": "确认目的地",
+      "en": "Could you help me confirm that this bus goes downtown?",
+      "zh": "能帮我确认这辆公交车开往市中心吗？"
+    },
+    {
+      "id": "phrase-0354",
+      "category": "交通出行",
+      "scene": "确认目的地",
+      "en": "I'd like to confirm that this bus goes downtown, please.",
+      "zh": "麻烦帮我确认这辆公交车开往市中心。"
+    },
+    {
+      "id": "phrase-0355",
+      "category": "交通出行",
+      "scene": "确认目的地",
+      "en": "Is it possible to confirm that this bus goes downtown?",
+      "zh": "可以确认这辆公交车开往市中心吗？"
+    },
+    {
+      "id": "phrase-0356",
+      "category": "交通出行",
+      "scene": "确认目的地",
+      "en": "I'm trying to confirm that this bus goes downtown.",
+      "zh": "我正在尝试确认这辆公交车开往市中心。"
+    },
+    {
+      "id": "phrase-0357",
+      "category": "交通出行",
+      "scene": "确认目的地",
+      "en": "I was hoping to confirm that this bus goes downtown.",
+      "zh": "我希望能确认这辆公交车开往市中心。"
+    },
+    {
+      "id": "phrase-0358",
+      "category": "交通出行",
+      "scene": "确认目的地",
+      "en": "Do you know how I can confirm that this bus goes downtown?",
+      "zh": "你知道我怎么才能确认这辆公交车开往市中心吗？"
+    },
+    {
+      "id": "phrase-0359",
+      "category": "交通出行",
+      "scene": "确认目的地",
+      "en": "Could I confirm that this bus goes downtown?",
+      "zh": "我可以确认这辆公交车开往市中心吗？"
+    },
+    {
+      "id": "phrase-0360",
+      "category": "交通出行",
+      "scene": "确认目的地",
+      "en": "I'd appreciate it if you could help me confirm that this bus goes downtown.",
+      "zh": "如果你能帮我确认这辆公交车开往市中心，我会很感激。"
+    },
+    {
+      "id": "phrase-0361",
+      "category": "酒店住宿",
+      "scene": "办理入住",
+      "en": "I need to check in under my name.",
+      "zh": "我需要用我的姓名办理入住。"
+    },
+    {
+      "id": "phrase-0362",
+      "category": "酒店住宿",
+      "scene": "办理入住",
+      "en": "Could you help me check in under my name?",
+      "zh": "能帮我用我的姓名办理入住吗？"
+    },
+    {
+      "id": "phrase-0363",
+      "category": "酒店住宿",
+      "scene": "办理入住",
+      "en": "I'd like to check in under my name, please.",
+      "zh": "麻烦帮我用我的姓名办理入住。"
+    },
+    {
+      "id": "phrase-0364",
+      "category": "酒店住宿",
+      "scene": "办理入住",
+      "en": "Is it possible to check in under my name?",
+      "zh": "可以用我的姓名办理入住吗？"
+    },
+    {
+      "id": "phrase-0365",
+      "category": "酒店住宿",
+      "scene": "办理入住",
+      "en": "I'm trying to check in under my name.",
+      "zh": "我正在尝试用我的姓名办理入住。"
+    },
+    {
+      "id": "phrase-0366",
+      "category": "酒店住宿",
+      "scene": "办理入住",
+      "en": "I was hoping to check in under my name.",
+      "zh": "我希望能用我的姓名办理入住。"
+    },
+    {
+      "id": "phrase-0367",
+      "category": "酒店住宿",
+      "scene": "办理入住",
+      "en": "Do you know how I can check in under my name?",
+      "zh": "你知道我怎么才能用我的姓名办理入住吗？"
+    },
+    {
+      "id": "phrase-0368",
+      "category": "酒店住宿",
+      "scene": "办理入住",
+      "en": "Could I check in under my name?",
+      "zh": "我可以用我的姓名办理入住吗？"
+    },
+    {
+      "id": "phrase-0369",
+      "category": "酒店住宿",
+      "scene": "办理入住",
+      "en": "I'd appreciate it if you could help me check in under my name.",
+      "zh": "如果你能帮我用我的姓名办理入住，我会很感激。"
+    },
+    {
+      "id": "phrase-0370",
+      "category": "酒店住宿",
+      "scene": "延迟退房",
+      "en": "I need to ask for a late checkout.",
+      "zh": "我需要申请延迟退房。"
+    },
+    {
+      "id": "phrase-0371",
+      "category": "酒店住宿",
+      "scene": "延迟退房",
+      "en": "Could you help me ask for a late checkout?",
+      "zh": "能帮我申请延迟退房吗？"
+    },
+    {
+      "id": "phrase-0372",
+      "category": "酒店住宿",
+      "scene": "延迟退房",
+      "en": "I'd like to ask for a late checkout, please.",
+      "zh": "麻烦帮我申请延迟退房。"
+    },
+    {
+      "id": "phrase-0373",
+      "category": "酒店住宿",
+      "scene": "延迟退房",
+      "en": "Is it possible to ask for a late checkout?",
+      "zh": "可以申请延迟退房吗？"
+    },
+    {
+      "id": "phrase-0374",
+      "category": "酒店住宿",
+      "scene": "延迟退房",
+      "en": "I'm trying to ask for a late checkout.",
+      "zh": "我正在尝试申请延迟退房。"
+    },
+    {
+      "id": "phrase-0375",
+      "category": "酒店住宿",
+      "scene": "延迟退房",
+      "en": "I was hoping to ask for a late checkout.",
+      "zh": "我希望能申请延迟退房。"
+    },
+    {
+      "id": "phrase-0376",
+      "category": "酒店住宿",
+      "scene": "延迟退房",
+      "en": "Do you know how I can ask for a late checkout?",
+      "zh": "你知道我怎么才能申请延迟退房吗？"
+    },
+    {
+      "id": "phrase-0377",
+      "category": "酒店住宿",
+      "scene": "延迟退房",
+      "en": "Could I ask for a late checkout?",
+      "zh": "我可以申请延迟退房吗？"
+    },
+    {
+      "id": "phrase-0378",
+      "category": "酒店住宿",
+      "scene": "延迟退房",
+      "en": "I'd appreciate it if you could help me ask for a late checkout.",
+      "zh": "如果你能帮我申请延迟退房，我会很感激。"
+    },
+    {
+      "id": "phrase-0379",
+      "category": "酒店住宿",
+      "scene": "索取毛巾",
+      "en": "I need to request some extra towels.",
+      "zh": "我需要再要几条毛巾。"
+    },
+    {
+      "id": "phrase-0380",
+      "category": "酒店住宿",
+      "scene": "索取毛巾",
+      "en": "Could you help me request some extra towels?",
+      "zh": "能帮我再要几条毛巾吗？"
+    },
+    {
+      "id": "phrase-0381",
+      "category": "酒店住宿",
+      "scene": "索取毛巾",
+      "en": "I'd like to request some extra towels, please.",
+      "zh": "麻烦帮我再要几条毛巾。"
+    },
+    {
+      "id": "phrase-0382",
+      "category": "酒店住宿",
+      "scene": "索取毛巾",
+      "en": "Is it possible to request some extra towels?",
+      "zh": "可以再要几条毛巾吗？"
+    },
+    {
+      "id": "phrase-0383",
+      "category": "酒店住宿",
+      "scene": "索取毛巾",
+      "en": "I'm trying to request some extra towels.",
+      "zh": "我正在尝试再要几条毛巾。"
+    },
+    {
+      "id": "phrase-0384",
+      "category": "酒店住宿",
+      "scene": "索取毛巾",
+      "en": "I was hoping to request some extra towels.",
+      "zh": "我希望能再要几条毛巾。"
+    },
+    {
+      "id": "phrase-0385",
+      "category": "酒店住宿",
+      "scene": "索取毛巾",
+      "en": "Do you know how I can request some extra towels?",
+      "zh": "你知道我怎么才能再要几条毛巾吗？"
+    },
+    {
+      "id": "phrase-0386",
+      "category": "酒店住宿",
+      "scene": "索取毛巾",
+      "en": "Could I request some extra towels?",
+      "zh": "我可以再要几条毛巾吗？"
+    },
+    {
+      "id": "phrase-0387",
+      "category": "酒店住宿",
+      "scene": "索取毛巾",
+      "en": "I'd appreciate it if you could help me request some extra towels.",
+      "zh": "如果你能帮我再要几条毛巾，我会很感激。"
+    },
+    {
+      "id": "phrase-0388",
+      "category": "酒店住宿",
+      "scene": "反馈噪音",
+      "en": "I need to tell the front desk about the noise.",
+      "zh": "我需要向前台反映噪音问题。"
+    },
+    {
+      "id": "phrase-0389",
+      "category": "酒店住宿",
+      "scene": "反馈噪音",
+      "en": "Could you help me tell the front desk about the noise?",
+      "zh": "能帮我向前台反映噪音问题吗？"
+    },
+    {
+      "id": "phrase-0390",
+      "category": "酒店住宿",
+      "scene": "反馈噪音",
+      "en": "I'd like to tell the front desk about the noise, please.",
+      "zh": "麻烦帮我向前台反映噪音问题。"
+    },
+    {
+      "id": "phrase-0391",
+      "category": "酒店住宿",
+      "scene": "反馈噪音",
+      "en": "Is it possible to tell the front desk about the noise?",
+      "zh": "可以向前台反映噪音问题吗？"
+    },
+    {
+      "id": "phrase-0392",
+      "category": "酒店住宿",
+      "scene": "反馈噪音",
+      "en": "I'm trying to tell the front desk about the noise.",
+      "zh": "我正在尝试向前台反映噪音问题。"
+    },
+    {
+      "id": "phrase-0393",
+      "category": "酒店住宿",
+      "scene": "反馈噪音",
+      "en": "I was hoping to tell the front desk about the noise.",
+      "zh": "我希望能向前台反映噪音问题。"
+    },
+    {
+      "id": "phrase-0394",
+      "category": "酒店住宿",
+      "scene": "反馈噪音",
+      "en": "Do you know how I can tell the front desk about the noise?",
+      "zh": "你知道我怎么才能向前台反映噪音问题吗？"
+    },
+    {
+      "id": "phrase-0395",
+      "category": "酒店住宿",
+      "scene": "反馈噪音",
+      "en": "Could I tell the front desk about the noise?",
+      "zh": "我可以向前台反映噪音问题吗？"
+    },
+    {
+      "id": "phrase-0396",
+      "category": "酒店住宿",
+      "scene": "反馈噪音",
+      "en": "I'd appreciate it if you could help me tell the front desk about the noise.",
+      "zh": "如果你能帮我向前台反映噪音问题，我会很感激。"
+    },
+    {
+      "id": "phrase-0397",
+      "category": "酒店住宿",
+      "scene": "询问网络",
+      "en": "I need to get the password for the Wi-Fi.",
+      "zh": "我需要询问无线网络密码。"
+    },
+    {
+      "id": "phrase-0398",
+      "category": "酒店住宿",
+      "scene": "询问网络",
+      "en": "Could you help me get the password for the Wi-Fi?",
+      "zh": "能帮我询问无线网络密码吗？"
+    },
+    {
+      "id": "phrase-0399",
+      "category": "酒店住宿",
+      "scene": "询问网络",
+      "en": "I'd like to get the password for the Wi-Fi, please.",
+      "zh": "麻烦帮我询问无线网络密码。"
+    },
+    {
+      "id": "phrase-0400",
+      "category": "酒店住宿",
+      "scene": "询问网络",
+      "en": "Is it possible to get the password for the Wi-Fi?",
+      "zh": "可以询问无线网络密码吗？"
+    },
+    {
+      "id": "phrase-0401",
+      "category": "酒店住宿",
+      "scene": "询问网络",
+      "en": "I'm trying to get the password for the Wi-Fi.",
+      "zh": "我正在尝试询问无线网络密码。"
+    },
+    {
+      "id": "phrase-0402",
+      "category": "酒店住宿",
+      "scene": "询问网络",
+      "en": "I was hoping to get the password for the Wi-Fi.",
+      "zh": "我希望能询问无线网络密码。"
+    },
+    {
+      "id": "phrase-0403",
+      "category": "酒店住宿",
+      "scene": "询问网络",
+      "en": "Do you know how I can get the password for the Wi-Fi?",
+      "zh": "你知道我怎么才能询问无线网络密码吗？"
+    },
+    {
+      "id": "phrase-0404",
+      "category": "酒店住宿",
+      "scene": "询问网络",
+      "en": "Could I get the password for the Wi-Fi?",
+      "zh": "我可以询问无线网络密码吗？"
+    },
+    {
+      "id": "phrase-0405",
+      "category": "酒店住宿",
+      "scene": "询问网络",
+      "en": "I'd appreciate it if you could help me get the password for the Wi-Fi.",
+      "zh": "如果你能帮我询问无线网络密码，我会很感激。"
+    },
+    {
+      "id": "phrase-0406",
+      "category": "酒店住宿",
+      "scene": "寄存行李",
+      "en": "I need to leave my luggage at the hotel.",
+      "zh": "我需要把行李寄存在酒店。"
+    },
+    {
+      "id": "phrase-0407",
+      "category": "酒店住宿",
+      "scene": "寄存行李",
+      "en": "Could you help me leave my luggage at the hotel?",
+      "zh": "能帮我把行李寄存在酒店吗？"
+    },
+    {
+      "id": "phrase-0408",
+      "category": "酒店住宿",
+      "scene": "寄存行李",
+      "en": "I'd like to leave my luggage at the hotel, please.",
+      "zh": "麻烦帮我把行李寄存在酒店。"
+    },
+    {
+      "id": "phrase-0409",
+      "category": "酒店住宿",
+      "scene": "寄存行李",
+      "en": "Is it possible to leave my luggage at the hotel?",
+      "zh": "可以把行李寄存在酒店吗？"
+    },
+    {
+      "id": "phrase-0410",
+      "category": "酒店住宿",
+      "scene": "寄存行李",
+      "en": "I'm trying to leave my luggage at the hotel.",
+      "zh": "我正在尝试把行李寄存在酒店。"
+    },
+    {
+      "id": "phrase-0411",
+      "category": "酒店住宿",
+      "scene": "寄存行李",
+      "en": "I was hoping to leave my luggage at the hotel.",
+      "zh": "我希望能把行李寄存在酒店。"
+    },
+    {
+      "id": "phrase-0412",
+      "category": "酒店住宿",
+      "scene": "寄存行李",
+      "en": "Do you know how I can leave my luggage at the hotel?",
+      "zh": "你知道我怎么才能把行李寄存在酒店吗？"
+    },
+    {
+      "id": "phrase-0413",
+      "category": "酒店住宿",
+      "scene": "寄存行李",
+      "en": "Could I leave my luggage at the hotel?",
+      "zh": "我可以把行李寄存在酒店吗？"
+    },
+    {
+      "id": "phrase-0414",
+      "category": "酒店住宿",
+      "scene": "寄存行李",
+      "en": "I'd appreciate it if you could help me leave my luggage at the hotel.",
+      "zh": "如果你能帮我把行李寄存在酒店，我会很感激。"
+    },
+    {
+      "id": "phrase-0415",
+      "category": "酒店住宿",
+      "scene": "更换房间",
+      "en": "I need to ask to move to a quieter room.",
+      "zh": "我需要申请换到一间安静些的房间。"
+    },
+    {
+      "id": "phrase-0416",
+      "category": "酒店住宿",
+      "scene": "更换房间",
+      "en": "Could you help me ask to move to a quieter room?",
+      "zh": "能帮我申请换到一间安静些的房间吗？"
+    },
+    {
+      "id": "phrase-0417",
+      "category": "酒店住宿",
+      "scene": "更换房间",
+      "en": "I'd like to ask to move to a quieter room, please.",
+      "zh": "麻烦帮我申请换到一间安静些的房间。"
+    },
+    {
+      "id": "phrase-0418",
+      "category": "酒店住宿",
+      "scene": "更换房间",
+      "en": "Is it possible to ask to move to a quieter room?",
+      "zh": "可以申请换到一间安静些的房间吗？"
+    },
+    {
+      "id": "phrase-0419",
+      "category": "酒店住宿",
+      "scene": "更换房间",
+      "en": "I'm trying to ask to move to a quieter room.",
+      "zh": "我正在尝试申请换到一间安静些的房间。"
+    },
+    {
+      "id": "phrase-0420",
+      "category": "酒店住宿",
+      "scene": "更换房间",
+      "en": "I was hoping to ask to move to a quieter room.",
+      "zh": "我希望能申请换到一间安静些的房间。"
+    },
+    {
+      "id": "phrase-0421",
+      "category": "酒店住宿",
+      "scene": "更换房间",
+      "en": "Do you know how I can ask to move to a quieter room?",
+      "zh": "你知道我怎么才能申请换到一间安静些的房间吗？"
+    },
+    {
+      "id": "phrase-0422",
+      "category": "酒店住宿",
+      "scene": "更换房间",
+      "en": "Could I ask to move to a quieter room?",
+      "zh": "我可以申请换到一间安静些的房间吗？"
+    },
+    {
+      "id": "phrase-0423",
+      "category": "酒店住宿",
+      "scene": "更换房间",
+      "en": "I'd appreciate it if you could help me ask to move to a quieter room.",
+      "zh": "如果你能帮我申请换到一间安静些的房间，我会很感激。"
+    },
+    {
+      "id": "phrase-0424",
+      "category": "酒店住宿",
+      "scene": "预约叫醒",
+      "en": "I need to arrange a wake-up call for six.",
+      "zh": "我需要预约六点的叫醒服务。"
+    },
+    {
+      "id": "phrase-0425",
+      "category": "酒店住宿",
+      "scene": "预约叫醒",
+      "en": "Could you help me arrange a wake-up call for six?",
+      "zh": "能帮我预约六点的叫醒服务吗？"
+    },
+    {
+      "id": "phrase-0426",
+      "category": "酒店住宿",
+      "scene": "预约叫醒",
+      "en": "I'd like to arrange a wake-up call for six, please.",
+      "zh": "麻烦帮我预约六点的叫醒服务。"
+    },
+    {
+      "id": "phrase-0427",
+      "category": "酒店住宿",
+      "scene": "预约叫醒",
+      "en": "Is it possible to arrange a wake-up call for six?",
+      "zh": "可以预约六点的叫醒服务吗？"
+    },
+    {
+      "id": "phrase-0428",
+      "category": "酒店住宿",
+      "scene": "预约叫醒",
+      "en": "I'm trying to arrange a wake-up call for six.",
+      "zh": "我正在尝试预约六点的叫醒服务。"
+    },
+    {
+      "id": "phrase-0429",
+      "category": "酒店住宿",
+      "scene": "预约叫醒",
+      "en": "I was hoping to arrange a wake-up call for six.",
+      "zh": "我希望能预约六点的叫醒服务。"
+    },
+    {
+      "id": "phrase-0430",
+      "category": "酒店住宿",
+      "scene": "预约叫醒",
+      "en": "Do you know how I can arrange a wake-up call for six?",
+      "zh": "你知道我怎么才能预约六点的叫醒服务吗？"
+    },
+    {
+      "id": "phrase-0431",
+      "category": "酒店住宿",
+      "scene": "预约叫醒",
+      "en": "Could I arrange a wake-up call for six?",
+      "zh": "我可以预约六点的叫醒服务吗？"
+    },
+    {
+      "id": "phrase-0432",
+      "category": "酒店住宿",
+      "scene": "预约叫醒",
+      "en": "I'd appreciate it if you could help me arrange a wake-up call for six.",
+      "zh": "如果你能帮我预约六点的叫醒服务，我会很感激。"
+    },
+    {
+      "id": "phrase-0433",
+      "category": "酒店住宿",
+      "scene": "索取账单",
+      "en": "I need to get an itemized invoice for my stay.",
+      "zh": "我需要索取住宿明细发票。"
+    },
+    {
+      "id": "phrase-0434",
+      "category": "酒店住宿",
+      "scene": "索取账单",
+      "en": "Could you help me get an itemized invoice for my stay?",
+      "zh": "能帮我索取住宿明细发票吗？"
+    },
+    {
+      "id": "phrase-0435",
+      "category": "酒店住宿",
+      "scene": "索取账单",
+      "en": "I'd like to get an itemized invoice for my stay, please.",
+      "zh": "麻烦帮我索取住宿明细发票。"
+    },
+    {
+      "id": "phrase-0436",
+      "category": "酒店住宿",
+      "scene": "索取账单",
+      "en": "Is it possible to get an itemized invoice for my stay?",
+      "zh": "可以索取住宿明细发票吗？"
+    },
+    {
+      "id": "phrase-0437",
+      "category": "酒店住宿",
+      "scene": "索取账单",
+      "en": "I'm trying to get an itemized invoice for my stay.",
+      "zh": "我正在尝试索取住宿明细发票。"
+    },
+    {
+      "id": "phrase-0438",
+      "category": "酒店住宿",
+      "scene": "索取账单",
+      "en": "I was hoping to get an itemized invoice for my stay.",
+      "zh": "我希望能索取住宿明细发票。"
+    },
+    {
+      "id": "phrase-0439",
+      "category": "酒店住宿",
+      "scene": "索取账单",
+      "en": "Do you know how I can get an itemized invoice for my stay?",
+      "zh": "你知道我怎么才能索取住宿明细发票吗？"
+    },
+    {
+      "id": "phrase-0440",
+      "category": "酒店住宿",
+      "scene": "索取账单",
+      "en": "Could I get an itemized invoice for my stay?",
+      "zh": "我可以索取住宿明细发票吗？"
+    },
+    {
+      "id": "phrase-0441",
+      "category": "酒店住宿",
+      "scene": "索取账单",
+      "en": "I'd appreciate it if you could help me get an itemized invoice for my stay.",
+      "zh": "如果你能帮我索取住宿明细发票，我会很感激。"
+    },
+    {
+      "id": "phrase-0442",
+      "category": "酒店住宿",
+      "scene": "报告房间故障",
+      "en": "I need to report that the air conditioner is not working.",
+      "zh": "我需要报告空调无法正常工作。"
+    },
+    {
+      "id": "phrase-0443",
+      "category": "酒店住宿",
+      "scene": "报告房间故障",
+      "en": "Could you help me report that the air conditioner is not working?",
+      "zh": "能帮我报告空调无法正常工作吗？"
+    },
+    {
+      "id": "phrase-0444",
+      "category": "酒店住宿",
+      "scene": "报告房间故障",
+      "en": "I'd like to report that the air conditioner is not working, please.",
+      "zh": "麻烦帮我报告空调无法正常工作。"
+    },
+    {
+      "id": "phrase-0445",
+      "category": "酒店住宿",
+      "scene": "报告房间故障",
+      "en": "Is it possible to report that the air conditioner is not working?",
+      "zh": "可以报告空调无法正常工作吗？"
+    },
+    {
+      "id": "phrase-0446",
+      "category": "酒店住宿",
+      "scene": "报告房间故障",
+      "en": "I'm trying to report that the air conditioner is not working.",
+      "zh": "我正在尝试报告空调无法正常工作。"
+    },
+    {
+      "id": "phrase-0447",
+      "category": "酒店住宿",
+      "scene": "报告房间故障",
+      "en": "I was hoping to report that the air conditioner is not working.",
+      "zh": "我希望能报告空调无法正常工作。"
+    },
+    {
+      "id": "phrase-0448",
+      "category": "酒店住宿",
+      "scene": "报告房间故障",
+      "en": "Do you know how I can report that the air conditioner is not working?",
+      "zh": "你知道我怎么才能报告空调无法正常工作吗？"
+    },
+    {
+      "id": "phrase-0449",
+      "category": "酒店住宿",
+      "scene": "报告房间故障",
+      "en": "Could I report that the air conditioner is not working?",
+      "zh": "我可以报告空调无法正常工作吗？"
+    },
+    {
+      "id": "phrase-0450",
+      "category": "酒店住宿",
+      "scene": "报告房间故障",
+      "en": "I'd appreciate it if you could help me report that the air conditioner is not working.",
+      "zh": "如果你能帮我报告空调无法正常工作，我会很感激。"
+    },
+    {
+      "id": "phrase-0451",
+      "category": "机场与出差",
+      "scene": "查询航班",
+      "en": "I need to check the status of my flight.",
+      "zh": "我需要查询我的航班状态。"
+    },
+    {
+      "id": "phrase-0452",
+      "category": "机场与出差",
+      "scene": "查询航班",
+      "en": "Could you help me check the status of my flight?",
+      "zh": "能帮我查询我的航班状态吗？"
+    },
+    {
+      "id": "phrase-0453",
+      "category": "机场与出差",
+      "scene": "查询航班",
+      "en": "I'd like to check the status of my flight, please.",
+      "zh": "麻烦帮我查询我的航班状态。"
+    },
+    {
+      "id": "phrase-0454",
+      "category": "机场与出差",
+      "scene": "查询航班",
+      "en": "Is it possible to check the status of my flight?",
+      "zh": "可以查询我的航班状态吗？"
+    },
+    {
+      "id": "phrase-0455",
+      "category": "机场与出差",
+      "scene": "查询航班",
+      "en": "I'm trying to check the status of my flight.",
+      "zh": "我正在尝试查询我的航班状态。"
+    },
+    {
+      "id": "phrase-0456",
+      "category": "机场与出差",
+      "scene": "查询航班",
+      "en": "I was hoping to check the status of my flight.",
+      "zh": "我希望能查询我的航班状态。"
+    },
+    {
+      "id": "phrase-0457",
+      "category": "机场与出差",
+      "scene": "查询航班",
+      "en": "Do you know how I can check the status of my flight?",
+      "zh": "你知道我怎么才能查询我的航班状态吗？"
+    },
+    {
+      "id": "phrase-0458",
+      "category": "机场与出差",
+      "scene": "查询航班",
+      "en": "Could I check the status of my flight?",
+      "zh": "我可以查询我的航班状态吗？"
+    },
+    {
+      "id": "phrase-0459",
+      "category": "机场与出差",
+      "scene": "查询航班",
+      "en": "I'd appreciate it if you could help me check the status of my flight.",
+      "zh": "如果你能帮我查询我的航班状态，我会很感激。"
+    },
+    {
+      "id": "phrase-0460",
+      "category": "机场与出差",
+      "scene": "行李托运",
+      "en": "I need to drop off my checked baggage.",
+      "zh": "我需要托运行李。"
+    },
+    {
+      "id": "phrase-0461",
+      "category": "机场与出差",
+      "scene": "行李托运",
+      "en": "Could you help me drop off my checked baggage?",
+      "zh": "能帮我托运行李吗？"
+    },
+    {
+      "id": "phrase-0462",
+      "category": "机场与出差",
+      "scene": "行李托运",
+      "en": "I'd like to drop off my checked baggage, please.",
+      "zh": "麻烦帮我托运行李。"
+    },
+    {
+      "id": "phrase-0463",
+      "category": "机场与出差",
+      "scene": "行李托运",
+      "en": "Is it possible to drop off my checked baggage?",
+      "zh": "可以托运行李吗？"
+    },
+    {
+      "id": "phrase-0464",
+      "category": "机场与出差",
+      "scene": "行李托运",
+      "en": "I'm trying to drop off my checked baggage.",
+      "zh": "我正在尝试托运行李。"
+    },
+    {
+      "id": "phrase-0465",
+      "category": "机场与出差",
+      "scene": "行李托运",
+      "en": "I was hoping to drop off my checked baggage.",
+      "zh": "我希望能托运行李。"
+    },
+    {
+      "id": "phrase-0466",
+      "category": "机场与出差",
+      "scene": "行李托运",
+      "en": "Do you know how I can drop off my checked baggage?",
+      "zh": "你知道我怎么才能托运行李吗？"
+    },
+    {
+      "id": "phrase-0467",
+      "category": "机场与出差",
+      "scene": "行李托运",
+      "en": "Could I drop off my checked baggage?",
+      "zh": "我可以托运行李吗？"
+    },
+    {
+      "id": "phrase-0468",
+      "category": "机场与出差",
+      "scene": "行李托运",
+      "en": "I'd appreciate it if you could help me drop off my checked baggage.",
+      "zh": "如果你能帮我托运行李，我会很感激。"
+    },
+    {
+      "id": "phrase-0469",
+      "category": "机场与出差",
+      "scene": "更换座位",
+      "en": "I need to ask to change my seat.",
+      "zh": "我需要申请更换座位。"
+    },
+    {
+      "id": "phrase-0470",
+      "category": "机场与出差",
+      "scene": "更换座位",
+      "en": "Could you help me ask to change my seat?",
+      "zh": "能帮我申请更换座位吗？"
+    },
+    {
+      "id": "phrase-0471",
+      "category": "机场与出差",
+      "scene": "更换座位",
+      "en": "I'd like to ask to change my seat, please.",
+      "zh": "麻烦帮我申请更换座位。"
+    },
+    {
+      "id": "phrase-0472",
+      "category": "机场与出差",
+      "scene": "更换座位",
+      "en": "Is it possible to ask to change my seat?",
+      "zh": "可以申请更换座位吗？"
+    },
+    {
+      "id": "phrase-0473",
+      "category": "机场与出差",
+      "scene": "更换座位",
+      "en": "I'm trying to ask to change my seat.",
+      "zh": "我正在尝试申请更换座位。"
+    },
+    {
+      "id": "phrase-0474",
+      "category": "机场与出差",
+      "scene": "更换座位",
+      "en": "I was hoping to ask to change my seat.",
+      "zh": "我希望能申请更换座位。"
+    },
+    {
+      "id": "phrase-0475",
+      "category": "机场与出差",
+      "scene": "更换座位",
+      "en": "Do you know how I can ask to change my seat?",
+      "zh": "你知道我怎么才能申请更换座位吗？"
+    },
+    {
+      "id": "phrase-0476",
+      "category": "机场与出差",
+      "scene": "更换座位",
+      "en": "Could I ask to change my seat?",
+      "zh": "我可以申请更换座位吗？"
+    },
+    {
+      "id": "phrase-0477",
+      "category": "机场与出差",
+      "scene": "更换座位",
+      "en": "I'd appreciate it if you could help me ask to change my seat.",
+      "zh": "如果你能帮我申请更换座位，我会很感激。"
+    },
+    {
+      "id": "phrase-0478",
+      "category": "机场与出差",
+      "scene": "寻找登机口",
+      "en": "I need to find the gate for my flight.",
+      "zh": "我需要找到我航班的登机口。"
+    },
+    {
+      "id": "phrase-0479",
+      "category": "机场与出差",
+      "scene": "寻找登机口",
+      "en": "Could you help me find the gate for my flight?",
+      "zh": "能帮我找到我航班的登机口吗？"
+    },
+    {
+      "id": "phrase-0480",
+      "category": "机场与出差",
+      "scene": "寻找登机口",
+      "en": "I'd like to find the gate for my flight, please.",
+      "zh": "麻烦帮我找到我航班的登机口。"
+    },
+    {
+      "id": "phrase-0481",
+      "category": "机场与出差",
+      "scene": "寻找登机口",
+      "en": "Is it possible to find the gate for my flight?",
+      "zh": "可以找到我航班的登机口吗？"
+    },
+    {
+      "id": "phrase-0482",
+      "category": "机场与出差",
+      "scene": "寻找登机口",
+      "en": "I'm trying to find the gate for my flight.",
+      "zh": "我正在尝试找到我航班的登机口。"
+    },
+    {
+      "id": "phrase-0483",
+      "category": "机场与出差",
+      "scene": "寻找登机口",
+      "en": "I was hoping to find the gate for my flight.",
+      "zh": "我希望能找到我航班的登机口。"
+    },
+    {
+      "id": "phrase-0484",
+      "category": "机场与出差",
+      "scene": "寻找登机口",
+      "en": "Do you know how I can find the gate for my flight?",
+      "zh": "你知道我怎么才能找到我航班的登机口吗？"
+    },
+    {
+      "id": "phrase-0485",
+      "category": "机场与出差",
+      "scene": "寻找登机口",
+      "en": "Could I find the gate for my flight?",
+      "zh": "我可以找到我航班的登机口吗？"
+    },
+    {
+      "id": "phrase-0486",
+      "category": "机场与出差",
+      "scene": "寻找登机口",
+      "en": "I'd appreciate it if you could help me find the gate for my flight.",
+      "zh": "如果你能帮我找到我航班的登机口，我会很感激。"
+    },
+    {
+      "id": "phrase-0487",
+      "category": "机场与出差",
+      "scene": "询问海关",
+      "en": "I need to ask where to go through customs.",
+      "zh": "我需要询问在哪里办理海关手续。"
+    },
+    {
+      "id": "phrase-0488",
+      "category": "机场与出差",
+      "scene": "询问海关",
+      "en": "Could you help me ask where to go through customs?",
+      "zh": "能帮我询问在哪里办理海关手续吗？"
+    },
+    {
+      "id": "phrase-0489",
+      "category": "机场与出差",
+      "scene": "询问海关",
+      "en": "I'd like to ask where to go through customs, please.",
+      "zh": "麻烦帮我询问在哪里办理海关手续。"
+    },
+    {
+      "id": "phrase-0490",
+      "category": "机场与出差",
+      "scene": "询问海关",
+      "en": "Is it possible to ask where to go through customs?",
+      "zh": "可以询问在哪里办理海关手续吗？"
+    },
+    {
+      "id": "phrase-0491",
+      "category": "机场与出差",
+      "scene": "询问海关",
+      "en": "I'm trying to ask where to go through customs.",
+      "zh": "我正在尝试询问在哪里办理海关手续。"
+    },
+    {
+      "id": "phrase-0492",
+      "category": "机场与出差",
+      "scene": "询问海关",
+      "en": "I was hoping to ask where to go through customs.",
+      "zh": "我希望能询问在哪里办理海关手续。"
+    },
+    {
+      "id": "phrase-0493",
+      "category": "机场与出差",
+      "scene": "询问海关",
+      "en": "Do you know how I can ask where to go through customs?",
+      "zh": "你知道我怎么才能询问在哪里办理海关手续吗？"
+    },
+    {
+      "id": "phrase-0494",
+      "category": "机场与出差",
+      "scene": "询问海关",
+      "en": "Could I ask where to go through customs?",
+      "zh": "我可以询问在哪里办理海关手续吗？"
+    },
+    {
+      "id": "phrase-0495",
+      "category": "机场与出差",
+      "scene": "询问海关",
+      "en": "I'd appreciate it if you could help me ask where to go through customs.",
+      "zh": "如果你能帮我询问在哪里办理海关手续，我会很感激。"
+    },
+    {
+      "id": "phrase-0496",
+      "category": "机场与出差",
+      "scene": "物品申报",
+      "en": "I need to declare an item at customs.",
+      "zh": "我需要在海关申报一件物品。"
+    },
+    {
+      "id": "phrase-0497",
+      "category": "机场与出差",
+      "scene": "物品申报",
+      "en": "Could you help me declare an item at customs?",
+      "zh": "能帮我在海关申报一件物品吗？"
+    },
+    {
+      "id": "phrase-0498",
+      "category": "机场与出差",
+      "scene": "物品申报",
+      "en": "I'd like to declare an item at customs, please.",
+      "zh": "麻烦帮我在海关申报一件物品。"
+    },
+    {
+      "id": "phrase-0499",
+      "category": "机场与出差",
+      "scene": "物品申报",
+      "en": "Is it possible to declare an item at customs?",
+      "zh": "可以在海关申报一件物品吗？"
+    },
+    {
+      "id": "phrase-0500",
+      "category": "机场与出差",
+      "scene": "物品申报",
+      "en": "I'm trying to declare an item at customs.",
+      "zh": "我正在尝试在海关申报一件物品。"
+    },
+    {
+      "id": "phrase-0501",
+      "category": "机场与出差",
+      "scene": "物品申报",
+      "en": "I was hoping to declare an item at customs.",
+      "zh": "我希望能在海关申报一件物品。"
+    },
+    {
+      "id": "phrase-0502",
+      "category": "机场与出差",
+      "scene": "物品申报",
+      "en": "Do you know how I can declare an item at customs?",
+      "zh": "你知道我怎么才能在海关申报一件物品吗？"
+    },
+    {
+      "id": "phrase-0503",
+      "category": "机场与出差",
+      "scene": "物品申报",
+      "en": "Could I declare an item at customs?",
+      "zh": "我可以在海关申报一件物品吗？"
+    },
+    {
+      "id": "phrase-0504",
+      "category": "机场与出差",
+      "scene": "物品申报",
+      "en": "I'd appreciate it if you could help me declare an item at customs.",
+      "zh": "如果你能帮我在海关申报一件物品，我会很感激。"
+    },
+    {
+      "id": "phrase-0505",
+      "category": "机场与出差",
+      "scene": "转机咨询",
+      "en": "I need to find the desk for connecting flights.",
+      "zh": "我需要找到转机服务柜台。"
+    },
+    {
+      "id": "phrase-0506",
+      "category": "机场与出差",
+      "scene": "转机咨询",
+      "en": "Could you help me find the desk for connecting flights?",
+      "zh": "能帮我找到转机服务柜台吗？"
+    },
+    {
+      "id": "phrase-0507",
+      "category": "机场与出差",
+      "scene": "转机咨询",
+      "en": "I'd like to find the desk for connecting flights, please.",
+      "zh": "麻烦帮我找到转机服务柜台。"
+    },
+    {
+      "id": "phrase-0508",
+      "category": "机场与出差",
+      "scene": "转机咨询",
+      "en": "Is it possible to find the desk for connecting flights?",
+      "zh": "可以找到转机服务柜台吗？"
+    },
+    {
+      "id": "phrase-0509",
+      "category": "机场与出差",
+      "scene": "转机咨询",
+      "en": "I'm trying to find the desk for connecting flights.",
+      "zh": "我正在尝试找到转机服务柜台。"
+    },
+    {
+      "id": "phrase-0510",
+      "category": "机场与出差",
+      "scene": "转机咨询",
+      "en": "I was hoping to find the desk for connecting flights.",
+      "zh": "我希望能找到转机服务柜台。"
+    },
+    {
+      "id": "phrase-0511",
+      "category": "机场与出差",
+      "scene": "转机咨询",
+      "en": "Do you know how I can find the desk for connecting flights?",
+      "zh": "你知道我怎么才能找到转机服务柜台吗？"
+    },
+    {
+      "id": "phrase-0512",
+      "category": "机场与出差",
+      "scene": "转机咨询",
+      "en": "Could I find the desk for connecting flights?",
+      "zh": "我可以找到转机服务柜台吗？"
+    },
+    {
+      "id": "phrase-0513",
+      "category": "机场与出差",
+      "scene": "转机咨询",
+      "en": "I'd appreciate it if you could help me find the desk for connecting flights.",
+      "zh": "如果你能帮我找到转机服务柜台，我会很感激。"
+    },
+    {
+      "id": "phrase-0514",
+      "category": "机场与出差",
+      "scene": "航班延误",
+      "en": "I need to ask what to do about a delayed flight.",
+      "zh": "我需要询问航班延误时该怎么办。"
+    },
+    {
+      "id": "phrase-0515",
+      "category": "机场与出差",
+      "scene": "航班延误",
+      "en": "Could you help me ask what to do about a delayed flight?",
+      "zh": "能帮我询问航班延误时该怎么办吗？"
+    },
+    {
+      "id": "phrase-0516",
+      "category": "机场与出差",
+      "scene": "航班延误",
+      "en": "I'd like to ask what to do about a delayed flight, please.",
+      "zh": "麻烦帮我询问航班延误时该怎么办。"
+    },
+    {
+      "id": "phrase-0517",
+      "category": "机场与出差",
+      "scene": "航班延误",
+      "en": "Is it possible to ask what to do about a delayed flight?",
+      "zh": "可以询问航班延误时该怎么办吗？"
+    },
+    {
+      "id": "phrase-0518",
+      "category": "机场与出差",
+      "scene": "航班延误",
+      "en": "I'm trying to ask what to do about a delayed flight.",
+      "zh": "我正在尝试询问航班延误时该怎么办。"
+    },
+    {
+      "id": "phrase-0519",
+      "category": "机场与出差",
+      "scene": "航班延误",
+      "en": "I was hoping to ask what to do about a delayed flight.",
+      "zh": "我希望能询问航班延误时该怎么办。"
+    },
+    {
+      "id": "phrase-0520",
+      "category": "机场与出差",
+      "scene": "航班延误",
+      "en": "Do you know how I can ask what to do about a delayed flight?",
+      "zh": "你知道我怎么才能询问航班延误时该怎么办吗？"
+    },
+    {
+      "id": "phrase-0521",
+      "category": "机场与出差",
+      "scene": "航班延误",
+      "en": "Could I ask what to do about a delayed flight?",
+      "zh": "我可以询问航班延误时该怎么办吗？"
+    },
+    {
+      "id": "phrase-0522",
+      "category": "机场与出差",
+      "scene": "航班延误",
+      "en": "I'd appreciate it if you could help me ask what to do about a delayed flight.",
+      "zh": "如果你能帮我询问航班延误时该怎么办，我会很感激。"
+    },
+    {
+      "id": "phrase-0523",
+      "category": "机场与出差",
+      "scene": "请求协助",
+      "en": "I need to request assistance getting to the gate.",
+      "zh": "我需要请求协助前往登机口。"
+    },
+    {
+      "id": "phrase-0524",
+      "category": "机场与出差",
+      "scene": "请求协助",
+      "en": "Could you help me request assistance getting to the gate?",
+      "zh": "能帮我请求协助前往登机口吗？"
+    },
+    {
+      "id": "phrase-0525",
+      "category": "机场与出差",
+      "scene": "请求协助",
+      "en": "I'd like to request assistance getting to the gate, please.",
+      "zh": "麻烦帮我请求协助前往登机口。"
+    },
+    {
+      "id": "phrase-0526",
+      "category": "机场与出差",
+      "scene": "请求协助",
+      "en": "Is it possible to request assistance getting to the gate?",
+      "zh": "可以请求协助前往登机口吗？"
+    },
+    {
+      "id": "phrase-0527",
+      "category": "机场与出差",
+      "scene": "请求协助",
+      "en": "I'm trying to request assistance getting to the gate.",
+      "zh": "我正在尝试请求协助前往登机口。"
+    },
+    {
+      "id": "phrase-0528",
+      "category": "机场与出差",
+      "scene": "请求协助",
+      "en": "I was hoping to request assistance getting to the gate.",
+      "zh": "我希望能请求协助前往登机口。"
+    },
+    {
+      "id": "phrase-0529",
+      "category": "机场与出差",
+      "scene": "请求协助",
+      "en": "Do you know how I can request assistance getting to the gate?",
+      "zh": "你知道我怎么才能请求协助前往登机口吗？"
+    },
+    {
+      "id": "phrase-0530",
+      "category": "机场与出差",
+      "scene": "请求协助",
+      "en": "Could I request assistance getting to the gate?",
+      "zh": "我可以请求协助前往登机口吗？"
+    },
+    {
+      "id": "phrase-0531",
+      "category": "机场与出差",
+      "scene": "请求协助",
+      "en": "I'd appreciate it if you could help me request assistance getting to the gate.",
+      "zh": "如果你能帮我请求协助前往登机口，我会很感激。"
+    },
+    {
+      "id": "phrase-0532",
+      "category": "机场与出差",
+      "scene": "出差报销",
+      "en": "I need to get a receipt for my business travel.",
+      "zh": "我需要获取出差行程的收据。"
+    },
+    {
+      "id": "phrase-0533",
+      "category": "机场与出差",
+      "scene": "出差报销",
+      "en": "Could you help me get a receipt for my business travel?",
+      "zh": "能帮我获取出差行程的收据吗？"
+    },
+    {
+      "id": "phrase-0534",
+      "category": "机场与出差",
+      "scene": "出差报销",
+      "en": "I'd like to get a receipt for my business travel, please.",
+      "zh": "麻烦帮我获取出差行程的收据。"
+    },
+    {
+      "id": "phrase-0535",
+      "category": "机场与出差",
+      "scene": "出差报销",
+      "en": "Is it possible to get a receipt for my business travel?",
+      "zh": "可以获取出差行程的收据吗？"
+    },
+    {
+      "id": "phrase-0536",
+      "category": "机场与出差",
+      "scene": "出差报销",
+      "en": "I'm trying to get a receipt for my business travel.",
+      "zh": "我正在尝试获取出差行程的收据。"
+    },
+    {
+      "id": "phrase-0537",
+      "category": "机场与出差",
+      "scene": "出差报销",
+      "en": "I was hoping to get a receipt for my business travel.",
+      "zh": "我希望能获取出差行程的收据。"
+    },
+    {
+      "id": "phrase-0538",
+      "category": "机场与出差",
+      "scene": "出差报销",
+      "en": "Do you know how I can get a receipt for my business travel?",
+      "zh": "你知道我怎么才能获取出差行程的收据吗？"
+    },
+    {
+      "id": "phrase-0539",
+      "category": "机场与出差",
+      "scene": "出差报销",
+      "en": "Could I get a receipt for my business travel?",
+      "zh": "我可以获取出差行程的收据吗？"
+    },
+    {
+      "id": "phrase-0540",
+      "category": "机场与出差",
+      "scene": "出差报销",
+      "en": "I'd appreciate it if you could help me get a receipt for my business travel.",
+      "zh": "如果你能帮我获取出差行程的收据，我会很感激。"
+    },
+    {
+      "id": "phrase-0541",
+      "category": "医疗药房",
+      "scene": "预约就诊",
+      "en": "I need to make an appointment with a doctor.",
+      "zh": "我需要预约看医生。"
+    },
+    {
+      "id": "phrase-0542",
+      "category": "医疗药房",
+      "scene": "预约就诊",
+      "en": "Could you help me make an appointment with a doctor?",
+      "zh": "能帮我预约看医生吗？"
+    },
+    {
+      "id": "phrase-0543",
+      "category": "医疗药房",
+      "scene": "预约就诊",
+      "en": "I'd like to make an appointment with a doctor, please.",
+      "zh": "麻烦帮我预约看医生。"
+    },
+    {
+      "id": "phrase-0544",
+      "category": "医疗药房",
+      "scene": "预约就诊",
+      "en": "Is it possible to make an appointment with a doctor?",
+      "zh": "可以预约看医生吗？"
+    },
+    {
+      "id": "phrase-0545",
+      "category": "医疗药房",
+      "scene": "预约就诊",
+      "en": "I'm trying to make an appointment with a doctor.",
+      "zh": "我正在尝试预约看医生。"
+    },
+    {
+      "id": "phrase-0546",
+      "category": "医疗药房",
+      "scene": "预约就诊",
+      "en": "I was hoping to make an appointment with a doctor.",
+      "zh": "我希望能预约看医生。"
+    },
+    {
+      "id": "phrase-0547",
+      "category": "医疗药房",
+      "scene": "预约就诊",
+      "en": "Do you know how I can make an appointment with a doctor?",
+      "zh": "你知道我怎么才能预约看医生吗？"
+    },
+    {
+      "id": "phrase-0548",
+      "category": "医疗药房",
+      "scene": "预约就诊",
+      "en": "Could I make an appointment with a doctor?",
+      "zh": "我可以预约看医生吗？"
+    },
+    {
+      "id": "phrase-0549",
+      "category": "医疗药房",
+      "scene": "预约就诊",
+      "en": "I'd appreciate it if you could help me make an appointment with a doctor.",
+      "zh": "如果你能帮我预约看医生，我会很感激。"
+    },
+    {
+      "id": "phrase-0550",
+      "category": "医疗药房",
+      "scene": "描述症状",
+      "en": "I need to describe my symptoms to the nurse.",
+      "zh": "我需要向护士描述我的症状。"
+    },
+    {
+      "id": "phrase-0551",
+      "category": "医疗药房",
+      "scene": "描述症状",
+      "en": "Could you help me describe my symptoms to the nurse?",
+      "zh": "能帮我向护士描述我的症状吗？"
+    },
+    {
+      "id": "phrase-0552",
+      "category": "医疗药房",
+      "scene": "描述症状",
+      "en": "I'd like to describe my symptoms to the nurse, please.",
+      "zh": "麻烦帮我向护士描述我的症状。"
+    },
+    {
+      "id": "phrase-0553",
+      "category": "医疗药房",
+      "scene": "描述症状",
+      "en": "Is it possible to describe my symptoms to the nurse?",
+      "zh": "可以向护士描述我的症状吗？"
+    },
+    {
+      "id": "phrase-0554",
+      "category": "医疗药房",
+      "scene": "描述症状",
+      "en": "I'm trying to describe my symptoms to the nurse.",
+      "zh": "我正在尝试向护士描述我的症状。"
+    },
+    {
+      "id": "phrase-0555",
+      "category": "医疗药房",
+      "scene": "描述症状",
+      "en": "I was hoping to describe my symptoms to the nurse.",
+      "zh": "我希望能向护士描述我的症状。"
+    },
+    {
+      "id": "phrase-0556",
+      "category": "医疗药房",
+      "scene": "描述症状",
+      "en": "Do you know how I can describe my symptoms to the nurse?",
+      "zh": "你知道我怎么才能向护士描述我的症状吗？"
+    },
+    {
+      "id": "phrase-0557",
+      "category": "医疗药房",
+      "scene": "描述症状",
+      "en": "Could I describe my symptoms to the nurse?",
+      "zh": "我可以向护士描述我的症状吗？"
+    },
+    {
+      "id": "phrase-0558",
+      "category": "医疗药房",
+      "scene": "描述症状",
+      "en": "I'd appreciate it if you could help me describe my symptoms to the nurse.",
+      "zh": "如果你能帮我向护士描述我的症状，我会很感激。"
+    },
+    {
+      "id": "phrase-0559",
+      "category": "医疗药房",
+      "scene": "咨询药品",
+      "en": "I need to ask the pharmacist about this medicine.",
+      "zh": "我需要向药剂师咨询这种药。"
+    },
+    {
+      "id": "phrase-0560",
+      "category": "医疗药房",
+      "scene": "咨询药品",
+      "en": "Could you help me ask the pharmacist about this medicine?",
+      "zh": "能帮我向药剂师咨询这种药吗？"
+    },
+    {
+      "id": "phrase-0561",
+      "category": "医疗药房",
+      "scene": "咨询药品",
+      "en": "I'd like to ask the pharmacist about this medicine, please.",
+      "zh": "麻烦帮我向药剂师咨询这种药。"
+    },
+    {
+      "id": "phrase-0562",
+      "category": "医疗药房",
+      "scene": "咨询药品",
+      "en": "Is it possible to ask the pharmacist about this medicine?",
+      "zh": "可以向药剂师咨询这种药吗？"
+    },
+    {
+      "id": "phrase-0563",
+      "category": "医疗药房",
+      "scene": "咨询药品",
+      "en": "I'm trying to ask the pharmacist about this medicine.",
+      "zh": "我正在尝试向药剂师咨询这种药。"
+    },
+    {
+      "id": "phrase-0564",
+      "category": "医疗药房",
+      "scene": "咨询药品",
+      "en": "I was hoping to ask the pharmacist about this medicine.",
+      "zh": "我希望能向药剂师咨询这种药。"
+    },
+    {
+      "id": "phrase-0565",
+      "category": "医疗药房",
+      "scene": "咨询药品",
+      "en": "Do you know how I can ask the pharmacist about this medicine?",
+      "zh": "你知道我怎么才能向药剂师咨询这种药吗？"
+    },
+    {
+      "id": "phrase-0566",
+      "category": "医疗药房",
+      "scene": "咨询药品",
+      "en": "Could I ask the pharmacist about this medicine?",
+      "zh": "我可以向药剂师咨询这种药吗？"
+    },
+    {
+      "id": "phrase-0567",
+      "category": "医疗药房",
+      "scene": "咨询药品",
+      "en": "I'd appreciate it if you could help me ask the pharmacist about this medicine.",
+      "zh": "如果你能帮我向药剂师咨询这种药，我会很感激。"
+    },
+    {
+      "id": "phrase-0568",
+      "category": "医疗药房",
+      "scene": "续配处方",
+      "en": "I need to refill my prescription.",
+      "zh": "我需要续配我的处方药。"
+    },
+    {
+      "id": "phrase-0569",
+      "category": "医疗药房",
+      "scene": "续配处方",
+      "en": "Could you help me refill my prescription?",
+      "zh": "能帮我续配我的处方药吗？"
+    },
+    {
+      "id": "phrase-0570",
+      "category": "医疗药房",
+      "scene": "续配处方",
+      "en": "I'd like to refill my prescription, please.",
+      "zh": "麻烦帮我续配我的处方药。"
+    },
+    {
+      "id": "phrase-0571",
+      "category": "医疗药房",
+      "scene": "续配处方",
+      "en": "Is it possible to refill my prescription?",
+      "zh": "可以续配我的处方药吗？"
+    },
+    {
+      "id": "phrase-0572",
+      "category": "医疗药房",
+      "scene": "续配处方",
+      "en": "I'm trying to refill my prescription.",
+      "zh": "我正在尝试续配我的处方药。"
+    },
+    {
+      "id": "phrase-0573",
+      "category": "医疗药房",
+      "scene": "续配处方",
+      "en": "I was hoping to refill my prescription.",
+      "zh": "我希望能续配我的处方药。"
+    },
+    {
+      "id": "phrase-0574",
+      "category": "医疗药房",
+      "scene": "续配处方",
+      "en": "Do you know how I can refill my prescription?",
+      "zh": "你知道我怎么才能续配我的处方药吗？"
+    },
+    {
+      "id": "phrase-0575",
+      "category": "医疗药房",
+      "scene": "续配处方",
+      "en": "Could I refill my prescription?",
+      "zh": "我可以续配我的处方药吗？"
+    },
+    {
+      "id": "phrase-0576",
+      "category": "医疗药房",
+      "scene": "续配处方",
+      "en": "I'd appreciate it if you could help me refill my prescription.",
+      "zh": "如果你能帮我续配我的处方药，我会很感激。"
+    },
+    {
+      "id": "phrase-0577",
+      "category": "医疗药房",
+      "scene": "说明过敏",
+      "en": "I need to tell the staff about my allergy.",
+      "zh": "我需要告知工作人员我的过敏情况。"
+    },
+    {
+      "id": "phrase-0578",
+      "category": "医疗药房",
+      "scene": "说明过敏",
+      "en": "Could you help me tell the staff about my allergy?",
+      "zh": "能帮我告知工作人员我的过敏情况吗？"
+    },
+    {
+      "id": "phrase-0579",
+      "category": "医疗药房",
+      "scene": "说明过敏",
+      "en": "I'd like to tell the staff about my allergy, please.",
+      "zh": "麻烦帮我告知工作人员我的过敏情况。"
+    },
+    {
+      "id": "phrase-0580",
+      "category": "医疗药房",
+      "scene": "说明过敏",
+      "en": "Is it possible to tell the staff about my allergy?",
+      "zh": "可以告知工作人员我的过敏情况吗？"
+    },
+    {
+      "id": "phrase-0581",
+      "category": "医疗药房",
+      "scene": "说明过敏",
+      "en": "I'm trying to tell the staff about my allergy.",
+      "zh": "我正在尝试告知工作人员我的过敏情况。"
+    },
+    {
+      "id": "phrase-0582",
+      "category": "医疗药房",
+      "scene": "说明过敏",
+      "en": "I was hoping to tell the staff about my allergy.",
+      "zh": "我希望能告知工作人员我的过敏情况。"
+    },
+    {
+      "id": "phrase-0583",
+      "category": "医疗药房",
+      "scene": "说明过敏",
+      "en": "Do you know how I can tell the staff about my allergy?",
+      "zh": "你知道我怎么才能告知工作人员我的过敏情况吗？"
+    },
+    {
+      "id": "phrase-0584",
+      "category": "医疗药房",
+      "scene": "说明过敏",
+      "en": "Could I tell the staff about my allergy?",
+      "zh": "我可以告知工作人员我的过敏情况吗？"
+    },
+    {
+      "id": "phrase-0585",
+      "category": "医疗药房",
+      "scene": "说明过敏",
+      "en": "I'd appreciate it if you could help me tell the staff about my allergy.",
+      "zh": "如果你能帮我告知工作人员我的过敏情况，我会很感激。"
+    },
+    {
+      "id": "phrase-0586",
+      "category": "医疗药房",
+      "scene": "确认说明",
+      "en": "I need to ask the doctor to explain the dosage instructions.",
+      "zh": "我需要请医生解释用药剂量说明。"
+    },
+    {
+      "id": "phrase-0587",
+      "category": "医疗药房",
+      "scene": "确认说明",
+      "en": "Could you help me ask the doctor to explain the dosage instructions?",
+      "zh": "能帮我请医生解释用药剂量说明吗？"
+    },
+    {
+      "id": "phrase-0588",
+      "category": "医疗药房",
+      "scene": "确认说明",
+      "en": "I'd like to ask the doctor to explain the dosage instructions, please.",
+      "zh": "麻烦帮我请医生解释用药剂量说明。"
+    },
+    {
+      "id": "phrase-0589",
+      "category": "医疗药房",
+      "scene": "确认说明",
+      "en": "Is it possible to ask the doctor to explain the dosage instructions?",
+      "zh": "可以请医生解释用药剂量说明吗？"
+    },
+    {
+      "id": "phrase-0590",
+      "category": "医疗药房",
+      "scene": "确认说明",
+      "en": "I'm trying to ask the doctor to explain the dosage instructions.",
+      "zh": "我正在尝试请医生解释用药剂量说明。"
+    },
+    {
+      "id": "phrase-0591",
+      "category": "医疗药房",
+      "scene": "确认说明",
+      "en": "I was hoping to ask the doctor to explain the dosage instructions.",
+      "zh": "我希望能请医生解释用药剂量说明。"
+    },
+    {
+      "id": "phrase-0592",
+      "category": "医疗药房",
+      "scene": "确认说明",
+      "en": "Do you know how I can ask the doctor to explain the dosage instructions?",
+      "zh": "你知道我怎么才能请医生解释用药剂量说明吗？"
+    },
+    {
+      "id": "phrase-0593",
+      "category": "医疗药房",
+      "scene": "确认说明",
+      "en": "Could I ask the doctor to explain the dosage instructions?",
+      "zh": "我可以请医生解释用药剂量说明吗？"
+    },
+    {
+      "id": "phrase-0594",
+      "category": "医疗药房",
+      "scene": "确认说明",
+      "en": "I'd appreciate it if you could help me ask the doctor to explain the dosage instructions.",
+      "zh": "如果你能帮我请医生解释用药剂量说明，我会很感激。"
+    },
+    {
+      "id": "phrase-0595",
+      "category": "医疗药房",
+      "scene": "询问副作用",
+      "en": "I need to ask about possible side effects.",
+      "zh": "我需要询问可能出现的副作用。"
+    },
+    {
+      "id": "phrase-0596",
+      "category": "医疗药房",
+      "scene": "询问副作用",
+      "en": "Could you help me ask about possible side effects?",
+      "zh": "能帮我询问可能出现的副作用吗？"
+    },
+    {
+      "id": "phrase-0597",
+      "category": "医疗药房",
+      "scene": "询问副作用",
+      "en": "I'd like to ask about possible side effects, please.",
+      "zh": "麻烦帮我询问可能出现的副作用。"
+    },
+    {
+      "id": "phrase-0598",
+      "category": "医疗药房",
+      "scene": "询问副作用",
+      "en": "Is it possible to ask about possible side effects?",
+      "zh": "可以询问可能出现的副作用吗？"
+    },
+    {
+      "id": "phrase-0599",
+      "category": "医疗药房",
+      "scene": "询问副作用",
+      "en": "I'm trying to ask about possible side effects.",
+      "zh": "我正在尝试询问可能出现的副作用。"
+    },
+    {
+      "id": "phrase-0600",
+      "category": "医疗药房",
+      "scene": "询问副作用",
+      "en": "I was hoping to ask about possible side effects.",
+      "zh": "我希望能询问可能出现的副作用。"
+    },
+    {
+      "id": "phrase-0601",
+      "category": "医疗药房",
+      "scene": "询问副作用",
+      "en": "Do you know how I can ask about possible side effects?",
+      "zh": "你知道我怎么才能询问可能出现的副作用吗？"
+    },
+    {
+      "id": "phrase-0602",
+      "category": "医疗药房",
+      "scene": "询问副作用",
+      "en": "Could I ask about possible side effects?",
+      "zh": "我可以询问可能出现的副作用吗？"
+    },
+    {
+      "id": "phrase-0603",
+      "category": "医疗药房",
+      "scene": "询问副作用",
+      "en": "I'd appreciate it if you could help me ask about possible side effects.",
+      "zh": "如果你能帮我询问可能出现的副作用，我会很感激。"
+    },
+    {
+      "id": "phrase-0604",
+      "category": "医疗药房",
+      "scene": "保险咨询",
+      "en": "I need to check whether my insurance is accepted.",
+      "zh": "我需要确认是否接受我的保险。"
+    },
+    {
+      "id": "phrase-0605",
+      "category": "医疗药房",
+      "scene": "保险咨询",
+      "en": "Could you help me check whether my insurance is accepted?",
+      "zh": "能帮我确认是否接受我的保险吗？"
+    },
+    {
+      "id": "phrase-0606",
+      "category": "医疗药房",
+      "scene": "保险咨询",
+      "en": "I'd like to check whether my insurance is accepted, please.",
+      "zh": "麻烦帮我确认是否接受我的保险。"
+    },
+    {
+      "id": "phrase-0607",
+      "category": "医疗药房",
+      "scene": "保险咨询",
+      "en": "Is it possible to check whether my insurance is accepted?",
+      "zh": "可以确认是否接受我的保险吗？"
+    },
+    {
+      "id": "phrase-0608",
+      "category": "医疗药房",
+      "scene": "保险咨询",
+      "en": "I'm trying to check whether my insurance is accepted.",
+      "zh": "我正在尝试确认是否接受我的保险。"
+    },
+    {
+      "id": "phrase-0609",
+      "category": "医疗药房",
+      "scene": "保险咨询",
+      "en": "I was hoping to check whether my insurance is accepted.",
+      "zh": "我希望能确认是否接受我的保险。"
+    },
+    {
+      "id": "phrase-0610",
+      "category": "医疗药房",
+      "scene": "保险咨询",
+      "en": "Do you know how I can check whether my insurance is accepted?",
+      "zh": "你知道我怎么才能确认是否接受我的保险吗？"
+    },
+    {
+      "id": "phrase-0611",
+      "category": "医疗药房",
+      "scene": "保险咨询",
+      "en": "Could I check whether my insurance is accepted?",
+      "zh": "我可以确认是否接受我的保险吗？"
+    },
+    {
+      "id": "phrase-0612",
+      "category": "医疗药房",
+      "scene": "保险咨询",
+      "en": "I'd appreciate it if you could help me check whether my insurance is accepted.",
+      "zh": "如果你能帮我确认是否接受我的保险，我会很感激。"
+    },
+    {
+      "id": "phrase-0613",
+      "category": "医疗药房",
+      "scene": "寻找诊所",
+      "en": "I need to find the nearest urgent care clinic.",
+      "zh": "我需要寻找最近的紧急护理诊所。"
+    },
+    {
+      "id": "phrase-0614",
+      "category": "医疗药房",
+      "scene": "寻找诊所",
+      "en": "Could you help me find the nearest urgent care clinic?",
+      "zh": "能帮我寻找最近的紧急护理诊所吗？"
+    },
+    {
+      "id": "phrase-0615",
+      "category": "医疗药房",
+      "scene": "寻找诊所",
+      "en": "I'd like to find the nearest urgent care clinic, please.",
+      "zh": "麻烦帮我寻找最近的紧急护理诊所。"
+    },
+    {
+      "id": "phrase-0616",
+      "category": "医疗药房",
+      "scene": "寻找诊所",
+      "en": "Is it possible to find the nearest urgent care clinic?",
+      "zh": "可以寻找最近的紧急护理诊所吗？"
+    },
+    {
+      "id": "phrase-0617",
+      "category": "医疗药房",
+      "scene": "寻找诊所",
+      "en": "I'm trying to find the nearest urgent care clinic.",
+      "zh": "我正在尝试寻找最近的紧急护理诊所。"
+    },
+    {
+      "id": "phrase-0618",
+      "category": "医疗药房",
+      "scene": "寻找诊所",
+      "en": "I was hoping to find the nearest urgent care clinic.",
+      "zh": "我希望能寻找最近的紧急护理诊所。"
+    },
+    {
+      "id": "phrase-0619",
+      "category": "医疗药房",
+      "scene": "寻找诊所",
+      "en": "Do you know how I can find the nearest urgent care clinic?",
+      "zh": "你知道我怎么才能寻找最近的紧急护理诊所吗？"
+    },
+    {
+      "id": "phrase-0620",
+      "category": "医疗药房",
+      "scene": "寻找诊所",
+      "en": "Could I find the nearest urgent care clinic?",
+      "zh": "我可以寻找最近的紧急护理诊所吗？"
+    },
+    {
+      "id": "phrase-0621",
+      "category": "医疗药房",
+      "scene": "寻找诊所",
+      "en": "I'd appreciate it if you could help me find the nearest urgent care clinic.",
+      "zh": "如果你能帮我寻找最近的紧急护理诊所，我会很感激。"
+    },
+    {
+      "id": "phrase-0622",
+      "category": "医疗药房",
+      "scene": "索取就诊记录",
+      "en": "I need to get a copy of my visit summary.",
+      "zh": "我需要索取一份就诊摘要。"
+    },
+    {
+      "id": "phrase-0623",
+      "category": "医疗药房",
+      "scene": "索取就诊记录",
+      "en": "Could you help me get a copy of my visit summary?",
+      "zh": "能帮我索取一份就诊摘要吗？"
+    },
+    {
+      "id": "phrase-0624",
+      "category": "医疗药房",
+      "scene": "索取就诊记录",
+      "en": "I'd like to get a copy of my visit summary, please.",
+      "zh": "麻烦帮我索取一份就诊摘要。"
+    },
+    {
+      "id": "phrase-0625",
+      "category": "医疗药房",
+      "scene": "索取就诊记录",
+      "en": "Is it possible to get a copy of my visit summary?",
+      "zh": "可以索取一份就诊摘要吗？"
+    },
+    {
+      "id": "phrase-0626",
+      "category": "医疗药房",
+      "scene": "索取就诊记录",
+      "en": "I'm trying to get a copy of my visit summary.",
+      "zh": "我正在尝试索取一份就诊摘要。"
+    },
+    {
+      "id": "phrase-0627",
+      "category": "医疗药房",
+      "scene": "索取就诊记录",
+      "en": "I was hoping to get a copy of my visit summary.",
+      "zh": "我希望能索取一份就诊摘要。"
+    },
+    {
+      "id": "phrase-0628",
+      "category": "医疗药房",
+      "scene": "索取就诊记录",
+      "en": "Do you know how I can get a copy of my visit summary?",
+      "zh": "你知道我怎么才能索取一份就诊摘要吗？"
+    },
+    {
+      "id": "phrase-0629",
+      "category": "医疗药房",
+      "scene": "索取就诊记录",
+      "en": "Could I get a copy of my visit summary?",
+      "zh": "我可以索取一份就诊摘要吗？"
+    },
+    {
+      "id": "phrase-0630",
+      "category": "医疗药房",
+      "scene": "索取就诊记录",
+      "en": "I'd appreciate it if you could help me get a copy of my visit summary.",
+      "zh": "如果你能帮我索取一份就诊摘要，我会很感激。"
+    },
+    {
+      "id": "phrase-0631",
+      "category": "工作沟通",
+      "scene": "安排会议",
+      "en": "I need to schedule a meeting for next week.",
+      "zh": "我需要安排下周的会议。"
+    },
+    {
+      "id": "phrase-0632",
+      "category": "工作沟通",
+      "scene": "安排会议",
+      "en": "Could you help me schedule a meeting for next week?",
+      "zh": "能帮我安排下周的会议吗？"
+    },
+    {
+      "id": "phrase-0633",
+      "category": "工作沟通",
+      "scene": "安排会议",
+      "en": "I'd like to schedule a meeting for next week, please.",
+      "zh": "麻烦帮我安排下周的会议。"
+    },
+    {
+      "id": "phrase-0634",
+      "category": "工作沟通",
+      "scene": "安排会议",
+      "en": "Is it possible to schedule a meeting for next week?",
+      "zh": "可以安排下周的会议吗？"
+    },
+    {
+      "id": "phrase-0635",
+      "category": "工作沟通",
+      "scene": "安排会议",
+      "en": "I'm trying to schedule a meeting for next week.",
+      "zh": "我正在尝试安排下周的会议。"
+    },
+    {
+      "id": "phrase-0636",
+      "category": "工作沟通",
+      "scene": "安排会议",
+      "en": "I was hoping to schedule a meeting for next week.",
+      "zh": "我希望能安排下周的会议。"
+    },
+    {
+      "id": "phrase-0637",
+      "category": "工作沟通",
+      "scene": "安排会议",
+      "en": "Do you know how I can schedule a meeting for next week?",
+      "zh": "你知道我怎么才能安排下周的会议吗？"
+    },
+    {
+      "id": "phrase-0638",
+      "category": "工作沟通",
+      "scene": "安排会议",
+      "en": "Could I schedule a meeting for next week?",
+      "zh": "我可以安排下周的会议吗？"
+    },
+    {
+      "id": "phrase-0639",
+      "category": "工作沟通",
+      "scene": "安排会议",
+      "en": "I'd appreciate it if you could help me schedule a meeting for next week.",
+      "zh": "如果你能帮我安排下周的会议，我会很感激。"
+    },
+    {
+      "id": "phrase-0640",
+      "category": "工作沟通",
+      "scene": "分享议程",
+      "en": "I need to share the agenda before the meeting.",
+      "zh": "我需要在会议前分享议程。"
+    },
+    {
+      "id": "phrase-0641",
+      "category": "工作沟通",
+      "scene": "分享议程",
+      "en": "Could you help me share the agenda before the meeting?",
+      "zh": "能帮我在会议前分享议程吗？"
+    },
+    {
+      "id": "phrase-0642",
+      "category": "工作沟通",
+      "scene": "分享议程",
+      "en": "I'd like to share the agenda before the meeting, please.",
+      "zh": "麻烦帮我在会议前分享议程。"
+    },
+    {
+      "id": "phrase-0643",
+      "category": "工作沟通",
+      "scene": "分享议程",
+      "en": "Is it possible to share the agenda before the meeting?",
+      "zh": "可以在会议前分享议程吗？"
+    },
+    {
+      "id": "phrase-0644",
+      "category": "工作沟通",
+      "scene": "分享议程",
+      "en": "I'm trying to share the agenda before the meeting.",
+      "zh": "我正在尝试在会议前分享议程。"
+    },
+    {
+      "id": "phrase-0645",
+      "category": "工作沟通",
+      "scene": "分享议程",
+      "en": "I was hoping to share the agenda before the meeting.",
+      "zh": "我希望能在会议前分享议程。"
+    },
+    {
+      "id": "phrase-0646",
+      "category": "工作沟通",
+      "scene": "分享议程",
+      "en": "Do you know how I can share the agenda before the meeting?",
+      "zh": "你知道我怎么才能在会议前分享议程吗？"
+    },
+    {
+      "id": "phrase-0647",
+      "category": "工作沟通",
+      "scene": "分享议程",
+      "en": "Could I share the agenda before the meeting?",
+      "zh": "我可以在会议前分享议程吗？"
+    },
+    {
+      "id": "phrase-0648",
+      "category": "工作沟通",
+      "scene": "分享议程",
+      "en": "I'd appreciate it if you could help me share the agenda before the meeting.",
+      "zh": "如果你能帮我在会议前分享议程，我会很感激。"
+    },
+    {
+      "id": "phrase-0649",
+      "category": "工作沟通",
+      "scene": "确认截止日期",
+      "en": "I need to ask when the project deadline is.",
+      "zh": "我需要询问项目截止日期。"
+    },
+    {
+      "id": "phrase-0650",
+      "category": "工作沟通",
+      "scene": "确认截止日期",
+      "en": "Could you help me ask when the project deadline is?",
+      "zh": "能帮我询问项目截止日期吗？"
+    },
+    {
+      "id": "phrase-0651",
+      "category": "工作沟通",
+      "scene": "确认截止日期",
+      "en": "I'd like to ask when the project deadline is, please.",
+      "zh": "麻烦帮我询问项目截止日期。"
+    },
+    {
+      "id": "phrase-0652",
+      "category": "工作沟通",
+      "scene": "确认截止日期",
+      "en": "Is it possible to ask when the project deadline is?",
+      "zh": "可以询问项目截止日期吗？"
+    },
+    {
+      "id": "phrase-0653",
+      "category": "工作沟通",
+      "scene": "确认截止日期",
+      "en": "I'm trying to ask when the project deadline is.",
+      "zh": "我正在尝试询问项目截止日期。"
+    },
+    {
+      "id": "phrase-0654",
+      "category": "工作沟通",
+      "scene": "确认截止日期",
+      "en": "I was hoping to ask when the project deadline is.",
+      "zh": "我希望能询问项目截止日期。"
+    },
+    {
+      "id": "phrase-0655",
+      "category": "工作沟通",
+      "scene": "确认截止日期",
+      "en": "Do you know how I can ask when the project deadline is?",
+      "zh": "你知道我怎么才能询问项目截止日期吗？"
+    },
+    {
+      "id": "phrase-0656",
+      "category": "工作沟通",
+      "scene": "确认截止日期",
+      "en": "Could I ask when the project deadline is?",
+      "zh": "我可以询问项目截止日期吗？"
+    },
+    {
+      "id": "phrase-0657",
+      "category": "工作沟通",
+      "scene": "确认截止日期",
+      "en": "I'd appreciate it if you could help me ask when the project deadline is.",
+      "zh": "如果你能帮我询问项目截止日期，我会很感激。"
+    },
+    {
+      "id": "phrase-0658",
+      "category": "工作沟通",
+      "scene": "发送草稿",
+      "en": "I need to send you the latest draft.",
+      "zh": "我需要把最新草稿发给你。"
+    },
+    {
+      "id": "phrase-0659",
+      "category": "工作沟通",
+      "scene": "发送草稿",
+      "en": "Could you help me send you the latest draft?",
+      "zh": "能帮我把最新草稿发给你吗？"
+    },
+    {
+      "id": "phrase-0660",
+      "category": "工作沟通",
+      "scene": "发送草稿",
+      "en": "I'd like to send you the latest draft, please.",
+      "zh": "麻烦帮我把最新草稿发给你。"
+    },
+    {
+      "id": "phrase-0661",
+      "category": "工作沟通",
+      "scene": "发送草稿",
+      "en": "Is it possible to send you the latest draft?",
+      "zh": "可以把最新草稿发给你吗？"
+    },
+    {
+      "id": "phrase-0662",
+      "category": "工作沟通",
+      "scene": "发送草稿",
+      "en": "I'm trying to send you the latest draft.",
+      "zh": "我正在尝试把最新草稿发给你。"
+    },
+    {
+      "id": "phrase-0663",
+      "category": "工作沟通",
+      "scene": "发送草稿",
+      "en": "I was hoping to send you the latest draft.",
+      "zh": "我希望能把最新草稿发给你。"
+    },
+    {
+      "id": "phrase-0664",
+      "category": "工作沟通",
+      "scene": "发送草稿",
+      "en": "Do you know how I can send you the latest draft?",
+      "zh": "你知道我怎么才能把最新草稿发给你吗？"
+    },
+    {
+      "id": "phrase-0665",
+      "category": "工作沟通",
+      "scene": "发送草稿",
+      "en": "Could I send you the latest draft?",
+      "zh": "我可以把最新草稿发给你吗？"
+    },
+    {
+      "id": "phrase-0666",
+      "category": "工作沟通",
+      "scene": "发送草稿",
+      "en": "I'd appreciate it if you could help me send you the latest draft.",
+      "zh": "如果你能帮我把最新草稿发给你，我会很感激。"
+    },
+    {
+      "id": "phrase-0667",
+      "category": "工作沟通",
+      "scene": "澄清任务",
+      "en": "I need to clarify what you need me to do.",
+      "zh": "我需要确认你希望我具体做什么。"
+    },
+    {
+      "id": "phrase-0668",
+      "category": "工作沟通",
+      "scene": "澄清任务",
+      "en": "Could you help me clarify what you need me to do?",
+      "zh": "能帮我确认你希望我具体做什么吗？"
+    },
+    {
+      "id": "phrase-0669",
+      "category": "工作沟通",
+      "scene": "澄清任务",
+      "en": "I'd like to clarify what you need me to do, please.",
+      "zh": "麻烦帮我确认你希望我具体做什么。"
+    },
+    {
+      "id": "phrase-0670",
+      "category": "工作沟通",
+      "scene": "澄清任务",
+      "en": "Is it possible to clarify what you need me to do?",
+      "zh": "可以确认你希望我具体做什么吗？"
+    },
+    {
+      "id": "phrase-0671",
+      "category": "工作沟通",
+      "scene": "澄清任务",
+      "en": "I'm trying to clarify what you need me to do.",
+      "zh": "我正在尝试确认你希望我具体做什么。"
+    },
+    {
+      "id": "phrase-0672",
+      "category": "工作沟通",
+      "scene": "澄清任务",
+      "en": "I was hoping to clarify what you need me to do.",
+      "zh": "我希望能确认你希望我具体做什么。"
+    },
+    {
+      "id": "phrase-0673",
+      "category": "工作沟通",
+      "scene": "澄清任务",
+      "en": "Do you know how I can clarify what you need me to do?",
+      "zh": "你知道我怎么才能确认你希望我具体做什么吗？"
+    },
+    {
+      "id": "phrase-0674",
+      "category": "工作沟通",
+      "scene": "澄清任务",
+      "en": "Could I clarify what you need me to do?",
+      "zh": "我可以确认你希望我具体做什么吗？"
+    },
+    {
+      "id": "phrase-0675",
+      "category": "工作沟通",
+      "scene": "澄清任务",
+      "en": "I'd appreciate it if you could help me clarify what you need me to do.",
+      "zh": "如果你能帮我确认你希望我具体做什么，我会很感激。"
+    },
+    {
+      "id": "phrase-0676",
+      "category": "工作沟通",
+      "scene": "汇报进度",
+      "en": "I need to give you a quick progress update.",
+      "zh": "我需要向你简要汇报进度。"
+    },
+    {
+      "id": "phrase-0677",
+      "category": "工作沟通",
+      "scene": "汇报进度",
+      "en": "Could you help me give you a quick progress update?",
+      "zh": "能帮我向你简要汇报进度吗？"
+    },
+    {
+      "id": "phrase-0678",
+      "category": "工作沟通",
+      "scene": "汇报进度",
+      "en": "I'd like to give you a quick progress update, please.",
+      "zh": "麻烦帮我向你简要汇报进度。"
+    },
+    {
+      "id": "phrase-0679",
+      "category": "工作沟通",
+      "scene": "汇报进度",
+      "en": "Is it possible to give you a quick progress update?",
+      "zh": "可以向你简要汇报进度吗？"
+    },
+    {
+      "id": "phrase-0680",
+      "category": "工作沟通",
+      "scene": "汇报进度",
+      "en": "I'm trying to give you a quick progress update.",
+      "zh": "我正在尝试向你简要汇报进度。"
+    },
+    {
+      "id": "phrase-0681",
+      "category": "工作沟通",
+      "scene": "汇报进度",
+      "en": "I was hoping to give you a quick progress update.",
+      "zh": "我希望能向你简要汇报进度。"
+    },
+    {
+      "id": "phrase-0682",
+      "category": "工作沟通",
+      "scene": "汇报进度",
+      "en": "Do you know how I can give you a quick progress update?",
+      "zh": "你知道我怎么才能向你简要汇报进度吗？"
+    },
+    {
+      "id": "phrase-0683",
+      "category": "工作沟通",
+      "scene": "汇报进度",
+      "en": "Could I give you a quick progress update?",
+      "zh": "我可以向你简要汇报进度吗？"
+    },
+    {
+      "id": "phrase-0684",
+      "category": "工作沟通",
+      "scene": "汇报进度",
+      "en": "I'd appreciate it if you could help me give you a quick progress update.",
+      "zh": "如果你能帮我向你简要汇报进度，我会很感激。"
+    },
+    {
+      "id": "phrase-0685",
+      "category": "工作沟通",
+      "scene": "征求反馈",
+      "en": "I need to ask for feedback on my presentation.",
+      "zh": "我需要征求你对我演示的意见。"
+    },
+    {
+      "id": "phrase-0686",
+      "category": "工作沟通",
+      "scene": "征求反馈",
+      "en": "Could you help me ask for feedback on my presentation?",
+      "zh": "能帮我征求你对我演示的意见吗？"
+    },
+    {
+      "id": "phrase-0687",
+      "category": "工作沟通",
+      "scene": "征求反馈",
+      "en": "I'd like to ask for feedback on my presentation, please.",
+      "zh": "麻烦帮我征求你对我演示的意见。"
+    },
+    {
+      "id": "phrase-0688",
+      "category": "工作沟通",
+      "scene": "征求反馈",
+      "en": "Is it possible to ask for feedback on my presentation?",
+      "zh": "可以征求你对我演示的意见吗？"
+    },
+    {
+      "id": "phrase-0689",
+      "category": "工作沟通",
+      "scene": "征求反馈",
+      "en": "I'm trying to ask for feedback on my presentation.",
+      "zh": "我正在尝试征求你对我演示的意见。"
+    },
+    {
+      "id": "phrase-0690",
+      "category": "工作沟通",
+      "scene": "征求反馈",
+      "en": "I was hoping to ask for feedback on my presentation.",
+      "zh": "我希望能征求你对我演示的意见。"
+    },
+    {
+      "id": "phrase-0691",
+      "category": "工作沟通",
+      "scene": "征求反馈",
+      "en": "Do you know how I can ask for feedback on my presentation?",
+      "zh": "你知道我怎么才能征求你对我演示的意见吗？"
+    },
+    {
+      "id": "phrase-0692",
+      "category": "工作沟通",
+      "scene": "征求反馈",
+      "en": "Could I ask for feedback on my presentation?",
+      "zh": "我可以征求你对我演示的意见吗？"
+    },
+    {
+      "id": "phrase-0693",
+      "category": "工作沟通",
+      "scene": "征求反馈",
+      "en": "I'd appreciate it if you could help me ask for feedback on my presentation.",
+      "zh": "如果你能帮我征求你对我演示的意见，我会很感激。"
+    },
+    {
+      "id": "phrase-0694",
+      "category": "工作沟通",
+      "scene": "申请延期",
+      "en": "I need to request more time to finish the report.",
+      "zh": "我需要申请更多时间完成报告。"
+    },
+    {
+      "id": "phrase-0695",
+      "category": "工作沟通",
+      "scene": "申请延期",
+      "en": "Could you help me request more time to finish the report?",
+      "zh": "能帮我申请更多时间完成报告吗？"
+    },
+    {
+      "id": "phrase-0696",
+      "category": "工作沟通",
+      "scene": "申请延期",
+      "en": "I'd like to request more time to finish the report, please.",
+      "zh": "麻烦帮我申请更多时间完成报告。"
+    },
+    {
+      "id": "phrase-0697",
+      "category": "工作沟通",
+      "scene": "申请延期",
+      "en": "Is it possible to request more time to finish the report?",
+      "zh": "可以申请更多时间完成报告吗？"
+    },
+    {
+      "id": "phrase-0698",
+      "category": "工作沟通",
+      "scene": "申请延期",
+      "en": "I'm trying to request more time to finish the report.",
+      "zh": "我正在尝试申请更多时间完成报告。"
+    },
+    {
+      "id": "phrase-0699",
+      "category": "工作沟通",
+      "scene": "申请延期",
+      "en": "I was hoping to request more time to finish the report.",
+      "zh": "我希望能申请更多时间完成报告。"
+    },
+    {
+      "id": "phrase-0700",
+      "category": "工作沟通",
+      "scene": "申请延期",
+      "en": "Do you know how I can request more time to finish the report?",
+      "zh": "你知道我怎么才能申请更多时间完成报告吗？"
+    },
+    {
+      "id": "phrase-0701",
+      "category": "工作沟通",
+      "scene": "申请延期",
+      "en": "Could I request more time to finish the report?",
+      "zh": "我可以申请更多时间完成报告吗？"
+    },
+    {
+      "id": "phrase-0702",
+      "category": "工作沟通",
+      "scene": "申请延期",
+      "en": "I'd appreciate it if you could help me request more time to finish the report.",
+      "zh": "如果你能帮我申请更多时间完成报告，我会很感激。"
+    },
+    {
+      "id": "phrase-0703",
+      "category": "工作沟通",
+      "scene": "确认优先级",
+      "en": "I need to agree on which task to prioritize.",
+      "zh": "我需要商定优先处理哪项任务。"
+    },
+    {
+      "id": "phrase-0704",
+      "category": "工作沟通",
+      "scene": "确认优先级",
+      "en": "Could you help me agree on which task to prioritize?",
+      "zh": "能帮我商定优先处理哪项任务吗？"
+    },
+    {
+      "id": "phrase-0705",
+      "category": "工作沟通",
+      "scene": "确认优先级",
+      "en": "I'd like to agree on which task to prioritize, please.",
+      "zh": "麻烦帮我商定优先处理哪项任务。"
+    },
+    {
+      "id": "phrase-0706",
+      "category": "工作沟通",
+      "scene": "确认优先级",
+      "en": "Is it possible to agree on which task to prioritize?",
+      "zh": "可以商定优先处理哪项任务吗？"
+    },
+    {
+      "id": "phrase-0707",
+      "category": "工作沟通",
+      "scene": "确认优先级",
+      "en": "I'm trying to agree on which task to prioritize.",
+      "zh": "我正在尝试商定优先处理哪项任务。"
+    },
+    {
+      "id": "phrase-0708",
+      "category": "工作沟通",
+      "scene": "确认优先级",
+      "en": "I was hoping to agree on which task to prioritize.",
+      "zh": "我希望能商定优先处理哪项任务。"
+    },
+    {
+      "id": "phrase-0709",
+      "category": "工作沟通",
+      "scene": "确认优先级",
+      "en": "Do you know how I can agree on which task to prioritize?",
+      "zh": "你知道我怎么才能商定优先处理哪项任务吗？"
+    },
+    {
+      "id": "phrase-0710",
+      "category": "工作沟通",
+      "scene": "确认优先级",
+      "en": "Could I agree on which task to prioritize?",
+      "zh": "我可以商定优先处理哪项任务吗？"
+    },
+    {
+      "id": "phrase-0711",
+      "category": "工作沟通",
+      "scene": "确认优先级",
+      "en": "I'd appreciate it if you could help me agree on which task to prioritize.",
+      "zh": "如果你能帮我商定优先处理哪项任务，我会很感激。"
+    },
+    {
+      "id": "phrase-0712",
+      "category": "工作沟通",
+      "scene": "跟进事项",
+      "en": "I need to follow up on our conversation yesterday.",
+      "zh": "我需要跟进我们昨天谈过的事情。"
+    },
+    {
+      "id": "phrase-0713",
+      "category": "工作沟通",
+      "scene": "跟进事项",
+      "en": "Could you help me follow up on our conversation yesterday?",
+      "zh": "能帮我跟进我们昨天谈过的事情吗？"
+    },
+    {
+      "id": "phrase-0714",
+      "category": "工作沟通",
+      "scene": "跟进事项",
+      "en": "I'd like to follow up on our conversation yesterday, please.",
+      "zh": "麻烦帮我跟进我们昨天谈过的事情。"
+    },
+    {
+      "id": "phrase-0715",
+      "category": "工作沟通",
+      "scene": "跟进事项",
+      "en": "Is it possible to follow up on our conversation yesterday?",
+      "zh": "可以跟进我们昨天谈过的事情吗？"
+    },
+    {
+      "id": "phrase-0716",
+      "category": "工作沟通",
+      "scene": "跟进事项",
+      "en": "I'm trying to follow up on our conversation yesterday.",
+      "zh": "我正在尝试跟进我们昨天谈过的事情。"
+    },
+    {
+      "id": "phrase-0717",
+      "category": "工作沟通",
+      "scene": "跟进事项",
+      "en": "I was hoping to follow up on our conversation yesterday.",
+      "zh": "我希望能跟进我们昨天谈过的事情。"
+    },
+    {
+      "id": "phrase-0718",
+      "category": "工作沟通",
+      "scene": "跟进事项",
+      "en": "Do you know how I can follow up on our conversation yesterday?",
+      "zh": "你知道我怎么才能跟进我们昨天谈过的事情吗？"
+    },
+    {
+      "id": "phrase-0719",
+      "category": "工作沟通",
+      "scene": "跟进事项",
+      "en": "Could I follow up on our conversation yesterday?",
+      "zh": "我可以跟进我们昨天谈过的事情吗？"
+    },
+    {
+      "id": "phrase-0720",
+      "category": "工作沟通",
+      "scene": "跟进事项",
+      "en": "I'd appreciate it if you could help me follow up on our conversation yesterday.",
+      "zh": "如果你能帮我跟进我们昨天谈过的事情，我会很感激。"
+    },
+    {
+      "id": "phrase-0721",
+      "category": "电话预约",
+      "scene": "预约时间",
+      "en": "I need to book an appointment for Friday.",
+      "zh": "我需要预约周五的时间。"
+    },
+    {
+      "id": "phrase-0722",
+      "category": "电话预约",
+      "scene": "预约时间",
+      "en": "Could you help me book an appointment for Friday?",
+      "zh": "能帮我预约周五的时间吗？"
+    },
+    {
+      "id": "phrase-0723",
+      "category": "电话预约",
+      "scene": "预约时间",
+      "en": "I'd like to book an appointment for Friday, please.",
+      "zh": "麻烦帮我预约周五的时间。"
+    },
+    {
+      "id": "phrase-0724",
+      "category": "电话预约",
+      "scene": "预约时间",
+      "en": "Is it possible to book an appointment for Friday?",
+      "zh": "可以预约周五的时间吗？"
+    },
+    {
+      "id": "phrase-0725",
+      "category": "电话预约",
+      "scene": "预约时间",
+      "en": "I'm trying to book an appointment for Friday.",
+      "zh": "我正在尝试预约周五的时间。"
+    },
+    {
+      "id": "phrase-0726",
+      "category": "电话预约",
+      "scene": "预约时间",
+      "en": "I was hoping to book an appointment for Friday.",
+      "zh": "我希望能预约周五的时间。"
+    },
+    {
+      "id": "phrase-0727",
+      "category": "电话预约",
+      "scene": "预约时间",
+      "en": "Do you know how I can book an appointment for Friday?",
+      "zh": "你知道我怎么才能预约周五的时间吗？"
+    },
+    {
+      "id": "phrase-0728",
+      "category": "电话预约",
+      "scene": "预约时间",
+      "en": "Could I book an appointment for Friday?",
+      "zh": "我可以预约周五的时间吗？"
+    },
+    {
+      "id": "phrase-0729",
+      "category": "电话预约",
+      "scene": "预约时间",
+      "en": "I'd appreciate it if you could help me book an appointment for Friday.",
+      "zh": "如果你能帮我预约周五的时间，我会很感激。"
+    },
+    {
+      "id": "phrase-0730",
+      "category": "电话预约",
+      "scene": "改期",
+      "en": "I need to move my appointment to another day.",
+      "zh": "我需要把我的预约改到另一天。"
+    },
+    {
+      "id": "phrase-0731",
+      "category": "电话预约",
+      "scene": "改期",
+      "en": "Could you help me move my appointment to another day?",
+      "zh": "能帮我把我的预约改到另一天吗？"
+    },
+    {
+      "id": "phrase-0732",
+      "category": "电话预约",
+      "scene": "改期",
+      "en": "I'd like to move my appointment to another day, please.",
+      "zh": "麻烦帮我把我的预约改到另一天。"
+    },
+    {
+      "id": "phrase-0733",
+      "category": "电话预约",
+      "scene": "改期",
+      "en": "Is it possible to move my appointment to another day?",
+      "zh": "可以把我的预约改到另一天吗？"
+    },
+    {
+      "id": "phrase-0734",
+      "category": "电话预约",
+      "scene": "改期",
+      "en": "I'm trying to move my appointment to another day.",
+      "zh": "我正在尝试把我的预约改到另一天。"
+    },
+    {
+      "id": "phrase-0735",
+      "category": "电话预约",
+      "scene": "改期",
+      "en": "I was hoping to move my appointment to another day.",
+      "zh": "我希望能把我的预约改到另一天。"
+    },
+    {
+      "id": "phrase-0736",
+      "category": "电话预约",
+      "scene": "改期",
+      "en": "Do you know how I can move my appointment to another day?",
+      "zh": "你知道我怎么才能把我的预约改到另一天吗？"
+    },
+    {
+      "id": "phrase-0737",
+      "category": "电话预约",
+      "scene": "改期",
+      "en": "Could I move my appointment to another day?",
+      "zh": "我可以把我的预约改到另一天吗？"
+    },
+    {
+      "id": "phrase-0738",
+      "category": "电话预约",
+      "scene": "改期",
+      "en": "I'd appreciate it if you could help me move my appointment to another day.",
+      "zh": "如果你能帮我把我的预约改到另一天，我会很感激。"
+    },
+    {
+      "id": "phrase-0739",
+      "category": "电话预约",
+      "scene": "确认预约",
+      "en": "I need to confirm the time of my appointment.",
+      "zh": "我需要确认预约时间。"
+    },
+    {
+      "id": "phrase-0740",
+      "category": "电话预约",
+      "scene": "确认预约",
+      "en": "Could you help me confirm the time of my appointment?",
+      "zh": "能帮我确认预约时间吗？"
+    },
+    {
+      "id": "phrase-0741",
+      "category": "电话预约",
+      "scene": "确认预约",
+      "en": "I'd like to confirm the time of my appointment, please.",
+      "zh": "麻烦帮我确认预约时间。"
+    },
+    {
+      "id": "phrase-0742",
+      "category": "电话预约",
+      "scene": "确认预约",
+      "en": "Is it possible to confirm the time of my appointment?",
+      "zh": "可以确认预约时间吗？"
+    },
+    {
+      "id": "phrase-0743",
+      "category": "电话预约",
+      "scene": "确认预约",
+      "en": "I'm trying to confirm the time of my appointment.",
+      "zh": "我正在尝试确认预约时间。"
+    },
+    {
+      "id": "phrase-0744",
+      "category": "电话预约",
+      "scene": "确认预约",
+      "en": "I was hoping to confirm the time of my appointment.",
+      "zh": "我希望能确认预约时间。"
+    },
+    {
+      "id": "phrase-0745",
+      "category": "电话预约",
+      "scene": "确认预约",
+      "en": "Do you know how I can confirm the time of my appointment?",
+      "zh": "你知道我怎么才能确认预约时间吗？"
+    },
+    {
+      "id": "phrase-0746",
+      "category": "电话预约",
+      "scene": "确认预约",
+      "en": "Could I confirm the time of my appointment?",
+      "zh": "我可以确认预约时间吗？"
+    },
+    {
+      "id": "phrase-0747",
+      "category": "电话预约",
+      "scene": "确认预约",
+      "en": "I'd appreciate it if you could help me confirm the time of my appointment.",
+      "zh": "如果你能帮我确认预约时间，我会很感激。"
+    },
+    {
+      "id": "phrase-0748",
+      "category": "电话预约",
+      "scene": "询问空档",
+      "en": "I need to ask what times are available.",
+      "zh": "我需要询问有哪些可预约的时段。"
+    },
+    {
+      "id": "phrase-0749",
+      "category": "电话预约",
+      "scene": "询问空档",
+      "en": "Could you help me ask what times are available?",
+      "zh": "能帮我询问有哪些可预约的时段吗？"
+    },
+    {
+      "id": "phrase-0750",
+      "category": "电话预约",
+      "scene": "询问空档",
+      "en": "I'd like to ask what times are available, please.",
+      "zh": "麻烦帮我询问有哪些可预约的时段。"
+    },
+    {
+      "id": "phrase-0751",
+      "category": "电话预约",
+      "scene": "询问空档",
+      "en": "Is it possible to ask what times are available?",
+      "zh": "可以询问有哪些可预约的时段吗？"
+    },
+    {
+      "id": "phrase-0752",
+      "category": "电话预约",
+      "scene": "询问空档",
+      "en": "I'm trying to ask what times are available.",
+      "zh": "我正在尝试询问有哪些可预约的时段。"
+    },
+    {
+      "id": "phrase-0753",
+      "category": "电话预约",
+      "scene": "询问空档",
+      "en": "I was hoping to ask what times are available.",
+      "zh": "我希望能询问有哪些可预约的时段。"
+    },
+    {
+      "id": "phrase-0754",
+      "category": "电话预约",
+      "scene": "询问空档",
+      "en": "Do you know how I can ask what times are available?",
+      "zh": "你知道我怎么才能询问有哪些可预约的时段吗？"
+    },
+    {
+      "id": "phrase-0755",
+      "category": "电话预约",
+      "scene": "询问空档",
+      "en": "Could I ask what times are available?",
+      "zh": "我可以询问有哪些可预约的时段吗？"
+    },
+    {
+      "id": "phrase-0756",
+      "category": "电话预约",
+      "scene": "询问空档",
+      "en": "I'd appreciate it if you could help me ask what times are available.",
+      "zh": "如果你能帮我询问有哪些可预约的时段，我会很感激。"
+    },
+    {
+      "id": "phrase-0757",
+      "category": "电话预约",
+      "scene": "留言",
+      "en": "I need to leave a message for the receptionist.",
+      "zh": "我需要给接待人员留言。"
+    },
+    {
+      "id": "phrase-0758",
+      "category": "电话预约",
+      "scene": "留言",
+      "en": "Could you help me leave a message for the receptionist?",
+      "zh": "能帮我给接待人员留言吗？"
+    },
+    {
+      "id": "phrase-0759",
+      "category": "电话预约",
+      "scene": "留言",
+      "en": "I'd like to leave a message for the receptionist, please.",
+      "zh": "麻烦帮我给接待人员留言。"
+    },
+    {
+      "id": "phrase-0760",
+      "category": "电话预约",
+      "scene": "留言",
+      "en": "Is it possible to leave a message for the receptionist?",
+      "zh": "可以给接待人员留言吗？"
+    },
+    {
+      "id": "phrase-0761",
+      "category": "电话预约",
+      "scene": "留言",
+      "en": "I'm trying to leave a message for the receptionist.",
+      "zh": "我正在尝试给接待人员留言。"
+    },
+    {
+      "id": "phrase-0762",
+      "category": "电话预约",
+      "scene": "留言",
+      "en": "I was hoping to leave a message for the receptionist.",
+      "zh": "我希望能给接待人员留言。"
+    },
+    {
+      "id": "phrase-0763",
+      "category": "电话预约",
+      "scene": "留言",
+      "en": "Do you know how I can leave a message for the receptionist?",
+      "zh": "你知道我怎么才能给接待人员留言吗？"
+    },
+    {
+      "id": "phrase-0764",
+      "category": "电话预约",
+      "scene": "留言",
+      "en": "Could I leave a message for the receptionist?",
+      "zh": "我可以给接待人员留言吗？"
+    },
+    {
+      "id": "phrase-0765",
+      "category": "电话预约",
+      "scene": "留言",
+      "en": "I'd appreciate it if you could help me leave a message for the receptionist.",
+      "zh": "如果你能帮我给接待人员留言，我会很感激。"
+    },
+    {
+      "id": "phrase-0766",
+      "category": "电话预约",
+      "scene": "请求稍候",
+      "en": "I need to hold for a moment while I check my calendar.",
+      "zh": "我需要稍等片刻让我查看日程。"
+    },
+    {
+      "id": "phrase-0767",
+      "category": "电话预约",
+      "scene": "请求稍候",
+      "en": "Could you help me hold for a moment while I check my calendar?",
+      "zh": "能帮我稍等片刻让我查看日程吗？"
+    },
+    {
+      "id": "phrase-0768",
+      "category": "电话预约",
+      "scene": "请求稍候",
+      "en": "I'd like to hold for a moment while I check my calendar, please.",
+      "zh": "麻烦帮我稍等片刻让我查看日程。"
+    },
+    {
+      "id": "phrase-0769",
+      "category": "电话预约",
+      "scene": "请求稍候",
+      "en": "Is it possible to hold for a moment while I check my calendar?",
+      "zh": "可以稍等片刻让我查看日程吗？"
+    },
+    {
+      "id": "phrase-0770",
+      "category": "电话预约",
+      "scene": "请求稍候",
+      "en": "I'm trying to hold for a moment while I check my calendar.",
+      "zh": "我正在尝试稍等片刻让我查看日程。"
+    },
+    {
+      "id": "phrase-0771",
+      "category": "电话预约",
+      "scene": "请求稍候",
+      "en": "I was hoping to hold for a moment while I check my calendar.",
+      "zh": "我希望能稍等片刻让我查看日程。"
+    },
+    {
+      "id": "phrase-0772",
+      "category": "电话预约",
+      "scene": "请求稍候",
+      "en": "Do you know how I can hold for a moment while I check my calendar?",
+      "zh": "你知道我怎么才能稍等片刻让我查看日程吗？"
+    },
+    {
+      "id": "phrase-0773",
+      "category": "电话预约",
+      "scene": "请求稍候",
+      "en": "Could I hold for a moment while I check my calendar?",
+      "zh": "我可以稍等片刻让我查看日程吗？"
+    },
+    {
+      "id": "phrase-0774",
+      "category": "电话预约",
+      "scene": "请求稍候",
+      "en": "I'd appreciate it if you could help me hold for a moment while I check my calendar.",
+      "zh": "如果你能帮我稍等片刻让我查看日程，我会很感激。"
+    },
+    {
+      "id": "phrase-0775",
+      "category": "电话预约",
+      "scene": "转接负责人",
+      "en": "I need to ask to speak with the person in charge.",
+      "zh": "我需要请求与负责人通话。"
+    },
+    {
+      "id": "phrase-0776",
+      "category": "电话预约",
+      "scene": "转接负责人",
+      "en": "Could you help me ask to speak with the person in charge?",
+      "zh": "能帮我请求与负责人通话吗？"
+    },
+    {
+      "id": "phrase-0777",
+      "category": "电话预约",
+      "scene": "转接负责人",
+      "en": "I'd like to ask to speak with the person in charge, please.",
+      "zh": "麻烦帮我请求与负责人通话。"
+    },
+    {
+      "id": "phrase-0778",
+      "category": "电话预约",
+      "scene": "转接负责人",
+      "en": "Is it possible to ask to speak with the person in charge?",
+      "zh": "可以请求与负责人通话吗？"
+    },
+    {
+      "id": "phrase-0779",
+      "category": "电话预约",
+      "scene": "转接负责人",
+      "en": "I'm trying to ask to speak with the person in charge.",
+      "zh": "我正在尝试请求与负责人通话。"
+    },
+    {
+      "id": "phrase-0780",
+      "category": "电话预约",
+      "scene": "转接负责人",
+      "en": "I was hoping to ask to speak with the person in charge.",
+      "zh": "我希望能请求与负责人通话。"
+    },
+    {
+      "id": "phrase-0781",
+      "category": "电话预约",
+      "scene": "转接负责人",
+      "en": "Do you know how I can ask to speak with the person in charge?",
+      "zh": "你知道我怎么才能请求与负责人通话吗？"
+    },
+    {
+      "id": "phrase-0782",
+      "category": "电话预约",
+      "scene": "转接负责人",
+      "en": "Could I ask to speak with the person in charge?",
+      "zh": "我可以请求与负责人通话吗？"
+    },
+    {
+      "id": "phrase-0783",
+      "category": "电话预约",
+      "scene": "转接负责人",
+      "en": "I'd appreciate it if you could help me ask to speak with the person in charge.",
+      "zh": "如果你能帮我请求与负责人通话，我会很感激。"
+    },
+    {
+      "id": "phrase-0784",
+      "category": "电话预约",
+      "scene": "确认地址",
+      "en": "I need to confirm the address for my appointment.",
+      "zh": "我需要确认预约地点的地址。"
+    },
+    {
+      "id": "phrase-0785",
+      "category": "电话预约",
+      "scene": "确认地址",
+      "en": "Could you help me confirm the address for my appointment?",
+      "zh": "能帮我确认预约地点的地址吗？"
+    },
+    {
+      "id": "phrase-0786",
+      "category": "电话预约",
+      "scene": "确认地址",
+      "en": "I'd like to confirm the address for my appointment, please.",
+      "zh": "麻烦帮我确认预约地点的地址。"
+    },
+    {
+      "id": "phrase-0787",
+      "category": "电话预约",
+      "scene": "确认地址",
+      "en": "Is it possible to confirm the address for my appointment?",
+      "zh": "可以确认预约地点的地址吗？"
+    },
+    {
+      "id": "phrase-0788",
+      "category": "电话预约",
+      "scene": "确认地址",
+      "en": "I'm trying to confirm the address for my appointment.",
+      "zh": "我正在尝试确认预约地点的地址。"
+    },
+    {
+      "id": "phrase-0789",
+      "category": "电话预约",
+      "scene": "确认地址",
+      "en": "I was hoping to confirm the address for my appointment.",
+      "zh": "我希望能确认预约地点的地址。"
+    },
+    {
+      "id": "phrase-0790",
+      "category": "电话预约",
+      "scene": "确认地址",
+      "en": "Do you know how I can confirm the address for my appointment?",
+      "zh": "你知道我怎么才能确认预约地点的地址吗？"
+    },
+    {
+      "id": "phrase-0791",
+      "category": "电话预约",
+      "scene": "确认地址",
+      "en": "Could I confirm the address for my appointment?",
+      "zh": "我可以确认预约地点的地址吗？"
+    },
+    {
+      "id": "phrase-0792",
+      "category": "电话预约",
+      "scene": "确认地址",
+      "en": "I'd appreciate it if you could help me confirm the address for my appointment.",
+      "zh": "如果你能帮我确认预约地点的地址，我会很感激。"
+    },
+    {
+      "id": "phrase-0793",
+      "category": "电话预约",
+      "scene": "取消预约",
+      "en": "I need to cancel my appointment for tomorrow.",
+      "zh": "我需要取消我明天的预约。"
+    },
+    {
+      "id": "phrase-0794",
+      "category": "电话预约",
+      "scene": "取消预约",
+      "en": "Could you help me cancel my appointment for tomorrow?",
+      "zh": "能帮我取消我明天的预约吗？"
+    },
+    {
+      "id": "phrase-0795",
+      "category": "电话预约",
+      "scene": "取消预约",
+      "en": "I'd like to cancel my appointment for tomorrow, please.",
+      "zh": "麻烦帮我取消我明天的预约。"
+    },
+    {
+      "id": "phrase-0796",
+      "category": "电话预约",
+      "scene": "取消预约",
+      "en": "Is it possible to cancel my appointment for tomorrow?",
+      "zh": "可以取消我明天的预约吗？"
+    },
+    {
+      "id": "phrase-0797",
+      "category": "电话预约",
+      "scene": "取消预约",
+      "en": "I'm trying to cancel my appointment for tomorrow.",
+      "zh": "我正在尝试取消我明天的预约。"
+    },
+    {
+      "id": "phrase-0798",
+      "category": "电话预约",
+      "scene": "取消预约",
+      "en": "I was hoping to cancel my appointment for tomorrow.",
+      "zh": "我希望能取消我明天的预约。"
+    },
+    {
+      "id": "phrase-0799",
+      "category": "电话预约",
+      "scene": "取消预约",
+      "en": "Do you know how I can cancel my appointment for tomorrow?",
+      "zh": "你知道我怎么才能取消我明天的预约吗？"
+    },
+    {
+      "id": "phrase-0800",
+      "category": "电话预约",
+      "scene": "取消预约",
+      "en": "Could I cancel my appointment for tomorrow?",
+      "zh": "我可以取消我明天的预约吗？"
+    },
+    {
+      "id": "phrase-0801",
+      "category": "电话预约",
+      "scene": "取消预约",
+      "en": "I'd appreciate it if you could help me cancel my appointment for tomorrow.",
+      "zh": "如果你能帮我取消我明天的预约，我会很感激。"
+    },
+    {
+      "id": "phrase-0802",
+      "category": "电话预约",
+      "scene": "请求回电",
+      "en": "I need to ask someone to call me back this afternoon.",
+      "zh": "我需要请对方今天下午给我回电话。"
+    },
+    {
+      "id": "phrase-0803",
+      "category": "电话预约",
+      "scene": "请求回电",
+      "en": "Could you help me ask someone to call me back this afternoon?",
+      "zh": "能帮我请对方今天下午给我回电话吗？"
+    },
+    {
+      "id": "phrase-0804",
+      "category": "电话预约",
+      "scene": "请求回电",
+      "en": "I'd like to ask someone to call me back this afternoon, please.",
+      "zh": "麻烦帮我请对方今天下午给我回电话。"
+    },
+    {
+      "id": "phrase-0805",
+      "category": "电话预约",
+      "scene": "请求回电",
+      "en": "Is it possible to ask someone to call me back this afternoon?",
+      "zh": "可以请对方今天下午给我回电话吗？"
+    },
+    {
+      "id": "phrase-0806",
+      "category": "电话预约",
+      "scene": "请求回电",
+      "en": "I'm trying to ask someone to call me back this afternoon.",
+      "zh": "我正在尝试请对方今天下午给我回电话。"
+    },
+    {
+      "id": "phrase-0807",
+      "category": "电话预约",
+      "scene": "请求回电",
+      "en": "I was hoping to ask someone to call me back this afternoon.",
+      "zh": "我希望能请对方今天下午给我回电话。"
+    },
+    {
+      "id": "phrase-0808",
+      "category": "电话预约",
+      "scene": "请求回电",
+      "en": "Do you know how I can ask someone to call me back this afternoon?",
+      "zh": "你知道我怎么才能请对方今天下午给我回电话吗？"
+    },
+    {
+      "id": "phrase-0809",
+      "category": "电话预约",
+      "scene": "请求回电",
+      "en": "Could I ask someone to call me back this afternoon?",
+      "zh": "我可以请对方今天下午给我回电话吗？"
+    },
+    {
+      "id": "phrase-0810",
+      "category": "电话预约",
+      "scene": "请求回电",
+      "en": "I'd appreciate it if you could help me ask someone to call me back this afternoon.",
+      "zh": "如果你能帮我请对方今天下午给我回电话，我会很感激。"
+    },
+    {
+      "id": "phrase-0811",
+      "category": "紧急求助",
+      "scene": "报告紧急情况",
+      "en": "I need to report an emergency at this location.",
+      "zh": "我需要报告这个地点发生了紧急情况。"
+    },
+    {
+      "id": "phrase-0812",
+      "category": "紧急求助",
+      "scene": "报告紧急情况",
+      "en": "Could you help me report an emergency at this location?",
+      "zh": "能帮我报告这个地点发生了紧急情况吗？"
+    },
+    {
+      "id": "phrase-0813",
+      "category": "紧急求助",
+      "scene": "报告紧急情况",
+      "en": "I'd like to report an emergency at this location, please.",
+      "zh": "麻烦帮我报告这个地点发生了紧急情况。"
+    },
+    {
+      "id": "phrase-0814",
+      "category": "紧急求助",
+      "scene": "报告紧急情况",
+      "en": "Is it possible to report an emergency at this location?",
+      "zh": "可以报告这个地点发生了紧急情况吗？"
+    },
+    {
+      "id": "phrase-0815",
+      "category": "紧急求助",
+      "scene": "报告紧急情况",
+      "en": "I'm trying to report an emergency at this location.",
+      "zh": "我正在尝试报告这个地点发生了紧急情况。"
+    },
+    {
+      "id": "phrase-0816",
+      "category": "紧急求助",
+      "scene": "报告紧急情况",
+      "en": "I was hoping to report an emergency at this location.",
+      "zh": "我希望能报告这个地点发生了紧急情况。"
+    },
+    {
+      "id": "phrase-0817",
+      "category": "紧急求助",
+      "scene": "报告紧急情况",
+      "en": "Do you know how I can report an emergency at this location?",
+      "zh": "你知道我怎么才能报告这个地点发生了紧急情况吗？"
+    },
+    {
+      "id": "phrase-0818",
+      "category": "紧急求助",
+      "scene": "报告紧急情况",
+      "en": "Could I report an emergency at this location?",
+      "zh": "我可以报告这个地点发生了紧急情况吗？"
+    },
+    {
+      "id": "phrase-0819",
+      "category": "紧急求助",
+      "scene": "报告紧急情况",
+      "en": "I'd appreciate it if you could help me report an emergency at this location.",
+      "zh": "如果你能帮我报告这个地点发生了紧急情况，我会很感激。"
+    },
+    {
+      "id": "phrase-0820",
+      "category": "紧急求助",
+      "scene": "报警",
+      "en": "I need to call the police for help.",
+      "zh": "我需要报警求助。"
+    },
+    {
+      "id": "phrase-0821",
+      "category": "紧急求助",
+      "scene": "报警",
+      "en": "Could you help me call the police for help?",
+      "zh": "能帮我报警求助吗？"
+    },
+    {
+      "id": "phrase-0822",
+      "category": "紧急求助",
+      "scene": "报警",
+      "en": "I'd like to call the police for help, please.",
+      "zh": "麻烦帮我报警求助。"
+    },
+    {
+      "id": "phrase-0823",
+      "category": "紧急求助",
+      "scene": "报警",
+      "en": "Is it possible to call the police for help?",
+      "zh": "可以报警求助吗？"
+    },
+    {
+      "id": "phrase-0824",
+      "category": "紧急求助",
+      "scene": "报警",
+      "en": "I'm trying to call the police for help.",
+      "zh": "我正在尝试报警求助。"
+    },
+    {
+      "id": "phrase-0825",
+      "category": "紧急求助",
+      "scene": "报警",
+      "en": "I was hoping to call the police for help.",
+      "zh": "我希望能报警求助。"
+    },
+    {
+      "id": "phrase-0826",
+      "category": "紧急求助",
+      "scene": "报警",
+      "en": "Do you know how I can call the police for help?",
+      "zh": "你知道我怎么才能报警求助吗？"
+    },
+    {
+      "id": "phrase-0827",
+      "category": "紧急求助",
+      "scene": "报警",
+      "en": "Could I call the police for help?",
+      "zh": "我可以报警求助吗？"
+    },
+    {
+      "id": "phrase-0828",
+      "category": "紧急求助",
+      "scene": "报警",
+      "en": "I'd appreciate it if you could help me call the police for help.",
+      "zh": "如果你能帮我报警求助，我会很感激。"
+    },
+    {
+      "id": "phrase-0829",
+      "category": "紧急求助",
+      "scene": "请求救护车",
+      "en": "I need to ask for an ambulance.",
+      "zh": "我需要请求救护车。"
+    },
+    {
+      "id": "phrase-0830",
+      "category": "紧急求助",
+      "scene": "请求救护车",
+      "en": "Could you help me ask for an ambulance?",
+      "zh": "能帮我请求救护车吗？"
+    },
+    {
+      "id": "phrase-0831",
+      "category": "紧急求助",
+      "scene": "请求救护车",
+      "en": "I'd like to ask for an ambulance, please.",
+      "zh": "麻烦帮我请求救护车。"
+    },
+    {
+      "id": "phrase-0832",
+      "category": "紧急求助",
+      "scene": "请求救护车",
+      "en": "Is it possible to ask for an ambulance?",
+      "zh": "可以请求救护车吗？"
+    },
+    {
+      "id": "phrase-0833",
+      "category": "紧急求助",
+      "scene": "请求救护车",
+      "en": "I'm trying to ask for an ambulance.",
+      "zh": "我正在尝试请求救护车。"
+    },
+    {
+      "id": "phrase-0834",
+      "category": "紧急求助",
+      "scene": "请求救护车",
+      "en": "I was hoping to ask for an ambulance.",
+      "zh": "我希望能请求救护车。"
+    },
+    {
+      "id": "phrase-0835",
+      "category": "紧急求助",
+      "scene": "请求救护车",
+      "en": "Do you know how I can ask for an ambulance?",
+      "zh": "你知道我怎么才能请求救护车吗？"
+    },
+    {
+      "id": "phrase-0836",
+      "category": "紧急求助",
+      "scene": "请求救护车",
+      "en": "Could I ask for an ambulance?",
+      "zh": "我可以请求救护车吗？"
+    },
+    {
+      "id": "phrase-0837",
+      "category": "紧急求助",
+      "scene": "请求救护车",
+      "en": "I'd appreciate it if you could help me ask for an ambulance.",
+      "zh": "如果你能帮我请求救护车，我会很感激。"
+    },
+    {
+      "id": "phrase-0838",
+      "category": "紧急求助",
+      "scene": "证件遗失",
+      "en": "I need to report that my passport is missing.",
+      "zh": "我需要报告我的护照不见了。"
+    },
+    {
+      "id": "phrase-0839",
+      "category": "紧急求助",
+      "scene": "证件遗失",
+      "en": "Could you help me report that my passport is missing?",
+      "zh": "能帮我报告我的护照不见了吗？"
+    },
+    {
+      "id": "phrase-0840",
+      "category": "紧急求助",
+      "scene": "证件遗失",
+      "en": "I'd like to report that my passport is missing, please.",
+      "zh": "麻烦帮我报告我的护照不见了。"
+    },
+    {
+      "id": "phrase-0841",
+      "category": "紧急求助",
+      "scene": "证件遗失",
+      "en": "Is it possible to report that my passport is missing?",
+      "zh": "可以报告我的护照不见了吗？"
+    },
+    {
+      "id": "phrase-0842",
+      "category": "紧急求助",
+      "scene": "证件遗失",
+      "en": "I'm trying to report that my passport is missing.",
+      "zh": "我正在尝试报告我的护照不见了。"
+    },
+    {
+      "id": "phrase-0843",
+      "category": "紧急求助",
+      "scene": "证件遗失",
+      "en": "I was hoping to report that my passport is missing.",
+      "zh": "我希望能报告我的护照不见了。"
+    },
+    {
+      "id": "phrase-0844",
+      "category": "紧急求助",
+      "scene": "证件遗失",
+      "en": "Do you know how I can report that my passport is missing?",
+      "zh": "你知道我怎么才能报告我的护照不见了吗？"
+    },
+    {
+      "id": "phrase-0845",
+      "category": "紧急求助",
+      "scene": "证件遗失",
+      "en": "Could I report that my passport is missing?",
+      "zh": "我可以报告我的护照不见了吗？"
+    },
+    {
+      "id": "phrase-0846",
+      "category": "紧急求助",
+      "scene": "证件遗失",
+      "en": "I'd appreciate it if you could help me report that my passport is missing.",
+      "zh": "如果你能帮我报告我的护照不见了，我会很感激。"
+    },
+    {
+      "id": "phrase-0847",
+      "category": "紧急求助",
+      "scene": "请求翻译",
+      "en": "I need to ask for an interpreter.",
+      "zh": "我需要请求一位口译员。"
+    },
+    {
+      "id": "phrase-0848",
+      "category": "紧急求助",
+      "scene": "请求翻译",
+      "en": "Could you help me ask for an interpreter?",
+      "zh": "能帮我请求一位口译员吗？"
+    },
+    {
+      "id": "phrase-0849",
+      "category": "紧急求助",
+      "scene": "请求翻译",
+      "en": "I'd like to ask for an interpreter, please.",
+      "zh": "麻烦帮我请求一位口译员。"
+    },
+    {
+      "id": "phrase-0850",
+      "category": "紧急求助",
+      "scene": "请求翻译",
+      "en": "Is it possible to ask for an interpreter?",
+      "zh": "可以请求一位口译员吗？"
+    },
+    {
+      "id": "phrase-0851",
+      "category": "紧急求助",
+      "scene": "请求翻译",
+      "en": "I'm trying to ask for an interpreter.",
+      "zh": "我正在尝试请求一位口译员。"
+    },
+    {
+      "id": "phrase-0852",
+      "category": "紧急求助",
+      "scene": "请求翻译",
+      "en": "I was hoping to ask for an interpreter.",
+      "zh": "我希望能请求一位口译员。"
+    },
+    {
+      "id": "phrase-0853",
+      "category": "紧急求助",
+      "scene": "请求翻译",
+      "en": "Do you know how I can ask for an interpreter?",
+      "zh": "你知道我怎么才能请求一位口译员吗？"
+    },
+    {
+      "id": "phrase-0854",
+      "category": "紧急求助",
+      "scene": "请求翻译",
+      "en": "Could I ask for an interpreter?",
+      "zh": "我可以请求一位口译员吗？"
+    },
+    {
+      "id": "phrase-0855",
+      "category": "紧急求助",
+      "scene": "请求翻译",
+      "en": "I'd appreciate it if you could help me ask for an interpreter.",
+      "zh": "如果你能帮我请求一位口译员，我会很感激。"
+    },
+    {
+      "id": "phrase-0856",
+      "category": "紧急求助",
+      "scene": "说明位置",
+      "en": "I need to give the dispatcher my exact location.",
+      "zh": "我需要把我的准确位置告诉调度员。"
+    },
+    {
+      "id": "phrase-0857",
+      "category": "紧急求助",
+      "scene": "说明位置",
+      "en": "Could you help me give the dispatcher my exact location?",
+      "zh": "能帮我把我的准确位置告诉调度员吗？"
+    },
+    {
+      "id": "phrase-0858",
+      "category": "紧急求助",
+      "scene": "说明位置",
+      "en": "I'd like to give the dispatcher my exact location, please.",
+      "zh": "麻烦帮我把我的准确位置告诉调度员。"
+    },
+    {
+      "id": "phrase-0859",
+      "category": "紧急求助",
+      "scene": "说明位置",
+      "en": "Is it possible to give the dispatcher my exact location?",
+      "zh": "可以把我的准确位置告诉调度员吗？"
+    },
+    {
+      "id": "phrase-0860",
+      "category": "紧急求助",
+      "scene": "说明位置",
+      "en": "I'm trying to give the dispatcher my exact location.",
+      "zh": "我正在尝试把我的准确位置告诉调度员。"
+    },
+    {
+      "id": "phrase-0861",
+      "category": "紧急求助",
+      "scene": "说明位置",
+      "en": "I was hoping to give the dispatcher my exact location.",
+      "zh": "我希望能把我的准确位置告诉调度员。"
+    },
+    {
+      "id": "phrase-0862",
+      "category": "紧急求助",
+      "scene": "说明位置",
+      "en": "Do you know how I can give the dispatcher my exact location?",
+      "zh": "你知道我怎么才能把我的准确位置告诉调度员吗？"
+    },
+    {
+      "id": "phrase-0863",
+      "category": "紧急求助",
+      "scene": "说明位置",
+      "en": "Could I give the dispatcher my exact location?",
+      "zh": "我可以把我的准确位置告诉调度员吗？"
+    },
+    {
+      "id": "phrase-0864",
+      "category": "紧急求助",
+      "scene": "说明位置",
+      "en": "I'd appreciate it if you could help me give the dispatcher my exact location.",
+      "zh": "如果你能帮我把我的准确位置告诉调度员，我会很感激。"
+    },
+    {
+      "id": "phrase-0865",
+      "category": "紧急求助",
+      "scene": "报告盗窃",
+      "en": "I need to report a theft to the authorities.",
+      "zh": "我需要向有关部门报告盗窃事件。"
+    },
+    {
+      "id": "phrase-0866",
+      "category": "紧急求助",
+      "scene": "报告盗窃",
+      "en": "Could you help me report a theft to the authorities?",
+      "zh": "能帮我向有关部门报告盗窃事件吗？"
+    },
+    {
+      "id": "phrase-0867",
+      "category": "紧急求助",
+      "scene": "报告盗窃",
+      "en": "I'd like to report a theft to the authorities, please.",
+      "zh": "麻烦帮我向有关部门报告盗窃事件。"
+    },
+    {
+      "id": "phrase-0868",
+      "category": "紧急求助",
+      "scene": "报告盗窃",
+      "en": "Is it possible to report a theft to the authorities?",
+      "zh": "可以向有关部门报告盗窃事件吗？"
+    },
+    {
+      "id": "phrase-0869",
+      "category": "紧急求助",
+      "scene": "报告盗窃",
+      "en": "I'm trying to report a theft to the authorities.",
+      "zh": "我正在尝试向有关部门报告盗窃事件。"
+    },
+    {
+      "id": "phrase-0870",
+      "category": "紧急求助",
+      "scene": "报告盗窃",
+      "en": "I was hoping to report a theft to the authorities.",
+      "zh": "我希望能向有关部门报告盗窃事件。"
+    },
+    {
+      "id": "phrase-0871",
+      "category": "紧急求助",
+      "scene": "报告盗窃",
+      "en": "Do you know how I can report a theft to the authorities?",
+      "zh": "你知道我怎么才能向有关部门报告盗窃事件吗？"
+    },
+    {
+      "id": "phrase-0872",
+      "category": "紧急求助",
+      "scene": "报告盗窃",
+      "en": "Could I report a theft to the authorities?",
+      "zh": "我可以向有关部门报告盗窃事件吗？"
+    },
+    {
+      "id": "phrase-0873",
+      "category": "紧急求助",
+      "scene": "报告盗窃",
+      "en": "I'd appreciate it if you could help me report a theft to the authorities.",
+      "zh": "如果你能帮我向有关部门报告盗窃事件，我会很感激。"
+    },
+    {
+      "id": "phrase-0874",
+      "category": "紧急求助",
+      "scene": "报告火情",
+      "en": "I need to tell someone that there is a fire.",
+      "zh": "我需要告诉他人发生了火灾。"
+    },
+    {
+      "id": "phrase-0875",
+      "category": "紧急求助",
+      "scene": "报告火情",
+      "en": "Could you help me tell someone that there is a fire?",
+      "zh": "能帮我告诉他人发生了火灾吗？"
+    },
+    {
+      "id": "phrase-0876",
+      "category": "紧急求助",
+      "scene": "报告火情",
+      "en": "I'd like to tell someone that there is a fire, please.",
+      "zh": "麻烦帮我告诉他人发生了火灾。"
+    },
+    {
+      "id": "phrase-0877",
+      "category": "紧急求助",
+      "scene": "报告火情",
+      "en": "Is it possible to tell someone that there is a fire?",
+      "zh": "可以告诉他人发生了火灾吗？"
+    },
+    {
+      "id": "phrase-0878",
+      "category": "紧急求助",
+      "scene": "报告火情",
+      "en": "I'm trying to tell someone that there is a fire.",
+      "zh": "我正在尝试告诉他人发生了火灾。"
+    },
+    {
+      "id": "phrase-0879",
+      "category": "紧急求助",
+      "scene": "报告火情",
+      "en": "I was hoping to tell someone that there is a fire.",
+      "zh": "我希望能告诉他人发生了火灾。"
+    },
+    {
+      "id": "phrase-0880",
+      "category": "紧急求助",
+      "scene": "报告火情",
+      "en": "Do you know how I can tell someone that there is a fire?",
+      "zh": "你知道我怎么才能告诉他人发生了火灾吗？"
+    },
+    {
+      "id": "phrase-0881",
+      "category": "紧急求助",
+      "scene": "报告火情",
+      "en": "Could I tell someone that there is a fire?",
+      "zh": "我可以告诉他人发生了火灾吗？"
+    },
+    {
+      "id": "phrase-0882",
+      "category": "紧急求助",
+      "scene": "报告火情",
+      "en": "I'd appreciate it if you could help me tell someone that there is a fire.",
+      "zh": "如果你能帮我告诉他人发生了火灾，我会很感激。"
+    },
+    {
+      "id": "phrase-0883",
+      "category": "紧急求助",
+      "scene": "寻求安全协助",
+      "en": "I need to ask for help because I feel unsafe.",
+      "zh": "我需要因为感到不安全而寻求帮助。"
+    },
+    {
+      "id": "phrase-0884",
+      "category": "紧急求助",
+      "scene": "寻求安全协助",
+      "en": "Could you help me ask for help because I feel unsafe?",
+      "zh": "能帮我因为感到不安全而寻求帮助吗？"
+    },
+    {
+      "id": "phrase-0885",
+      "category": "紧急求助",
+      "scene": "寻求安全协助",
+      "en": "I'd like to ask for help because I feel unsafe, please.",
+      "zh": "麻烦帮我因为感到不安全而寻求帮助。"
+    },
+    {
+      "id": "phrase-0886",
+      "category": "紧急求助",
+      "scene": "寻求安全协助",
+      "en": "Is it possible to ask for help because I feel unsafe?",
+      "zh": "可以因为感到不安全而寻求帮助吗？"
+    },
+    {
+      "id": "phrase-0887",
+      "category": "紧急求助",
+      "scene": "寻求安全协助",
+      "en": "I'm trying to ask for help because I feel unsafe.",
+      "zh": "我正在尝试因为感到不安全而寻求帮助。"
+    },
+    {
+      "id": "phrase-0888",
+      "category": "紧急求助",
+      "scene": "寻求安全协助",
+      "en": "I was hoping to ask for help because I feel unsafe.",
+      "zh": "我希望能因为感到不安全而寻求帮助。"
+    },
+    {
+      "id": "phrase-0889",
+      "category": "紧急求助",
+      "scene": "寻求安全协助",
+      "en": "Do you know how I can ask for help because I feel unsafe?",
+      "zh": "你知道我怎么才能因为感到不安全而寻求帮助吗？"
+    },
+    {
+      "id": "phrase-0890",
+      "category": "紧急求助",
+      "scene": "寻求安全协助",
+      "en": "Could I ask for help because I feel unsafe?",
+      "zh": "我可以因为感到不安全而寻求帮助吗？"
+    },
+    {
+      "id": "phrase-0891",
+      "category": "紧急求助",
+      "scene": "寻求安全协助",
+      "en": "I'd appreciate it if you could help me ask for help because I feel unsafe.",
+      "zh": "如果你能帮我因为感到不安全而寻求帮助，我会很感激。"
+    },
+    {
+      "id": "phrase-0892",
+      "category": "紧急求助",
+      "scene": "联系紧急联系人",
+      "en": "I need to contact my emergency contact.",
+      "zh": "我需要联系我的紧急联系人。"
+    },
+    {
+      "id": "phrase-0893",
+      "category": "紧急求助",
+      "scene": "联系紧急联系人",
+      "en": "Could you help me contact my emergency contact?",
+      "zh": "能帮我联系我的紧急联系人吗？"
+    },
+    {
+      "id": "phrase-0894",
+      "category": "紧急求助",
+      "scene": "联系紧急联系人",
+      "en": "I'd like to contact my emergency contact, please.",
+      "zh": "麻烦帮我联系我的紧急联系人。"
+    },
+    {
+      "id": "phrase-0895",
+      "category": "紧急求助",
+      "scene": "联系紧急联系人",
+      "en": "Is it possible to contact my emergency contact?",
+      "zh": "可以联系我的紧急联系人吗？"
+    },
+    {
+      "id": "phrase-0896",
+      "category": "紧急求助",
+      "scene": "联系紧急联系人",
+      "en": "I'm trying to contact my emergency contact.",
+      "zh": "我正在尝试联系我的紧急联系人。"
+    },
+    {
+      "id": "phrase-0897",
+      "category": "紧急求助",
+      "scene": "联系紧急联系人",
+      "en": "I was hoping to contact my emergency contact.",
+      "zh": "我希望能联系我的紧急联系人。"
+    },
+    {
+      "id": "phrase-0898",
+      "category": "紧急求助",
+      "scene": "联系紧急联系人",
+      "en": "Do you know how I can contact my emergency contact?",
+      "zh": "你知道我怎么才能联系我的紧急联系人吗？"
+    },
+    {
+      "id": "phrase-0899",
+      "category": "紧急求助",
+      "scene": "联系紧急联系人",
+      "en": "Could I contact my emergency contact?",
+      "zh": "我可以联系我的紧急联系人吗？"
+    },
+    {
+      "id": "phrase-0900",
+      "category": "紧急求助",
+      "scene": "联系紧急联系人",
+      "en": "I'd appreciate it if you could help me contact my emergency contact.",
+      "zh": "如果你能帮我联系我的紧急联系人，我会很感激。"
+    }
+  ]
+}

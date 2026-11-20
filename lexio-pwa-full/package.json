@@ -1,0 +1,10 @@
+{
+  "name": "lexio-pwa-full",
+  "private": true,
+  "scripts": {
+    "test": "node test/nav.test.js"
+  },
+  "devDependencies": {
+    "jsdom": "31.0.1"
+  }
+}
