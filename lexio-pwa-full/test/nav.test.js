@@ -158,11 +158,7 @@ function animClean() {
   Object.defineProperty(window.navigator,'serviceWorker',{configurable:true,value:{controller:{}}});
   exampleSpeakButton.click();
   await sleep(30);
-  const sampleAudio = window.__lastAudio;
-  const sourceURL = new URL(sampleAudio.src);
-  check('例句走同源媒体、整句 1 倍速',(sourceURL.pathname.endsWith('local-sentence.wav') || sourceURL.pathname.endsWith('.mp3')) && sampleAudio.playbackRate===1);
-  check('例句只请求一段音频',window.__audioInstances.length===audioCountBeforeSentence+1);
-  exampleSpeakButton.click(); // stop the mocked utterance and leave no timer behind
+  check('未配音示例卡仅显示文字，不尝试朗读',exampleSpeakButton.disabled && exampleSpeakButton.textContent.includes('待配音') && window.__audioInstances.length===audioCountBeforeSentence);
 
   // 释义自测开关
   const meaningEl = doc.getElementById('studyMeaning');
@@ -312,8 +308,8 @@ function animClean() {
     cssText.includes('@keyframes appHomeEnter') && cssText.includes('@keyframes appPricingEnter') &&
     cssText.includes('@keyframes pricePop') && cssText.includes('.price strong.is-changing') &&
     cssText.includes('prefers-reduced-motion: reduce'));
-  check('Service Worker 升到 v25 并预缓存口语句库与安装引导视频',
-    swSource.includes("CACHE_NAME = 'lexio-shell-v25-surface-hierarchy'") &&
+  check('Service Worker 升到 v26 并预缓存口语句库与安装引导视频',
+    swSource.includes("CACHE_NAME = 'lexio-shell-v26-selected-voice'") &&
     swSource.includes("'./data/daily-conversation.json'") &&
     swSource.includes("'./media/install-guide.mp4'") &&
     pageHtml.includes('controllerchange') && pageHtml.includes('swRefreshing'));
@@ -529,14 +525,13 @@ function animClean() {
   const pharmacyPhrase = doc.querySelector('#dailyPhraseGrid .phrase-item');
   check('日常口语可以按英文/中文/场景搜索',
     !!pharmacyPhrase && pharmacyPhrase.textContent.includes('pharmacy nearby'));
+  const oldUtterance=window.__lastUtterance;
   pharmacyPhrase.querySelector('[data-phrase-speak]').click();
   await sleep(30);
   const phraseAudio=window.__lastAudio, phraseURL=new URL(phraseAudio.src);
-  check('口语句使用本机美式音频与 1 倍速', phraseURL.pathname.endsWith('/local-sentence.wav') && phraseURL.searchParams.get('text').includes('pharmacy') && phraseAudio.playbackRate===1);
+  check('口语播放所选音色的整句 MP3，正常速度', phraseURL.pathname.endsWith('/media/voice/pharmacy.mp3') && phraseAudio.playbackRate===1);
   phraseAudio.emit('error');
-  check('网络音频失败转入美式系统语音', window.__lastUtterance.lang==='en-US' && window.__lastUtterance.rate===1 && window.__lastUtterance.text.includes('pharmacy'));
-  window.__lastUtterance.onend();
-  window.speechSynthesis.speaking = false;
+  check('录音出错不切换系统语音',window.__lastUtterance===oldUtterance && pharmacyPhrase.querySelector('[data-phrase-speak]').dataset.speaking==='0');
   phraseSearch.value = '';
   phraseSearch.dispatchEvent(new window.Event('input', {bubbles:true}));
   const medicalChip = [...doc.querySelectorAll('#phraseCategories [data-phrase-category]')].find(button => button.dataset.phraseCategory === '医疗药房');
@@ -704,13 +699,12 @@ function animClean() {
       w2.__picked === 'Samantha', String(w2.__picked));
     check('朗读参数为 rate 1 / pitch 1.08',
       w2.__rate === 1 && w2.__pitch === 1.08, `rate=${w2.__rate} pitch=${w2.__pitch}`);
-    w2.document.getElementById('exampleSpeak').click();
-    check('例句与单词同一女声，例句恢复正常速度', w2.__picked === 'Samantha' && w2.__rate === 1);
+    w2.__picked=null;w2.document.getElementById('exampleSpeak').click();
+    check('无媒体播放器时不拿系统声音冒充所选配音', w2.__picked===null);
     dom2.window.close();
   }
 
-  check('词卡例句朗读会去掉中文引号并整句交给 en-US 语音',
-    html.includes("replace(/[“”\"]/g, '')") && html.includes("playPronunciation(sentence,'en-US',1,url,onDone,onError,true)"));
+  check('词卡和口语不使用合成 WAV 端点', !html.includes('local-sentence.wav') && !swSource.includes('renderLexioWave'));
   check('内置词库逐词有记忆线索/复习提示', missingMnemonics === 0 &&
     bundledWords.filter((word) => word.mnemonicSource === 'generated-recall-cue').length > 0,
     `missing=${missingMnemonics}`);

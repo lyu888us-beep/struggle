@@ -232,6 +232,8 @@
     .phrase-en { margin: 0; color: var(--ink); font-size: 13px; font-weight: 670; line-height: 1.5; }
     .phrase-zh { margin: 3px 0 0; color: #748076; font-size: 11px; line-height: 1.5; }
     .phrase-speak { width: 36px; height: 36px; border: 0; border-radius: 12px; color: var(--forest); background: #edf4e5; font-size: 16px; cursor: pointer; }
+    .recorded-filter { font-size:12px; display:flex; align-items:center; gap:5px; margin-bottom:6px; }
+    .pending-voice { color:#52665a; text-align:center; font-size:10px; }
     .phrase-empty { grid-column: 1 / -1; padding: 22px; color: #839087; text-align: center; font-size: 11px; }
     .phrase-load-more { flex: 0 0 auto; min-height: 40px; margin: 2px 4px 10px; border: 1px solid #dfe9dc; border-radius: 13px; color: var(--forest); background: #fff; font-size: 11px; font-weight: 750; cursor: pointer; }
     .library-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 17px; }
@@ -1430,7 +1432,7 @@
       <div class="menu-grid">
         <a class="menu-card primary" href="#study"><span class="m-ico">🎯</span><strong>开始学习</strong><span class="m-desc">词卡 · 例句朗读 · 错词强化</span></a>
         <a class="menu-card" href="#library"><span class="m-ico">📚</span><strong>浏览词库</strong><span class="m-desc">中小学 / 考试 / 美国分级 · 28,414 条</span></a>
-        <a class="menu-card" href="#library" data-open-daily-phrases><span class="m-ico">🗣️</span><strong>日常口语</strong><span class="m-desc">十一个场景 · 1,100 句可朗读</span></a>
+        <a class="menu-card" href="#library" data-open-daily-phrases><span class="m-ico">🗣️</span><strong>日常口语</strong><span class="m-desc">十一个场景 · 1,100 句中英表达</span></a>
         <a class="menu-card" href="#study" data-open-battle><span class="m-ico">⚔️</span><strong>好友对战</strong><span class="m-desc">10 题词义快答 · 本机模拟对手</span></a>
         <a class="menu-card" href="#method"><span class="m-ico">🧠</span><strong>功能介绍</strong><span class="m-desc">学习进展 · 例句来源 · 发音</span></a>
         <a class="menu-card" href="#pricing"><span class="m-ico">💎</span><strong>订阅方案</strong><span class="m-desc">试用 · 价格 · 常见问题</span></a>
@@ -1457,7 +1459,7 @@
           <article class="feature-card" data-reveal><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3 5 6v5c0 4.5 3 7.7 7 10 4-2.3 7-5.5 7-10V6l-7-3Z" stroke-width="1.8" stroke-linejoin="round"/><path d="M8.5 12.1 10.8 14l4.8-5" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h3>真实学习进展</h3><p>按本机实际标记显示已记住与待巩固词数，不用虚构曲线或学习效果。</p><a class="card-link" href="#progress">查看我的学习进度 <span>→</span></a></article>
           <article class="feature-card stagger-1" data-reveal><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v16H6.5A2.5 2.5 0 0 0 4 21V5.5Z" stroke-width="1.8" stroke-linejoin="round"/><path d="M4 17.5A2.5 2.5 0 0 1 6.5 15H20M8 7h8M8 10h5" stroke-width="1.8" stroke-linecap="round"/></svg></div><h3>考纲精准词库</h3><p>承接原站高考、四级、六级、考研与雅思词库结构，按目标考试规划学习路线。</p><a class="card-link" href="#library">浏览目标词库 <span>→</span></a></article>
           <article class="feature-card stagger-2" data-reveal><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3.5 14.6 9l5.9.8-4.3 4.1 1 5.8-5.2-2.8-5.2 2.8 1-5.8-4.3-4.1L9.4 9 12 3.5Z" stroke-width="1.7" stroke-linejoin="round"/></svg></div><h3>例句来源 + 记忆线索</h3><p>词卡区分词典原句、原词库内容与自动生成的释义提示；点击下方按钮随机抽取带例句的词卡背面。</p><a class="card-link" href="#study" data-open-random-example>随机看一条例句 <span>→</span></a></article>
-          <article class="feature-card" data-reveal><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M4 10v4h4l5 4V6l-5 4H4Z" stroke-width="1.8" stroke-linejoin="round"/><path d="M16 9a5 5 0 0 1 0 6m2-9a9 9 0 0 1 0 12" stroke-width="1.8" stroke-linecap="round"/></svg></div><h3>英式 · 美式双音支持</h3><p>可切换英音、美音；单词发音优先尝试在线音频，失败后使用设备英语语音；例句由设备英语语音朗读。</p><a class="card-link" href="#study">试听学习卡片 <span>→</span></a></article>
+          <article class="feature-card" data-reveal><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M4 10v4h4l5 4V6l-5 4H4Z" stroke-width="1.8" stroke-linejoin="round"/><path d="M16 9a5 5 0 0 1 0 6m2-9a9 9 0 0 1 0 12" stroke-width="1.8" stroke-linecap="round"/></svg></div><h3>英式 · 美式双音支持</h3><p>可切换英音、美音；单词发音优先尝试在线音频，失败后使用设备英语语音；已配音例句只播放选定的美式录音。</p><a class="card-link" href="#study">试听学习卡片 <span>→</span></a></article>
           <article class="feature-card stagger-1" data-reveal><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none"><path d="m13 2-9 12h7l-1 8 10-13h-7l1-7Z" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg></div><h3>游戏化闯关</h3><p>用 10 题限时词义挑战练习，当前对手为本机模拟角色，不是实时在线玩家。</p><a class="card-link" href="#study" data-open-battle>进入好友对战 <span>→</span></a></article>
           <article class="feature-card stagger-2" data-reveal><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M4 19V5m0 14h17" stroke-width="1.8" stroke-linecap="round"/><path d="m7 15 4-4 3 2 6-7" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 6h4v4" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h3>学习进展</h3><p>按本机记录显示已记住与待巩固的词；标记为不熟的词会自动回到强化队列。</p><a class="card-link" href="#ops">了解学习闭环 <span>→</span></a></article>
         </div>
@@ -1500,7 +1502,8 @@
           <div class="library-mode-panel" id="dailyPhrasesMode" role="tabpanel" aria-labelledby="dailyPhrasesTab" hidden>
             <div class="catalog phrase-catalog" id="phraseCatalog"><svg class="pocket-art" aria-hidden="true" viewBox="0 0 60 56"><path d="M8 31L7 8L24 16Q31 13 39 17L52 8L52 31Q54 46 30 50Q9 45 8 31Z" fill="#d98557"/><path d="M11 14L12 24L19 19ZM47 15L41 20L48 24Z" fill="#98524c"/><path d="M9 31Q20 27 30 40Q41 26 52 31Q50 46 30 50Q13 45 9 31Z" fill="#fff0d7"/><path d="M16 30Q20 34 24 30M36 30Q40 34 44 30" fill="none" stroke="#643f39" stroke-width="2.5"/><path d="M26 40Q30 37 34 40L30 44Z" fill="#533b37"/></svg><small>LEXIO FIELD NOTES　 /　02</small><h3>选择练习场景</h3><p>按场景开口练习，或回到自己的复习夹。</p><div id="phraseCategories"></div></div>
             <div class="list-crumb"><button data-up="dailyPhrasesMode">‹ 口语目录</button><b id="phraseCrumb"></b></div>
-            <div class="phrase-top"><div><h3>日常口语场景句</h3><p>生活、出行、工作、医疗等常用表达；医疗句仅供语言练习。点击喇叭朗读。</p></div><label class="search-wrap phrase-search-wrap"><span class="visually-hidden">搜索口语句子</span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8" stroke="currentColor" stroke-width="1.8"/><path d="m16 16 4.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><input class="search-input" type="search" id="phraseSearch" placeholder="搜索英文、中文或场景" autocomplete="off"></label></div>
+            <div class="phrase-top"><div><h3>日常口语场景句</h3><p>生活、出行、工作、医疗等常用表达；医疗句仅供语言练习。带喇叭的句子可听所选配音。</p></div><label class="search-wrap phrase-search-wrap"><span class="visually-hidden">搜索口语句子</span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8" stroke="currentColor" stroke-width="1.8"/><path d="m16 16 4.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><input class="search-input" type="search" id="phraseSearch" placeholder="搜索英文、中文或场景" autocomplete="off"></label></div>
+            <label class="recorded-filter"><input id="recordedOnly" type="checkbox"> 只看已配音</label>
             <p class="phrase-count" id="phraseCount" aria-live="polite">正在载入口语句库…</p>
             <div class="daily-phrase-grid" id="dailyPhraseGrid" aria-live="polite"><div class="phrase-empty">正在准备日常口语句库…</div></div>
           </div>
@@ -1513,7 +1516,7 @@
       <div class="container">
         <div class="section-heading" data-reveal><div class="eyebrow"><span class="dot"></span> ONE LIBRARY, MANY GOALS</div><h2>从小学到留学，<br>让每个目标 <em>都有清晰路线。</em></h2><p>大陆小学和初中词汇、美国 1–9 年级精选词、五套考试词库与 1,100 句日常口语都在同一本词库里；搜索、学习、朗读都不用切换 App。</p></div>
         <div class="phrase-tag-board" data-reveal aria-label="日常短句宣传">
-          <div class="phrase-tag-head"><h3>日常英语 · 随手就能说出口</h3><p>十一个生活与商务场景、1,100 句常用短句，点标签直接进入对应场景开始朗读练习。</p></div>
+          <div class="phrase-tag-head"><h3>日常英语 · 随手就能说出口</h3><p>十一个生活与商务场景、1,100 句常用短句，点标签直接进入对应场景开始练习。</p></div>
           <div class="phrase-tags" id="phraseTagBoard">
             <span class="phrase-tag"><span class="tag-ico">💬</span>日常交流 <b>100 句</b></span>
             <span class="phrase-tag"><span class="tag-ico">🍜</span>餐饮点单 <b>100 句</b></span>
@@ -1632,7 +1635,7 @@
             <article class="ops-step"><span class="ops-number">DAY 07</span><h4>体验结束</h4><p>由支付服务商托管结账，按运维配置的月付或年付方案续订。</p></article>
             <article class="ops-step"><span class="ops-number">本机</span><h4>不采集数据</h4><p>没有账号体系，也没有远程同步；进度只写入这台设备的本地存储。</p></article>
             <article class="ops-step"><span class="ops-number">随时</span><h4>查看或取消</h4><p>订阅入口常驻底部标签栏，随时可以查看方案、取消或继续学习。</p></article>
-            <article class="ops-step"><span class="ops-number">离线</span><h4>无网也能用</h4><p>词库、口语和记录保存在本机。缓存完成后，离线也能查看词卡、听本机合成的整句。</p></article>
+            <article class="ops-step"><span class="ops-number">离线</span><h4>无网也能用</h4><p>词库、口语和记录保存在本机。缓存完成后，离线也能查看词卡、听已缓存的精选配音。</p></article>
           </div>
           <div class="ops-bottom"><span><strong>数据保护：</strong>学习进度与词库保存在这台设备上，换手机前请留意备份。</span><span><strong>收费透明：</strong>试用天数和续费金额直接写在页面上，付款前不会自动扣款。</span></div>
         </div>
@@ -1670,7 +1673,7 @@
         <div class="section-heading" data-reveal><div class="eyebrow"><span class="dot"></span> SIMPLE, STUDENT-FRIENDLY PRICING</div><h2>先完整体验 7 天，<br>再决定是否 <em>继续前进。</em></h2><p>价格、试用天数和提醒方式都写在下面。这一版不会自动扣款，也不会要求卡号。</p></div>
         <div class="pricing-layout">
           <div class="trial-info-card" data-reveal><div><div class="eyebrow"><span class="dot"></span> 7-DAY FULL ACCESS</div><h3>给自己 7 天，感受真正高效的背词节奏。</h3><p>试用期间开放 Pro 学习体验。你可以自由探索词库、记忆卡片、英美音与学习报告。</p><div class="trial-timeline-mini"><div class="timeline-mini-row"><span>1</span>设置目标，开始第一组单词</div><div class="timeline-mini-row"><span>3</span>到期前 2 周 / 1 周 / 1 天在本机提醒</div><div class="timeline-mini-row"><span>7</span>体验结束：本机提醒，当前版本不会自动扣款</div></div></div><p class="trial-info-foot">正式上线时，将在开始试用前清楚展示付款方式、续费日期、<span id="trialInfoPrice">选定方案的价格</span>与取消入口。</p></div>
-          <div class="price-card" data-reveal><span class="popular-pill">✦ 学生 Pro · 全部学习功能</span><h3>Lexio Pro</h3><p class="price-desc">适合希望稳定提升词汇量的学生</p><p class="price-life"><span>日常英语及情境英语练习</span><span>一个软件从小学到留学</span></p><div class="plan-switch" role="group" aria-label="选择订阅周期"><button class="plan-option active" type="button" data-plan-select="monthly" aria-pressed="true">连续包月</button><button class="plan-option" type="button" data-plan-select="annual" aria-pressed="false">连续包年 <b id="annualBadge">省约 36%</b></button></div><div class="price"><strong id="priceAmount">¥18</strong><span id="pricePeriod">/ 月</span><span class="price-original" id="priceOriginal" hidden>¥216</span></div><p class="after-trial" id="priceTerms">前 7 天免费体验 · 之后 ¥18 / 月（正式收款时按此价格，当前不扣款）</p><p class="student-promo" id="studentPromo" hidden>🎓 凭学生证可享优惠（正式版需完成学生身份验证）</p><div class="price-divider"></div><ul class="plan-list"><li><span>✓</span>五大考试词库 25,024 条，随 App 保存在本机</li><li><span>✓</span>「记住了 / 还不熟悉」标记与薄弱词强化队列</li><li><span>✓</span>例句来源标注、英式 / 美式发音与整句朗读</li><li><span>✓</span>本机学习统计、7 天记录与离线可用</li><li><span>✓</span>随时查看方案、取消或继续学习</li></ul><button class="btn btn-primary" type="button" data-open-trial>免费体验 7 天 <span class="btn-arrow">↗</span></button><button class="btn btn-outline secondary-subscribe" type="button" id="directSubscribe">选择此方案并继续</button><p class="terms-small">试用结束前会在这台设备上提醒你，付款前也会明确显示续费日期、价格和取消入口。当前预览不会收款。</p></div>
+          <div class="price-card" data-reveal><span class="popular-pill">✦ 学生 Pro · 全部学习功能</span><h3>Lexio Pro</h3><p class="price-desc">适合希望稳定提升词汇量的学生</p><p class="price-life"><span>日常英语及情境英语练习</span><span>一个软件从小学到留学</span></p><div class="plan-switch" role="group" aria-label="选择订阅周期"><button class="plan-option active" type="button" data-plan-select="monthly" aria-pressed="true">连续包月</button><button class="plan-option" type="button" data-plan-select="annual" aria-pressed="false">连续包年 <b id="annualBadge">省约 36%</b></button></div><div class="price"><strong id="priceAmount">¥18</strong><span id="pricePeriod">/ 月</span><span class="price-original" id="priceOriginal" hidden>¥216</span></div><p class="after-trial" id="priceTerms">前 7 天免费体验 · 之后 ¥18 / 月（正式收款时按此价格，当前不扣款）</p><p class="student-promo" id="studentPromo" hidden>🎓 凭学生证可享优惠（正式版需完成学生身份验证）</p><div class="price-divider"></div><ul class="plan-list"><li><span>✓</span>五大考试词库 25,024 条，随 App 保存在本机</li><li><span>✓</span>「记住了 / 还不熟悉」标记与薄弱词强化队列</li><li><span>✓</span>例句来源标注、英式 / 美式发音与精选例句配音</li><li><span>✓</span>本机学习统计、7 天记录与离线可用</li><li><span>✓</span>随时查看方案、取消或继续学习</li></ul><button class="btn btn-primary" type="button" data-open-trial>免费体验 7 天 <span class="btn-arrow">↗</span></button><button class="btn btn-outline secondary-subscribe" type="button" id="directSubscribe">选择此方案并继续</button><p class="terms-small">试用结束前会在这台设备上提醒你，付款前也会明确显示续费日期、价格和取消入口。当前预览不会收款。</p></div>
         </div>
         <div class="team-row" data-reveal><div><h3>老师与学校：学习跟进服务</h3><p>我们面向中学、大学等学校提供学习跟进服务，并按学校需要提供词表模板、练习模板等教学模板；具体内容与范围可与学校沟通后确定。</p></div><a href="#faq">查看服务说明 <span aria-hidden="true">→</span></a></div>
       </div>
@@ -1685,8 +1688,8 @@
           <details><summary>7 天试用结束后会怎样？</summary><p>这一版只在本机记录试用开始日期，并在到期前 14 天、7 天、1 天打开 App 时弹出提醒，不发短信、不发邮件。当前版本没有接入收银服务，不会自动扣款；付款前会明确显示续费日期、金额和取消方式。</p></details>
           <details><summary>支持哪些支付方式？</summary><p>支持多种方式支付，具体方式以正式结账页面为准。当前演示尚未接入真实收银服务，不会产生扣款。</p></details>
           <details><summary>它可以离线使用、添加到主屏幕吗？</summary><p>可以。用手机浏览器打开后，按页面里的「安装」引导添加到主屏幕，就能像普通 App 一样全屏打开；首次联网打开后即可离线使用。</p></details>
-          <details><summary>原站的发音、例句和学习进度也能保留吗？</summary><p>已迁移英 / 美音标、词性、中文释义与考试分类。精讲内容保留原有资料；另有匹配到词典的真实句例/记忆法，以及明确标注的释义提示和通用复习提示。词库数据本身未内嵌音频文件；单词保留原音源，句子优先播放已制作的美式女声录音，其余由本机女声生成，以正常速度播放。公开 HTML 未包含个人学习进度，迁移进度仍需原站账号数据导出。</p></details>
-          <details><summary>需要联网吗？能离线用吗？</summary><p>词库与日常口语句库都随 App 缓存到本机，断网也能查询和学习。首次载入、主动同步词库和播放原音录音需要网络；内置句子女声载入后，即使设备没有安装英语语音也可以离线朗读。</p></details>
+          <details><summary>原站的发音、例句和学习进度也能保留吗？</summary><p>已迁移英 / 美音标、词性、中文释义与考试分类。精讲内容保留原有资料；另有匹配到词典的真实句例/记忆法，以及明确标注的释义提示和通用复习提示。词库数据本身未内嵌音频文件；单词保留原音源，整句只播放聊天中选定的音色，按正常速度播放；尚无录音的句子保留文字。公开 HTML 未包含个人学习进度，迁移进度仍需原站账号数据导出。</p></details>
+          <details><summary>需要联网吗？能离线用吗？</summary><p>词库与日常口语句库都随 App 缓存到本机，断网也能查询和学习。首次载入、主动同步词库和播放原音录音需要网络；所选音色的录音缓存后可离线播放。</p></details>
         </div>
       </div>
     </section>
@@ -2189,11 +2192,11 @@
         const count=$('#phraseCount');
         if(!grid || !count || !$('#dailyPhrasesMode').classList.contains('in-list')) return;
         const query=($('#phraseSearch').value||'').trim().toLowerCase();
-        const filtered=dailyPhraseBank.filter(item=>phraseMatches(item,activePhraseCategory)&&(!query||`${item.en} ${item.zh} ${item.scene} ${item.category}`.toLowerCase().includes(query)));
+        const filtered=dailyPhraseBank.filter(item=>(!$('#recordedOnly').checked||recordingFor(item.en))&&phraseMatches(item,activePhraseCategory)&&(!query||`${item.en} ${item.zh} ${item.scene} ${item.category}`.toLowerCase().includes(query)));
         const visible=filtered.slice(0,phraseVisibleLimit);
         count.textContent=`显示 ${visible.length} / ${filtered.length} 条匹配表达 · 共 ${dailyPhraseBank.length} 条`;
         if(!filtered.length){grid.innerHTML='<div class="phrase-empty">没有找到匹配的表达，试试其他关键词或场景。</div>';return;}
-        grid.innerHTML=visible.map(item=>`<article class="phrase-item"><div class="phrase-item-main"><div class="phrase-item-meta"><b>${escapeHTML(item.category)}</b><span>${escapeHTML(item.scene)}</span></div><p class="phrase-en">${escapeHTML(item.en)}</p><p class="phrase-zh">${escapeHTML(item.zh)}</p><div class="phrase-marks">${['我记住了','再练一次'].map(mark=>`<button type="button" aria-pressed="${phraseMarks[item.id]===mark}" data-mark="${mark}" data-id="${escapeHTML(item.id)}">${mark==='再练一次'?'还没记住 · 再练一次':mark}</button>`).join('')}</div></div><button class="phrase-speak" type="button" aria-label="朗读：${escapeHTML(item.en)}" data-phrase-speak="${escapeHTML(item.id)}">🔊</button></article>`).join('');
+        grid.innerHTML=visible.map(item=>`<article class="phrase-item"><div class="phrase-item-main"><div class="phrase-item-meta"><b>${escapeHTML(item.category)}</b><span>${escapeHTML(item.scene)}</span></div><p class="phrase-en">${escapeHTML(item.en)}</p><p class="phrase-zh">${escapeHTML(item.zh)}</p><div class="phrase-marks">${['我记住了','再练一次'].map(mark=>`<button type="button" aria-pressed="${phraseMarks[item.id]===mark}" data-mark="${mark}" data-id="${escapeHTML(item.id)}">${mark==='再练一次'?'还没记住 · 再练一次':mark}</button>`).join('')}</div></div>${recordingFor(item.en)?`<button class="phrase-speak" type="button" aria-label="朗读：${escapeHTML(item.en)}" data-phrase-speak="${escapeHTML(item.id)}">🔊</button>`:'<small class="pending-voice">待配音</small>'}</article>`).join('');
         if(filtered.length>visible.length){
           const more=document.createElement('button');
           more.type='button';more.className='phrase-load-more';more.textContent=`加载更多（${filtered.length-visible.length} 条）`;
@@ -2438,6 +2441,7 @@
       };
       function updateStudyCard() {
         if (!bank.length) return;
+        if(activeAudio || activeUtterance) stopSpeech();
         studyIndex = ((studyIndex % bank.length) + bank.length) % bank.length;
         const word = bank[studyIndex];
         $('#studyWord').textContent = word.word;
@@ -2484,9 +2488,9 @@
         const exSpeakBtn = $('#exampleSpeak');
         if (exSpeakBtn) {
           exSpeakBtn.hidden = !word.example;
-          exSpeakBtn.disabled = exampleIsPhrase;
-          exSpeakBtn.title = exampleIsPhrase ? '这是词典短语，不是完整句子：请用上方单词发音。' : '朗读整句例句';
-          exSpeakBtn.textContent = '🔊 朗读例句';
+          exSpeakBtn.disabled = exampleIsPhrase || !recordingFor(word.example);
+          exSpeakBtn.title = exampleIsPhrase ? '这是词典短语，不是完整句子：请用上方单词发音。' : exSpeakBtn.disabled ? '这句暂无所选音色的录音' : '使用所选音色朗读整句';
+          exSpeakBtn.textContent = exSpeakBtn.disabled ? (exampleIsPhrase ? '词典短语' : '所选音色待配音') : '🔊 朗读例句';
           exSpeakBtn.dataset.speaking = '0';
         }
         updateProgressUI();
@@ -2688,16 +2692,26 @@
         "I look after our key accounts.": "business-3",
         "Hi, how's your day going?": "daily-1",
         "Pretty well, thanks for asking. How about you?": "daily-2",
-        "Sorry, could you say that again a little more slowly?": "daily-3"
+        "Sorry, could you say that again a little more slowly?": "daily-3",
+        "Could we get a table for two, please?": "dining",
+        "How much is this?": "shopping",
+        "Could you take me to this address, please?": "taxi",
+        "I have a reservation under the name Chen.": "hotel",
+        "I'd like to check in for my flight to Seattle.": "flight",
+        "Is there a pharmacy nearby?": "pharmacy",
+        "Shall we get started?": "meeting",
+        "Hello, this is Mei speaking.": "phone",
+        "I need help. Could you call the police?": "help",
+        "Could you tell me a little about your business?": "business-4"
 };
+      function recordingFor(text) {
+        const key=String(text||'').trim();
+        return Object.hasOwn(selectedRecordings,key) ? selectedRecordings[key] : null;
+      }
       function speakExample(text, onDone, onError) {
-        const sentence=String(text||'').replace(/[“”"]/g, '').trim();
-        if(!sentence){onDone?.();return;}
-        const clip=selectedRecordings[sentence];
-        // A native media play() in the actual tap. No delayed AudioContext
-        // resume/decode or iOS handoff from an asynchronous synthesis worker.
-        const url=clip?'./media/voice/'+clip+'.mp3': './local-sentence.wav?text='+encodeURIComponent(sentence);
-        if(!clip && !navigator.serviceWorker?.controller){stopSpeech();speak(sentence,'en-US',onDone,onError,1);return;}
+        const sentence=String(text||'').trim(), clip=recordingFor(sentence);
+        if(!clip){onError?.(new Error('这句暂无所选音色的录音。'));return;}
+        const url='./media/voice/'+clip+'.mp3';
         playPronunciation(sentence,'en-US',1,url,onDone,onError,true);
       }
       function speakEntry(entry, lang=activeAccent) {
@@ -2715,6 +2729,7 @@
           if(complete || (audio && activeAudio!==audio))return;
           clearTimeout(timer);
           if(audio){activeAudio=null; try{audio.pause();}catch(_){} }
+          if(local){finish();onError?.(new Error('这段录音未能播放，请联网重试或先准备离线资源。'));return;}
           speak(text, lang, finish, onError, rate);
         };
         if (!local && navigator.onLine === false) { fallback(); return; }
@@ -2869,6 +2884,7 @@
       renderPhraseCategories();
       document.addEventListener('click',e=>{if(e.target.closest('a[data-tab="library"],.menu-card[href="#library"]:not([data-open-daily-phrases])'))showCatalog('words');});
       $$('[data-open-daily-phrases]').forEach(link=>link.addEventListener('click',()=>showCatalog('phrases')));
+      $('#recordedOnly').onchange=()=>{phraseVisibleLimit=50;renderDailyPhrases();};
       $('#dailyPhraseGrid').addEventListener('click',event=>{
         const mark=event.target.closest('[data-mark]');
         if(mark){phraseMarks[mark.dataset.id]=mark.dataset.mark; writeJSON(phraseMarksKey,phraseMarks);renderPhraseCategories();renderDailyPhrases();return;}
@@ -3171,8 +3187,6 @@
         const flipToBack = () => {
           const flip = $('#wordCardFlip');
           if (flip) flip.classList.add('is-flipped');
-          const speak = $('#exampleSpeak');
-          if (speak) speak.textContent = '🔊 朗读例句';
         };
         setTimeout(flipToBack, 260);
       }

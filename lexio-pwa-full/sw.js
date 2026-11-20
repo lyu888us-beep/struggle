@@ -1,5 +1,5 @@
 /* Lexio 乐词 PWA shell cache. Bump the cache version whenever app assets change. */
-const CACHE_NAME = 'lexio-shell-v25-surface-hierarchy';
+const CACHE_NAME = 'lexio-shell-v26-selected-voice';
 const SHELL_URLS = [
   './',
   './index.html',
@@ -9,7 +9,6 @@ const SHELL_URLS = [
   './data/daily-conversation.json',
   './media/install-guide.mp4',
   './media/install-guide-poster.jpg',
-  './speech/engine.js',
   './icon.svg',
   './icon-192.png',
   './icon-512.png'
@@ -31,8 +30,7 @@ self.addEventListener('activate', event => {
   );
 });
 
-importScripts('./speech/engine.js');
-const bulkAssets=['./data/original-site-wordbank.json','./speech/flite.wasm',...['card-1','card-2','card-3','card-4','daily-1','daily-2','daily-3','business-1','business-2','business-3'].map(n=>'./media/voice/'+n+'.mp3')];
+const bulkAssets=['./data/original-site-wordbank.json',...["card-1", "card-2", "card-3", "card-4", "business-1", "business-2", "business-3", "daily-1", "daily-2", "daily-3", "dining", "shopping", "taxi", "hotel", "flight", "pharmacy", "meeting", "phone", "help", "business-4"].map(n=>'./media/voice/'+n+'.mp3')];
 async function localAsset(path){
   const cache=await caches.open(CACHE_NAME), cached=await cache.match(path);
   if(cached)return cached;
@@ -61,22 +59,11 @@ function mediaResponse(data,request,type){
   headers['Content-Length']=String(end-start+1);
   return new Response(request.method==='HEAD'?null:data.slice(start,end+1),{status:range?206:200,headers});
 }
-const recentWaves=new Map();
-async function sentenceResponse(url,request){
-  const text=(url.searchParams.get('text')||'').trim();
-  if(!text || text.length>2000)return new Response('Invalid text',{status:400});
-  if(!recentWaves.has(text)){
-    if(recentWaves.size>=4)recentWaves.delete(recentWaves.keys().next().value);
-    recentWaves.set(text,self.renderLexioWave(text,async()=> (await localAsset('./speech/flite.wasm')).arrayBuffer()).catch(e=>{recentWaves.delete(text);throw e;}));
-  }
-  return mediaResponse(await recentWaves.get(text),request,'audio/wav');
-}
 self.addEventListener('fetch', event => {
   const request = event.request;
   if (!['GET','HEAD'].includes(request.method)) return;
   const url = new URL(request.url);
   if (url.origin !== self.location.origin) return;
-  if(url.pathname.endsWith('/local-sentence.wav')){event.respondWith(sentenceResponse(url,request).catch(()=>new Response('Voice unavailable',{status:503})));return;}
   if(url.pathname.includes('/media/voice/') && url.pathname.endsWith('.mp3')){
     event.respondWith(localAsset(url.href).then(async r=>mediaResponse(await r.arrayBuffer(),request,'audio/mpeg')));return;
   }
@@ -106,7 +93,10 @@ self.addEventListener('fetch', event => {
     event.respondWith(
       fetch(request, {cache:'no-store'})
         .then(response => {
-          if (response && response.ok) caches.open(CACHE_NAME).then(cache => cache.put(request, response.clone()));
+          if (response && response.ok) {
+            const copy=response.clone();
+            event.waitUntil(caches.open(CACHE_NAME).then(cache=>cache.put(request,copy)).catch(()=>{}));
+          }
           return response;
         })
         .catch(() => caches.match(request))
@@ -122,7 +112,10 @@ self.addEventListener('fetch', event => {
     event.respondWith(
       fetch(request)
         .then(response => {
-          if (response && response.ok) caches.open(CACHE_NAME).then(cache => cache.put(request, response.clone()));
+          if (response && response.ok) {
+            const copy=response.clone();
+            event.waitUntil(caches.open(CACHE_NAME).then(cache=>cache.put(request,copy)).catch(()=>{}));
+          }
           return response;
         })
         .catch(() => caches.match(request))
