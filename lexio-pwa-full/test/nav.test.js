@@ -61,6 +61,13 @@ const dom = new JSDOM(html, {
 
 const { window } = dom;
 const doc = window.document;
+const manifest = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'manifest.webmanifest'), 'utf8'));
+// Visible copy only: strip <script>/<style> so code identifiers never count as UI text.
+const visibleText = html
+  .replace(/<script[\s\S]*?<\/script>/g, ' ')
+  .replace(/<style[\s\S]*?<\/style>/g, ' ')
+  .replace(/<[^>]+>/g, ' ')
+  .replace(/\s+/g, ' ');
 const scrollCalls = [];
 Object.defineProperty(window, 'scrollY', { configurable: true, writable: true, value: 0 });
 window.scrollTo = (_x, y) => { window.scrollY = Number(y) || 0; scrollCalls.push(window.scrollY); };
@@ -250,14 +257,30 @@ function animClean() {
      'overscroll-behavior: contain;',
      '#studyCard { touch-action: pan-y;',
      '.card-flip.is-flipped .card-front { pointer-events: none; }'].every((frag) => cssText.includes(frag)));
-  check('切换动画不透底(实心背景+非透明淡入+FAQ背景+动画禁毛玻璃)',
+  check('切换动画不透底(实心背景+FAQ背景+动画禁毛玻璃)',
     ['.section { padding: 100px 0; background: var(--cream); }',
      '.hero { position: relative; isolation: isolate; overflow: hidden; padding: 62px 0 71px; background: var(--cream); }',
      '.faq-section { padding: 103px 0 104px; background: var(--cream); }',
      'background: #fcfcfa;', 'background: #fdfdfc;',
-     'viewFadeUp',
      'body.view-anim-lock .site-header',
      'backdrop-filter: none !important'].every((frag) => cssText.includes(frag)));
+
+  // 只允许路由这一处动画：入场动画与滚动显影会和它叠在同一个元素上，
+  // 叠出来的两层 transform / 半透明就是"重影、失真、掉帧"的来源。
+  check('切页动画只有一层（入场/显影/错峰动画已关闭）',
+    cssText.includes('body[data-app-view="home"] .hero-copy,\n    body[data-app-view="home"] .menu-card,\n    body[data-app-view="pricing"] .price-card { animation: none !important; }') &&
+    !cssText.includes('.menu-card:nth-child(1) { animation-delay') &&
+    cssText.includes('main > section[data-app-view] .stagger-1,'));
+  check('切页期间旧页面不透明淡出（不做双层半透明交叉）',
+    '.anim-push-out { animation-name: viewFadeOut; animation-duration: .12s !important; }' &&
+    cssText.includes('.anim-push-out { animation-name: viewFadeOut; animation-duration: .12s !important; }') &&
+    cssText.includes('@keyframes viewFadeOut { from { opacity: 1; } to { opacity: 0; } }') &&
+    !cssText.includes('viewPushOut'));
+  check('切页图层提升到合成层并避免中途重绘（防模糊/重影）',
+    cssText.includes('backface-visibility: hidden;') && cssText.includes('contain: paint;') &&
+    cssText.includes('animation-duration: .19s;'));
+  check('切页动画进行中忽略重复点击（动画不会被打断留残影）',
+    html.includes('if (pending) return;'));
   check('释义未揭晓时完全不显示(透明,非马赛克)',
     cssText.includes('.study-meaning.is-hidden { color: transparent;'));
   check('学习词卡与词库滚动容器有上下圆角和安全区留白',
@@ -294,8 +317,8 @@ function animClean() {
     cssText.includes('@keyframes appHomeEnter') && cssText.includes('@keyframes appPricingEnter') &&
     cssText.includes('@keyframes pricePop') && cssText.includes('.price strong.is-changing') &&
     cssText.includes('prefers-reduced-motion: reduce'));
-  check('Service Worker 升到 v17 并预缓存口语句库与安装引导视频',
-    swSource.includes("CACHE_NAME = 'lexio-shell-v17-full-sentence-examples'") &&
+  check('Service Worker 升到 v18 并预缓存口语句库与安装引导视频',
+    swSource.includes("CACHE_NAME = 'lexio-shell-v18-app-shell-polish'") &&
     swSource.includes("'./data/daily-conversation.json'") &&
     swSource.includes("'./media/install-guide.mp4'") &&
     pageHtml.includes('controllerchange') && pageHtml.includes('swRefreshing'));
@@ -618,6 +641,48 @@ function animClean() {
     void phraseWord;
   }
 
+  {
+    // 4) 朗读音色：优先美国女声，语速/音高更明亮
+    check('朗读优先选用美国女声（Samantha / Ava / Google US English 等）',
+      pageHtml.includes("const VOICE_PREFERENCE = {") &&
+      pageHtml.includes("'Samantha', 'Ava', 'Allison'") &&
+      pageHtml.includes('FEMALE_HINTS') && pageHtml.includes('MALE_HINTS'));
+    check('语速 1.0 + 音高 1.08（年轻明亮，不再是老的 .9 低沉）',
+      pageHtml.includes('utterance.rate = 1;') && pageHtml.includes('utterance.pitch = 1.08;') &&
+      !pageHtml.includes('utterance.rate = .9;'));
+    // 用真实浏览器语音列表跑一遍 pickVoice 的行为
+    const dom2 = new JSDOM(fs.readFileSync(htmlPath, 'utf8'), {
+      url: 'http://localhost/', runScripts: 'dangerously', pretendToBeVisual: true,
+      virtualConsole: vc,
+      beforeParse(w2) {
+        w2.SpeechSynthesisUtterance = function (t) { this.text = t; };
+        w2.speechSynthesis = {
+          speaking: false, pending: false, paused: false,
+          getVoices: () => [
+            { lang: 'en-US', name: 'Alex' },
+            { lang: 'en-US', name: 'Samantha' },
+            { lang: 'en-GB', name: 'Daniel' },
+          ],
+          addEventListener() {}, resume() {}, cancel() {},
+          speak(u) { w2.__picked = u.voice && u.voice.name; w2.__rate = u.rate; w2.__pitch = u.pitch; },
+        };
+        w2.fetch = () => Promise.reject(new Error('offline'));
+      },
+    });
+    await sleep(400);
+    const w2 = dom2.window;
+    const usVoice = w2.document.querySelector('.accent-toggle [data-accent="en-US"]');
+    if (usVoice) usVoice.click(); // 默认英式，先切到美式再测
+    await sleep(60);
+    w2.document.getElementById('studySpeak').click();
+    await sleep(120);
+    check('美式发音在有 Alex 与 Samantha 的设备上会挑 Samantha（女声）',
+      w2.__picked === 'Samantha', String(w2.__picked));
+    check('朗读参数为 rate 1 / pitch 1.08',
+      w2.__rate === 1 && w2.__pitch === 1.08, `rate=${w2.__rate} pitch=${w2.__pitch}`);
+    dom2.window.close();
+  }
+
   check('词卡例句朗读会去掉中文引号并整句交给 en-US 语音',
     html.includes("replace(/[“”\"]/g, '')") && html.includes("speak(sentence, 'en-US', onDone, onError)"));
   check('内置词库逐词有记忆线索/复习提示', missingMnemonics === 0 &&
@@ -707,6 +772,31 @@ function animClean() {
   // 6b) 首页「日常口语」入口 → 词库视图的口语模式
   await setHashSettled('#top');
   const phraseEntry = doc.querySelector('[data-open-daily-phrases]');
+  // 2b) “让每个目标都有清晰路线”下面的日常短句标签卡
+  const tagBoard = doc.getElementById('phraseTagBoard');
+  // 首页必须立刻有内容（静态骨架），词库载入后再换成带场景筛选的实时标签
+  const skeletonTags = [...(tagBoard ? tagBoard.querySelectorAll('.phrase-tag') : [])];
+  check('目标页有日常短句标签卡（首页立即可见，不用等口语句库）',
+    skeletonTags.length === 9 && skeletonTags.every((a) => /100 句/.test(a.textContent)),
+    `${skeletonTags.length} tags`);
+  await sleep(400);
+  const tagLinks = [...tagBoard.querySelectorAll('[data-phrase-tag]')];
+  check('标签卡由真实口语句库渲染（可点击的场景标签）',
+    tagLinks.length === 9 && tagLinks.every((a) => /\d+ 句/.test(a.textContent)),
+    `${tagLinks.length} clickable tags`);
+  check('标签数量与口语句库一致（每个场景 100 句）',
+    tagLinks.every((a) => /100 句/.test(a.textContent)),
+    tagLinks.map((a) => a.textContent.trim().replace(/\s+/g, ' ')).slice(0, 3).join(' | '));
+  tagLinks[1].click();
+  await sleep(700);
+  check('点标签 → 进入词库并把该场景作为筛选条件',
+    doc.body.getAttribute('data-app-view') === 'library' &&
+    [...doc.querySelectorAll('#phraseCategories [data-phrase-category]')]
+      .some((b) => b.dataset.phraseCategory === tagLinks[1].dataset.phraseTag && b.getAttribute('aria-pressed') === 'true') &&
+    doc.querySelectorAll('#dailyPhraseGrid .phrase-item').length === 50,
+    tagLinks[1].dataset.phraseTag);
+  await setHashSettled('#top');
+
   check('首页有「日常口语」入口', !!phraseEntry);
   phraseEntry.click();
   await sleep(700);
@@ -787,11 +877,17 @@ function animClean() {
     !progressApi.mastered().includes(againWord),
     `mastered=${masteredBefore}→${masteredAfterKnown} weak=${weakBefore}→${weakAfterKnown}→${progressApi.weak()} (wasWeak=${wasAlreadyWeak})`);
   doc.querySelector('[data-demo-tab="memory"]').click();
-  await sleep(60);
-  check('记忆面板显示真实已记住 / 没记牢 / 连续天数',
-    doc.getElementById('memoryMastered').textContent === String(progressApi.mastered().length) &&
+  // 面板渲染由 updateProgressUI 触发；jsdom 里的定时器偶有延迟，等它落定再断言
+  for (let settle = 0; settle < 20; settle += 1) {
+    if (doc.getElementById('memoryMastered').textContent === String(progressApi.mastered().length)) break;
+    window.__lexioProgress.refresh();
+    await sleep(30);
+  }
+  const memoryOk = doc.getElementById('memoryMastered').textContent === String(progressApi.mastered().length) &&
     doc.getElementById('memoryWeak').textContent === String(progressApi.weak()) &&
-    /^\d+$/.test(doc.getElementById('studyStreak').textContent));
+    /^\d+$/.test(doc.getElementById('studyStreak').textContent);
+  check('记忆面板显示真实已记住 / 没记牢 / 连续天数', memoryOk,
+    `mastered=${doc.getElementById('memoryMastered').textContent}/${progressApi.mastered().length} weak=${doc.getElementById('memoryWeak').textContent}/${progressApi.weak()}`);
   // 学习页左下“今日学习进度”条必须来自真实比例，而不是虚构的每日 30 词配额
   const stats = JSON.parse(window.localStorage.getItem('lexio.dailyStats') || '{}');
   window.__lexioProgress.refresh();
@@ -840,6 +936,41 @@ function animClean() {
     !/多所中学|多所大学|合作学校|已有\s*\d+\s*所/.test(doc.getElementById('faq').textContent));
   check('宣传页无虚构成绩/用户数字',
     !pageHtml.includes('平均词汇量') && !pageHtml.includes('提升 23%') && !pageHtml.includes('% 记忆保持'));
+
+  // 13a) 全屏 / 开发信息 / 学校文案 / 包月两句话
+  check('iOS 全屏所需 meta 齐全（主屏快捷方式打开时无地址栏）',
+    pageHtml.includes('<meta name="apple-mobile-web-app-capable" content="yes">') &&
+    pageHtml.includes('<meta name="mobile-web-app-capable" content="yes">') &&
+    pageHtml.includes('apple-mobile-web-app-status-bar-style') &&
+    pageHtml.includes('viewport-fit=cover') &&
+    manifest.display === 'standalone' && Array.isArray(manifest.display_override));
+  check('页面不出现开发相关字样（IndexedDB / PWA / 不上传服务器）',
+    !/IndexedDB|indexedDB/.test(visibleText) && !/\bPWA\b/.test(visibleText) &&
+    !/不上传|不会上传/.test(visibleText),
+    (visibleText.match(/IndexedDB|\bPWA\b|不上传|不会上传/g) || []).join(',') || 'clean');
+  {
+    const faq = doc.getElementById('faq');
+    const q = [...faq.querySelectorAll('summary')].find((el) => el.textContent.trim() === '我们能提供什么？');
+    check('学校/老师 FAQ 标题改为「我们能提供什么？」并写明服务类目',
+      !!q && faq.textContent.includes('我们是专业提供学习辅助服务类目及学习跟进服务') &&
+      !faq.textContent.includes('学校、老师可以获得哪些支持'),
+      q ? q.textContent.trim() : 'missing');
+  }
+  {
+    const life = doc.querySelector('.price-card .price-life');
+    const lines = life ? [...life.querySelectorAll('span')].map((el) => el.textContent.trim()) : [];
+    check('包月宣传卡加入两句生活化文案（独立配色）',
+      lines.length === 2 && lines[0] === '日常英语及情境英语练习' && lines[1] === '一个软件从中学用到留学' &&
+      cssText.includes('.price-life span') && cssText.includes('.price-life span:first-child'),
+      lines.join(' / '));
+    check('包月卡在每日学习之外强调生活场景（不是只讲考试）',
+      doc.getElementById('pricing').textContent.includes('日常英语') &&
+      doc.getElementById('pricing').textContent.includes('留学'));
+  }
+  check('浅色化的产品体验区不再使用深色大块（配色失衡修复）',
+    cssText.includes('.showcase-intro { background: var(--cream);') &&
+    cssText.includes('.showcase-card:before') &&
+    !/<section class="dark-section showcase-intro"/.test(pageHtml));
 
   // 13b) 所有页内链接都指向真实存在的区块（App 外壳不能有死链）
   {

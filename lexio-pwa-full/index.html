@@ -3,8 +3,16 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#163f32">
-  <meta name="description" content="Lexio 乐词：为学生打造的英语词汇记忆 PWA。覆盖高考、四六级、考研与雅思词库，以科学复习节奏帮助你真正记住单词。">
+  <!-- Full-screen app behaviour. iOS only drops the Safari address bar for a
+     home-screen shortcut, and it ignores the manifest for that decision, so
+     these Apple-specific tags are what actually make it open without chrome. -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="乐词">
+  <meta name="application-name" content="Lexio 乐词">
+  <meta name="theme-color" content="#f7f8f4">
+  <meta name="description" content="Lexio 乐词：学生英语词汇与日常口语练习。覆盖高考、四六级、考研与雅思词库，跟着复习节奏真正记住单词。">
   <meta name="color-scheme" content="light">
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="apple-touch-icon" href="./icon-192.png">
@@ -645,8 +653,24 @@
       html.js [data-reveal] { opacity: 1; transform: none; }
     }
 
-    /* ===== Multi-view navigation (v2) ===== */
+    /* ===== Multi-view navigation (v2) =====
+       Only ONE thing may move a section: the router. Scroll-reveal, entrance
+       animations and per-child staggers are neutralised wherever the router
+       can animate, because stacking two transforms on the same element is
+       what produced the ghosting, the blurry mid-transition frames and the
+       dropped frames on phones. */
     main > section[data-app-view] { display: none; }
+    /* The footer sits outside <main> but belongs to the pricing view. */
+    footer[data-app-view] { display: none; }
+    footer[data-app-view].is-active { display: block; }
+    main > section[data-app-view] .in-view,
+    main > section[data-app-view] .stagger-1,
+    main > section[data-app-view] .stagger-2,
+    main > section[data-app-view] .stagger-3,
+    main > section[data-app-view] .stagger-4 { transition-delay: 0s !important; }
+    body[data-app-view="home"] .hero-copy,
+    body[data-app-view="home"] .menu-card,
+    body[data-app-view="pricing"] .price-card { animation: none !important; }
     main > section[data-app-view].is-active { display: block; }
     body { padding-bottom: 74px; }
     .view-topbar { display: none; align-items: center; gap: 14px; max-width: var(--container); margin: 0 auto; padding: 16px 20px 2px; }
@@ -747,19 +771,29 @@
        it is harmless. */
     body.view-anim-lock { overscroll-behavior: contain; }
     main.is-animating { position: relative; }
-    main.is-animating > section.is-active { animation-fill-mode: both; animation-duration: .2s; animation-timing-function: cubic-bezier(.22,.68,.24,1); }
+    main.is-animating > section.is-active {
+      animation-fill-mode: both;
+      animation-duration: .19s;
+      animation-timing-function: cubic-bezier(.22,.68,.24,1);
+      /* Own compositor layer for the whole transition, so the browser never
+         re-rasterises the text mid-animation (that is what looked blurry). */
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      transform: translateZ(0);
+      contain: paint;
+    }
+    /* The layer that leaves fixes to the background: no cross-fade means no
+       double exposure and half the pixels to composite. */
     .anim-push-in { animation-name: viewPushIn; }
-    .anim-push-out { animation-name: viewPushOut; animation-duration: .16s !important; }
+    .anim-push-out { animation-name: viewFadeOut; animation-duration: .12s !important; }
     .anim-pop-in { animation-name: viewPopIn; }
-    .anim-pop-out { animation-name: viewPopOut; animation-duration: .16s !important; }
-    .anim-fade-in { animation-name: viewFadeUp; }
-    .anim-fade-out { animation-name: viewFadeOut; animation-duration: .14s !important; }
-    @keyframes viewPushIn { from { transform: translate3d(26px,0,0); opacity: .62; } to { transform: translate3d(0,0,0); opacity: 1; } }
-    @keyframes viewPushOut { from { transform: translate3d(0,0,0); opacity: 1; } to { transform: translate3d(-12px,0,0); opacity: .7; } }
-    @keyframes viewPopIn { from { transform: translate3d(-12px,0,0); opacity: .7; } to { transform: translate3d(0,0,0); opacity: 1; } }
-    @keyframes viewPopOut { from { transform: translate3d(0,0,0); opacity: 1; } to { transform: translate3d(26px,0,0); opacity: .62; } }
-    @keyframes viewFadeUp { from { opacity: .55; } to { opacity: 1; } }
-    @keyframes viewFadeOut { from { opacity: 1; } to { opacity: .55; } }
+    .anim-pop-out { animation-name: viewFadeOut; animation-duration: .12s !important; }
+    .anim-fade-in { animation-name: viewFadeIn; }
+    .anim-fade-out { animation-name: viewFadeOut; animation-duration: .12s !important; }
+    @keyframes viewPushIn { from { transform: translate3d(18px,0,0); opacity: .94; } to { transform: translate3d(0,0,0); opacity: 1; } }
+    @keyframes viewPopIn { from { transform: translate3d(-18px,0,0); opacity: .94; } to { transform: translate3d(0,0,0); opacity: 1; } }
+    @keyframes viewFadeIn { from { opacity: .9; } to { opacity: 1; } }
+    @keyframes viewFadeOut { from { opacity: 1; } to { opacity: 0; } }
 
     /* ===== v4: library app lock, 3D word-card flip, real-feel battle ===== */
     .library-shell { display: flex; box-sizing: border-box; flex-direction: column; height: 100%; min-height: 0; padding: 12px 0 calc(12px + env(safe-area-inset-bottom)); }
@@ -856,6 +890,102 @@
       body[data-app-view="pricing"] .section-heading h2 { font-size: clamp(25px, 6.6vw, 33px); }
     }
 
+    /* ===== v6: two lived-in promises on the pricing card ===== */
+    /* Deliberately a third colour: this is the only place on the page that
+       talks about everyday life rather than exams, so it reads as a highlight
+       instead of one more grey paragraph. */
+    .price-life {
+      display: grid; gap: 6px; margin: 12px 0 0;
+    }
+    .price-life span {
+      display: block; padding: 8px 12px; border-radius: 12px;
+      color: #6b4a12; background: linear-gradient(96deg, #fff4d6, #fffaf0);
+      border: 1px solid #f3e2b8; font-size: 12px; font-weight: 720; line-height: 1.45;
+      letter-spacing: -.01em;
+    }
+    .price-life span:first-child { color: #1f5a3c; background: linear-gradient(96deg, #e8f5dd, #f6fbef); border-color: #d3e8c2; }
+    .price-life span:before { content: "✦"; margin-right: 7px; font-size: 10px; opacity: .75; }
+
+    /* ===== v6: full-screen app shell on every phone ===== */
+    /* Inside a home-screen shortcut there is no browser chrome, so the app has
+       to own the whole viewport and paint the safe areas itself. */
+    @supports (height: 100dvh) {
+      body[data-app-view="home"],
+      body[data-app-view="pricing"] { min-height: 100dvh; }
+    }
+    body[data-app-view="home"],
+    body[data-app-view="pricing"] { background: #f3f6f0; }
+    /* Home: the tab bar is fixed; keep the last card clear of it instead of
+       letting it slide under. */
+    @media (max-width: 760px) {
+      body[data-app-view="home"] main { padding-bottom: calc(14px + env(safe-area-inset-bottom)); }
+      body[data-app-view="home"] .site-header .container,
+      body[data-app-view="home"] .menu-grid,
+      body[data-app-view="home"] .hero-grid { max-width: none; }
+    }
+    /* Study/library are already a fixed full-height frame; make the frame use
+       dvh so the iOS toolbar collapse cannot leave a strip at the bottom. */
+    @supports (height: 100dvh) {
+      main > section[data-app-view="study"].is-active,
+      main > section[data-app-view="library"].is-active { bottom: auto; height: 100dvh; }
+    }
+
+    /* ===== v6: showcase palette balance ===== */
+    /* The dark full-bleed band was the only heavy block left on the marketing
+       pages and it clipped the green accent. This section is now light: cream
+       background, dark type, one green-accented card, one primary CTA. */
+    .showcase-intro { background: var(--cream); padding: 96px 0 92px; }
+    .showcase-intro .section-heading h2 { color: var(--ink); }
+    .showcase-intro .section-heading h2 em { color: var(--forest-2); }
+    .showcase-intro .section-heading p { color: #5d6b63; }
+    .showcase-intro .eyebrow { color: #6c8477; }
+    .showcase-intro .eyebrow .dot { background: var(--leaf); }
+    .showcase-card {
+      position: relative; margin-top: 26px; padding: 26px 28px 28px;
+      background: #fff; border: 1px solid #e4ebe2; border-radius: 24px;
+      box-shadow: 0 18px 44px rgba(23,69,54,.09); overflow: hidden;
+    }
+    .showcase-card:before {
+      position: absolute; inset: 0 auto 0 0; width: 4px; content: "";
+      background: linear-gradient(180deg, var(--forest), var(--leaf));
+    }
+    .showcase-card .eyebrow { color: #7d8e83; }
+    .showcase-card h3 { color: var(--ink); }
+    .showcase-card h3 em { color: var(--forest-2); font-style: normal; }
+    .showcase-card p, .showcase-card #showcaseCopy { color: #4d5f55; }
+    .showcase-card .check-list li { color: #3f5247; }
+    .showcase-card .check { color: var(--forest); background: var(--mint); }
+    .showcase-card .btn-primary { margin-top: 18px; }
+
+    /* ===== v6: 日常短句 tag board (the "清晰路线" section) ===== */
+    .phrase-tag-board {
+      margin-top: 30px; padding: 24px 24px 22px;
+      background: radial-gradient(120% 140% at 100% 0%, #eef7e2 0%, #fbfcf8 46%, #ffffff 100%);
+      border: 1px solid #e3eade; border-radius: 24px;
+    }
+    .phrase-tag-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; }
+    .phrase-tag-head h3 { margin: 0; color: var(--ink); font-size: clamp(17px, 2.4vw, 21px); letter-spacing: -.03em; }
+    .phrase-tag-head p { margin: 0; color: #63746a; font-size: 12.5px; }
+    .phrase-tags { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 16px; }
+    .phrase-tag {
+      display: inline-flex; align-items: center; gap: 8px; min-height: 42px;
+      padding: 8px 15px; color: var(--forest); background: #fff;
+      border: 1px solid #dfe8d9; border-radius: 999px; text-decoration: none;
+      font-size: 12.5px; font-weight: 700; box-shadow: 0 3px 10px rgba(23,69,54,.05);
+      transition: transform .14s ease, box-shadow .14s ease, border-color .14s ease;
+    }
+    .phrase-tag b { color: #93a89a; font-size: 10px; font-weight: 700; }
+    .phrase-tag .tag-ico { font-size: 14px; line-height: 1; }
+    .phrase-tag:active { transform: scale(.97); }
+    .phrase-tag.is-live { background: var(--forest); border-color: var(--forest); color: #fff; }
+    .phrase-tag.is-live b { color: #b7d3a5; }
+    .phrase-tag-cta {
+      display: inline-flex; align-items: center; gap: 6px; margin-top: 18px;
+      color: var(--forest-2); font-size: 12.5px; font-weight: 780; text-decoration: none;
+    }
+    .phrase-tag-cta span { transition: transform .14s ease; }
+    .phrase-tag-cta:active span { transform: translateX(3px); }
+
     /* ===== v5: home progress card (real local numbers only) ===== */
     .hero-progress { min-height: 0; display: block; }
     .progress-card { padding: 20px; background: #fff; border: 1px solid var(--line); border-radius: 22px; box-shadow: var(--shadow-small); }
@@ -927,7 +1057,24 @@
       .module-tabs, .library-mode-tabs { scroll-margin-top: calc(56px + env(safe-area-inset-top)); }
     }
 
-    /* Mobile PWA: make the default route feel like a focused app dashboard, not a landing page. */
+    @media (max-width: 760px) {
+      .showcase-intro { padding: 40px 0 36px; }
+      .showcase-card { margin-top: 16px; padding: 18px 18px 20px; border-radius: 20px; }
+      .showcase-card:before { width: 3px; }
+      .phrase-tag-board { margin-top: 18px; padding: 17px 16px 16px; border-radius: 20px; }
+      .phrase-tag-head { display: block; }
+      .phrase-tag-head h3 { font-size: 16px; }
+      .phrase-tag-head p { margin-top: 5px; font-size: 11.5px; line-height: 1.6; }
+      .phrase-tags { gap: 7px; margin-top: 12px; }
+      .phrase-tag { min-height: 38px; padding: 7px 12px; font-size: 11.5px; }
+      .phrase-tag b { font-size: 9px; }
+    }
+
+    @media (max-width: 760px) {
+      .price-life span { padding: 7px 10px; font-size: 11.5px; }
+    }
+
+    /* Mobile app shell: the default route is a dashboard, not a landing page. */
     @media (max-width: 760px) {
       html, body { min-height: 100%; overscroll-behavior-x: none; }
       body { background: #f3f6f0; }
@@ -953,7 +1100,7 @@
       /* Keep the dashboard on one screen: 4 compact tiles, no empty band. */
       body[data-app-view="home"] .menu-grid { margin-top: 0; }
       /* Short phones: tighten the dashboard so title + numbers + actions fit. */
-      @media (max-width: 760px) and (max-height: 720px) {
+      @media (max-width: 760px) {
         body[data-app-view="home"] .menu-card { min-height: 88px; padding: 11px; }
         body[data-app-view="home"] .hero h1 { font-size: clamp(23px, 6.6vw, 30px); }
       }
@@ -1034,15 +1181,6 @@
       @keyframes viewSlideOut { from { transform: translate3d(0,0,0); opacity: 1; } to { transform: translate3d(-10px,0,0); opacity: .86; } }
       /* First paint only: the entrance animation never re-runs on a view
          change, so returning home from the word list cannot drop frames. */
-      body[data-app-view="home"]:not(.view-returned) .hero-copy { animation: appHomeEnter .3s cubic-bezier(.22,.61,.36,1) both; }
-      body[data-app-view="home"]:not(.view-returned) .menu-card { animation: appTileEnter .24s cubic-bezier(.22,.61,.36,1) both; }
-      body[data-app-view="home"]:not(.view-returned) .menu-card:nth-child(1) { animation-delay: .02s; }
-      body[data-app-view="home"]:not(.view-returned) .menu-card:nth-child(2) { animation-delay: .04s; }
-      body[data-app-view="home"]:not(.view-returned) .menu-card:nth-child(3) { animation-delay: .06s; }
-      body[data-app-view="home"]:not(.view-returned) .menu-card:nth-child(4) { animation-delay: .08s; }
-      body[data-app-view="home"]:not(.view-returned) .menu-card:nth-child(5) { animation-delay: .1s; }
-      body[data-app-view="home"]:not(.view-returned) .menu-card:nth-child(6) { animation-delay: .12s; }
-      body[data-app-view="pricing"]:not(.view-returned) .price-card { animation: appPricingEnter .3s cubic-bezier(.22,.61,.36,1) both; }
       @keyframes appHomeEnter { from { opacity: 0; transform: translateY(14px) scale(.99); } to { opacity: 1; transform: translateY(0) scale(1); } }
       @keyframes appTileEnter { from { opacity: 0; transform: translateY(12px) scale(.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
       @keyframes appPricingEnter { from { opacity: 0; transform: translateY(18px) scale(.985); } to { opacity: 1; transform: translateY(0) scale(1); } }
@@ -1151,15 +1289,15 @@
       </div>
     </section>
 
-    <section class="dark-section showcase-intro" data-app-view="home" aria-label="产品体验介绍">
+    <section class="section showcase-intro" data-app-view="home" aria-label="产品体验介绍">
       <div class="container">
-        <div class="section-heading" data-reveal><div class="eyebrow"><span class="dot"></span> PRODUCT EXPERIENCE</div><h2>打开 App 的每一分钟，<br><em>都在高效记忆。</em></h2><p>试试智能词单、记忆卡片和学习进度。此处是可交互的 PWA 体验版，当前学习状态保存在本设备。</p></div>
-        <div class="study-side-copy" id="showcasePanel" role="tabpanel" data-reveal>
+        <div class="section-heading" data-reveal><div class="eyebrow"><span class="dot"></span> PRODUCT EXPERIENCE</div><h2>打开 App 的每一分钟，<br>都在 <em>高效记忆。</em></h2><p>试试智能词单、记忆卡片和学习进度。学习状态保存在这台设备上。</p></div>
+        <div class="study-side-copy showcase-card" id="showcasePanel" role="tabpanel" data-reveal>
             <div class="eyebrow"><span class="dot"></span> SMALL STEPS, REAL PROGRESS</div>
             <h3 id="showcaseHeadline">每天醒来，<br><em>词单已为你排好。</em></h3>
             <p id="showcaseCopy">告诉 Lexio 你的考试目标和日期，系统拆解考纲词库，生成刚刚好的每日任务——不多到崩溃，不少到焦虑。</p>
             <ul class="check-list"><li><span class="check">✓</span><span data-showcase-bullet="0">按考试日期倒推每日词量。</span></li><li><span class="check">✓</span><span data-showcase-bullet="1">新词与复习词智能配比。</span></li><li><span class="check">✓</span><span data-showcase-bullet="2">漏打卡自动重排，不让任务堆积。</span></li></ul>
-            <button class="btn btn-lime" type="button" data-open-trial>开始我的 7 天体验 <span class="btn-arrow">↗</span></button>
+            <button class="btn btn-primary" type="button" data-open-trial>开始我的 7 天体验 <span class="btn-arrow">↗</span></button>
           </div>
       </div>
     </section>
@@ -1197,7 +1335,22 @@
 
     <section class="section library-intro" data-app-view="home" aria-label="词库介绍">
       <div class="container">
-        <div class="section-heading" data-reveal><div class="eyebrow"><span class="dot"></span> ONE LIBRARY, MANY GOALS</div><h2>从校内考试到留学，<br>让每个目标 <em>都有清晰路线。</em></h2><p>五大考试词库与 100 条精讲词已随 App 安装并保存在本机。可离线搜索、学习和朗读；需要更新词库时，用「联网同步」载入新的词库文件。</p></div>
+        <div class="section-heading" data-reveal><div class="eyebrow"><span class="dot"></span> ONE LIBRARY, MANY GOALS</div><h2>从校内考试到留学，<br>让每个目标 <em>都有清晰路线。</em></h2><p>高考、四六级、考研、雅思五套考试词库与 1,000 句日常口语都在同一本词库里；搜索、学习、朗读都不用切换 App。</p></div>
+        <div class="phrase-tag-board" data-reveal aria-label="日常短句宣传">
+          <div class="phrase-tag-head"><h3>日常英语 · 随手就能说出口</h3><p>十个生活场景、1,000 句常用短句，点标签直接进入对应场景开始朗读练习。</p></div>
+          <div class="phrase-tags" id="phraseTagBoard">
+            <span class="phrase-tag"><span class="tag-ico">💬</span>日常交流 <b>100 句</b></span>
+            <span class="phrase-tag"><span class="tag-ico">🍜</span>餐饮点单 <b>100 句</b></span>
+            <span class="phrase-tag"><span class="tag-ico">🛍️</span>购物 <b>100 句</b></span>
+            <span class="phrase-tag"><span class="tag-ico">🚇</span>交通出行 <b>100 句</b></span>
+            <span class="phrase-tag"><span class="tag-ico">🏨</span>酒店住宿 <b>100 句</b></span>
+            <span class="phrase-tag"><span class="tag-ico">✈️</span>机场与出差 <b>100 句</b></span>
+            <span class="phrase-tag"><span class="tag-ico">🏥</span>医疗药房 <b>100 句</b></span>
+            <span class="phrase-tag"><span class="tag-ico">💼</span>工作沟通 <b>100 句</b></span>
+            <span class="phrase-tag"><span class="tag-ico">📞</span>电话预约 <b>100 句</b></span>
+          </div>
+          <a class="phrase-tag-cta" href="#library" data-open-daily-phrases>打开日常口语句 <span aria-hidden="true">→</span></a>
+        </div>
 <div class="exam-grid">
           <article class="exam-card" style="--wash:#e5efd8" data-reveal><span class="exam-icon">高</span><strong>3,500 词</strong><h3>高考核心词</h3><p>高考大纲 · 真题高频</p></article>
           <article class="exam-card stagger-1" style="--wash:#f2ead5" data-reveal><span class="exam-icon">4</span><strong>4,500 词</strong><h3>大学英语四级</h3><p>CET-4 · 高频核心</p></article>
@@ -1206,7 +1359,7 @@
           <article class="exam-card stagger-4" style="--wash:#e9e3f2" data-reveal><span class="exam-icon">雅</span><strong>6,000 词</strong><h3>雅思核心词</h3><p>学术语境 · 话题拓展</p></article>
         </div>
         <div class="roots-panel" data-reveal><div class="roots-intro"><span class="eyebrow"><span class="dot"></span> WORD ROOT MINI-CLASS</span><h3>一个词根，<br>串起一整组单词。</h3><p>把零散词汇连成可理解的网络，背过一个，再遇见同族词就更容易。</p></div><div class="root-list"><div class="root-row"><strong>spect / spec</strong><span>看 · look</span><small>inspect · perspective · spectacular</small></div><div class="root-row"><strong>port</strong><span>携带 · carry</span><small>transport · support · portable</small></div><div class="root-row"><strong>mit / miss</strong><span>送、放 · send</span><small>submit · transmit · mission</small></div></div></div>
-        <div class="migration-note"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/><path d="M12 11v5m0-8h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span><strong>本机词库：</strong>25,024 条学习记录会在首次联网打开时自动写入 IndexedDB，之后离线可用。</span></div>
+        <div class="migration-note"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/><path d="M12 11v5m0-8h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span><strong>本机词库：</strong>25,024 条学习记录第一次联网打开时会自动保存到这台设备，之后没有网络也能查、能学。</span></div>
           <p class="library-footnote">预期字段支持 word / english、meaning / translation、phonetic、pos、example、category / exam、uk / us；保留源记录并映射到统一学习卡片。</p>
       </div>
     </section>
@@ -1258,7 +1411,7 @@
                 <div class="memory-curve-head"><strong>最近 7 天</strong><span id="memoryCurveNote">还没有学习记录</span></div>
                 <div class="memory-bars" id="memoryBars"></div>
               </div>
-              <p class="panel-note">这里的数字全部来自这台设备的学习记录：卡片上点「记住了 ✓」计入已记住，点「还不熟悉 · 再练一次」计入没记牢。没有虚构的记忆曲线，也不含任何上传的数据。</p>
+              <p class="panel-note">这里的数字全部来自这台设备的学习记录：卡片上点「记住了 ✓」计入已记住，点「还不熟悉 · 再练一次」计入没记牢。没有虚构的记忆曲线。</p>
               <ul class="weak-list" id="weakList"></ul>
               <div class="panel-empty" id="weakEmpty">暂时没有薄弱词。继续学习，标记不熟的词会自动出现在这里。</div>
             </div>
@@ -1295,7 +1448,7 @@
       <div class="container">
         <div class="section-heading" data-reveal><div class="eyebrow"><span class="dot"></span> AUTOMATION BY DESIGN</div><h2>从首次体验到续订，<br>让服务 <em>顺畅自动运转。</em></h2><p>试用计时、到期前本机提醒与订阅入口都写在这一版里；当前没有后台服务器，也没有自动续费扣款。</p></div>
         <div class="ops-panel" data-reveal>
-          <div class="ops-top"><div><h3>试用与提醒怎么运转</h3><p>这一版全部在本机完成：试用开始日、到期前提醒和订阅入口都不依赖服务器，也不会上传任何学习数据。</p></div><span class="ops-status"><i></i>本机计时 · 无需服务器</span></div>
+          <div class="ops-top"><div><h3>试用与提醒怎么运转</h3><p>试用开始日、到期前提醒和订阅入口都在这台设备上完成，不需要额外设置，也不会打扰你的学习。</p></div><span class="ops-status"><i></i>自动计时 · 到期提醒</span></div>
           <div class="ops-flow">
             <article class="ops-step"><span class="ops-number">DAY 01</span><h4>开始 7 天体验</h4><p>创建账号、记录试用截止日，清楚展示续费价格与取消方式。</p></article>
             <article class="ops-step"><span class="ops-number">14 / 7 / 1</span><h4>到期前本机提醒</h4><p>在到期前 14 天、7 天、1 天打开 App 时，由本机弹窗提醒，不发送邮件或短信。</p></article>
@@ -1304,7 +1457,7 @@
             <article class="ops-step"><span class="ops-number">随时</span><h4>查看或取消</h4><p>订阅入口常驻底部标签栏，随时可以查看方案、取消或继续学习。</p></article>
             <article class="ops-step"><span class="ops-number">离线</span><h4>无网也能用</h4><p>词库、口语库与学习记录都在本机，断网时照样可以学习和朗读。</p></article>
           </div>
-          <div class="ops-bottom"><span><strong>数据保护：</strong>学习进度与词库保存在本机 IndexedDB，不上传服务器。</span><span><strong>收费透明：</strong>试用天数和续费金额直接写在页面上，付款前不会自动扣款。</span></div>
+          <div class="ops-bottom"><span><strong>数据保护：</strong>学习进度与词库保存在这台设备上，换手机前请留意备份。</span><span><strong>收费透明：</strong>试用天数和续费金额直接写在页面上，付款前不会自动扣款。</span></div>
         </div>
       </div>
     </section>
@@ -1315,7 +1468,7 @@
         <div class="benefits-grid">
           <article class="benefit" data-reveal><div class="benefit-number">15<span style="font-size:.47em;letter-spacing:-.02em"> 分钟</span></div><h3>每天一小步</h3><p>课间、通勤和睡前的碎片时间，都能变成稳定积累。</p></article>
           <article class="benefit stagger-1" data-reveal><div class="benefit-number">14 / 7 / 1</div><h3>到期前提醒</h3><p>试用结束前 14 天、7 天、1 天打开 App，会在这台设备上提醒你。</p></article>
-          <article class="benefit stagger-2" data-reveal><div class="benefit-number">100%</div><h3>记录留在本机</h3><p>词库、学习进度与口语句库都保存在本机，不上传服务器。</p></article>
+          <article class="benefit stagger-2" data-reveal><div class="benefit-number">100%</div><h3>记录留在本机</h3><p>词库、学习进度与口语句库都保存在这台设备上，随时打开都是上次的进度。</p></article>
         </div>
         <p class="proof-note">以上三项都是本版本可以直接核对的功能设定，不是效果宣传，也没有用户成绩统计。</p>
       </div>
@@ -1340,7 +1493,7 @@
         <div class="section-heading" data-reveal><div class="eyebrow"><span class="dot"></span> SIMPLE, STUDENT-FRIENDLY PRICING</div><h2>先完整体验 7 天，<br>再决定是否 <em>继续前进。</em></h2><p>价格、试用天数和提醒方式都写在下面。这一版不会自动扣款，也不会要求卡号。</p></div>
         <div class="pricing-layout">
           <div class="trial-info-card" data-reveal><div><div class="eyebrow"><span class="dot"></span> 7-DAY FULL ACCESS</div><h3>给自己 7 天，感受真正高效的背词节奏。</h3><p>试用期间开放 Pro 学习体验。你可以自由探索词库、记忆卡片、英美音与学习报告。</p><div class="trial-timeline-mini"><div class="timeline-mini-row"><span>1</span>设置目标，开始第一组单词</div><div class="timeline-mini-row"><span>3</span>到期前 2 周 / 1 周 / 1 天在本机提醒</div><div class="timeline-mini-row"><span>7</span>体验结束：本机提醒，当前版本不会自动扣款</div></div></div><p class="trial-info-foot">正式上线时，将在开始试用前清楚展示付款方式、续费日期、<span id="trialInfoPrice">选定方案的价格</span>与取消入口。</p></div>
-          <div class="price-card" data-reveal><span class="popular-pill">✦ 学生 Pro · 全部学习功能</span><h3>Lexio Pro</h3><p class="price-desc">适合希望稳定提升词汇量的学生</p><div class="plan-switch" role="group" aria-label="选择订阅周期"><button class="plan-option active" type="button" data-plan-select="monthly" aria-pressed="true">连续包月</button><button class="plan-option" type="button" data-plan-select="annual" aria-pressed="false">连续包年 <b id="annualBadge">省 40%</b></button></div><div class="price"><strong id="priceAmount">¥15</strong><span id="pricePeriod">/ 月</span><span class="price-original" id="priceOriginal" hidden>¥180</span></div><p class="after-trial" id="priceTerms">前 7 天免费体验 · 之后 ¥15 / 月（正式收款时按此价格，当前不扣款）</p><p class="student-promo" id="studentPromo" hidden>🎓 凭学生证可享优惠（正式版需完成学生身份验证）</p><div class="price-divider"></div><ul class="plan-list"><li><span>✓</span>五大考试词库 25,024 条，随 App 保存在本机</li><li><span>✓</span>「记住了 / 还不熟悉」标记与薄弱词强化队列</li><li><span>✓</span>例句来源标注、英式 / 美式发音与整句朗读</li><li><span>✓</span>本机学习统计、7 天记录与离线可用</li><li><span>✓</span>随时查看方案、取消或继续学习</li></ul><button class="btn btn-primary" type="button" data-open-trial>免费体验 7 天 <span class="btn-arrow">↗</span></button><button class="btn btn-outline secondary-subscribe" type="button" id="directSubscribe">选择此方案并继续</button><p class="terms-small">试用结束前会在这台设备上提醒你，付款前也会明确显示续费日期、价格和取消入口。当前预览不会收款。</p></div>
+          <div class="price-card" data-reveal><span class="popular-pill">✦ 学生 Pro · 全部学习功能</span><h3>Lexio Pro</h3><p class="price-desc">适合希望稳定提升词汇量的学生</p><p class="price-life"><span>日常英语及情境英语练习</span><span>一个软件从中学用到留学</span></p><div class="plan-switch" role="group" aria-label="选择订阅周期"><button class="plan-option active" type="button" data-plan-select="monthly" aria-pressed="true">连续包月</button><button class="plan-option" type="button" data-plan-select="annual" aria-pressed="false">连续包年 <b id="annualBadge">省 40%</b></button></div><div class="price"><strong id="priceAmount">¥15</strong><span id="pricePeriod">/ 月</span><span class="price-original" id="priceOriginal" hidden>¥180</span></div><p class="after-trial" id="priceTerms">前 7 天免费体验 · 之后 ¥15 / 月（正式收款时按此价格，当前不扣款）</p><p class="student-promo" id="studentPromo" hidden>🎓 凭学生证可享优惠（正式版需完成学生身份验证）</p><div class="price-divider"></div><ul class="plan-list"><li><span>✓</span>五大考试词库 25,024 条，随 App 保存在本机</li><li><span>✓</span>「记住了 / 还不熟悉」标记与薄弱词强化队列</li><li><span>✓</span>例句来源标注、英式 / 美式发音与整句朗读</li><li><span>✓</span>本机学习统计、7 天记录与离线可用</li><li><span>✓</span>随时查看方案、取消或继续学习</li></ul><button class="btn btn-primary" type="button" data-open-trial>免费体验 7 天 <span class="btn-arrow">↗</span></button><button class="btn btn-outline secondary-subscribe" type="button" id="directSubscribe">选择此方案并继续</button><p class="terms-small">试用结束前会在这台设备上提醒你，付款前也会明确显示续费日期、价格和取消入口。当前预览不会收款。</p></div>
         </div>
         <div class="team-row" data-reveal><div><h3>老师与学校：学习跟进服务</h3><p>我们面向中学、大学等学校提供学习跟进服务，并按学校需要提供词表模板、练习模板等教学模板；具体内容与范围可与学校沟通后确定。</p></div><a href="#faq">查看服务说明 <span aria-hidden="true">→</span></a></div>
       </div>
@@ -1350,11 +1503,11 @@
       <div class="container faq-layout">
         <div class="faq-aside" data-reveal><h2>你想知道的，<br>都在这里。</h2><p>还有其他问题？把你的词库格式或上线需求告诉我们。</p><a href="#pricing">查看体验与定价 <span aria-hidden="true">↗</span></a></div>
         <div class="faq-list" data-reveal>
-          <details><summary>学校、老师可以获得哪些支持？</summary><p>我们为中学、大学等学校提供学习跟进服务：可以按学校现有词表提供模板、按班级进度整理练习模板，并配合老师安排复习节奏。这些是我们可以提供的服务内容；具体合作方式、适用范围与效果，需要与学校沟通后确定，不以任何未经确认的学校名单或数据作宣传。</p></details>
-          <details><summary>词库里到底有多少词，存在哪里？</summary><p>词库合计 25,024 条学习记录（五套考试列表 25,000 条，另含 100 条精讲词；相同拼写在不同考试列表中分别保留）。首次联网打开时会自动写入本机 IndexedDB，之后可离线搜索与学习，学习记录也只保存在这台设备上。</p></details>
+          <details><summary>我们能提供什么？</summary><p>我们是专业提供学习辅助服务类目及学习跟进服务：可以按学校现有词表提供模板、按班级进度整理练习模板，并配合老师安排复习节奏。具体合作方式、适用范围与效果，需要与学校沟通后确定；不以任何未经确认的学校名单或数据作宣传。</p></details>
+          <details><summary>词库里到底有多少词，存在哪里？</summary><p>词库合计 25,024 条学习记录（五套考试列表 25,000 条，另含 100 条精讲词；相同拼写在不同考试列表中分别保留）。第一次联网打开时会自动保存到这台设备，之后没有网络也能搜索与学习，学习记录也只留在这台设备上。</p></details>
           <details><summary>7 天试用结束后会怎样？</summary><p>这一版只在本机记录试用开始日期，并在到期前 14 天、7 天、1 天打开 App 时弹出提醒，不发短信、不发邮件。当前版本没有接入收银服务，不会自动扣款；付款前会明确显示续费日期、金额和取消方式。</p></details>
           <details><summary>支持哪些支付方式？</summary><p>支持多种方式支付，具体方式以正式结账页面为准。当前演示尚未接入真实收银服务，不会产生扣款。</p></details>
-          <details><summary>它可以离线使用、添加到主屏幕吗？</summary><p>已配置 PWA manifest 和 Service Worker 应用外壳缓存；在 HTTPS 部署并由支持的浏览器访问后，可添加到主屏幕并以独立 App 窗口运行。词库与学习进度保存在本机 IndexedDB；首次联网完成缓存后即可离线使用。</p></details>
+          <details><summary>它可以离线使用、添加到主屏幕吗？</summary><p>可以。用手机浏览器打开后，按页面里的「安装」引导添加到主屏幕，就能像普通 App 一样全屏打开；首次联网打开后即可离线使用。</p></details>
           <details><summary>原站的发音、例句和学习进度也能保留吗？</summary><p>已迁移英 / 美音标、词性、中文释义与考试分类。精讲内容保留原有资料；另有匹配到词典的真实句例/记忆法，以及明确标注的释义提示和通用复习提示。词库数据本身未内嵌音频文件；例句朗读直接调用设备 en-US 系统语音。公开 HTML 未包含个人学习进度，迁移进度仍需原站账号数据导出。</p></details>
           <details><summary>需要联网吗？能离线用吗？</summary><p>词库与日常口语句库都随 App 缓存到本机，断网也能查询、学习、朗读（朗读使用设备自带英语语音）。联网只在两种情况下需要：首次打开时下载词库、以及你主动点「联网同步」获取新词库。</p></details>
         </div>
@@ -1366,13 +1519,13 @@
     </section>
   </main>
 
-  <footer class="footer">
+  <footer class="footer" data-app-view="pricing">
     <div class="container">
       <div class="footer-main">
         <div><a class="brand" href="#top" aria-label="Lexio 乐词回到首页"><span class="brand-mark"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 18V6.5c0-.8.7-1.5 1.5-1.5H18M6 18h11.5c.8 0 1.5-.7 1.5-1.5V8" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"/><path d="m10 13 2 2 5-6" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="brand-word">Lexio<small>乐词 · LEARN IN FLOW</small></span></a><p class="footer-blurb">为每一次考试，也为每一个更好的自己。用科学节奏，把单词稳稳记住。</p></div>
         <div class="footer-links"><div class="footer-col"><h3>探索 Lexio</h3><a href="#method">学习方法</a><a href="#library">目标词库</a><a href="#study">学习体验</a></div><div class="footer-col"><h3>了解更多</h3><a href="#pricing">订阅计划</a><a href="#faq">常见问题</a><a href="#ops">自动化运维</a></div><div class="footer-col"><h3>支持</h3><a href="#faq">联系与支持</a><a href="#faq">数据迁移</a><a href="#pricing">订阅与取消</a></div></div>
       </div>
-      <div class="footer-bottom"><span>© <span id="year"></span> Lexio 乐词 · PWA 概念交付</span><span class="legal-links"><a href="#faq">隐私说明</a><a href="#faq">服务条款</a><a href="#top">回到顶部 ↑</a></span></div>
+      <div class="footer-bottom"><span>© <span id="year"></span> Lexio 乐词 · 学习辅助服务</span><span class="legal-links"><a href="#faq">隐私说明</a><a href="#faq">服务条款</a><a href="#top">回到顶部 ↑</a></span></div>
     </div>
   </footer>
 
@@ -1743,7 +1896,7 @@
       const SHOWCASE_CONTENT = {
         plan:{headline:'每天醒来，<br><em>词单已为你排好。</em>',copy:'告诉 Lexio 你的考试目标和日期，系统拆解考纲词库，生成刚刚好的每日任务——不多到崩溃，不少到焦虑。',bullets:['按考试日期倒推每日词量。','新词与复习词智能配比。','漏打卡自动重排，不让任务堆积。']},
         memory:{headline:'在快要忘记时，<br><em>刚好再遇见。</em>',copy:'每次自测的反馈都会帮助系统判断掌握程度，逐步安排复习间隔，把时间花在真正需要巩固的单词上。',bullets:['每个词拥有独立复习状态。','错词自动加入强化队列。','按学习反馈调整复习节奏。']},
-        battle:{headline:'把每天 15 分钟，<br><em>变成有趣的挑战。</em>',copy:'用 10 题限时词义快答增加即时反馈。对手由本机随机生成，不是实时在线玩家；对战结果不会上传。',bullets:['每局固定 10 题，答错自动进复习。','词义快答练习主动回忆。','本机对战，不需要注册账号。']}
+        battle:{headline:'把每天 15 分钟，<br><em>变成有趣的挑战。</em>',copy:'用 10 题限时词义快答增加即时反馈。对手由本机随机生成，不是实时在线玩家；对战只在本机进行。',bullets:['每局固定 10 题，答错自动进复习。','词义快答练习主动回忆。','本机对战，不需要注册账号。']}
       };
       function selectShowcaseTab(key) {
         const content=SHOWCASE_CONTENT[key] || SHOWCASE_CONTENT.plan;
@@ -1789,11 +1942,46 @@
           grid.appendChild(more);
         }
       }
+      /* Marketing tag cards on the "clear route" section. Built from the same
+         phrase library the app reads, so the counts are the real ones. */
+      const PHRASE_TAG_ICONS = { '日常交流': '💬', '餐饮点单': '🍜', '购物': '🛍️', '交通出行': '🚇', '酒店住宿': '🏨',
+        '机场与出差': '✈️', '医疗药房': '🏥', '工作沟通': '💼', '电话预约': '📞', '紧急求助': '🆘' };
+      function warmPhraseTagBoard() {
+        const board = $('#phraseTagBoard');
+        if (board && board.dataset.pending === '1') loadDailyPhrases();
+      }
+      window.__lexioWarmPhraseTags = warmPhraseTagBoard;
+      function renderPhraseTagBoard() {
+        const board = $('#phraseTagBoard');
+        if (!board) return;
+        if (!dailyPhraseBank || !dailyPhraseBank.length) {
+          board.dataset.pending = '1';
+          return;
+        }
+        board.dataset.pending = '0';
+        const counts = new Map();
+        for (let i = 0; i < dailyPhraseBank.length; i++) {
+          const key = dailyPhraseBank[i].category;
+          if (key) counts.set(key, (counts.get(key) || 0) + 1);
+        }
+        const ordered = [...counts.entries()].sort((a, b) => b[1] - a[1]).slice(0, 9);
+        board.innerHTML = ordered.map(([category, count], index) => `<a class="phrase-tag${index === 0 ? ' is-live' : ''}" href="#library" data-phrase-tag="${escapeHTML(category)}"><span class="tag-ico">${PHRASE_TAG_ICONS[category] || '💬'}</span>${escapeHTML(category)} <b>${count.toLocaleString()} 句</b></a>`).join('');
+        board.querySelectorAll('[data-phrase-tag]').forEach(tag => tag.addEventListener('click', event => {
+          event.preventDefault();
+          activePhraseCategory = tag.dataset.phraseTag;
+          phraseVisibleLimit = 50;
+          setLibraryMode('phrases');
+          renderPhraseCategories();
+          renderDailyPhrases();
+          if (window.__lexioShow) window.__lexioShow('library', 'library');
+        }));
+      }
       function renderPhraseCategories() {
         const root=$('#phraseCategories');
         if(!root) return;
         const categories=['全部',...(dailyPhraseBank && dailyPhraseBank.length ? [...new Set(dailyPhraseBank.map(item=>item.category).filter(Boolean))] : [])];
         root.innerHTML=categories.map(category=>`<button class="phrase-chip" type="button" role="tab" aria-pressed="${category===activePhraseCategory}" data-phrase-category="${escapeHTML(category)}">${escapeHTML(category)}</button>`).join('');
+        renderPhraseTagBoard();
         root.querySelectorAll('[data-phrase-category]').forEach(button=>button.addEventListener('click',()=>{
           activePhraseCategory=button.dataset.phraseCategory;
           phraseVisibleLimit=50;
@@ -1890,7 +2078,7 @@
           if(navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(()=>{});
         } else {
           try { localStorage.setItem('lexio.fallbackBank',JSON.stringify(normalized));bank=normalized; }
-          catch(e) { throw new Error('本浏览器不支持大型离线词库存储。请使用支持 IndexedDB 的现代浏览器。'); }
+          catch(e) { throw new Error('这个浏览器无法保存完整离线词库，请换用手机或电脑上的 Chrome / Safari 打开。'); }
         }
         renderBank({wordCount:bank.length,isDemo:false,sourceFile:sourceName});
         updateStudyCard();
@@ -2159,23 +2347,69 @@
       }
       if ('speechSynthesis' in window) {
         refreshVoices();
-        try { window.speechSynthesis.addEventListener('voiceschanged', refreshVoices); } catch(_) {
+        try { window.speechSynthesis.addEventListener('voiceschanged', () => { refreshVoices(); nudgePreferredVoice(); }); } catch(_) {
           try { window.speechSynthesis.onvoiceschanged = refreshVoices; } catch(__) {}
         }
       }
+      /* Voice preference: a young, bright American English voice.
+         Phones ship several en-US voices and the browser default is often the
+         flattest one, so the named favourites below are tried first. Order:
+         known sweet/young US voices → any female-sounding US voice → any US
+         voice. en-GB keeps its own matching for the 英式 toggle. */
+      const VOICE_PREFERENCE = {
+        'en-US': [
+          'Samantha', 'Ava', 'Allison', 'Susan', 'Zoe', 'Nicky', 'Karen', 'Serena',
+          'Google US English', 'Google US English Female', 'Microsoft Aria',
+          'Microsoft Jenny', 'Microsoft Michelle', 'Microsoft Ana', 'Microsoft Zira'
+        ],
+        'en-GB': ['Serena', 'Kate', 'Stephanie', 'Libby', 'Sonia', 'Google UK English Female', 'Microsoft Libby']
+      };
+      const FEMALE_HINTS = /female|woman|girl|samantha|ava|allison|susan|zoe|nicky|karen|serena|aria|jenny|michelle|zira|sonia|kate|stephanie|libby|moira|tessa|fiona/i;
+      const MALE_HINTS = /male|man|daniel|alex|fred|tom|david|mark|guy|george|james|arthur|oliver|aaron|matthew/i;
       function pickVoice(lang) {
         const voices = refreshVoices();
         if (!voices.length) return null;
         const want = String(lang || 'en-US').toLowerCase().replace('_','-');
         const base = want.split('-')[0];
-        const sameBase = voices.filter(v => v && v.lang && v.lang.toLowerCase().replace('_','-').startsWith(base));
-        return sameBase.find(v => v.lang.toLowerCase().replace('_','-') === want)
-          || sameBase.find(v => v.lang.toLowerCase().replace('_','-').startsWith(want))
-          || sameBase[0]
-          || null;
+        const norm = value => String(value || '').toLowerCase().replace('_','-');
+        const sameBase = voices.filter(v => v && v.lang && norm(v.lang).startsWith(base));
+        if (!sameBase.length) return null;
+        const exact = sameBase.filter(v => norm(v.lang) === want);
+        const pool = exact.length ? exact : sameBase;
+        /* Object keys are case-sensitive while `want` is lowercased for
+           matching, so a direct VOICE_PREFERENCE[want] lookup always missed. */
+        const prefKey = Object.keys(VOICE_PREFERENCE).find(key => key.toLowerCase() === want)
+          || Object.keys(VOICE_PREFERENCE).find(key => key.toLowerCase() === base);
+        const named = (prefKey && VOICE_PREFERENCE[prefKey]) || [];
+        for (let i = 0; i < named.length; i++) {
+          const hit = pool.find(v => String(v.name || '').toLowerCase().includes(named[i].toLowerCase()));
+          if (hit) return hit;
+        }
+        const female = pool.find(v => FEMALE_HINTS.test(String(v.name || '')) && !MALE_HINTS.test(String(v.name || '')));
+        if (female) return female;
+        const neutral = pool.find(v => !MALE_HINTS.test(String(v.name || '')));
+        return neutral || pool[0] || sameBase[0] || null;
       }
       function resumeSynth() {
         try { const synth = window.speechSynthesis; if (synth && synth.paused) synth.resume(); } catch(_) {}
+      }
+      /* Some phones only expose their voice list after the first utterance
+         (iOS fires "voiceschanged" late). If a sentence is already speaking
+         with the system default, swap in the preferred voice as soon as the
+         list arrives, so the first read is not the flat/male default. */
+      let lastRequestedLang = 'en-US';
+      function nudgePreferredVoice() {
+        const synth = window.speechSynthesis;
+        if (!synth || !activeUtterance || !synth.speaking) return;
+        const want = pickVoice(lastRequestedLang);
+        if (!want || activeUtterance.voice === want) return;
+        try {
+          synth.cancel();
+          activeUtterance.voice = want;
+          activeUtterance.lang = want.lang || lastRequestedLang;
+          synth.speak(activeUtterance);
+          resumeSynth();
+        } catch (_) {}
       }
       function speak(text, lang='en-GB', done, onError) {
         if (activeAudio) { try { activeAudio.pause(); } catch(_) {} activeAudio = null; }
@@ -2192,13 +2426,17 @@
           return;
         }
         const synth = window.speechSynthesis;
+        lastRequestedLang = lang;
         const token = ++speechRequestId;
         let finished = false, started = false, startWatchdog = null, finishWatchdog = null;
         const utterance = new SpeechSynthesisUtterance(sentence);
         utterance.lang = lang;
         const voice = pickVoice(lang);
         if (voice) { utterance.voice = voice; utterance.lang = voice.lang || lang; }
-        utterance.rate = .9;
+        /* Brighter and a touch quicker than the old .9 — reads as young and
+           friendly without becoming hard to follow. */
+        utterance.rate = 1;
+        utterance.pitch = 1.08;
         utterance.volume = 1;
         const finish = error => {
           if (finished || token !== speechRequestId) return;
@@ -2841,7 +3079,7 @@
   var anchorTimer = null;
   function sectionsOf(view) {
     var found = [];
-    var all = document.querySelectorAll('main > section[data-app-view]');
+    var all = document.querySelectorAll('main > section[data-app-view], footer[data-app-view]');
     for (var i = 0; i < all.length; i++) {
       if (all[i].getAttribute('data-app-view') === view) found.push(all[i]);
     }
@@ -2887,6 +3125,10 @@
     window.scrollTo(0, 0);
   }
   function show(view, anchor) {
+    /* A second tap during the 190ms transition is ignored instead of being
+       allowed to cut an animation mid-flight, which is what left a ghost of
+       the previous page on screen. */
+    if (pending) return;
     endAnim();
     var main = document.getElementById('main');
     var prev = document.body.getAttribute('data-app-view');
@@ -2903,7 +3145,7 @@
     var inn = sectionsOf(view);
     var outers = [];
     var prevOuters = [];
-    var all = document.querySelectorAll('main > section[data-app-view].is-active');
+    var all = document.querySelectorAll('main > section[data-app-view].is-active, footer[data-app-view].is-active');
     for (var i = 0; i < all.length; i++) {
       if (all[i].getAttribute('data-app-view') !== view) prevOuters.push(all[i]);
     }
@@ -2921,6 +3163,7 @@
       for (var b = 0; b < inn.length; b++) inn[b].classList.add('is-active');
       document.body.setAttribute('data-app-view', view);
       if (view === 'study' && window.__lexioStudyStart) window.__lexioStudyStart();
+      if (view === 'home' && window.__lexioWarmPhraseTags) window.__lexioWarmPhraseTags();
       var lbl0 = document.getElementById('viewTopbarLabel');
       if (lbl0) lbl0.textContent = VIEW_LABEL[view] || view;
       syncTabbar(view);
@@ -2932,6 +3175,7 @@
     for (var c = 0; c < inn.length; c++) inn[c].classList.add('is-active');
     document.body.setAttribute('data-app-view', view);
     if (view === 'study' && window.__lexioStudyStart) window.__lexioStudyStart();
+    if (view === 'home' && window.__lexioWarmPhraseTags) window.__lexioWarmPhraseTags();
     var lbl = document.getElementById('viewTopbarLabel');
     if (lbl) lbl.textContent = VIEW_LABEL[view] || view;
     syncTabbar(view);
