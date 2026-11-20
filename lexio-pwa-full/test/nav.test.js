@@ -160,7 +160,7 @@ function animClean() {
   await sleep(30);
   const sampleAudio = window.__lastAudio;
   const sourceURL = new URL(sampleAudio.src);
-  check('例句走同源媒体、整句 0.75 倍速',(sourceURL.pathname.endsWith('local-sentence.wav') || sourceURL.pathname.endsWith('.mp3')) && sampleAudio.playbackRate===0.75);
+  check('例句走同源媒体、整句 1 倍速',(sourceURL.pathname.endsWith('local-sentence.wav') || sourceURL.pathname.endsWith('.mp3')) && sampleAudio.playbackRate===1);
   check('例句只请求一段音频',window.__audioInstances.length===audioCountBeforeSentence+1);
   exampleSpeakButton.click(); // stop the mocked utterance and leave no timer behind
 
@@ -291,7 +291,7 @@ function animClean() {
     cssText.includes('padding: 12px 0 calc(12px + env(safe-area-inset-bottom))'));
   const pageHtml = doc.documentElement.outerHTML;
   check('例句首选完整 en-US 录音，避免异步音频链',
-    pageHtml.includes("playPronunciation(sentence,'en-US',0.75,url,onDone,onError,true)") &&
+    pageHtml.includes("playPronunciation(sentence,'en-US',1,url,onDone,onError,true)") &&
     !pageHtml.includes('function speakExample(text, onDone, onError) {\n        const sentence = String(text || \'\').trim();\n        const matches ='));
   check('例句朗读按钮和状态明确标记美式发音',
     pageHtml.includes('使用美式发音播放例句') && pageHtml.includes('正在播放美式例句'));
@@ -312,8 +312,8 @@ function animClean() {
     cssText.includes('@keyframes appHomeEnter') && cssText.includes('@keyframes appPricingEnter') &&
     cssText.includes('@keyframes pricePop') && cssText.includes('.price strong.is-changing') &&
     cssText.includes('prefers-reduced-motion: reduce'));
-  check('Service Worker 升到 v23 并预缓存口语句库与安装引导视频',
-    swSource.includes("CACHE_NAME = 'lexio-shell-v23-tab-alignment'") &&
+  check('Service Worker 升到 v24 并预缓存口语句库与安装引导视频',
+    swSource.includes("CACHE_NAME = 'lexio-shell-v24-grade-library'") &&
     swSource.includes("'./data/daily-conversation.json'") &&
     swSource.includes("'./media/install-guide.mp4'") &&
     pageHtml.includes('controllerchange') && pageHtml.includes('swRefreshing'));
@@ -532,9 +532,9 @@ function animClean() {
   pharmacyPhrase.querySelector('[data-phrase-speak]').click();
   await sleep(30);
   const phraseAudio=window.__lastAudio, phraseURL=new URL(phraseAudio.src);
-  check('口语句使用本机美式音频与 0.75 倍速', phraseURL.pathname.endsWith('/local-sentence.wav') && phraseURL.searchParams.get('text').includes('pharmacy') && phraseAudio.playbackRate===0.75);
+  check('口语句使用本机美式音频与 1 倍速', phraseURL.pathname.endsWith('/local-sentence.wav') && phraseURL.searchParams.get('text').includes('pharmacy') && phraseAudio.playbackRate===1);
   phraseAudio.emit('error');
-  check('网络音频失败转入美式系统语音', window.__lastUtterance.lang==='en-US' && window.__lastUtterance.rate===0.75 && window.__lastUtterance.text.includes('pharmacy'));
+  check('网络音频失败转入美式系统语音', window.__lastUtterance.lang==='en-US' && window.__lastUtterance.rate===1 && window.__lastUtterance.text.includes('pharmacy'));
   window.__lastUtterance.onend();
   window.speechSynthesis.speaking = false;
   phraseSearch.value = '';
@@ -631,12 +631,23 @@ function animClean() {
     `phrases=${conversation.phrases.length} scenes=${conversation.categories.length}`);
   const bundled = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'original-site-wordbank.json'), 'utf8'));
   const bundledWords = bundled.books.flatMap((book) => book.words || []);
+  check('词库首页不直接列出各年级', !doc.querySelector('#wordCatalog [data-grade]') && doc.querySelectorAll('#wordCatalog [data-stage]').length===3);
+  for(const [stage,total] of Object.entries({小学:6,初中:3,美国:9})){
+    doc.querySelector(`[data-stage="${stage}"]`).click();
+    const choices=[...doc.querySelectorAll('#gradeChoices [data-grade]')];
+    check(`${stage}二级目录数量和词库一致`, choices.length===total && choices.every((button,i)=>{
+      const key=stage==='美国'?`美国${i+1}年级`:`${stage} · ${i+(stage==='初中'?7:1)}年级`;
+      const count=bundled.books.filter(book=>book.category===key).reduce((n,book)=>n+book.words.length,0);
+      return count>0 && button.dataset.grade===key && button.textContent.endsWith(`· ${count} 条`);
+    }));
+    doc.querySelector('#gradeBack').click();
+  }
   const missingExamples = bundledWords.filter((word) => !String(word.example || '').trim()).length;
   const missingMnemonics = bundledWords.filter((word) => !String(word.mnemonic || '').trim()).length;
   const cjkExamples = bundledWords.filter((word) => /[\u4e00-\u9fff]/.test(String(word.example || ''))).length;
   const realExamples = bundledWords.filter((word) => String(word.exampleSource || '').startsWith('dictionary:')).length;
   check('每个词条的例句都是可朗读的英文，不含中文说明',
-    bundledWords.length === 28366 && missingExamples === 0 && cjkExamples === 0 && realExamples > 22000,
+    bundledWords.length === 28414 && missingExamples === 0 && cjkExamples === 0 && realExamples > 22000,
     `total=${bundledWords.length} missing=${missingExamples} cjk=${cjkExamples} real=${realExamples}`);
   {
     // 词典短语（没有完整句子的词）要明确标注，且不提供“整句朗读”
@@ -694,12 +705,12 @@ function animClean() {
     check('朗读参数为 rate 1 / pitch 1.08',
       w2.__rate === 1 && w2.__pitch === 1.08, `rate=${w2.__rate} pitch=${w2.__pitch}`);
     w2.document.getElementById('exampleSpeak').click();
-    check('例句与单词同一女声，例句降速至 0.75', w2.__picked === 'Samantha' && w2.__rate === 0.75);
+    check('例句与单词同一女声，例句恢复正常速度', w2.__picked === 'Samantha' && w2.__rate === 1);
     dom2.window.close();
   }
 
   check('词卡例句朗读会去掉中文引号并整句交给 en-US 语音',
-    html.includes("replace(/[“”\"]/g, '')") && html.includes("playPronunciation(sentence,'en-US',0.75,url,onDone,onError,true)"));
+    html.includes("replace(/[“”\"]/g, '')") && html.includes("playPronunciation(sentence,'en-US',1,url,onDone,onError,true)"));
   check('内置词库逐词有记忆线索/复习提示', missingMnemonics === 0 &&
     bundledWords.filter((word) => word.mnemonicSource === 'generated-recall-cue').length > 0,
     `missing=${missingMnemonics}`);
@@ -1046,12 +1057,16 @@ function animClean() {
       `before=${chineseBefore} after=${chineseAfter}`);
     const version = (pageHtml.match(/BUNDLED_CONTENT_VERSION\s*=\s*'([^']+)'/) || [])[1];
     check('内容版本号已递增，老客户端会触发这次迁移',
-      version === 'school-books-2026-11-v1', String(version));
+      version === 'school-grades-2026-11-v2', String(version));
 
     const installedExam = bundledRecords.filter(r => !r.id.startsWith('school-')).map(normalize);
     const migrate = rows => runner(async()=>({ok:true,json:async()=>bundled}),()=>bundledRecords,normalize,async()=>{},async()=>{},version,rows,{sourceFile:'原站内嵌词库 · original-site-wordbank.json'});
     await migrate(installedExam); await migrate(installedExam);
-    check('旧内置词库升级后 28,366 条，重复执行不增词', installedExam.length === 28366 && new Set(installedExam.map(r=>r.id)).size===28366);
+    check('旧内置词库升级后 28,414 条，重复执行不增词', installedExam.length === 28414 && new Set(installedExam.map(r=>r.id)).size===28414);
+    const custom = normalize({id:'my-word',word:'my word',category:'自选'});
+    const synced = [custom];
+    await runner(async()=>({ok:true,json:async()=>bundled}),()=>bundledRecords,normalize,async()=>{},async()=>{},version,synced,{sourceFile:'网络同步'});
+    check('同步词库也补齐校园词条，并保留自选词', synced.length===3391 && synced[0]===custom);
     // 上一版已经替换成英文、但仍是词典残句的记录也要升级成完整句子
     const fragmentInstall = [normalize({
       ...bundledRecords.find((r) => r.word === 'energetic'),

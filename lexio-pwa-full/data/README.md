@@ -27,4 +27,4 @@
 
 原考试记录 25,024 条保持 ID 不变。增加中国大陆人教版小学（三至六年级，932 条）、初中（七至九年级，2,320 条）；来源是 [EbbWords 的 PEP 分册 JSON](https://github.com/XiaoyYuChen/EbbWords/tree/33c361809e780e83cd647d51cb70434e8264b6c6/data/books)，按册保留重复拼写。转换了结构和字段，补齐缺失例句、修正部分拼写，附上游 Apache-2.0 许可 `EbbWords-LICENSE.txt`。这些是按教材整理的学习资料，不是出版社授权的教材全文。
 
-美国 1–9 年级每级 10 个精选词，各配一条原创英文例句、中文释义。选词从日常描述过渡到跨学科学术表达，分级是本应用的教学建议而非全美统一必背清单。参考 [Illinois ELA Standards, Vocabulary Acquisition and Use](https://www.isbe.net/Documents/ELA_common_core_standards.pdf)。合计 28,366 条分类记录，不代表互不重复的单词数。
+美国 1–9 年级每级 10 个精选词，各配一条原创英文例句、中文释义。选词从日常描述过渡到跨学科学术表达，分级是本应用的教学建议而非全美统一必背清单。参考 [Illinois ELA Standards, Vocabulary Acquisition and Use](https://www.isbe.net/Documents/ELA_common_core_standards.pdf)。另有大陆小学一、二年级原创启蒙精选各 24 条，附中英例句，不属于人教版教材摘录。合计 28,414 条分类记录，不代表互不重复的单词数。

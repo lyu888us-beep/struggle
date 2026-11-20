@@ -1,5 +1,5 @@
 /* Lexio 乐词 PWA shell cache. Bump the cache version whenever app assets change. */
-const CACHE_NAME = 'lexio-shell-v23-tab-alignment';
+const CACHE_NAME = 'lexio-shell-v24-grade-library';
 const SHELL_URLS = [
   './',
   './index.html',

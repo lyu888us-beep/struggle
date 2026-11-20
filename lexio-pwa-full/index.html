@@ -1269,6 +1269,7 @@
     /* Directory first; list controls only appear after an explicit choice. */
     .library-mode-panel:not(.in-list)>:not(.catalog), .library-mode-panel.in-list>.catalog { display:none !important; }
     .catalog { flex:1; min-height:0; overflow-y:auto; overscroll-behavior:contain; padding:8px 5px 20px; }
+    #gradeBack { color:#245c57; border:1px solid #bececa; border-radius:16px; background:white; padding:7px 12px; margin-bottom:10px; }
     .catalog>small { color:#397380; font-weight:800; letter-spacing:.14em; font-size:10px; }
     .catalog h3 { font-size:24px; margin:4px 0; } .catalog>p { color:#50676a; font-size:13px; margin:4px 0 14px; }
     .shelf { --edge:#397e76; --tint:#eaf6ef; background:var(--tint); border:1px solid #d3e1df; border-inline-start:4px solid var(--edge); border-radius:17px; margin:10px 0; padding:12px; }
@@ -1320,7 +1321,7 @@
     <section class="hero" id="top" data-app-view="home">
       <div class="container hero-grid">
         <div class="hero-copy" data-reveal>
-          <div class="hero-pill"><span>✦</span> 今日学习 · 28,366 条本地词库</div>
+          <div class="hero-pill"><span>✦</span> 今日学习 · 28,414 条本地词库</div>
           <h1>每天学一点，<br>把单词记成<br><span class="highlight">长期记忆。</span></h1>
           <p class="hero-lede">你的词库已经保存在本机。打开今日词单，练习单词、例句和复习；联网同步更新后，离线也能继续学习。</p>
           <div class="hero-ctas">
@@ -1362,7 +1363,7 @@
     <section class="menu-section" id="menu" data-app-view="home" aria-label="功能导航">
       <div class="menu-grid">
         <a class="menu-card primary" href="#study"><span class="m-ico">🎯</span><strong>开始学习</strong><span class="m-desc">词卡 · 例句朗读 · 错词强化</span></a>
-        <a class="menu-card" href="#library"><span class="m-ico">📚</span><strong>浏览词库</strong><span class="m-desc">中小学 / 考试 / 美国分级 · 28,366 条</span></a>
+        <a class="menu-card" href="#library"><span class="m-ico">📚</span><strong>浏览词库</strong><span class="m-desc">中小学 / 考试 / 美国分级 · 28,414 条</span></a>
         <a class="menu-card" href="#library" data-open-daily-phrases><span class="m-ico">🗣️</span><strong>日常口语</strong><span class="m-desc">十一个场景 · 1,100 句可朗读</span></a>
         <a class="menu-card" href="#study" data-open-battle><span class="m-ico">⚔️</span><strong>好友对战</strong><span class="m-desc">10 题词义快答 · 本机模拟对手</span></a>
         <a class="menu-card" href="#method"><span class="m-ico">🧠</span><strong>功能介绍</strong><span class="m-desc">学习进展 · 例句来源 · 发音</span></a>
@@ -1373,7 +1374,7 @@
     <section class="proof-band" data-app-view="home" aria-label="Lexio 产品配置">
       <div class="container">
         <div class="proof-inner">
-          <div class="proof-item" data-reveal><strong>28,366</strong><span>已保存在本机的学习词条</span></div>
+          <div class="proof-item" data-reveal><strong>28,414</strong><span>已保存在本机的学习词条</span></div>
           <div class="proof-item" data-reveal><strong>5 类</strong><span>内置考试词库</span></div>
           <div class="proof-item" data-reveal><strong>10 题</strong><span>每局挑战题数</span></div>
           <div class="proof-item" data-reveal><strong>1,100 句</strong><span>日常口语句，按十一个场景分类</span></div>
@@ -1418,7 +1419,8 @@
             <button class="library-mode-tab" id="dailyPhrasesTab" type="button" role="tab" aria-selected="false" data-library-mode="phrases">日常口语</button>
           </div>
           <div class="library-mode-panel is-active" id="wordBankMode" role="tabpanel" aria-labelledby="wordLibraryTab">
-            <div class="catalog" id="wordCatalog"><svg class="pocket-art" aria-hidden="true" viewBox="0 0 60 56"><path d="M30 36Q31 22 39 10M31 30Q20 25 16 18" fill="none" stroke="#476e55" stroke-width="3"/><path d="M33 22Q32 4 51 4Q53 21 33 22" fill="#61ad7c"/><path d="M24 27Q8 29 7 13Q22 11 24 27" fill="#98c889"/><path d="M16 33H44L40 50H20Z" fill="#ebac81"/><rect x="14" y="31" width="32" height="6" rx="3" fill="#ca845f"/><path d="M25 41Q30 46 35 41" fill="none" stroke="#83533b" stroke-width="2"/></svg><small>LEXIO FIELD NOTES　 /　01</small><h3>选择词库</h3><p>选一套词表，再搜索或进入词卡。</p><div class="offline-pack"><button id="prepareOffline" type="button">准备离线资源</button><small id="packStatus" role="status">安装后，检测到 Wi-Fi 将自动准备。无法识别网络时可手动准备。</small></div><section class="shelf shelf-0"><h4>通用</h4><div class="shelf-grid"><button class="filter-chip shelf-link" data-filter="all" type="button">全部词条</button></div></section><section class="shelf shelf-1"><h4>大陆教材</h4><div class="shelf-grid"><button class="filter-chip shelf-link" data-filter="小学" type="button">小学</button><button class="filter-chip shelf-link" data-filter="初中" type="button">初中</button></div></section><section class="shelf shelf-2"><h4>考试备考</h4><div class="shelf-grid"><button class="filter-chip shelf-link" data-filter="高考" type="button">高考</button><button class="filter-chip shelf-link" data-filter="CET-4" type="button">大学英语四级</button><button class="filter-chip shelf-link" data-filter="CET-6" type="button">大学英语六级</button><button class="filter-chip shelf-link" data-filter="考研" type="button">考研</button><button class="filter-chip shelf-link" data-filter="雅思" type="button">雅思</button></div></section><section class="shelf shelf-3"><h4>美国分级</h4><div class="shelf-grid"><button class="filter-chip shelf-link" data-filter="美国1年级" type="button">美国1年级</button><button class="filter-chip shelf-link" data-filter="美国2年级" type="button">美国2年级</button><button class="filter-chip shelf-link" data-filter="美国3年级" type="button">美国3年级</button><button class="filter-chip shelf-link" data-filter="美国4年级" type="button">美国4年级</button><button class="filter-chip shelf-link" data-filter="美国5年级" type="button">美国5年级</button><button class="filter-chip shelf-link" data-filter="美国6年级" type="button">美国6年级</button><button class="filter-chip shelf-link" data-filter="美国7年级" type="button">美国7年级</button><button class="filter-chip shelf-link" data-filter="美国8年级" type="button">美国8年级</button><button class="filter-chip shelf-link" data-filter="美国9年级" type="button">美国9年级</button></div></section></div>
+            <div class="catalog" id="wordCatalog"><svg class="pocket-art" aria-hidden="true" viewBox="0 0 60 56"><path d="M30 36Q31 22 39 10M31 30Q20 25 16 18" fill="none" stroke="#476e55" stroke-width="3"/><path d="M33 22Q32 4 51 4Q53 21 33 22" fill="#61ad7c"/><path d="M24 27Q8 29 7 13Q22 11 24 27" fill="#98c889"/><path d="M16 33H44L40 50H20Z" fill="#ebac81"/><rect x="14" y="31" width="32" height="6" rx="3" fill="#ca845f"/><path d="M25 41Q30 46 35 41" fill="none" stroke="#83533b" stroke-width="2"/></svg><small>LEXIO FIELD NOTES　 /　01</small><h3>选择词库</h3><p>选一套词表，再搜索或进入词卡。</p><div class="offline-pack"><button id="prepareOffline" type="button">准备离线资源</button><small id="packStatus" role="status">安装后，检测到 Wi-Fi 将自动准备。无法识别网络时可手动准备。</small></div><section class="shelf shelf-0"><h4>通用</h4><div class="shelf-grid"><button class="filter-chip shelf-link" data-filter="all" type="button">全部词条</button></div></section><section class="shelf shelf-1"><h4>大陆分级</h4><div class="shelf-grid"><button class="shelf-link" data-stage="小学">大陆小学</button><button class="shelf-link" data-stage="初中">大陆初中</button></div></section><section class="shelf shelf-2"><h4>考试备考</h4><div class="shelf-grid"><button class="filter-chip shelf-link" data-filter="高考" type="button">高考</button><button class="filter-chip shelf-link" data-filter="CET-4" type="button">大学英语四级</button><button class="filter-chip shelf-link" data-filter="CET-6" type="button">大学英语六级</button><button class="filter-chip shelf-link" data-filter="考研" type="button">考研</button><button class="filter-chip shelf-link" data-filter="雅思" type="button">雅思</button></div></section><section class="shelf shelf-3"><h4>美国分级</h4><div class="shelf-grid"><button class="shelf-link" data-stage="美国">美国学校词汇</button></div></section></div>
+            <div class="catalog" id="gradeCatalog" hidden><button id="gradeBack" type="button">‹ 词库目录</button><h3 id="stageTitle"></h3><p id="stageNote"></p><section class="shelf"><h4>选择年级</h4><div class="shelf-grid" id="gradeChoices"></div></section></div>
             <div class="list-crumb"><button data-up="wordBankMode">‹ 词库目录</button><b id="wordCrumb"></b></div>
             <div class="library-top">
               <div class="library-top-left"><h3>词库内容中心 <span id="bankCountLabel" style="font-size:10px;color:#8b968e;font-weight:550">正在载入…</span></h3><p>搜索单词或释义，点「学习此词」直接跳到学习面板。</p></div>
@@ -1467,7 +1469,7 @@
           <article class="exam-card stagger-4" style="--wash:#e9e3f2" data-reveal><span class="exam-icon">雅</span><strong>6,000 词</strong><h3>雅思核心词</h3><p>学术语境 · 话题拓展</p></article>
         </div>
         <div class="roots-panel" data-reveal><div class="roots-intro"><span class="eyebrow"><span class="dot"></span> WORD ROOT MINI-CLASS</span><h3>一个词根，<br>串起一整组单词。</h3><p>把零散词汇连成可理解的网络，背过一个，再遇见同族词就更容易。</p></div><div class="root-list"><div class="root-row"><strong>spect / spec</strong><span>看 · look</span><small>inspect · perspective · spectacular</small></div><div class="root-row"><strong>port</strong><span>携带 · carry</span><small>transport · support · portable</small></div><div class="root-row"><strong>mit / miss</strong><span>送、放 · send</span><small>submit · transmit · mission</small></div></div></div>
-        <div class="migration-note"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/><path d="M12 11v5m0-8h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span><strong>本机词库：</strong>28,366 条学习记录第一次联网打开时会自动保存到这台设备，之后没有网络也能查、能学。</span></div>
+        <div class="migration-note"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/><path d="M12 11v5m0-8h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span><strong>本机词库：</strong>28,414 条学习记录第一次联网打开时会自动保存到这台设备，之后没有网络也能查、能学。</span></div>
           <p class="library-footnote">预期字段支持 word / english、meaning / translation、phonetic、pos、example、category / exam、uk / us；保留源记录并映射到统一学习卡片。</p>
       </div>
     </section>
@@ -1613,11 +1615,11 @@
         <div class="faq-aside" data-reveal><h2>你想知道的，<br>都在这里。</h2><p>还有其他问题？把你的词库格式或上线需求告诉我们。</p><a href="#pricing">查看体验与定价 <span aria-hidden="true">↗</span></a></div>
         <div class="faq-list" data-reveal>
           <details><summary>我们能提供什么？</summary><p>我们是专业提供学习辅助服务类目及学习跟进服务：可以按学校现有词表提供模板、按班级进度整理练习模板，并配合老师安排复习节奏。具体合作方式、适用范围与效果，需要与学校沟通后确定；不以任何未经确认的学校名单或数据作宣传。</p></details>
-          <details><summary>词库里到底有多少词，存在哪里？</summary><p>词库合计 28,366 条分类学习记录，其中原考试词库 25,024 条，新增中小学和美国分级词汇 3,342 条（跨书保留重复拼写）。第一次联网打开时会自动保存到这台设备，之后没有网络也能搜索与学习，学习记录也只留在这台设备上。</p></details>
+          <details><summary>词库里到底有多少词，存在哪里？</summary><p>词库合计 28,414 条分类学习记录，其中原考试词库 25,024 条，新增中小学和美国分级词汇 3,390 条（跨书保留重复拼写）。第一次联网打开时会自动保存到这台设备，之后没有网络也能搜索与学习，学习记录也只留在这台设备上。</p></details>
           <details><summary>7 天试用结束后会怎样？</summary><p>这一版只在本机记录试用开始日期，并在到期前 14 天、7 天、1 天打开 App 时弹出提醒，不发短信、不发邮件。当前版本没有接入收银服务，不会自动扣款；付款前会明确显示续费日期、金额和取消方式。</p></details>
           <details><summary>支持哪些支付方式？</summary><p>支持多种方式支付，具体方式以正式结账页面为准。当前演示尚未接入真实收银服务，不会产生扣款。</p></details>
           <details><summary>它可以离线使用、添加到主屏幕吗？</summary><p>可以。用手机浏览器打开后，按页面里的「安装」引导添加到主屏幕，就能像普通 App 一样全屏打开；首次联网打开后即可离线使用。</p></details>
-          <details><summary>原站的发音、例句和学习进度也能保留吗？</summary><p>已迁移英 / 美音标、词性、中文释义与考试分类。精讲内容保留原有资料；另有匹配到词典的真实句例/记忆法，以及明确标注的释义提示和通用复习提示。词库数据本身未内嵌音频文件；单词保留原音源，句子优先播放已制作的美式女声录音，其余由本机女声生成，以约 0.75 倍速播放。公开 HTML 未包含个人学习进度，迁移进度仍需原站账号数据导出。</p></details>
+          <details><summary>原站的发音、例句和学习进度也能保留吗？</summary><p>已迁移英 / 美音标、词性、中文释义与考试分类。精讲内容保留原有资料；另有匹配到词典的真实句例/记忆法，以及明确标注的释义提示和通用复习提示。词库数据本身未内嵌音频文件；单词保留原音源，句子优先播放已制作的美式女声录音，其余由本机女声生成，以正常速度播放。公开 HTML 未包含个人学习进度，迁移进度仍需原站账号数据导出。</p></details>
           <details><summary>需要联网吗？能离线用吗？</summary><p>词库与日常口语句库都随 App 缓存到本机，断网也能查询和学习。首次载入、主动同步词库和播放原音录音需要网络；内置句子女声载入后，即使设备没有安装英语语音也可以离线朗读。</p></details>
         </div>
       </div>
@@ -1653,7 +1655,7 @@
         <source src="./media/install-guide.mp4" type="video/mp4">
         你的浏览器不支持视频播放。请按下方步骤手动添加。
       </video>
-      <p class="install-hint">36 秒分步演示 · 每步停留 9 秒。可随时暂停，菜单位置以你的手机为准。</p>
+      <p class="install-hint">原版安装演示 · 半速播放，约 24 秒。可随时暂停，菜单位置以你的手机为准。</p>
       <ol class="install-steps">
         <li>安卓浏览器：打开浏览器菜单 →「安装应用」或「添加到主屏幕」。</li>
         <li>iPhone / iPad Safari：点底部「分享」→「添加到主屏幕」→「添加」。</li>
@@ -1704,9 +1706,9 @@
       const DB_WORDS = 'words';
       const DB_STAGING = 'stagingWords';
       const DB_META = 'meta';
-      const BUNDLED_CONTENT_VERSION = 'school-books-2026-11-v1';
+      const BUNDLED_CONTENT_VERSION = 'school-grades-2026-11-v2';
       let db = null;
-      let bankReady = false;
+      let bankReady = false, bankMeta = null;
       let bank = SAMPLE_WORDS.map((w, i) => normalizeWord(w, i));
       let activeFilter = 'all';
       let studyIndex = 0;
@@ -1831,7 +1833,7 @@
         for (const update of incoming) {
           const current = byId.get(update.id) || byKey.get(`${update.category.toLowerCase()}\u0000${update.word.toLowerCase()}`);
           if (!current) {
-            if (update.id.startsWith('school-') && (meta.sourceFile || '').includes('original-site-wordbank.json')) {
+            if (update.id.startsWith('school-')) {
               bank.push(update); changed = true;
             }
             continue;
@@ -1940,6 +1942,7 @@
       function escapeHTML(value) { return String(value == null ? '' : value).replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch])); }
       function categoryMatches(word, filter) {
         if (filter === 'all') return true;
+        if (Object.hasOwn(gradeCounts,filter)) return word.category===filter;
         const category = (word.category || '').toLowerCase();
         const aliases = {
           '高考':['高考','中考','高中','gaokao','high school','考纲'],
@@ -1956,6 +1959,7 @@
         return preferred || word.phonetic || other || '';
       }
       function renderBank(meta) {
+        bankMeta=meta;
         const count = bank.length;
         const isDemo = meta ? !!meta.isDemo : count <= SAMPLE_WORDS.length;
         const label = isDemo ? `示例 ${count} 条` : `${count.toLocaleString()} 条`;
@@ -2627,8 +2631,8 @@
         // A native media play() in the actual tap. No delayed AudioContext
         // resume/decode or iOS handoff from an asynchronous synthesis worker.
         const url=clip?'./media/voice/'+clip+'.mp3': './local-sentence.wav?text='+encodeURIComponent(sentence);
-        if(!clip && !navigator.serviceWorker?.controller){stopSpeech();speak(sentence,'en-US',onDone,onError,0.75);return;}
-        playPronunciation(sentence,'en-US',0.75,url,onDone,onError,true);
+        if(!clip && !navigator.serviceWorker?.controller){stopSpeech();speak(sentence,'en-US',onDone,onError,1);return;}
+        playPronunciation(sentence,'en-US',1,url,onDone,onError,true);
       }
       function speakEntry(entry, lang=activeAccent) {
         if (!entry || !entry.word) return;
@@ -2769,9 +2773,31 @@
       })();
       window.__lexioSearchRelease = () => { document.querySelectorAll('.search-input').forEach(field => field.blur()); };
 
-      function showCatalog(mode){setLibraryMode(mode);$('#'+(mode==='phrases'?'dailyPhrasesMode':'wordBankMode')).classList.remove('in-list');}
+      const gradeCounts={"小学 · 3年级": 219, "小学 · 4年级": 188, "小学 · 5年级": 287, "小学 · 6年级": 238, "初中 · 7年级": 884, "初中 · 8年级": 885, "初中 · 9年级": 551, "美国1年级": 10, "美国2年级": 10, "美国3年级": 10, "美国4年级": 10, "美国5年级": 10, "美国6年级": 10, "美国7年级": 10, "美国8年级": 10, "美国9年级": 10, "小学 · 1年级": 24, "小学 · 2年级": 24};
+      let currentStage='', schoolRepair=null;
+      function levelMenu(stage){
+        currentStage=stage;
+        $('#wordBankMode').classList.remove('in-list');
+        $('#wordCatalog').hidden=!!stage;$('#gradeCatalog').hidden=!stage;
+        if(!stage)return;
+        $('#stageTitle').textContent=stage==='美国'?'美国学校词汇':'大陆'+stage;
+        const provenance={小学:'一、二年级为原创启蒙精选；三至六年级按人教版教材分册整理。',初中:'初一、初二、初三分别对应教材七、八、九年级。',美国:'每个年级精选 10 词，并非全美统一必背词表。'};
+        $('#stageNote').textContent=provenance[stage]+' 本机词库不完整时，首次选级会联网补载。';
+        $('#gradeChoices').replaceChildren();
+        for(let g=1;g<=(stage==='小学'?6:stage==='初中'?3:9);g++){
+          const key=stage==='美国'?`美国${g}年级`:`${stage} · ${stage==='初中'?g+6:g}年级`;
+          const b=document.createElement('button');b.type='button';b.className='shelf-link';
+          const label=stage==='初中'?'初'+['一','二','三'][g-1]:g+' 年级';
+          b.dataset.grade=key;b.textContent=`${label} · ${gradeCounts[key]} 条`;
+          b.onclick=()=>openWords(key,`${$('#stageTitle').textContent} / ${label}`);
+          $('#gradeChoices').appendChild(b);
+        }
+      }
+      $$('[data-stage]').forEach(b=>b.onclick=()=>levelMenu(b.dataset.stage));
+      $('#gradeBack').onclick=()=>levelMenu('');
+      function showCatalog(mode){if(mode==='words') levelMenu('');setLibraryMode(mode);$('#'+(mode==='phrases'?'dailyPhrasesMode':'wordBankMode')).classList.remove('in-list');}
       $$('[data-library-mode]').forEach(b=>b.onclick=()=>showCatalog(b.dataset.libraryMode));
-      $$('[data-up]').forEach(b=>b.onclick=()=>$('#'+b.dataset.up).classList.remove('in-list'));
+      $$('[data-up]').forEach(b=>b.onclick=()=>{if(b.dataset.up==='wordBankMode')levelMenu(currentStage);else $('#'+b.dataset.up).classList.remove('in-list');});
       renderPhraseCategories();
       document.addEventListener('click',e=>{if(e.target.closest('a[data-tab="library"],.menu-card[href="#library"]:not([data-open-daily-phrases])'))showCatalog('words');});
       $$('[data-open-daily-phrases]').forEach(link=>link.addEventListener('click',()=>showCatalog('phrases')));
@@ -2787,9 +2813,45 @@
         const reset=()=>{button.dataset.speaking='0';button.textContent='🔊';};
         speakExample(phrase.en,reset,error=>{reset();toastMessage(error.message||'口语句朗读失败，请检查设备语音设置。');});
       });
+      async function repairSchoolBank(){
+        // A grade click is an explicit request, not a background cellular download.
+        await bankInit;
+        const r=await fetch('./data/original-site-wordbank.json',{cache:'no-store'});
+        if(!r.ok)throw Error('无法载入内置词库');
+        const rows=extractRecords(await r.json());
+        if(rows.length!==28414)throw Error('词库版本尚未更新');
+        const isDemo=bankMeta?.isDemo ?? true;
+        const existing=new Set(bank.map(w=>w.id));
+        const missing=rows.filter(w=>w.id.startsWith('school-')&&!existing.has(w.id));
+        const merged=isDemo?rows:[...bank,...missing];
+        const source=isDemo?'原站内嵌词库 · original-site-wordbank.json':bankMeta?.sourceFile || '本机词库';
+        const wordId=bank[studyIndex]?.id;
+        try{await persistWordRecords(merged,source,{contentVersion:BUNDLED_CONTENT_VERSION});}
+        catch(storageError){
+          // Private browsing / quota limits must not turn a readable book into an empty list.
+          bank=merged.map(normalizeWord);renderBank({isDemo:false,sourceFile:source});
+          $('#storageStatus').textContent='本次可学习 · 离线存储空间不足';
+        }
+        const saved=bank.findIndex(w=>w.id===wordId);if(saved>=0)studyIndex=saved;
+        updateStudyCard();
+      }
+      async function openWords(key,label){
+        activeFilter=key;$('#wordBankMode').classList.add('in-list');
+        $('[data-up="wordBankMode"]').textContent=currentStage?'‹ 返回年级':'‹ 词库目录';
+        $('#wordCrumb').textContent=label;$('#wordSearch').value='';renderWordGrid(true);$('#wordGrid').scrollTop=0;
+        if(key!=='all'&&!gradeCounts[key])return;
+        await bankInit;
+        if(activeFilter!==key)return;
+        const incomplete=gradeCounts[key]?bank.filter(w=>w.category===key).length<gradeCounts[key]:bankMeta?.isDemo;
+        if(!incomplete)return;
+        const grid=$('#wordGrid');grid.setAttribute('aria-busy','true');
+        const notice=document.createElement('p');notice.textContent='正在载入完整词库…';grid.prepend(notice);
+        try{schoolRepair ||= repairSchoolBank().finally(()=>{schoolRepair=null;});await schoolRepair;}
+        catch(_){if(activeFilter===key){renderWordGrid(true);const retry=document.createElement('button');retry.className='word-load-more';retry.textContent='完整词库尚未载入 · 联网后重试';retry.onclick=()=>openWords(key,label);if(gradeCounts[key]&&!bank.some(w=>w.category===key))grid.replaceChildren();grid.prepend(retry);}}
+        finally{notice.remove();grid.removeAttribute('aria-busy');}
+      }
       $$('.filter-chip').forEach(button=>button.addEventListener('click',()=>{
-        $$('.filter-chip').forEach(item=>{item.classList.remove('active');item.setAttribute('aria-selected','false');});
-        button.classList.add('active');button.setAttribute('aria-selected','true');activeFilter=button.dataset.filter;$('#wordBankMode').classList.add('in-list');$('#wordCrumb').textContent=button.textContent;$('#wordSearch').value='';renderWordGrid(true);$('#wordGrid').scrollTop=0;
+        currentStage='';$$('.filter-chip').forEach(b=>b.classList.toggle('active',b===button));openWords(button.dataset.filter,button.textContent);
       }));
       $('#wordGrid').addEventListener('click',event=>{
         const speakButton=event.target.closest('[data-word-speak]');
