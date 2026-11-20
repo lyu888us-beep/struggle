@@ -666,6 +666,19 @@ function animClean() {
       `hide rules: ${hideRules.join(' | ') || 'none'}`);
   })();
 
+  {
+    // 任何可输入的文本控件都必须 ≥16px，否则 iOS 聚焦时会放大整页
+    const textFields = [...doc.querySelectorAll('input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]), textarea, select')];
+    const uncovered = textFields.filter((el) => {
+      const id = el.id ? `#${el.id}` : '';
+      const cls = el.className ? `.${String(el.className).trim().split(/\s+/).join('.')}` : '';
+      return !(id && cssText.includes(id)) && !(cls && cssText.includes(cls.split('.')[1]));
+    });
+    check('所有文本输入框都有 16px 字号规则（iOS 聚焦不缩放）',
+      textFields.length > 0 && uncovered.length === 0,
+      `${textFields.length} fields, uncovered: ${uncovered.map((el) => el.id || el.className).join(', ') || 'none'}`);
+  }
+
   check('手机布局不会误把真实进度卡一起隐藏',
     cssText.includes('body[data-app-view="home"] .hero-visual:not(.hero-progress)') &&
     !cssText.includes('body[data-app-view="home"] .hero-visual,\n      body[data-app-view="home"] .hero-social'));
