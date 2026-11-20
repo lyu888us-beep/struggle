@@ -259,8 +259,8 @@ function animClean() {
     cssText.includes('@keyframes appHomeEnter') && cssText.includes('@keyframes appPricingEnter') &&
     cssText.includes('@keyframes pricePop') && cssText.includes('.price strong.is-changing') &&
     cssText.includes('prefers-reduced-motion: reduce'));
-  check('新版 Service Worker 缓存将旧 PWA 更新到 v13 并预缓存口语库',
-    swSource.includes("CACHE_NAME = 'lexio-shell-v13-conversations-resume-motion'") &&
+  check('新版 Service Worker 缓存将旧 PWA 更新到 v14 并预缓存 1,000 条口语库',
+    swSource.includes("CACHE_NAME = 'lexio-shell-v14-1000-conversation-phrases'") &&
     swSource.includes("'./data/daily-conversation.json'") &&
     pageHtml.includes('controllerchange') && pageHtml.includes('swRefreshing'));
 
@@ -445,10 +445,18 @@ function animClean() {
     doc.documentElement.outerHTML.includes('original-site-wordbank.json'));
   doc.getElementById('dailyPhrasesTab').click();
   await sleep(50);
-  check('日常口语库离线资源已载入并覆盖多个场景',
-    doc.querySelectorAll('#dailyPhraseGrid .phrase-item').length === 100 &&
+  check('日常口语库离线资源已载入且总数为 1,000 条',
+    doc.querySelectorAll('#dailyPhraseGrid .phrase-item').length === 50 &&
     doc.querySelectorAll('#phraseCategories [data-phrase-category]').length === 11 &&
-    doc.getElementById('phraseCount').textContent.includes('100'));
+    doc.getElementById('phraseCount').textContent.includes('1000'));
+  for(let i=0;i<20;i++){
+    const more=doc.querySelector('#dailyPhraseGrid .phrase-load-more');
+    if(!more) break;
+    more.click();
+  }
+  check('日常口语按需加载，能够浏览完整 1,000 条表达',
+    doc.querySelectorAll('#dailyPhraseGrid .phrase-item').length === 1000 &&
+    !doc.querySelector('#dailyPhraseGrid .phrase-load-more'));
   const phraseSearch = doc.getElementById('phraseSearch');
   phraseSearch.value = 'pharmacy';
   phraseSearch.dispatchEvent(new window.Event('input', {bubbles:true}));
@@ -466,7 +474,10 @@ function animClean() {
   phraseSearch.dispatchEvent(new window.Event('input', {bubbles:true}));
   const medicalChip = [...doc.querySelectorAll('#phraseCategories [data-phrase-category]')].find(button => button.dataset.phraseCategory === '医疗药房');
   medicalChip.click();
-  check('日常口语按医疗场景过滤', doc.querySelectorAll('#dailyPhraseGrid .phrase-item').length === 10);
+  check('日常口语按医疗场景筛选并显示总数',
+    doc.querySelectorAll('#dailyPhraseGrid .phrase-item').length === 50 && doc.getElementById('phraseCount').textContent.includes('/ 100'));
+  doc.querySelector('#dailyPhraseGrid .phrase-load-more').click();
+  check('医疗场景可继续加载完整分类表达', doc.querySelectorAll('#dailyPhraseGrid .phrase-item').length === 100);
   doc.querySelector('#phraseCategories [data-phrase-category="全部"]').click();
   doc.getElementById('wordLibraryTab').click();
   const tilesAll = doc.querySelectorAll('#wordGrid .word-tile');
@@ -540,8 +551,9 @@ function animClean() {
 
   const conversation = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'daily-conversation.json'), 'utf8'));
   check('离线口语库含多场景、有中英句子且 ID 唯一',
-    conversation.phrases.length === 100 && new Set(conversation.phrases.map(item=>item.id)).size === 100 &&
-    conversation.phrases.every(item=>item.en && item.zh && item.scene) && conversation.categories.length === 10,
+    conversation.phrases.length === 1000 && new Set(conversation.phrases.map(item=>item.id)).size === 1000 &&
+    conversation.phrases.every(item=>item.en && item.zh && item.scene) && conversation.categories.length === 10 &&
+    conversation.categories.every(category=>conversation.phrases.filter(item=>item.category===category).length===100),
     `phrases=${conversation.phrases.length} scenes=${conversation.categories.length}`);
   const bundled = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'original-site-wordbank.json'), 'utf8'));
   const bundledWords = bundled.books.flatMap((book) => book.words || []);

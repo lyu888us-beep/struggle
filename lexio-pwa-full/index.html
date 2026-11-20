@@ -225,6 +225,7 @@
     .phrase-zh { margin: 3px 0 0; color: #748076; font-size: 11px; line-height: 1.5; }
     .phrase-speak { width: 36px; height: 36px; border: 0; border-radius: 12px; color: var(--forest); background: #edf4e5; font-size: 16px; cursor: pointer; }
     .phrase-empty { grid-column: 1 / -1; padding: 22px; color: #839087; text-align: center; font-size: 11px; }
+    .phrase-load-more { flex: 0 0 auto; min-height: 40px; margin: 2px 4px 10px; border: 1px solid #dfe9dc; border-radius: 13px; color: var(--forest); background: #fff; font-size: 11px; font-weight: 750; cursor: pointer; }
     .library-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 17px; }
     .library-top-left h3 { margin: 0; color: var(--ink); font-size: 16px; letter-spacing: -.03em; }
     .library-top-left p { margin: 2px 0 0; color: #859087; font-size: 10px; }
@@ -1262,6 +1263,7 @@
       let dailyPhraseBank = [];
       let dailyPhraseLoad = null;
       let activePhraseCategory = '全部';
+      let phraseVisibleLimit = 50;
       let activeAccent = 'en-GB';
       let activeAudio = null;
       let activeUtterance = null;
@@ -1576,6 +1578,7 @@
         root.innerHTML=categories.map(category=>`<button class="phrase-chip" type="button" role="tab" aria-pressed="${category===activePhraseCategory}" data-phrase-category="${escapeHTML(category)}">${escapeHTML(category)}</button>`).join('');
         root.querySelectorAll('[data-phrase-category]').forEach(button=>button.addEventListener('click',()=>{
           activePhraseCategory=button.dataset.phraseCategory;
+          phraseVisibleLimit=50;
           renderPhraseCategories();
           renderDailyPhrases();
         }));
@@ -1586,9 +1589,16 @@
         if(!grid || !count) return;
         const query=($('#phraseSearch').value||'').trim().toLowerCase();
         const filtered=dailyPhraseBank.filter(item=>(activePhraseCategory==='全部'||item.category===activePhraseCategory)&&(!query||`${item.en} ${item.zh} ${item.scene} ${item.category}`.toLowerCase().includes(query)));
-        count.textContent=`显示 ${filtered.length} / ${dailyPhraseBank.length} 条场景句`;
+        const visible=filtered.slice(0,phraseVisibleLimit);
+        count.textContent=`显示 ${visible.length} / ${filtered.length} 条匹配表达 · 共 ${dailyPhraseBank.length} 条`;
         if(!filtered.length){grid.innerHTML='<div class="phrase-empty">没有找到匹配的表达，试试其他关键词或场景。</div>';return;}
-        grid.innerHTML=filtered.map(item=>`<article class="phrase-item"><div class="phrase-item-main"><div class="phrase-item-meta"><b>${escapeHTML(item.category)}</b><span>${escapeHTML(item.scene)}</span></div><p class="phrase-en">${escapeHTML(item.en)}</p><p class="phrase-zh">${escapeHTML(item.zh)}</p></div><button class="phrase-speak" type="button" aria-label="朗读：${escapeHTML(item.en)}" data-phrase-speak="${escapeHTML(item.id)}">🔊</button></article>`).join('');
+        grid.innerHTML=visible.map(item=>`<article class="phrase-item"><div class="phrase-item-main"><div class="phrase-item-meta"><b>${escapeHTML(item.category)}</b><span>${escapeHTML(item.scene)}</span></div><p class="phrase-en">${escapeHTML(item.en)}</p><p class="phrase-zh">${escapeHTML(item.zh)}</p></div><button class="phrase-speak" type="button" aria-label="朗读：${escapeHTML(item.en)}" data-phrase-speak="${escapeHTML(item.id)}">🔊</button></article>`).join('');
+        if(filtered.length>visible.length){
+          const more=document.createElement('button');
+          more.type='button';more.className='phrase-load-more';more.textContent=`加载更多（${filtered.length-visible.length} 条）`;
+          more.addEventListener('click',()=>{phraseVisibleLimit+=50;renderDailyPhrases();});
+          grid.appendChild(more);
+        }
       }
       async function loadDailyPhrases() {
         if(dailyPhraseLoad) return dailyPhraseLoad;
@@ -1598,7 +1608,8 @@
             if(!response.ok) throw new Error(`HTTP ${response.status}`);
             const payload=await response.json();
             dailyPhraseBank=Array.isArray(payload.phrases)?payload.phrases.filter(item=>item&&item.en&&item.zh):[];
-            activePhraseCategory='全部';
+          activePhraseCategory='全部';
+            phraseVisibleLimit=50;
             renderPhraseCategories();
             renderDailyPhrases();
           }catch(error){
@@ -1924,7 +1935,7 @@
       }
 
       $('#wordSearch').addEventListener('input',()=>renderWordGrid(true));
-      $('#phraseSearch').addEventListener('input',renderDailyPhrases);
+      $('#phraseSearch').addEventListener('input',()=>{phraseVisibleLimit=50;renderDailyPhrases();});
       $$('[data-library-mode]').forEach(button=>button.addEventListener('click',()=>setLibraryMode(button.dataset.libraryMode)));
       $$('[data-open-daily-phrases]').forEach(link=>link.addEventListener('click',()=>setLibraryMode('phrases')));
       $('#dailyPhraseGrid').addEventListener('click',event=>{

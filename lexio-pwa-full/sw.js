@@ -1,5 +1,5 @@
 /* Lexio 乐词 PWA shell cache. Bump the cache version whenever app assets change. */
-const CACHE_NAME = 'lexio-shell-v13-conversations-resume-motion';
+const CACHE_NAME = 'lexio-shell-v14-1000-conversation-phrases';
 const SHELL_URLS = [
   './',
   './index.html',
