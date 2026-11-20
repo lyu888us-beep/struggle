@@ -783,6 +783,59 @@ function animClean() {
   check('宣传页无虚构成绩/用户数字',
     !pageHtml.includes('平均词汇量') && !pageHtml.includes('提升 23%') && !pageHtml.includes('% 记忆保持'));
 
+  // 14) 老用户升级：安装过的词库会被内容迁移修正（不再夹带中文例句）
+  {
+    const fnStart = pageHtml.indexOf('async function mergeBundledStudyContent(meta)');
+    let fnSource = '';
+    if (fnStart >= 0) {
+      let depth = 0;
+      for (let i = pageHtml.indexOf('{', fnStart); i < pageHtml.length; i += 1) {
+        if (pageHtml[i] === '{') depth += 1;
+        else if (pageHtml[i] === '}') { depth -= 1; if (depth === 0) { fnSource = pageHtml.slice(fnStart, i + 1); break; } }
+      }
+    }
+    check('内容迁移函数存在（老用户升级路径）', fnSource.length > 100);
+    const bundled = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'original-site-wordbank.json'), 'utf8'));
+    const bundledRecords = bundled.books.flatMap((b) => (b.words || []).map((w) => ({ ...w, category: w.category || b.category || b.name })));
+    const normalize = (item) => ({
+      id: `${item.category || 'x'}-${item.word}`, word: item.word, category: item.category || 'x',
+      example: item.example || '', exampleSource: item.exampleSource || '',
+      exampleTranslation: item.exampleTranslation || '', mnemonic: item.mnemonic || '',
+      mnemonicSource: item.mnemonicSource || '',
+    });
+    // Simulate an install whose IndexedDB copy still has the 8,587 mix-language
+    // gloss examples the previous bundle shipped.
+    const installed = bundledRecords.slice(0, 900).map((w, i) => normalize({
+      ...w,
+      example: i % 3 === 0 ? `The word “${w.word}” means “释义” in this context.` : (w.example || ''),
+      exampleSource: i % 3 === 0 ? 'generated-gloss-prompt' : (w.exampleSource || ''),
+    }));
+    const chineseBefore = installed.filter((w) => /[\u4e00-\u9fff]/.test(w.example)).length;
+    let persisted = null;
+    const runner = new Function(
+      'fetch', 'extractRecords', 'normalizeWord', 'persistWordRecords', 'idbSetMeta',
+      'BUNDLED_CONTENT_VERSION', 'bank', 'meta',
+      `return (async () => { ${fnSource}; await mergeBundledStudyContent(meta); return bank; })();`
+    );
+    const migrated = await runner(
+      () => Promise.resolve({ ok: true, json: () => Promise.resolve(bundled) }),
+      () => bundledRecords,
+      (item) => normalize(item),
+      async (records) => { persisted = records; },
+      async () => {},
+      (pageHtml.match(/BUNDLED_CONTENT_VERSION\s*=\s*'([^']+)'/) || [])[1] || 'v0',
+      installed,
+      { isDemo: false, contentVersion: 'example-mnemonic-2026-11-v1' }
+    );
+    const chineseAfter = migrated.filter((w) => /[\u4e00-\u9fff]/.test(w.example)).length;
+    check('已安装用户的旧中文例句会被迁移替换为纯英文',
+      chineseBefore > 0 && chineseAfter === 0 && !!persisted,
+      `before=${chineseBefore} after=${chineseAfter}`);
+    const version = (pageHtml.match(/BUNDLED_CONTENT_VERSION\s*=\s*'([^']+)'/) || [])[1];
+    check('内容版本号已递增，老客户端会触发这次迁移',
+      version === 'example-english-only-2026-11-v2', String(version));
+  }
+
   console.log(failed === 0 ? '\n导航测试全部通过 ✔' : `\n${failed} 项失败 ✘`);
   process.exit(failed === 0 ? 0 : 1);
 })().catch((e) => {

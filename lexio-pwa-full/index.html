@@ -1442,7 +1442,7 @@
       const DB_WORDS = 'words';
       const DB_STAGING = 'stagingWords';
       const DB_META = 'meta';
-      const BUNDLED_CONTENT_VERSION = 'example-mnemonic-2026-11-v1';
+      const BUNDLED_CONTENT_VERSION = 'example-english-only-2026-11-v2';
       let db = null;
       let bankReady = false;
       let bank = SAMPLE_WORDS.map((w, i) => normalizeWord(w, i));
@@ -1577,12 +1577,24 @@
           for (const [field,sourceField] of pairs) {
             const oldSource = sourceField ? current[sourceField] || '' : '';
             const newSource = sourceField ? update[sourceField] || '' : '';
-            const replaceGenerated = sourceField && oldSource.startsWith('generated-') && newSource.startsWith('dictionary:');
+            /* An already-installed app keeps its IndexedDB copy, so this
+               migration is the only way a content fix reaches returning
+               users. Replace (a) generated text, and (b) any example that
+               still contains Chinese — older bundles shipped gloss prompts
+               like “The word X means Y in this context.” that the English
+               voice read out loud in the middle of an English sentence. */
+            const hasCJK = /[\u3400-\u9fff\uf900-\ufaff\u3000-\u303f\uff00-\uffef]/.test(String(current[field] || ''));
+            const replaceGenerated = sourceField && (
+              oldSource.startsWith('generated-') ||
+              (field === 'example' && hasCJK)
+            );
+            const sameText = String(current[field] || '').trim() === String(update[field] || '').trim();
+            if (sameText && (!sourceField || (current[sourceField] || '') === newSource)) continue;
             if ((!String(current[field] || '').trim() || replaceGenerated) && String(update[field] || '').trim()) {
               current[field] = update[field];
               if (sourceField) current[sourceField] = newSource;
-              if (field === 'example' && replaceGenerated && update.exampleTranslation) {
-                current.exampleTranslation = update.exampleTranslation;
+              if (field === 'example' && replaceGenerated) {
+                current.exampleTranslation = update.exampleTranslation || '';
               }
               changed = true;
             }
