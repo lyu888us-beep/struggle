@@ -689,8 +689,9 @@
     .menu-card.primary strong { color: var(--leaf); }
     .menu-card.primary span.m-desc { color: #cfe0d4; }
     .tabbar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 90; display: flex; background: rgba(255,255,255,.97); backdrop-filter: none; border-top: 1px solid var(--line); padding: 7px 10px calc(7px + env(safe-area-inset-bottom)); }
-    .tabbar a { flex: 1; text-align: center; text-decoration: none; color: var(--muted); font-size: 11.5px; padding: 5px 2px 4px; border-radius: 14px; -webkit-tap-highlight-color: transparent; }
-    .tabbar a .t-ico { display: block; font-size: 19px; line-height: 1.25; margin-bottom: 1px; }
+    .tabbar a { flex: 1; min-width: 0; display: grid; grid-template-rows: 24px auto; justify-items: center; align-content: center; row-gap: 2px; text-align: center; text-decoration: none; color: var(--muted); font-size: 11.5px; padding: 5px 2px 4px; border-radius: 14px; -webkit-tap-highlight-color: transparent; }
+    .tabbar a .t-ico { display: grid; place-items: center; width: 24px; height: 24px; font-size: 19px; line-height: 1; }
+    .tabbar .t-ico svg { display: block; }
     .tabbar a.is-current { color: var(--forest); font-weight: 800; background: var(--mint); }
     .menu-section + .proof-band { border-top: none; }
 
