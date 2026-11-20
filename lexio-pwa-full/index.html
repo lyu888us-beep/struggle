@@ -42,7 +42,7 @@
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; scroll-padding-top: 86px; }
     body { margin: 0; color: var(--ink); background: var(--cream); font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; font-size: 15px; line-height: 1.65; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
-    body, button, input { font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
+    button, input { font-family:inherit; }
     button, a { -webkit-tap-highlight-color: transparent; }
     button { color: inherit; }
     a { color: inherit; text-decoration: none; }
@@ -1216,8 +1216,7 @@
     }
     #progress { width: 100%; }
     .library-mode-panel.panel-in { animation: none; }
-    /* Semantic colors stay consistent across tabs; rails are painted on a
-       separate border layer so they never replace a card's own background. */
+    /* Route accents are reserved for focal surfaces. */
     body { --rail-top:#18745f; --rail-bottom:#d2e886; }
     body[data-app-view="library"] { --rail-top:#286da1; --rail-bottom:#82d5c6; }
     body[data-app-view="study"] { --rail-top:#326a75; --rail-bottom:#bada7b; }
@@ -1230,13 +1229,6 @@
     .filter-chip.active { background:#24546d; color:white; }
     #study .battle-stage { background-color:#f3f8fa; }
     #pricing .plan-option.active { background:#583e6c; color:#fff; }
-    :is(.menu-card,.feature-card,.exam-card,.phrase-tag-board,.showcase-card,.roots-panel,.testimonial,.migration-note,.ops-panel,.ops-step,.faq-list details,.record-card,.record-metrics>div,.progress-card,.library-panel,.word-tile,.phrase-item,.study-app,.study-scroll,.study-word-card,.battle-stage,.weak-item,.foe-card,.memory-curve,.price-card,.trial-info-card,.dialog-content,.benefit,.trial-banner,.panel-empty,.phrase-empty,.dialog-notice,.dialog-timeline,.price-life span,.progress-stats>div,.trial-timeline-mini,.team-row) { position:relative; }
-    :is(.menu-card,.feature-card,.exam-card,.phrase-tag-board,.showcase-card,.roots-panel,.testimonial,.migration-note,.ops-panel,.ops-step,.faq-list details,.record-card,.record-metrics>div,.progress-card,.library-panel,.word-tile,.phrase-item,.study-app,.study-scroll,.study-word-card,.battle-stage,.weak-item,.foe-card,.memory-curve,.price-card,.trial-info-card,.dialog-content,.benefit,.trial-banner,.panel-empty,.phrase-empty,.dialog-notice,.dialog-timeline,.price-life span,.progress-stats>div,.trial-timeline-mini,.team-row)::after {
-      content:""; position:absolute; inset:0; width:auto; height:auto; border-radius:inherit; pointer-events:none; padding-inline:3px;
-      background:linear-gradient(180deg,var(--rail-top),var(--rail-bottom));
-      -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0); -webkit-mask-composite:xor;
-      mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0); mask-composite:exclude;
-    }
     .record-shell { width:min(100% - 32px,740px); margin:auto; padding:24px 0 48px; }
     .record-shell h1 { font-size:clamp(28px,5vw,42px); letter-spacing:-.045em; margin:6px 0; }
     .record-shell p { color:#605d52; line-height:1.65; }
@@ -1249,9 +1241,9 @@
     #recordDays li { display:grid; grid-template-columns:4em 1fr 4em; align-items:center; font-size:13px; } #recordDays meter { width:100%; } #recordDays b { text-align:right; }
     body[data-app-view="progress"] .site-header { display:none; }
     body[data-app-view="progress"] .view-topbar { position:sticky; top:0; z-index:10; padding:calc(10px + env(safe-area-inset-top)) 16px 10px; border-bottom:1px solid var(--line); }
-    body[data-app-view="home"] .menu-card:nth-child(2) { background-color:#edf6fa; --rail-top:#236c91; }
-    body[data-app-view="home"] .menu-card:nth-child(3) { background-color:#fff4df; --rail-top:#95591e; }
-    body[data-app-view="home"] .menu-card:nth-child(4) { background-color:#f1edfa; --rail-top:#765790; }
+    body[data-app-view="home"] .menu-card:nth-child(2) { background-color:#edf6fa; }
+    body[data-app-view="home"] .menu-card:nth-child(3) { background-color:#fff4df; }
+    body[data-app-view="home"] .menu-card:nth-child(4) { background-color:#f1edfa; }
     #study .back-speak { color:#155776; background-color:#e5f3fa; }
     /* Raised surfaces are intentionally limited to focal cards, not the header or scrolling text. */
     :is(.progress-card,.record-card,.showcase-card,.library-panel,.price-card,.study-word-card) { box-shadow:0 2px 3px #254c3510,0 9px 24px -12px #16443845; }
@@ -1272,7 +1264,7 @@
     #gradeBack { color:#245c57; border:1px solid #bececa; border-radius:16px; background:white; padding:7px 12px; margin-bottom:10px; }
     .catalog>small { color:#397380; font-weight:800; letter-spacing:.14em; font-size:10px; }
     .catalog h3 { font-size:24px; margin:4px 0; } .catalog>p { color:#50676a; font-size:13px; margin:4px 0 14px; }
-    .shelf { --edge:#397e76; --tint:#eaf6ef; background:var(--tint); border:1px solid #d3e1df; border-inline-start:4px solid var(--edge); border-radius:17px; margin:10px 0; padding:12px; }
+    .shelf { --edge:#397e76; --tint:#eaf6ef; background:var(--tint); border:0; border-radius:17px; margin:10px 0; padding:12px; }
     .shelf-1 { --edge:#996132; --tint:#fcf2e4; } .shelf-2 { --edge:#776098; --tint:#f3eff9; } .shelf-3 { --edge:#437392; --tint:#eaf3fa; }
     .shelf h4 { font-size:13px; margin:0 0 8px; color:var(--edge); } .shelf-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(128px,100%),1fr)); gap:7px; }
     .catalog button,.list-crumb button,.phrase-marks button { border:1px solid #ccd9d6; background:white; color:#294e4d; border-radius:10px; padding:8px 10px; cursor:pointer; }
@@ -1288,6 +1280,80 @@
     .catalog .shelf h4::before { content:'';width:12px;height:8px;border-radius:1px 9px;background:var(--edge);transform:rotate(-18deg); }
     .catalog .shelf-link { min-height:45px; border-radius:12px; }
     @media(prefers-reduced-motion:no-preference){.pocket-art {animation:leafBob 6s ease-in-out infinite;} @keyframes leafBob {50%{transform:translateY(-3px) rotate(2deg);}}}
+
+    /* Surface hierarchy: the accent lives in the actual border box, not on
+       an absolutely positioned layer over text or a scrolling container. */
+    :root {
+      --surface-line:#dae4dd;
+      --quiet-shadow:0 6px 22px -14px rgba(26,59,43,.28);
+    }
+    #progressSummary, #studyCard, #pricing .price-card, .record-card:first-of-type {
+      border:1px solid var(--surface-line); border-inline:2px solid transparent;
+      background:linear-gradient(white,white) padding-box,
+        linear-gradient(165deg,var(--rail-top),var(--rail-bottom)) border-box;
+      box-shadow:var(--quiet-shadow);
+    }
+    /* A neutral workspace around the content; only the card being studied
+       needs an accented frame. No decoration attached to scrollports. */
+    #library .library-panel { border:0; background:#f4f7f7; box-shadow:none; }
+    #study .study-app, #study .study-scroll { border:0; background:#f5f7f3; box-shadow:none; }
+    .study-stat, .progress-stats div, .record-metrics>div { border:0; min-width:0; }
+    .study-stat { background:transparent; }
+    .study-word-main>div, .word-tile-head>div { min-width:0; flex:1; }
+    .word-tile-head button { flex:none; }
+    .word-tile h4 { white-space:normal; overflow-wrap:anywhere; line-height:1.3; }
+    .word-tile :is(.meaning,.phonetic), .phrase-item-main, .card-face, #recordWords { overflow-wrap:anywhere; }
+    #wordCardFlip .card-front { overflow-y:auto; }
+    .card-back { border-radius:0; }
+    .card-back-label, .study-word-top, .phrase-item-meta { flex-wrap:wrap; gap:5px 10px; }
+    .word-tile-bottom { flex-wrap:wrap; }
+    .word-tag { max-width:100%; }
+    .word-tile, .phrase-item { background:white; border:1px solid var(--surface-line); box-shadow:none; }
+    .phrase-marks button:not([aria-pressed=true]) { border-color:transparent; background:#eff4f1; }
+    .weak-item, .foe-card, .memory-curve, .battle-stage { border:0; box-shadow:none; }
+    .panel-empty { border:0; background:#eaf0e6; }
+
+    /* Shelves carry the category colour. Their links read as tappable rows,
+       rather than small outlined cards boxed inside another outline. */
+    .catalog .shelf { box-shadow:none; padding:clamp(12px,2vw,18px); }
+    .catalog .shelf-grid { gap:6px; }
+    .catalog .shelf-link { min-width:0; margin:0; border:0; border-radius:10px; box-shadow:none;
+      background:#fff; color:#254641; padding:11px 13px; line-height:1.45; overflow-wrap:anywhere; }
+    .catalog .shelf-link::after { background:none; font-size:19px; }
+    .catalog .shelf-link:hover { background:#f8fbfa; transform:none; }
+    .catalog .shelf-link:focus-visible { outline-offset:-3px; }
+    .list-crumb { padding-block:3px; }
+    .list-crumb b { min-width:0; overflow-wrap:anywhere; }
+    .catalog>p { line-height:1.65; }
+
+    .menu-card:not(.primary), .exam-card, .feature-card, .record-card { border-color:var(--surface-line); }
+    .record-card { padding:clamp(16px,3vw,24px); }
+    .record-card h2 { line-height:1.4; }
+    .record-metrics { grid-template-columns:repeat(3,minmax(0,1fr)); }
+    .record-metrics>div { padding:clamp(10px,3vw,16px); }
+    #recordDays li { grid-template-columns:3.2em minmax(0,1fr) auto; column-gap:10px; }
+    #recordDays meter { width:100%; min-width:0; }
+    #gradeChoices .shelf-link { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:2px 8px; }
+    #gradeChoices small { grid-column:1; font-size:11px; font-weight:500; color:#506c63; }
+    #gradeChoices .shelf-link::after { grid-area:1/2/3/3; align-self:center; }
+    .faq-list details { padding-inline:10px; }
+    .study-meaning.is-hidden { border-top-color:transparent; }
+    .hero h1 .highlight::after { content:none; }
+    .ops-step:not(:last-child)::before { content:none; }
+    .price-life span, .dialog-day, .dialog-notice, .trial-banner { border:0; }
+    .dialog { border:0; }
+    .dialog-content { overflow-wrap:anywhere; }
+    .payment-row { flex-wrap:wrap; }
+    @media (max-width:760px) {
+      body[data-app-view="home"] .hero-grid { align-items:stretch; width:calc(100% - 32px); }
+      body[data-app-view="home"] .hero-progress { max-width:none; margin:0; justify-items:stretch; }
+      .progress-actions { grid-template-columns:repeat(3,minmax(0,1fr)); }
+      .progress-actions .btn { padding-inline:5px; }
+      .catalog { padding-inline:3px; }
+      .word-tile, .phrase-item { padding:12px; }
+      .panel-head, .study-app-top { flex-wrap:wrap; }
+      .view-topbar .back { border:0; background:#edf3ee; }
+    }
   </style>
 </head>
 <body>
@@ -2788,7 +2854,9 @@
           const key=stage==='美国'?`美国${g}年级`:`${stage} · ${stage==='初中'?g+6:g}年级`;
           const b=document.createElement('button');b.type='button';b.className='shelf-link';
           const label=stage==='初中'?'初'+['一','二','三'][g-1]:g+' 年级';
-          b.dataset.grade=key;b.textContent=`${label} · ${gradeCounts[key]} 条`;
+          b.dataset.grade=key;
+          const title=document.createElement('span'), count=document.createElement('small');
+          title.textContent=label;count.textContent=`${gradeCounts[key]} 条`;b.append(title,' ',count);
           b.onclick=()=>openWords(key,`${$('#stageTitle').textContent} / ${label}`);
           $('#gradeChoices').appendChild(b);
         }

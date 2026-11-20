@@ -312,8 +312,8 @@ function animClean() {
     cssText.includes('@keyframes appHomeEnter') && cssText.includes('@keyframes appPricingEnter') &&
     cssText.includes('@keyframes pricePop') && cssText.includes('.price strong.is-changing') &&
     cssText.includes('prefers-reduced-motion: reduce'));
-  check('Service Worker 升到 v24 并预缓存口语句库与安装引导视频',
-    swSource.includes("CACHE_NAME = 'lexio-shell-v24-grade-library'") &&
+  check('Service Worker 升到 v25 并预缓存口语句库与安装引导视频',
+    swSource.includes("CACHE_NAME = 'lexio-shell-v25-surface-hierarchy'") &&
     swSource.includes("'./data/daily-conversation.json'") &&
     swSource.includes("'./media/install-guide.mp4'") &&
     pageHtml.includes('controllerchange') && pageHtml.includes('swRefreshing'));
@@ -638,7 +638,7 @@ function animClean() {
     check(`${stage}二级目录数量和词库一致`, choices.length===total && choices.every((button,i)=>{
       const key=stage==='美国'?`美国${i+1}年级`:`${stage} · ${i+(stage==='初中'?7:1)}年级`;
       const count=bundled.books.filter(book=>book.category===key).reduce((n,book)=>n+book.words.length,0);
-      return count>0 && button.dataset.grade===key && button.textContent.endsWith(`· ${count} 条`);
+      return count>0 && button.dataset.grade===key && button.querySelector('small')?.textContent===`${count} 条`;
     }));
     doc.querySelector('#gradeBack').click();
   }
