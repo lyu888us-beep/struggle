@@ -592,6 +592,42 @@ function animClean() {
   check('搜索框字号 ≥16px（iOS Safari 不触发聚焦放大）',
     /\.search-input, #wordSearch, #phraseSearch, \.source-url-input \{ font-size: 16px/.test(cssText) &&
     /\.search-input, #wordSearch, #phraseSearch \{ font-size: 16px !important; \}/.test(cssText));
+  // 逐条检查手机断点里所有 display:none 规则，确认没有一条会命中首页进度卡
+  (function () {
+    const card = doc.querySelector('#top .hero-visual');
+    const cardClasses = [...card.classList];
+    const mobileBlocks = [];
+    cssText.replace(/@media\s*\(max-width:\s*760px\)\s*\{/g, (match, offset) => {
+      let depth = 1, i = offset + match.length;
+      const start = i;
+      for (; i < cssText.length && depth > 0; i += 1) {
+        if (cssText[i] === '{') depth += 1;
+        else if (cssText[i] === '}') depth -= 1;
+      }
+      mobileBlocks.push(cssText.slice(start, i - 1));
+      return match;
+    });
+    const hideRules = [];
+    mobileBlocks.forEach((block) => {
+      block.replace(/([^{}]+)\{([^{}]*)\}/g, (all, selector, body) => {
+        if (/display\s*:\s*none/.test(body)) hideRules.push(selector.trim());
+        return all;
+      });
+    });
+    const hitsCard = hideRules.some((selector) => selector.split(',').some((part) => {
+      const simple = part.trim();
+      if (!simple.startsWith('body[data-app-view="home"]')) return false;
+      const wanted = [...simple.matchAll(/\.([\w-]+)/g)].map((m) => m[1]);
+      const nots = [...simple.matchAll(/:not\(\.([\w-]+)\)/g)].map((m) => m[1]);
+      if (!wanted.length) return false;
+      if (!wanted.every((cls) => cardClasses.includes(cls))) return false;
+      return !nots.some((cls) => cardClasses.includes(cls));
+    }));
+    check('首页进度卡不会被手机断点里的 display:none 命中',
+      !!card && cardClasses.includes('hero-progress') && !hitsCard,
+      `hide rules: ${hideRules.join(' | ') || 'none'}`);
+  })();
+
   check('手机布局不会误把真实进度卡一起隐藏',
     cssText.includes('body[data-app-view="home"] .hero-visual:not(.hero-progress)') &&
     !cssText.includes('body[data-app-view="home"] .hero-visual,\n      body[data-app-view="home"] .hero-social'));

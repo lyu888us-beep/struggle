@@ -950,6 +950,13 @@
          CTA should be reachable without scrolling. */
       body[data-app-view="home"] .hero-ctas .btn-primary { min-height: 46px; }
       body[data-app-view="home"] .progress-card { box-shadow: 0 10px 26px rgba(24,58,40,.07); }
+      /* Keep the dashboard on one screen: 4 compact tiles, no empty band. */
+      body[data-app-view="home"] .menu-grid { margin-top: 0; }
+      /* Short phones: tighten the dashboard so title + numbers + actions fit. */
+      @media (max-width: 760px) and (max-height: 720px) {
+        body[data-app-view="home"] .menu-card { min-height: 88px; padding: 11px; }
+        body[data-app-view="home"] .hero h1 { font-size: clamp(23px, 6.6vw, 30px); }
+      }
       body[data-app-view="home"] .hero { padding: 14px 0 12px; background: transparent; }
       /* Dashboard order: title → real numbers → actions. The marketing lede,
          trust row and floating pill are desktop-only. */
