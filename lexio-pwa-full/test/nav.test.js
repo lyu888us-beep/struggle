@@ -155,6 +155,7 @@ function animClean() {
   // 例句点击时立即调用设备 en-US 系统语音，避免异步逐词音频失去 iOS 用户手势授权。
   const exampleSpeakButton = doc.getElementById('exampleSpeak');
   const audioCountBeforeSentence = (window.__audioInstances || []).length;
+  doc.getElementById('sentenceVoice').value='original';
   exampleSpeakButton.click();
   await sleep(30);
   const sampleAudio = window.__lastAudio;
@@ -311,8 +312,8 @@ function animClean() {
     cssText.includes('@keyframes appHomeEnter') && cssText.includes('@keyframes appPricingEnter') &&
     cssText.includes('@keyframes pricePop') && cssText.includes('.price strong.is-changing') &&
     cssText.includes('prefers-reduced-motion: reduce'));
-  check('Service Worker 升到 v20 并预缓存口语句库与安装引导视频',
-    swSource.includes("CACHE_NAME = 'lexio-shell-v20-audio-journal'") &&
+  check('Service Worker 升到 v21 并预缓存口语句库与安装引导视频',
+    swSource.includes("CACHE_NAME = 'lexio-shell-v21-speaking-library'") &&
     swSource.includes("'./data/daily-conversation.json'") &&
     swSource.includes("'./media/install-guide.mp4'") &&
     pageHtml.includes('controllerchange') && pageHtml.includes('swRefreshing'));
@@ -466,7 +467,7 @@ function animClean() {
     !!intro.querySelector('#showcasePanel') && intro.textContent.includes('PRODUCT EXPERIENCE'));
   const proofBand = doc.querySelector('.proof-band');
   check('首页宣传改为可核对的产品配置，不显示虚高累计记忆数',
-    !!proofBand && proofBand.textContent.includes('10 题') && proofBand.textContent.includes('1,000 句') &&
+    !!proofBand && proofBand.textContent.includes('10 题') && proofBand.textContent.includes('1,100 句') &&
     !proofBand.textContent.includes('本轮学习计划') &&
     !proofBand.textContent.includes('11 亿') && !proofBand.textContent.includes('282 万') &&
     !proofBand.textContent.includes('4.9 / 5'));
@@ -507,17 +508,19 @@ function animClean() {
     doc.documentElement.outerHTML.includes('original-site-wordbank.json'));
   doc.getElementById('dailyPhrasesTab').click();
   await sleep(50);
-  check('日常口语库离线资源已载入且总数为 1,000 条',
+  check('口语首页先展示目录',!doc.querySelector('#dailyPhrasesMode').classList.contains('in-list'));
+  doc.querySelector('[data-phrase-category="全部"]').click();
+  check('日常口语库离线资源已载入且总数为 1,100 条',
     doc.querySelectorAll('#dailyPhraseGrid .phrase-item').length === 50 &&
-    doc.querySelectorAll('#phraseCategories [data-phrase-category]').length === 11 &&
-    doc.getElementById('phraseCount').textContent.includes('1000'));
-  for(let i=0;i<20;i++){
+    doc.querySelectorAll('#phraseCategories [data-phrase-category]').length === 14 &&
+    doc.getElementById('phraseCount').textContent.includes('1100'));
+  for(let i=0;i<24;i++){
     const more=doc.querySelector('#dailyPhraseGrid .phrase-load-more');
     if(!more) break;
     more.click();
   }
-  check('日常口语按需加载，能够浏览完整 1,000 条表达',
-    doc.querySelectorAll('#dailyPhraseGrid .phrase-item').length === 1000 &&
+  check('日常口语按需加载，能够浏览完整 1,100 条表达',
+    doc.querySelectorAll('#dailyPhraseGrid .phrase-item').length === 1100 &&
     !doc.querySelector('#dailyPhraseGrid .phrase-load-more'));
   const phraseSearch = doc.getElementById('phraseSearch');
   phraseSearch.value = 'pharmacy';
@@ -543,7 +546,14 @@ function animClean() {
   doc.querySelector('#dailyPhraseGrid .phrase-load-more').click();
   check('医疗场景可继续加载完整分类表达', doc.querySelectorAll('#dailyPhraseGrid .phrase-item').length === 100);
   doc.querySelector('#phraseCategories [data-phrase-category="全部"]').click();
+  doc.querySelector('[data-phrase-category="商务英语"]').click();
+  const practiceId=doc.querySelector('[data-mark="再练一次"]').dataset.id;
+  doc.querySelector('[data-mark="再练一次"]').click();doc.querySelector('[data-phrase-category="再练一次"]').click();
+  check('商务句进入待练夹',doc.querySelectorAll('#dailyPhraseGrid article').length===1 && doc.querySelector('[data-mark="我记住了"]').dataset.id===practiceId);
+  doc.querySelector('[data-mark="我记住了"]').click();check('已记住与再练一次互斥',!doc.querySelector('#dailyPhraseGrid article') && JSON.parse(window.localStorage.getItem('lexio.phraseMarks.v1'))[practiceId]==='我记住了');
   doc.getElementById('wordLibraryTab').click();
+  check('词库目录和列表分层',!doc.querySelector('#wordBankMode').classList.contains('in-list'));
+  doc.querySelector('[data-filter=all]').click();
   const tilesAll = doc.querySelectorAll('#wordGrid .word-tile');
   check('词库全量显示(无9条上限) — 24条全部渲染',
     tilesAll.length === 24 && !doc.getElementById('wordGrid').textContent.includes('前 9'),
@@ -615,8 +625,8 @@ function animClean() {
 
   const conversation = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'daily-conversation.json'), 'utf8'));
   check('离线口语库含多场景、有中英句子且 ID 唯一',
-    conversation.phrases.length === 1000 && new Set(conversation.phrases.map(item=>item.id)).size === 1000 &&
-    conversation.phrases.every(item=>item.en && item.zh && item.scene) && conversation.categories.length === 10 &&
+    conversation.phrases.length === 1100 && new Set(conversation.phrases.map(item=>item.id)).size === 1100 &&
+    conversation.phrases.every(item=>item.en && item.zh && item.scene) && conversation.categories.length === 11 &&
     conversation.categories.every(category=>conversation.phrases.filter(item=>item.category===category).length===100),
     `phrases=${conversation.phrases.length} scenes=${conversation.categories.length}`);
   const bundled = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'original-site-wordbank.json'), 'utf8'));

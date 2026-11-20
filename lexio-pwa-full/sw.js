@@ -1,5 +1,5 @@
 /* Lexio 乐词 PWA shell cache. Bump the cache version whenever app assets change. */
-const CACHE_NAME = 'lexio-shell-v20-audio-journal';
+const CACHE_NAME = 'lexio-shell-v21-speaking-library';
 const SHELL_URLS = [
   './',
   './index.html',
@@ -10,6 +10,8 @@ const SHELL_URLS = [
   './data/daily-conversation.json',
   './media/install-guide.mp4',
   './media/install-guide-poster.jpg',
+  './speech/flite.wasm',
+  './speech/worker.js',
   './icon.svg',
   './icon-192.png',
   './icon-512.png'

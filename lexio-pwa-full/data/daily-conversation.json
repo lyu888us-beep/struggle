@@ -1,7 +1,7 @@
 {
-  "version": "2.0.0",
+  "version": "3.0.0",
   "title": "日常英语口语场景库",
-  "sourceNote": "本项目整理编写的本地英语学习语料：保留原有100条场景表达，新增900条按场景任务搭配常见句型组合的练习表达，共1000条，覆盖10类日常场景。医疗药房内容仅用于语言练习，不构成医疗建议。",
+  "sourceNote": "本项目整理编写的本地英语学习语料：保留原有100条场景表达，新增900条按场景任务搭配常见句型组合的练习表达，共1000条，覆盖10类日常场景。医疗药房内容仅用于语言练习，不构成医疗建议。 新增100句原创商务场景常用表达，按任务精选，不代表语料库频次排名。",
   "categories": [
     "日常交流",
     "餐饮点单",
@@ -12,7 +12,8 @@
     "医疗药房",
     "工作沟通",
     "电话预约",
-    "紧急求助"
+    "紧急求助",
+    "商务英语"
   ],
   "phrases": [
     {
@@ -7014,6 +7015,706 @@
       "scene": "联系紧急联系人",
       "en": "I'd appreciate it if you could help me contact my emergency contact.",
       "zh": "如果你能帮我联系我的紧急联系人，我会很感激。"
+    },
+    {
+      "id": "biz-001",
+      "category": "商务英语",
+      "scene": "初次联络",
+      "en": "It's a pleasure to meet you.",
+      "zh": "很高兴认识您。"
+    },
+    {
+      "id": "biz-002",
+      "category": "商务英语",
+      "scene": "初次联络",
+      "en": "Thank you for reaching out.",
+      "zh": "感谢您主动联系。"
+    },
+    {
+      "id": "biz-003",
+      "category": "商务英语",
+      "scene": "初次联络",
+      "en": "I look after our key accounts.",
+      "zh": "我负责公司的重点客户。"
+    },
+    {
+      "id": "biz-004",
+      "category": "商务英语",
+      "scene": "初次联络",
+      "en": "Could you tell me a little about your business?",
+      "zh": "能简单介绍一下贵公司的业务吗？"
+    },
+    {
+      "id": "biz-005",
+      "category": "商务英语",
+      "scene": "初次联络",
+      "en": "Who would be the best person to speak with?",
+      "zh": "我应该和哪位负责人联系？"
+    },
+    {
+      "id": "biz-006",
+      "category": "商务英语",
+      "scene": "初次联络",
+      "en": "I got your contact details from a colleague.",
+      "zh": "一位同事给了我您的联系方式。"
+    },
+    {
+      "id": "biz-007",
+      "category": "商务英语",
+      "scene": "初次联络",
+      "en": "What does your team focus on?",
+      "zh": "您的团队主要负责什么？"
+    },
+    {
+      "id": "biz-008",
+      "category": "商务英语",
+      "scene": "初次联络",
+      "en": "May I have your business card?",
+      "zh": "可以给我一张您的名片吗？"
+    },
+    {
+      "id": "biz-009",
+      "category": "商务英语",
+      "scene": "初次联络",
+      "en": "Let me introduce you to our sales manager.",
+      "zh": "让我向您介绍我们的销售经理。"
+    },
+    {
+      "id": "biz-010",
+      "category": "商务英语",
+      "scene": "初次联络",
+      "en": "I look forward to working with you.",
+      "zh": "期待与您合作。"
+    },
+    {
+      "id": "biz-011",
+      "category": "商务英语",
+      "scene": "约定时间",
+      "en": "Are you available for a quick call?",
+      "zh": "您方便简短通个电话吗？"
+    },
+    {
+      "id": "biz-012",
+      "category": "商务英语",
+      "scene": "约定时间",
+      "en": "What time works best for you?",
+      "zh": "您什么时间最方便？"
+    },
+    {
+      "id": "biz-013",
+      "category": "商务英语",
+      "scene": "约定时间",
+      "en": "Would Tuesday morning work for your team?",
+      "zh": "周二上午您的团队方便吗？"
+    },
+    {
+      "id": "biz-014",
+      "category": "商务英语",
+      "scene": "约定时间",
+      "en": "Which time zone are you in?",
+      "zh": "您在哪个时区？"
+    },
+    {
+      "id": "biz-015",
+      "category": "商务英语",
+      "scene": "约定时间",
+      "en": "I'll send you a calendar invitation.",
+      "zh": "我会给您发日历邀请。"
+    },
+    {
+      "id": "biz-016",
+      "category": "商务英语",
+      "scene": "约定时间",
+      "en": "Could we move our meeting to Thursday?",
+      "zh": "我们可以把会议改到周四吗？"
+    },
+    {
+      "id": "biz-017",
+      "category": "商务英语",
+      "scene": "约定时间",
+      "en": "Something has come up on our end.",
+      "zh": "我们这边临时有点事情。"
+    },
+    {
+      "id": "biz-018",
+      "category": "商务英语",
+      "scene": "约定时间",
+      "en": "Let's allow thirty minutes for the call.",
+      "zh": "我们为这次通话预留三十分钟吧。"
+    },
+    {
+      "id": "biz-019",
+      "category": "商务英语",
+      "scene": "约定时间",
+      "en": "Please let me know if your schedule changes.",
+      "zh": "如果日程有变，请告诉我。"
+    },
+    {
+      "id": "biz-020",
+      "category": "商务英语",
+      "scene": "约定时间",
+      "en": "Does the original time still work for you?",
+      "zh": "原定时间您还方便吗？"
+    },
+    {
+      "id": "biz-021",
+      "category": "商务英语",
+      "scene": "会议讨论",
+      "en": "Shall we get started?",
+      "zh": "我们可以开始了吗？"
+    },
+    {
+      "id": "biz-022",
+      "category": "商务英语",
+      "scene": "会议讨论",
+      "en": "Can everyone see my screen?",
+      "zh": "大家能看到我的屏幕吗？"
+    },
+    {
+      "id": "biz-023",
+      "category": "商务英语",
+      "scene": "会议讨论",
+      "en": "Let's go over today's agenda.",
+      "zh": "我们过一下今天的议程吧。"
+    },
+    {
+      "id": "biz-024",
+      "category": "商务英语",
+      "scene": "会议讨论",
+      "en": "What would you like to add?",
+      "zh": "您有什么要补充的吗？"
+    },
+    {
+      "id": "biz-025",
+      "category": "商务英语",
+      "scene": "会议讨论",
+      "en": "Could you walk us through the numbers?",
+      "zh": "能带我们看一下这些数据吗？"
+    },
+    {
+      "id": "biz-026",
+      "category": "商务英语",
+      "scene": "会议讨论",
+      "en": "Let's hear from the operations team.",
+      "zh": "我们听听运营团队的意见吧。"
+    },
+    {
+      "id": "biz-027",
+      "category": "商务英语",
+      "scene": "会议讨论",
+      "en": "Can we come back to that point later?",
+      "zh": "我们稍后再谈这一点好吗？"
+    },
+    {
+      "id": "biz-028",
+      "category": "商务英语",
+      "scene": "会议讨论",
+      "en": "Let's take that discussion offline.",
+      "zh": "这个问题我们会后单独谈吧。"
+    },
+    {
+      "id": "biz-029",
+      "category": "商务英语",
+      "scene": "会议讨论",
+      "en": "We're running short on time.",
+      "zh": "我们的时间不多了。"
+    },
+    {
+      "id": "biz-030",
+      "category": "商务英语",
+      "scene": "会议讨论",
+      "en": "I'll circulate the minutes after the meeting.",
+      "zh": "我会在会后分发会议纪要。"
+    },
+    {
+      "id": "biz-031",
+      "category": "商务英语",
+      "scene": "确认需求",
+      "en": "What are your main priorities?",
+      "zh": "您最优先考虑哪些事情？"
+    },
+    {
+      "id": "biz-032",
+      "category": "商务英语",
+      "scene": "确认需求",
+      "en": "What problem are you trying to solve?",
+      "zh": "您希望解决什么问题？"
+    },
+    {
+      "id": "biz-033",
+      "category": "商务英语",
+      "scene": "确认需求",
+      "en": "Could you give me a concrete example?",
+      "zh": "能给我一个具体例子吗？"
+    },
+    {
+      "id": "biz-034",
+      "category": "商务英语",
+      "scene": "确认需求",
+      "en": "Do you have a target budget in mind?",
+      "zh": "您有预期的预算吗？"
+    },
+    {
+      "id": "biz-035",
+      "category": "商务英语",
+      "scene": "确认需求",
+      "en": "What would a successful outcome look like?",
+      "zh": "怎样的结果算是成功？"
+    },
+    {
+      "id": "biz-036",
+      "category": "商务英语",
+      "scene": "确认需求",
+      "en": "Is that a requirement or a preference?",
+      "zh": "这是硬性要求，还是偏好？"
+    },
+    {
+      "id": "biz-037",
+      "category": "商务英语",
+      "scene": "确认需求",
+      "en": "Let me make sure I understand.",
+      "zh": "让我确认一下我的理解。"
+    },
+    {
+      "id": "biz-038",
+      "category": "商务英语",
+      "scene": "确认需求",
+      "en": "Are there any constraints we should know about?",
+      "zh": "有什么限制是我们应该了解的吗？"
+    },
+    {
+      "id": "biz-039",
+      "category": "商务英语",
+      "scene": "确认需求",
+      "en": "Which features are essential for launch?",
+      "zh": "上线时哪些功能是必不可少的？"
+    },
+    {
+      "id": "biz-040",
+      "category": "商务英语",
+      "scene": "确认需求",
+      "en": "Have I missed anything important?",
+      "zh": "我有没有遗漏什么重要的内容？"
+    },
+    {
+      "id": "biz-041",
+      "category": "商务英语",
+      "scene": "邮件跟进",
+      "en": "I'm following up on our conversation.",
+      "zh": "我来跟进一下我们之前谈的事。"
+    },
+    {
+      "id": "biz-042",
+      "category": "商务英语",
+      "scene": "邮件跟进",
+      "en": "Did you receive the proposal I sent?",
+      "zh": "您收到我发的方案了吗？"
+    },
+    {
+      "id": "biz-043",
+      "category": "商务英语",
+      "scene": "邮件跟进",
+      "en": "I've attached the updated document.",
+      "zh": "我已附上更新后的文件。"
+    },
+    {
+      "id": "biz-044",
+      "category": "商务英语",
+      "scene": "邮件跟进",
+      "en": "Could you confirm receipt of the file?",
+      "zh": "能确认一下您收到了文件吗？"
+    },
+    {
+      "id": "biz-045",
+      "category": "商务英语",
+      "scene": "邮件跟进",
+      "en": "I'm copying our finance team on this email.",
+      "zh": "我把这封邮件抄送给财务团队。"
+    },
+    {
+      "id": "biz-046",
+      "category": "商务英语",
+      "scene": "邮件跟进",
+      "en": "Please use the latest version of the spreadsheet.",
+      "zh": "请使用最新版的电子表格。"
+    },
+    {
+      "id": "biz-047",
+      "category": "商务英语",
+      "scene": "邮件跟进",
+      "en": "Thank you for the clarification.",
+      "zh": "感谢您的说明。"
+    },
+    {
+      "id": "biz-048",
+      "category": "商务英语",
+      "scene": "邮件跟进",
+      "en": "Could you send your feedback by Friday?",
+      "zh": "您能在周五前发来反馈吗？"
+    },
+    {
+      "id": "biz-049",
+      "category": "商务英语",
+      "scene": "邮件跟进",
+      "en": "I'll get back to you by the end of the day.",
+      "zh": "我会在今天下班前回复您。"
+    },
+    {
+      "id": "biz-050",
+      "category": "商务英语",
+      "scene": "邮件跟进",
+      "en": "Please let me know if you need anything else.",
+      "zh": "如果还需要其他资料，请告诉我。"
+    },
+    {
+      "id": "biz-051",
+      "category": "商务英语",
+      "scene": "报价谈判",
+      "en": "Could you send us a written quote?",
+      "zh": "能给我们一份书面报价吗？"
+    },
+    {
+      "id": "biz-052",
+      "category": "商务英语",
+      "scene": "报价谈判",
+      "en": "Does the price include shipping?",
+      "zh": "这个价格包含运费吗？"
+    },
+    {
+      "id": "biz-053",
+      "category": "商务英语",
+      "scene": "报价谈判",
+      "en": "How long is this offer valid?",
+      "zh": "这份报价的有效期是多久？"
+    },
+    {
+      "id": "biz-054",
+      "category": "商务英语",
+      "scene": "报价谈判",
+      "en": "Is there a discount for larger orders?",
+      "zh": "大批量订购有折扣吗？"
+    },
+    {
+      "id": "biz-055",
+      "category": "商务英语",
+      "scene": "报价谈判",
+      "en": "What's your minimum order quantity?",
+      "zh": "贵方的最低订购量是多少？"
+    },
+    {
+      "id": "biz-056",
+      "category": "商务英语",
+      "scene": "报价谈判",
+      "en": "That figure is above our budget.",
+      "zh": "这个数字超出了我们的预算。"
+    },
+    {
+      "id": "biz-057",
+      "category": "商务英语",
+      "scene": "报价谈判",
+      "en": "Is there any flexibility on the price?",
+      "zh": "价格上还有商量的余地吗？"
+    },
+    {
+      "id": "biz-058",
+      "category": "商务英语",
+      "scene": "报价谈判",
+      "en": "What if we commit to a longer contract?",
+      "zh": "如果我们签更长期的合同呢？"
+    },
+    {
+      "id": "biz-059",
+      "category": "商务英语",
+      "scene": "报价谈判",
+      "en": "We can agree to those terms.",
+      "zh": "我们可以接受这些条款。"
+    },
+    {
+      "id": "biz-060",
+      "category": "商务英语",
+      "scene": "报价谈判",
+      "en": "Let me check with my manager first.",
+      "zh": "我先和经理确认一下。"
+    },
+    {
+      "id": "biz-061",
+      "category": "商务英语",
+      "scene": "订单交付",
+      "en": "We'd like to place a trial order.",
+      "zh": "我们想先下一份试订单。"
+    },
+    {
+      "id": "biz-062",
+      "category": "商务英语",
+      "scene": "订单交付",
+      "en": "Please include our purchase order number.",
+      "zh": "请注明我们的采购订单号。"
+    },
+    {
+      "id": "biz-063",
+      "category": "商务英语",
+      "scene": "订单交付",
+      "en": "Do you have this item in stock?",
+      "zh": "这个商品有现货吗？"
+    },
+    {
+      "id": "biz-064",
+      "category": "商务英语",
+      "scene": "订单交付",
+      "en": "What is the current lead time?",
+      "zh": "目前从下单到交付需要多久？"
+    },
+    {
+      "id": "biz-065",
+      "category": "商务英语",
+      "scene": "订单交付",
+      "en": "Can you confirm the delivery address?",
+      "zh": "能确认一下收货地址吗？"
+    },
+    {
+      "id": "biz-066",
+      "category": "商务英语",
+      "scene": "订单交付",
+      "en": "When will the shipment leave your warehouse?",
+      "zh": "这批货什么时候从你们仓库发出？"
+    },
+    {
+      "id": "biz-067",
+      "category": "商务英语",
+      "scene": "订单交付",
+      "en": "Could you share the tracking number?",
+      "zh": "能提供运单号吗？"
+    },
+    {
+      "id": "biz-068",
+      "category": "商务英语",
+      "scene": "订单交付",
+      "en": "Part of the shipment is missing.",
+      "zh": "这批货有一部分没有收到。"
+    },
+    {
+      "id": "biz-069",
+      "category": "商务英语",
+      "scene": "订单交付",
+      "en": "Please hold the order until we confirm.",
+      "zh": "请先暂缓处理订单，等我们确认。"
+    },
+    {
+      "id": "biz-070",
+      "category": "商务英语",
+      "scene": "订单交付",
+      "en": "The goods arrived in good condition.",
+      "zh": "货物已完好送达。"
+    },
+    {
+      "id": "biz-071",
+      "category": "商务英语",
+      "scene": "项目协作",
+      "en": "Who's responsible for this task?",
+      "zh": "这项任务由谁负责？"
+    },
+    {
+      "id": "biz-072",
+      "category": "商务英语",
+      "scene": "项目协作",
+      "en": "What are the next steps?",
+      "zh": "接下来要做什么？"
+    },
+    {
+      "id": "biz-073",
+      "category": "商务英语",
+      "scene": "项目协作",
+      "en": "Let's set a deadline for the first draft.",
+      "zh": "我们定一下初稿的截止日期吧。"
+    },
+    {
+      "id": "biz-074",
+      "category": "商务英语",
+      "scene": "项目协作",
+      "en": "Are we still on track for launch?",
+      "zh": "我们仍能按计划上线吗？"
+    },
+    {
+      "id": "biz-075",
+      "category": "商务英语",
+      "scene": "项目协作",
+      "en": "What is blocking progress?",
+      "zh": "目前是什么阻碍了进展？"
+    },
+    {
+      "id": "biz-076",
+      "category": "商务英语",
+      "scene": "项目协作",
+      "en": "I'll send you a status update tomorrow.",
+      "zh": "我明天会发一份进度更新给您。"
+    },
+    {
+      "id": "biz-077",
+      "category": "商务英语",
+      "scene": "项目协作",
+      "en": "We need approval before we proceed.",
+      "zh": "我们需要先获批才能继续。"
+    },
+    {
+      "id": "biz-078",
+      "category": "商务英语",
+      "scene": "项目协作",
+      "en": "Could you prioritize this request?",
+      "zh": "能优先处理这个请求吗？"
+    },
+    {
+      "id": "biz-079",
+      "category": "商务英语",
+      "scene": "项目协作",
+      "en": "This change will affect the timeline.",
+      "zh": "这个变更会影响时间安排。"
+    },
+    {
+      "id": "biz-080",
+      "category": "商务英语",
+      "scene": "项目协作",
+      "en": "Let's review the results together.",
+      "zh": "我们一起看看结果吧。"
+    },
+    {
+      "id": "biz-081",
+      "category": "商务英语",
+      "scene": "发票付款",
+      "en": "Who should we address the invoice to?",
+      "zh": "发票抬头应该写谁？"
+    },
+    {
+      "id": "biz-082",
+      "category": "商务英语",
+      "scene": "发票付款",
+      "en": "What are your payment terms?",
+      "zh": "贵方的付款条件是什么？"
+    },
+    {
+      "id": "biz-083",
+      "category": "商务英语",
+      "scene": "发票付款",
+      "en": "Is a deposit required?",
+      "zh": "需要付定金吗？"
+    },
+    {
+      "id": "biz-084",
+      "category": "商务英语",
+      "scene": "发票付款",
+      "en": "Please itemize the charges on the invoice.",
+      "zh": "请在发票上逐项列明费用。"
+    },
+    {
+      "id": "biz-085",
+      "category": "商务英语",
+      "scene": "发票付款",
+      "en": "The total doesn't match our records.",
+      "zh": "总额和我们的记录不一致。"
+    },
+    {
+      "id": "biz-086",
+      "category": "商务英语",
+      "scene": "发票付款",
+      "en": "Could you issue a corrected invoice?",
+      "zh": "可以出一张更正后的发票吗？"
+    },
+    {
+      "id": "biz-087",
+      "category": "商务英语",
+      "scene": "发票付款",
+      "en": "When is the balance due?",
+      "zh": "尾款什么时候到期？"
+    },
+    {
+      "id": "biz-088",
+      "category": "商务英语",
+      "scene": "发票付款",
+      "en": "Our accounts team has processed the payment.",
+      "zh": "我们的财务团队已处理这笔付款。"
+    },
+    {
+      "id": "biz-089",
+      "category": "商务英语",
+      "scene": "发票付款",
+      "en": "Please send us a receipt for our records.",
+      "zh": "请给我们一份收据以便存档。"
+    },
+    {
+      "id": "biz-090",
+      "category": "商务英语",
+      "scene": "发票付款",
+      "en": "Could you check whether the transfer went through?",
+      "zh": "能查一下转账是否成功吗？"
+    },
+    {
+      "id": "biz-091",
+      "category": "商务英语",
+      "scene": "客户服务",
+      "en": "Thank you for bringing this to our attention.",
+      "zh": "感谢您提醒我们注意这件事。"
+    },
+    {
+      "id": "biz-092",
+      "category": "商务英语",
+      "scene": "客户服务",
+      "en": "I'm sorry for the inconvenience.",
+      "zh": "给您带来不便，非常抱歉。"
+    },
+    {
+      "id": "biz-093",
+      "category": "商务英语",
+      "scene": "客户服务",
+      "en": "Could you describe what happened?",
+      "zh": "能描述一下发生了什么吗？"
+    },
+    {
+      "id": "biz-094",
+      "category": "商务英语",
+      "scene": "客户服务",
+      "en": "I'll look into this right away.",
+      "zh": "我马上调查这件事。"
+    },
+    {
+      "id": "biz-095",
+      "category": "商务英语",
+      "scene": "客户服务",
+      "en": "May I put you on hold for a moment?",
+      "zh": "您能稍等片刻，不要挂断吗？"
+    },
+    {
+      "id": "biz-096",
+      "category": "商务英语",
+      "scene": "客户服务",
+      "en": "I'll connect you with our support team.",
+      "zh": "我帮您转接到支持团队。"
+    },
+    {
+      "id": "biz-097",
+      "category": "商务英语",
+      "scene": "客户服务",
+      "en": "Here's what we can do for you.",
+      "zh": "我们可以这样帮您处理。"
+    },
+    {
+      "id": "biz-098",
+      "category": "商务英语",
+      "scene": "客户服务",
+      "en": "Would a replacement work for you?",
+      "zh": "给您换货可以吗？"
+    },
+    {
+      "id": "biz-099",
+      "category": "商务英语",
+      "scene": "客户服务",
+      "en": "Has the issue been resolved?",
+      "zh": "问题解决了吗？"
+    },
+    {
+      "id": "biz-100",
+      "category": "商务英语",
+      "scene": "客户服务",
+      "en": "We appreciate your continued business.",
+      "zh": "感谢您一直以来的惠顾。"
     }
   ]
 }
