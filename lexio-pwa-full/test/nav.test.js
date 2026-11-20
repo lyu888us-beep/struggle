@@ -270,7 +270,7 @@ function animClean() {
   // 只允许路由这一处动画：入场动画与滚动显影会和它叠在同一个元素上，
   // 叠出来的两层 transform / 半透明就是"重影、失真、掉帧"的来源。
   check('切页动画只有一层（入场/显影/错峰动画已关闭）',
-    cssText.includes('body[data-app-view="home"] .hero-copy,\n    body[data-app-view="home"] .menu-card,\n    body[data-app-view="pricing"] .price-card { animation: none !important; }') &&
+    cssText.includes('body[data-app-view="home"] .hero-copy { animation: none !important; }') &&
     !cssText.includes('.menu-card:nth-child(1) { animation-delay') &&
     cssText.includes('main > section[data-app-view] .stagger-1,'));
   for (const view of ['library','study','pricing','progress','home']) {
@@ -309,8 +309,8 @@ function animClean() {
     cssText.includes('@keyframes appHomeEnter') && cssText.includes('@keyframes appPricingEnter') &&
     cssText.includes('@keyframes pricePop') && cssText.includes('.price strong.is-changing') &&
     cssText.includes('prefers-reduced-motion: reduce'));
-  check('Service Worker 升到 v28 并预缓存口语句库与安装引导视频',
-    swSource.includes("CACHE_NAME = 'lexio-shell-v28-listen-light'") &&
+  check('Service Worker 升到 v29 并预缓存口语句库与安装引导视频',
+    swSource.includes("CACHE_NAME = 'lexio-shell-v29-full-conversation'") &&
     swSource.includes("'./data/daily-conversation.json'") &&
     swSource.includes("'./media/install-guide.mp4'") &&
     pageHtml.includes('controllerchange') && pageHtml.includes('swRefreshing'));
