@@ -158,7 +158,7 @@ function animClean() {
   Object.defineProperty(window.navigator,'serviceWorker',{configurable:true,value:{controller:{}}});
   exampleSpeakButton.click();
   await sleep(30);
-  check('未配音示例卡仅显示文字，不尝试朗读',exampleSpeakButton.disabled && exampleSpeakButton.textContent.includes('待配音') && window.__audioInstances.length===audioCountBeforeSentence);
+  check('未配音示例卡仅显示文字，不尝试朗读',exampleSpeakButton.disabled && exampleSpeakButton.textContent.includes('暂无录音') && window.__audioInstances.length===audioCountBeforeSentence);
 
   // 释义自测开关
   const meaningEl = doc.getElementById('studyMeaning');
@@ -308,8 +308,8 @@ function animClean() {
     cssText.includes('@keyframes appHomeEnter') && cssText.includes('@keyframes appPricingEnter') &&
     cssText.includes('@keyframes pricePop') && cssText.includes('.price strong.is-changing') &&
     cssText.includes('prefers-reduced-motion: reduce'));
-  check('Service Worker 升到 v26 并预缓存口语句库与安装引导视频',
-    swSource.includes("CACHE_NAME = 'lexio-shell-v26-selected-voice'") &&
+  check('Service Worker 升到 v27 并预缓存口语句库与安装引导视频',
+    swSource.includes("CACHE_NAME = 'lexio-shell-v27-study-glow'") &&
     swSource.includes("'./data/daily-conversation.json'") &&
     swSource.includes("'./media/install-guide.mp4'") &&
     pageHtml.includes('controllerchange') && pageHtml.includes('swRefreshing'));
@@ -626,6 +626,9 @@ function animClean() {
     `phrases=${conversation.phrases.length} scenes=${conversation.categories.length}`);
   const bundled = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'original-site-wordbank.json'), 'utf8'));
   const bundledWords = bundled.books.flatMap((book) => book.words || []);
+  const schoolShelf=doc.querySelector('[data-stage="小学"]').closest('section');
+  check('中小学在同一个分组，保留三个独立的年级入口', [...schoolShelf.querySelectorAll('[data-stage]')].map(b=>b.textContent).join('/')==='小学/初中/美国1-9年级');
+  check('自动缓存不需要用户点击，也不需要浏览器报告 Wi-Fi', !doc.querySelector('#prepareOffline') && !pageHtml.includes('wifiReady') && pageHtml.includes("postMessage({type:'prepare-offline'})"));
   check('词库首页不直接列出各年级', !doc.querySelector('#wordCatalog [data-grade]') && doc.querySelectorAll('#wordCatalog [data-stage]').length===3);
   for(const [stage,total] of Object.entries({小学:6,初中:3,美国:9})){
     doc.querySelector(`[data-stage="${stage}"]`).click();

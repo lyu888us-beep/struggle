@@ -1257,8 +1257,6 @@
     .catalog .shelf-link { display:flex; align-items:center; justify-content:space-between; gap:6px; background:linear-gradient(145deg,#fff,#ffffffa8); border-color:color-mix(in srgb,var(--edge) 22%,white); box-shadow:0 1px 2px #27473912; }
     .catalog .shelf-link:after { width:19px;height:19px;border-radius:50%;text-align:center;background:var(--tint);line-height:18px;flex-shrink:0; }
     .catalog .shelf-link:focus-visible { outline:3px solid var(--edge);outline-offset:1px; }
-    .offline-pack { display:flex; align-items:center; gap:10px; background:#eef5ef; padding:9px; border-radius:12px; }
-    .offline-pack button {flex-shrink:0;} .offline-pack small {line-height:1.45;color:#47615c;font-size:11px;}
     @media (hover:hover) and (prefers-reduced-motion:no-preference){.shelf-link:hover {transform:translateY(-2px);} }
     /* Directory first; list controls only appear after an explicit choice. */
     .library-mode-panel:not(.in-list)>:not(.catalog), .library-mode-panel.in-list>.catalog { display:none !important; }
@@ -1355,6 +1353,41 @@
       .word-tile, .phrase-item { padding:12px; }
       .panel-head, .study-app-top { flex-wrap:wrap; }
       .view-topbar .back { border:0; background:#edf3ee; }
+    }
+
+    /* Paint the rails in the border box. The wash fades to paper before
+       the label; neither layer is an overlay or an absolutely placed node. */
+    .shelf, .word-tile, .phrase-item, .record-card, .record-metrics>div,
+    .feature-card, .exam-card, .menu-card:not(.primary) {
+      --edge-ink:var(--edge,var(--rail-top));
+      --paper-tint:var(--tint,#fff);
+      border:1px solid transparent; border-inline-width:2px;
+      background:linear-gradient(var(--paper-tint),var(--paper-tint)) padding-box,
+        linear-gradient(160deg,color-mix(in srgb,var(--edge-ink) 55%,white),#ebeee4,var(--rail-bottom)) border-box;
+    }
+    .record-metrics>div:nth-child(1){--paper-tint:#eaf5e8;}
+    .record-metrics>div:nth-child(2){--paper-tint:#fcf0df;}
+    .record-metrics>div:nth-child(3){--paper-tint:#e9f0fa;}
+    .catalog .shelf {background:linear-gradient(115deg,var(--tint),#fdfefd) padding-box,
+      linear-gradient(165deg,var(--edge),#e6eeeb,var(--tint)) border-box;}
+    body[data-app-view] :is(.demo-tab,.library-mode-tab,.catalog .shelf-link,.menu-card) {
+      --glow:#68a799; --glow-end:#accb80; --face:#fcfefb; --wash:#edf6ef;
+      border:1px solid transparent; border-inline-width:2px; color:#173f36;
+      background:linear-gradient(90deg,var(--wash),var(--face) 28%,var(--face) 72%,var(--wash)) padding-box,
+        linear-gradient(140deg,var(--glow),#d9e9de,var(--glow-end),var(--glow)) border-box;
+      background-size:100% 100%,200% 100%;
+    }
+    body[data-app-view] :is(.demo-tab.active,.library-mode-tab[aria-selected="true"],.menu-card.primary){
+      --face:#18473f; --wash:#285b4e; --glow:#78c2ae; --glow-end:#d1e98d;color:#fff;
+    }
+    body[data-app-view] .shelf-link {--wash:var(--tint);--glow:var(--edge);}
+    body[data-app-view] .menu-card:nth-child(2){--wash:#e5eff7;--glow:#76a7c3;}
+    body[data-app-view] .menu-card:nth-child(3){--wash:#fbf0df;--glow:#c49a64;}
+    body[data-app-view] .menu-card:nth-child(4){--wash:#eee9f6;--glow:#a78bb8;}
+    @keyframes edgeBreath {0%,100%{background-position:0 0,0% 50%;box-shadow:0 0 0 transparent;}
+      50%{background-position:0 0,100% 50%;box-shadow:0 0 6px color-mix(in srgb,var(--glow) 35%,transparent);}}
+    @media(prefers-reduced-motion:no-preference){
+      body[data-app-view] :is(.demo-tab,.library-mode-tab,.catalog .shelf-link,.menu-card){animation:edgeBreath 5s ease-in-out infinite;}
     }
   </style>
 </head>
@@ -1487,7 +1520,7 @@
             <button class="library-mode-tab" id="dailyPhrasesTab" type="button" role="tab" aria-selected="false" data-library-mode="phrases">日常口语</button>
           </div>
           <div class="library-mode-panel is-active" id="wordBankMode" role="tabpanel" aria-labelledby="wordLibraryTab">
-            <div class="catalog" id="wordCatalog"><svg class="pocket-art" aria-hidden="true" viewBox="0 0 60 56"><path d="M30 36Q31 22 39 10M31 30Q20 25 16 18" fill="none" stroke="#476e55" stroke-width="3"/><path d="M33 22Q32 4 51 4Q53 21 33 22" fill="#61ad7c"/><path d="M24 27Q8 29 7 13Q22 11 24 27" fill="#98c889"/><path d="M16 33H44L40 50H20Z" fill="#ebac81"/><rect x="14" y="31" width="32" height="6" rx="3" fill="#ca845f"/><path d="M25 41Q30 46 35 41" fill="none" stroke="#83533b" stroke-width="2"/></svg><small>LEXIO FIELD NOTES　 /　01</small><h3>选择词库</h3><p>选一套词表，再搜索或进入词卡。</p><div class="offline-pack"><button id="prepareOffline" type="button">准备离线资源</button><small id="packStatus" role="status">安装后，检测到 Wi-Fi 将自动准备。无法识别网络时可手动准备。</small></div><section class="shelf shelf-0"><h4>通用</h4><div class="shelf-grid"><button class="filter-chip shelf-link" data-filter="all" type="button">全部词条</button></div></section><section class="shelf shelf-1"><h4>大陆分级</h4><div class="shelf-grid"><button class="shelf-link" data-stage="小学">大陆小学</button><button class="shelf-link" data-stage="初中">大陆初中</button></div></section><section class="shelf shelf-2"><h4>考试备考</h4><div class="shelf-grid"><button class="filter-chip shelf-link" data-filter="高考" type="button">高考</button><button class="filter-chip shelf-link" data-filter="CET-4" type="button">大学英语四级</button><button class="filter-chip shelf-link" data-filter="CET-6" type="button">大学英语六级</button><button class="filter-chip shelf-link" data-filter="考研" type="button">考研</button><button class="filter-chip shelf-link" data-filter="雅思" type="button">雅思</button></div></section><section class="shelf shelf-3"><h4>美国分级</h4><div class="shelf-grid"><button class="shelf-link" data-stage="美国">美国学校词汇</button></div></section></div>
+            <div class="catalog" id="wordCatalog"><svg class="pocket-art" aria-hidden="true" viewBox="0 0 60 56"><path d="M30 36Q31 22 39 10M31 30Q20 25 16 18" fill="none" stroke="#476e55" stroke-width="3"/><path d="M33 22Q32 4 51 4Q53 21 33 22" fill="#61ad7c"/><path d="M24 27Q8 29 7 13Q22 11 24 27" fill="#98c889"/><path d="M16 33H44L40 50H20Z" fill="#ebac81"/><rect x="14" y="31" width="32" height="6" rx="3" fill="#ca845f"/><path d="M25 41Q30 46 35 41" fill="none" stroke="#83533b" stroke-width="2"/></svg><small>LEXIO FIELD NOTES　 /　01</small><h3>选择词库</h3><p>选一套词表，再搜索或进入词卡。</p><section class="shelf shelf-0"><h4>通用</h4><div class="shelf-grid"><button class="filter-chip shelf-link" data-filter="all" type="button">全部词条</button></div></section><section class="shelf shelf-1"><h4>中小学分级</h4><div class="shelf-grid"><button class="shelf-link" data-stage="小学">小学</button><button class="shelf-link" data-stage="初中">初中</button><button class="shelf-link" data-stage="美国">美国1-9年级</button></div></section><section class="shelf shelf-2"><h4>考试备考</h4><div class="shelf-grid"><button class="filter-chip shelf-link" data-filter="高考" type="button">高考</button><button class="filter-chip shelf-link" data-filter="CET-4" type="button">英语四级</button><button class="filter-chip shelf-link" data-filter="CET-6" type="button">英语六级</button><button class="filter-chip shelf-link" data-filter="考研" type="button">考研</button><button class="filter-chip shelf-link" data-filter="雅思" type="button">雅思</button></div></section></div>
             <div class="catalog" id="gradeCatalog" hidden><button id="gradeBack" type="button">‹ 词库目录</button><h3 id="stageTitle"></h3><p id="stageNote"></p><section class="shelf"><h4>选择年级</h4><div class="shelf-grid" id="gradeChoices"></div></section></div>
             <div class="list-crumb"><button data-up="wordBankMode">‹ 词库目录</button><b id="wordCrumb"></b></div>
             <div class="library-top">
@@ -1514,7 +1547,7 @@
 
     <section class="section library-intro" data-app-view="home" aria-label="词库介绍">
       <div class="container">
-        <div class="section-heading" data-reveal><div class="eyebrow"><span class="dot"></span> ONE LIBRARY, MANY GOALS</div><h2>从小学到留学，<br>让每个目标 <em>都有清晰路线。</em></h2><p>大陆小学和初中词汇、美国 1–9 年级精选词、五套考试词库与 1,100 句日常口语都在同一本词库里；搜索、学习、朗读都不用切换 App。</p></div>
+        <div class="section-heading" data-reveal><div class="eyebrow"><span class="dot"></span> ONE LIBRARY, MANY GOALS</div><h2>从小学到留学，<br>让每个目标 <em>都有清晰路线。</em></h2><p>小学和初中词汇、美国 1–9 年级精选词、五套考试词库与 1,100 句日常口语都在同一本词库里；搜索、学习、朗读都不用切换 App。</p></div>
         <div class="phrase-tag-board" data-reveal aria-label="日常短句宣传">
           <div class="phrase-tag-head"><h3>日常英语 · 随手就能说出口</h3><p>十一个生活与商务场景、1,100 句常用短句，点标签直接进入对应场景开始练习。</p></div>
           <div class="phrase-tags" id="phraseTagBoard">
@@ -1532,8 +1565,8 @@
         </div>
 <div class="exam-grid">
           <article class="exam-card" style="--wash:#e5efd8" data-reveal><span class="exam-icon">高</span><strong>3,500 词</strong><h3>高考核心词</h3><p>高考大纲 · 真题高频</p></article>
-          <article class="exam-card stagger-1" style="--wash:#f2ead5" data-reveal><span class="exam-icon">4</span><strong>4,500 词</strong><h3>大学英语四级</h3><p>CET-4 · 高频核心</p></article>
-          <article class="exam-card stagger-2" style="--wash:#e0e9f0" data-reveal><span class="exam-icon">6</span><strong>5,500 词</strong><h3>大学英语六级</h3><p>CET-6 · 进阶刷分</p></article>
+          <article class="exam-card stagger-1" style="--wash:#f2ead5" data-reveal><span class="exam-icon">4</span><strong>4,500 词</strong><h3>英语四级</h3><p>CET-4 · 高频核心</p></article>
+          <article class="exam-card stagger-2" style="--wash:#e0e9f0" data-reveal><span class="exam-icon">6</span><strong>5,500 词</strong><h3>英语六级</h3><p>CET-6 · 进阶刷分</p></article>
           <article class="exam-card stagger-3" style="--wash:#f4e5dc" data-reveal><span class="exam-icon">研</span><strong>5,500 词</strong><h3>考研英语</h3><p>熟词生义 · 真题拆解</p></article>
           <article class="exam-card stagger-4" style="--wash:#e9e3f2" data-reveal><span class="exam-icon">雅</span><strong>6,000 词</strong><h3>雅思核心词</h3><p>学术语境 · 话题拓展</p></article>
         </div>
@@ -1954,17 +1987,13 @@
           await idbSetMeta({...meta, contentVersion:BUNDLED_CONTENT_VERSION});
         }
       }
-      const installedMode=()=>!!(navigator.standalone || window.matchMedia?.('(display-mode: standalone), (display-mode: fullscreen)').matches);
-      const wifiReady=()=>navigator.connection?.type==='wifi' && !navigator.connection.saveData;
-      async function initializeBank(manual=false) {
+      async function initializeBank() {
         try {
           db ||= await openDB();
           let count = await idbCount();
           let meta = await idbGetMeta('bank');
           const shouldSeedOriginal = count === 0 || !!(meta && meta.isDemo) || (!meta && count <= SAMPLE_WORDS.length);
-          const canSeed=manual || !installedMode() || wifiReady() || !!(await window.caches?.match('./data/original-site-wordbank.json'));
-          if (!canSeed && !count) {await idbReplaceWords(SAMPLE_WORDS.map(normalizeWord),{sourceFile:'示例词库',isDemo:true});}
-          if (shouldSeedOriginal && canSeed) {
+          if (shouldSeedOriginal) {
             try {
               await loadBundledWordBank();
               count = await idbCount();
@@ -1980,7 +2009,7 @@
           }
           bank = await idbGetAll();
           meta = await idbGetMeta('bank');
-          if (canSeed && meta && !meta.isDemo && meta.contentVersion !== BUNDLED_CONTENT_VERSION) {
+          if (meta && !meta.isDemo && meta.contentVersion !== BUNDLED_CONTENT_VERSION) {
             try {
               await mergeBundledStudyContent(meta);
               bank = await idbGetAll();
@@ -2490,7 +2519,7 @@
           exSpeakBtn.hidden = !word.example;
           exSpeakBtn.disabled = exampleIsPhrase || !recordingFor(word.example);
           exSpeakBtn.title = exampleIsPhrase ? '这是词典短语，不是完整句子：请用上方单词发音。' : exSpeakBtn.disabled ? '这句暂无所选音色的录音' : '使用所选音色朗读整句';
-          exSpeakBtn.textContent = exSpeakBtn.disabled ? (exampleIsPhrase ? '词典短语' : '所选音色待配音') : '🔊 朗读例句';
+          exSpeakBtn.textContent = exSpeakBtn.disabled ? (exampleIsPhrase ? '词典短语' : '本句暂无录音') : '🔊 朗读例句';
           exSpeakBtn.dataset.speaking = '0';
         }
         updateProgressUI();
@@ -2702,7 +2731,17 @@
         "Shall we get started?": "meeting",
         "Hello, this is Mei speaking.": "phone",
         "I need help. Could you call the police?": "help",
-        "Could you tell me a little about your business?": "business-4"
+        "Could you tell me a little about your business?": "business-4",
+        "The teacher provided a comprehensive review guide before the final exam.": "card-5",
+        "She set an ambitious goal of mastering 3,500 words before the college entrance exam.": "card-6",
+        "Daily reading contributes greatly to building a solid vocabulary base.": "card-7",
+        "Spaced repetition is essential for transferring words into long-term memory.": "card-8",
+        "Online courses make high-quality English learning accessible to rural students.": "card-9",
+        "A significant number of students improved their scores after three months of daily practice.": "card-10",
+        "Read one paragraph at a time so your brain can absorb the new words.": "card-11",
+        "You can accomplish your weekly word goal by studying fifteen minutes a day.": "card-12",
+        "Acknowledge your mistakes first, and then correct them with targeted review.": "card-13",
+        "It takes about two weeks to adapt to a new study schedule.": "card-14"
 };
       function recordingFor(text) {
         const key=String(text||'').trim();
@@ -2729,7 +2768,7 @@
           if(complete || (audio && activeAudio!==audio))return;
           clearTimeout(timer);
           if(audio){activeAudio=null; try{audio.pause();}catch(_){} }
-          if(local){finish();onError?.(new Error('这段录音未能播放，请联网重试或先准备离线资源。'));return;}
+          if(local){finish();onError?.(new Error('这段录音未能播放，请联网后重试。'));return;}
           speak(text, lang, finish, onError, rate);
         };
         if (!local && navigator.onLine === false) { fallback(); return; }
@@ -2861,7 +2900,7 @@
         $('#wordBankMode').classList.remove('in-list');
         $('#wordCatalog').hidden=!!stage;$('#gradeCatalog').hidden=!stage;
         if(!stage)return;
-        $('#stageTitle').textContent=stage==='美国'?'美国学校词汇':'大陆'+stage;
+        $('#stageTitle').textContent=stage==='美国'?'美国1-9年级':stage;
         const provenance={小学:'一、二年级为原创启蒙精选；三至六年级按人教版教材分册整理。',初中:'初一、初二、初三分别对应教材七、八、九年级。',美国:'每个年级精选 10 词，并非全美统一必背词表。'};
         $('#stageNote').textContent=provenance[stage]+' 本机词库不完整时，首次选级会联网补载。';
         $('#gradeChoices').replaceChildren();
@@ -3277,26 +3316,23 @@
       }
       loadPublicConfigs();
       let bankInit=initializeBank();
-      let preparing=false;
-      async function prepareOffline(manual=false){
-        if(preparing || (!manual && (!installedMode() || !wifiReady())))return;
-        const btn=$('#prepareOffline'),status=$('#packStatus');
-        if(!('serviceWorker' in navigator)){status.textContent='此浏览器不支持离线缓存。';return;}
-        preparing=true;btn.disabled=true;status.textContent='正在准备词库和朗读资源，请保持页面打开…';
+      // No install-mode or network-type test: iOS often doesn't expose either.
+      // The worker checks Cache Storage first and coalesces concurrent requests.
+      async function cacheInBackground(){
+        if(!navigator.serviceWorker || navigator.onLine===false)return;
         try{
-          const registration=await Promise.race([navigator.serviceWorker.ready,new Promise((_,reject)=>setTimeout(()=>reject(Error('离线服务尚未就绪')),15000))]);
-          await new Promise((resolve,reject)=>{
-            const port=new MessageChannel(),timeout=setTimeout(()=>{port.port1.close();reject(Error('下载超时'));},120000);
-            port.port1.onmessage=e=>{clearTimeout(timeout);port.port1.close();e.data.ok?resolve():reject(Error('资源下载失败'));};
-            registration.active.postMessage({type:'prepare-offline'},[port.port2]);
-          });
-          await bankInit;await initializeBank(true);status.textContent='离线词库和朗读资源已就绪。';
-        }catch(_){status.textContent='准备未完成，请检查网络和可用空间后重试。';}finally{preparing=false;btn.disabled=false;}
+          const registration=await navigator.serviceWorker.ready;
+          await bankInit;
+          registration.active?.postMessage({type:'prepare-offline'});
+        }catch(e){console.info('Offline resources will be retried on the next visit.',e);}
       }
-      $('#prepareOffline').onclick=()=>prepareOffline(true);
-      navigator.connection?.addEventListener?.('change',()=>prepareOffline());
-      window.addEventListener('online',()=>prepareOffline());
-      prepareOffline();
+      window.addEventListener('online',async()=>{
+        await bankInit;
+        if(bankMeta?.isDemo)bankInit=initializeBank();
+        cacheInBackground();
+      });
+      document.addEventListener('visibilitychange',()=>{if(!document.hidden)cacheInBackground();});
+      cacheInBackground();
       window.__lexioMaybeReminder = maybeShowReminder;
       setTimeout(maybeShowReminder, 1200);
     })();

@@ -1,5 +1,5 @@
 /* Lexio 乐词 PWA shell cache. Bump the cache version whenever app assets change. */
-const CACHE_NAME = 'lexio-shell-v26-selected-voice';
+const CACHE_NAME = 'lexio-shell-v27-study-glow';
 const SHELL_URLS = [
   './',
   './index.html',
@@ -30,7 +30,7 @@ self.addEventListener('activate', event => {
   );
 });
 
-const bulkAssets=['./data/original-site-wordbank.json',...["card-1", "card-2", "card-3", "card-4", "business-1", "business-2", "business-3", "daily-1", "daily-2", "daily-3", "dining", "shopping", "taxi", "hotel", "flight", "pharmacy", "meeting", "phone", "help", "business-4"].map(n=>'./media/voice/'+n+'.mp3')];
+const bulkAssets=['./data/original-site-wordbank.json',...["card-1", "card-2", "card-3", "card-4", "business-1", "business-2", "business-3", "daily-1", "daily-2", "daily-3", "dining", "shopping", "taxi", "hotel", "flight", "pharmacy", "meeting", "phone", "help", "business-4", "card-5", "card-6", "card-7", "card-8", "card-9", "card-10", "card-11", "card-12", "card-13", "card-14"].map(n=>'./media/voice/'+n+'.mp3')];
 async function localAsset(path){
   const cache=await caches.open(CACHE_NAME), cached=await cache.match(path);
   if(cached)return cached;
