@@ -775,14 +775,17 @@ function animClean() {
   await sleep(80);
   const masteredAfterKnown = progressApi.mastered().length;
   const weakAfterKnown = progressApi.weak();
+  const againWord = (window.__lexioStudy.current() || {}).word;
+  const wasAlreadyWeak = window.__lexioWeak ? window.__lexioWeak.list().includes(againWord) : false;
   doc.getElementById('againWord').click();
   await sleep(80);
-  // 点「还不熟悉」：当前词进入薄弱队列、退出已记住；已记住总数不因这次点击减少
+  // 点「还不熟悉」：当前词进入薄弱队列（已在队列里不重复计数）、并退出已记住
   check('已记住 / 没记牢随实际标记变化',
     masteredAfterKnown === masteredBefore + 1 &&
-    progressApi.weak() === weakAfterKnown + 1 &&
-    !progressApi.mastered().includes(window.__lexioStudy.current().word),
-    `mastered=${masteredBefore}→${masteredAfterKnown} weak=${weakBefore}→${weakAfterKnown}→${progressApi.weak()}`);
+    window.__lexioWeak.list().includes(againWord) &&
+    progressApi.weak() === weakAfterKnown + (wasAlreadyWeak ? 0 : 1) &&
+    !progressApi.mastered().includes(againWord),
+    `mastered=${masteredBefore}→${masteredAfterKnown} weak=${weakBefore}→${weakAfterKnown}→${progressApi.weak()} (wasWeak=${wasAlreadyWeak})`);
   doc.querySelector('[data-demo-tab="memory"]').click();
   await sleep(60);
   check('记忆面板显示真实已记住 / 没记牢 / 连续天数',
