@@ -155,12 +155,12 @@ function animClean() {
   // 例句点击时立即调用设备 en-US 系统语音，避免异步逐词音频失去 iOS 用户手势授权。
   const exampleSpeakButton = doc.getElementById('exampleSpeak');
   const audioCountBeforeSentence = (window.__audioInstances || []).length;
-  doc.getElementById('sentenceVoice').value='original';
+  Object.defineProperty(window.navigator,'serviceWorker',{configurable:true,value:{controller:{}}});
   exampleSpeakButton.click();
   await sleep(30);
   const sampleAudio = window.__lastAudio;
   const sourceURL = new URL(sampleAudio.src);
-  check('例句走原美式音源、整句 0.75 倍速',sourceURL.hostname==='dict.youdao.com' && sourceURL.searchParams.get('type')==='2' && sourceURL.searchParams.get('audio').includes(' ') && sampleAudio.playbackRate===0.75);
+  check('例句走同源媒体、整句 0.75 倍速',(sourceURL.pathname.endsWith('local-sentence.wav') || sourceURL.pathname.endsWith('.mp3')) && sampleAudio.playbackRate===0.75);
   check('例句只请求一段音频',window.__audioInstances.length===audioCountBeforeSentence+1);
   exampleSpeakButton.click(); // stop the mocked utterance and leave no timer behind
 
@@ -291,7 +291,7 @@ function animClean() {
     cssText.includes('padding: 12px 0 calc(12px + env(safe-area-inset-bottom))'));
   const pageHtml = doc.documentElement.outerHTML;
   check('例句首选完整 en-US 录音，避免异步音频链',
-    pageHtml.includes("playPronunciation(sentence, 'en-US', 0.75, '', onDone, onError)") &&
+    pageHtml.includes("playPronunciation(sentence,'en-US',0.75,url,onDone,onError,true)") &&
     !pageHtml.includes('function speakExample(text, onDone, onError) {\n        const sentence = String(text || \'\').trim();\n        const matches ='));
   check('例句朗读按钮和状态明确标记美式发音',
     pageHtml.includes('使用美式发音播放例句') && pageHtml.includes('正在播放美式例句'));
@@ -312,8 +312,8 @@ function animClean() {
     cssText.includes('@keyframes appHomeEnter') && cssText.includes('@keyframes appPricingEnter') &&
     cssText.includes('@keyframes pricePop') && cssText.includes('.price strong.is-changing') &&
     cssText.includes('prefers-reduced-motion: reduce'));
-  check('Service Worker 升到 v21 并预缓存口语句库与安装引导视频',
-    swSource.includes("CACHE_NAME = 'lexio-shell-v21-speaking-library'") &&
+  check('Service Worker 升到 v22 并预缓存口语句库与安装引导视频',
+    swSource.includes("CACHE_NAME = 'lexio-shell-v22-pocket-garden'") &&
     swSource.includes("'./data/daily-conversation.json'") &&
     swSource.includes("'./media/install-guide.mp4'") &&
     pageHtml.includes('controllerchange') && pageHtml.includes('swRefreshing'));
@@ -532,7 +532,7 @@ function animClean() {
   pharmacyPhrase.querySelector('[data-phrase-speak]').click();
   await sleep(30);
   const phraseAudio=window.__lastAudio, phraseURL=new URL(phraseAudio.src);
-  check('口语句沿用原美式音频与 0.75 倍速', phraseURL.searchParams.get('type')==='2' && phraseURL.searchParams.get('audio').includes('pharmacy') && phraseAudio.playbackRate===0.75);
+  check('口语句使用本机美式音频与 0.75 倍速', phraseURL.pathname.endsWith('/local-sentence.wav') && phraseURL.searchParams.get('text').includes('pharmacy') && phraseAudio.playbackRate===0.75);
   phraseAudio.emit('error');
   check('网络音频失败转入美式系统语音', window.__lastUtterance.lang==='en-US' && window.__lastUtterance.rate===0.75 && window.__lastUtterance.text.includes('pharmacy'));
   window.__lastUtterance.onend();
@@ -699,7 +699,7 @@ function animClean() {
   }
 
   check('词卡例句朗读会去掉中文引号并整句交给 en-US 语音',
-    html.includes("replace(/[“”\"]/g, '')") && html.includes("playPronunciation(sentence, 'en-US', 0.75, '', onDone, onError)"));
+    html.includes("replace(/[“”\"]/g, '')") && html.includes("playPronunciation(sentence,'en-US',0.75,url,onDone,onError,true)"));
   check('内置词库逐词有记忆线索/复习提示', missingMnemonics === 0 &&
     bundledWords.filter((word) => word.mnemonicSource === 'generated-recall-cue').length > 0,
     `missing=${missingMnemonics}`);

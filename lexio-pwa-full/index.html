@@ -1252,20 +1252,40 @@
     body[data-app-view="home"] .menu-card:nth-child(3) { background-color:#fff4df; --rail-top:#95591e; }
     body[data-app-view="home"] .menu-card:nth-child(4) { background-color:#f1edfa; --rail-top:#765790; }
     #study .back-speak { color:#155776; background-color:#e5f3fa; }
+    /* Raised surfaces are intentionally limited to focal cards, not the header or scrolling text. */
+    :is(.progress-card,.record-card,.showcase-card,.library-panel,.price-card,.study-word-card) { box-shadow:0 2px 3px #254c3510,0 9px 24px -12px #16443845; }
+    #studyCard { transform-origin:center 84%; }
+    .catalog { position:relative; }
+    .pocket-art { width:52px; height:48px; float:right; margin:0 6px 0 8px; pointer-events:none; filter:drop-shadow(0 5px 3px #34594024); }
+    .shelf { position:relative; box-shadow:0 5px 14px -10px #31524c70; }
+    .catalog .shelf h4 { letter-spacing:.055em; }
+    .catalog .shelf-link { display:flex; align-items:center; justify-content:space-between; gap:6px; background:linear-gradient(145deg,#fff,#ffffffa8); border-color:color-mix(in srgb,var(--edge) 22%,white); box-shadow:0 1px 2px #27473912; }
+    .catalog .shelf-link:after { width:19px;height:19px;border-radius:50%;text-align:center;background:var(--tint);line-height:18px;flex-shrink:0; }
+    .catalog .shelf-link:focus-visible { outline:3px solid var(--edge);outline-offset:1px; }
+    .offline-pack { display:flex; align-items:center; gap:10px; background:#eef5ef; padding:9px; border-radius:12px; }
+    .offline-pack button {flex-shrink:0;} .offline-pack small {line-height:1.45;color:#47615c;font-size:11px;}
+    @media (hover:hover) and (prefers-reduced-motion:no-preference){.shelf-link:hover {transform:translateY(-2px);} }
     /* Directory first; list controls only appear after an explicit choice. */
     .library-mode-panel:not(.in-list)>:not(.catalog), .library-mode-panel.in-list>.catalog { display:none !important; }
     .catalog { flex:1; min-height:0; overflow-y:auto; overscroll-behavior:contain; padding:8px 5px 20px; }
-    .catalog>small,#voiceDialog small { color:#397380; font-weight:800; letter-spacing:.14em; font-size:10px; }
+    .catalog>small { color:#397380; font-weight:800; letter-spacing:.14em; font-size:10px; }
     .catalog h3 { font-size:24px; margin:4px 0; } .catalog>p { color:#50676a; font-size:13px; margin:4px 0 14px; }
     .shelf { --edge:#397e76; --tint:#eaf6ef; background:var(--tint); border:1px solid #d3e1df; border-inline-start:4px solid var(--edge); border-radius:17px; margin:10px 0; padding:12px; }
     .shelf-1 { --edge:#996132; --tint:#fcf2e4; } .shelf-2 { --edge:#776098; --tint:#f3eff9; } .shelf-3 { --edge:#437392; --tint:#eaf3fa; }
     .shelf h4 { font-size:13px; margin:0 0 8px; color:var(--edge); } .shelf-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(128px,100%),1fr)); gap:7px; }
     .catalog button,.list-crumb button,.phrase-marks button { border:1px solid #ccd9d6; background:white; color:#294e4d; border-radius:10px; padding:8px 10px; cursor:pointer; }
     .catalog .shelf-link { min-height:42px; text-align:left; font-size:13px; font-weight:650; } .shelf-link:after { content:'›'; float:right; color:var(--edge); }
-    .list-crumb { display:flex; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:8px; font-size:13px; }.list-crumb [data-voices]{ margin-left:auto; }
+    .list-crumb { display:flex; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:8px; font-size:13px; }
     .phrase-marks { display:flex; gap:6px; flex-wrap:wrap; margin-top:8px; }.phrase-marks button { font-size:11px; }.phrase-marks button[aria-pressed=true] { color:white; background:#256857; }
-    #sentenceVoice { display:block; width:100%; padding:10px; margin:6px 0; font-size:16px; } #voiceHint { min-height:2em; font-size:13px; color:#58665e; }
+
     @media(max-width:760px){ .phrase-top .phrase-search-wrap { flex:auto; } }
+    .catalog .pocket-art { width:62px; height:58px; margin-right:10px; }
+    .catalog h3 { letter-spacing:-.045em; }
+    .catalog .shelf { margin:14px 1px; padding:14px; border-radius:19px; background:linear-gradient(115deg,var(--tint) 0%,var(--tint) 60%,#fff 150%); }
+    .catalog .shelf h4 { display:flex;align-items:center;gap:8px;margin-bottom:11px; }
+    .catalog .shelf h4::before { content:'';width:12px;height:8px;border-radius:1px 9px;background:var(--edge);transform:rotate(-18deg); }
+    .catalog .shelf-link { min-height:45px; border-radius:12px; }
+    @media(prefers-reduced-motion:no-preference){.pocket-art {animation:leafBob 6s ease-in-out infinite;} @keyframes leafBob {50%{transform:translateY(-3px) rotate(2deg);}}}
   </style>
 </head>
 <body>
@@ -1327,7 +1347,7 @@
 
     <section id="progress" data-app-view="progress" aria-labelledby="recordTitle">
       <div class="record-shell">
-        <header><span class="eyebrow">LEARNING JOURNAL</span><h1 id="recordTitle">本机学习记录</h1><p>看看这段时间记住了什么，以及哪些词还需要练习。</p></header>
+        <header><svg class="pocket-art" aria-hidden="true" viewBox="0 0 60 56"><path d="M30 36Q31 22 39 10M31 30Q20 25 16 18" fill="none" stroke="#476e55" stroke-width="3"/><path d="M33 22Q32 4 51 4Q53 21 33 22" fill="#61ad7c"/><path d="M24 27Q8 29 7 13Q22 11 24 27" fill="#98c889"/><path d="M16 33H44L40 50H20Z" fill="#ebac81"/><rect x="14" y="31" width="32" height="6" rx="3" fill="#ca845f"/><path d="M25 41Q30 46 35 41" fill="none" stroke="#83533b" stroke-width="2"/></svg><span class="eyebrow">LEARNING JOURNAL</span><h1 id="recordTitle">本机学习记录</h1><p>看看这段时间记住了什么，以及哪些词还需要练习。</p></header>
         <div class="record-metrics">
           <div><small>累计已记住</small><strong id="recordKnown">0</strong></div>
           <div><small>待巩固</small><strong id="recordWeak">0</strong></div>
@@ -1397,7 +1417,7 @@
             <button class="library-mode-tab" id="dailyPhrasesTab" type="button" role="tab" aria-selected="false" data-library-mode="phrases">日常口语</button>
           </div>
           <div class="library-mode-panel is-active" id="wordBankMode" role="tabpanel" aria-labelledby="wordLibraryTab">
-            <div class="catalog" id="wordCatalog"><small>WORD COLLECTIONS</small><h3>选择词库</h3><p>选一套词表，再搜索或进入词卡。</p><section class="shelf shelf-0"><h4>通用</h4><div class="shelf-grid"><button class="filter-chip shelf-link" data-filter="all" type="button">全部词条</button></div></section><section class="shelf shelf-1"><h4>大陆教材</h4><div class="shelf-grid"><button class="filter-chip shelf-link" data-filter="小学" type="button">小学</button><button class="filter-chip shelf-link" data-filter="初中" type="button">初中</button></div></section><section class="shelf shelf-2"><h4>考试备考</h4><div class="shelf-grid"><button class="filter-chip shelf-link" data-filter="高考" type="button">高考</button><button class="filter-chip shelf-link" data-filter="CET-4" type="button">大学英语四级</button><button class="filter-chip shelf-link" data-filter="CET-6" type="button">大学英语六级</button><button class="filter-chip shelf-link" data-filter="考研" type="button">考研</button><button class="filter-chip shelf-link" data-filter="雅思" type="button">雅思</button></div></section><section class="shelf shelf-3"><h4>美国分级</h4><div class="shelf-grid"><button class="filter-chip shelf-link" data-filter="美国1年级" type="button">美国1年级</button><button class="filter-chip shelf-link" data-filter="美国2年级" type="button">美国2年级</button><button class="filter-chip shelf-link" data-filter="美国3年级" type="button">美国3年级</button><button class="filter-chip shelf-link" data-filter="美国4年级" type="button">美国4年级</button><button class="filter-chip shelf-link" data-filter="美国5年级" type="button">美国5年级</button><button class="filter-chip shelf-link" data-filter="美国6年级" type="button">美国6年级</button><button class="filter-chip shelf-link" data-filter="美国7年级" type="button">美国7年级</button><button class="filter-chip shelf-link" data-filter="美国8年级" type="button">美国8年级</button><button class="filter-chip shelf-link" data-filter="美国9年级" type="button">美国9年级</button></div></section></div>
+            <div class="catalog" id="wordCatalog"><svg class="pocket-art" aria-hidden="true" viewBox="0 0 60 56"><path d="M30 36Q31 22 39 10M31 30Q20 25 16 18" fill="none" stroke="#476e55" stroke-width="3"/><path d="M33 22Q32 4 51 4Q53 21 33 22" fill="#61ad7c"/><path d="M24 27Q8 29 7 13Q22 11 24 27" fill="#98c889"/><path d="M16 33H44L40 50H20Z" fill="#ebac81"/><rect x="14" y="31" width="32" height="6" rx="3" fill="#ca845f"/><path d="M25 41Q30 46 35 41" fill="none" stroke="#83533b" stroke-width="2"/></svg><small>LEXIO FIELD NOTES　 /　01</small><h3>选择词库</h3><p>选一套词表，再搜索或进入词卡。</p><div class="offline-pack"><button id="prepareOffline" type="button">准备离线资源</button><small id="packStatus" role="status">安装后，检测到 Wi-Fi 将自动准备。无法识别网络时可手动准备。</small></div><section class="shelf shelf-0"><h4>通用</h4><div class="shelf-grid"><button class="filter-chip shelf-link" data-filter="all" type="button">全部词条</button></div></section><section class="shelf shelf-1"><h4>大陆教材</h4><div class="shelf-grid"><button class="filter-chip shelf-link" data-filter="小学" type="button">小学</button><button class="filter-chip shelf-link" data-filter="初中" type="button">初中</button></div></section><section class="shelf shelf-2"><h4>考试备考</h4><div class="shelf-grid"><button class="filter-chip shelf-link" data-filter="高考" type="button">高考</button><button class="filter-chip shelf-link" data-filter="CET-4" type="button">大学英语四级</button><button class="filter-chip shelf-link" data-filter="CET-6" type="button">大学英语六级</button><button class="filter-chip shelf-link" data-filter="考研" type="button">考研</button><button class="filter-chip shelf-link" data-filter="雅思" type="button">雅思</button></div></section><section class="shelf shelf-3"><h4>美国分级</h4><div class="shelf-grid"><button class="filter-chip shelf-link" data-filter="美国1年级" type="button">美国1年级</button><button class="filter-chip shelf-link" data-filter="美国2年级" type="button">美国2年级</button><button class="filter-chip shelf-link" data-filter="美国3年级" type="button">美国3年级</button><button class="filter-chip shelf-link" data-filter="美国4年级" type="button">美国4年级</button><button class="filter-chip shelf-link" data-filter="美国5年级" type="button">美国5年级</button><button class="filter-chip shelf-link" data-filter="美国6年级" type="button">美国6年级</button><button class="filter-chip shelf-link" data-filter="美国7年级" type="button">美国7年级</button><button class="filter-chip shelf-link" data-filter="美国8年级" type="button">美国8年级</button><button class="filter-chip shelf-link" data-filter="美国9年级" type="button">美国9年级</button></div></section></div>
             <div class="list-crumb"><button data-up="wordBankMode">‹ 词库目录</button><b id="wordCrumb"></b></div>
             <div class="library-top">
               <div class="library-top-left"><h3>词库内容中心 <span id="bankCountLabel" style="font-size:10px;color:#8b968e;font-weight:550">正在载入…</span></h3><p>搜索单词或释义，点「学习此词」直接跳到学习面板。</p></div>
@@ -1409,8 +1429,8 @@
             <div class="word-grid" id="wordGrid" aria-live="polite"><div class="empty-state">正在准备词库…</div></div>
           </div>
           <div class="library-mode-panel" id="dailyPhrasesMode" role="tabpanel" aria-labelledby="dailyPhrasesTab" hidden>
-            <div class="catalog phrase-catalog" id="phraseCatalog"><small>CONVERSATION LAB</small><h3>选择练习场景</h3><p>按场景开口练习，或回到自己的复习夹。</p><div id="phraseCategories"></div><button type="button" data-voices>♫ 试听与选择句子声音</button></div>
-            <div class="list-crumb"><button data-up="dailyPhrasesMode">‹ 口语目录</button><b id="phraseCrumb"></b><button data-voices>♫ 声音</button></div>
+            <div class="catalog phrase-catalog" id="phraseCatalog"><svg class="pocket-art" aria-hidden="true" viewBox="0 0 60 56"><path d="M8 31L7 8L24 16Q31 13 39 17L52 8L52 31Q54 46 30 50Q9 45 8 31Z" fill="#d98557"/><path d="M11 14L12 24L19 19ZM47 15L41 20L48 24Z" fill="#98524c"/><path d="M9 31Q20 27 30 40Q41 26 52 31Q50 46 30 50Q13 45 9 31Z" fill="#fff0d7"/><path d="M16 30Q20 34 24 30M36 30Q40 34 44 30" fill="none" stroke="#643f39" stroke-width="2.5"/><path d="M26 40Q30 37 34 40L30 44Z" fill="#533b37"/></svg><small>LEXIO FIELD NOTES　 /　02</small><h3>选择练习场景</h3><p>按场景开口练习，或回到自己的复习夹。</p><div id="phraseCategories"></div></div>
+            <div class="list-crumb"><button data-up="dailyPhrasesMode">‹ 口语目录</button><b id="phraseCrumb"></b></div>
             <div class="phrase-top"><div><h3>日常口语场景句</h3><p>生活、出行、工作、医疗等常用表达；医疗句仅供语言练习。点击喇叭朗读。</p></div><label class="search-wrap phrase-search-wrap"><span class="visually-hidden">搜索口语句子</span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8" stroke="currentColor" stroke-width="1.8"/><path d="m16 16 4.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><input class="search-input" type="search" id="phraseSearch" placeholder="搜索英文、中文或场景" autocomplete="off"></label></div>
             <p class="phrase-count" id="phraseCount" aria-live="polite">正在载入口语句库…</p>
             <div class="daily-phrase-grid" id="dailyPhraseGrid" aria-live="polite"><div class="phrase-empty">正在准备日常口语句库…</div></div>
@@ -1475,7 +1495,7 @@
                   <p class="study-example" id="studyExample">先试着回忆，再揭晓释义。能主动想起，记忆才会更牢。</p>
                   <p class="study-example-translation" id="studyExampleTranslation" hidden></p>
                   <p class="study-mnemonic" id="studyMnemonic" hidden></p>
-                  <div class="back-actions"><button class="back-speak" id="exampleSpeak" type="button" aria-label="使用美式发音播放例句">🔊 朗读例句</button> <button type="button" class="back-speak" data-voices>♫ 选声音</button></div>
+                  <div class="back-actions"><button class="back-speak" id="exampleSpeak" type="button" aria-label="使用美式发音播放例句">🔊 朗读例句</button> </div>
                 </div>
               </div>
             </article>
@@ -1596,7 +1616,7 @@
           <details><summary>7 天试用结束后会怎样？</summary><p>这一版只在本机记录试用开始日期，并在到期前 14 天、7 天、1 天打开 App 时弹出提醒，不发短信、不发邮件。当前版本没有接入收银服务，不会自动扣款；付款前会明确显示续费日期、金额和取消方式。</p></details>
           <details><summary>支持哪些支付方式？</summary><p>支持多种方式支付，具体方式以正式结账页面为准。当前演示尚未接入真实收银服务，不会产生扣款。</p></details>
           <details><summary>它可以离线使用、添加到主屏幕吗？</summary><p>可以。用手机浏览器打开后，按页面里的「安装」引导添加到主屏幕，就能像普通 App 一样全屏打开；首次联网打开后即可离线使用。</p></details>
-          <details><summary>原站的发音、例句和学习进度也能保留吗？</summary><p>已迁移英 / 美音标、词性、中文释义与考试分类。精讲内容保留原有资料；另有匹配到词典的真实句例/记忆法，以及明确标注的释义提示和通用复习提示。词库数据本身未内嵌音频文件；单词保留原音源，句子默认使用可试听的本机美式女声。公开 HTML 未包含个人学习进度，迁移进度仍需原站账号数据导出。</p></details>
+          <details><summary>原站的发音、例句和学习进度也能保留吗？</summary><p>已迁移英 / 美音标、词性、中文释义与考试分类。精讲内容保留原有资料；另有匹配到词典的真实句例/记忆法，以及明确标注的释义提示和通用复习提示。词库数据本身未内嵌音频文件；单词保留原音源，句子优先播放已制作的美式女声录音，其余由本机女声生成，以约 0.75 倍速播放。公开 HTML 未包含个人学习进度，迁移进度仍需原站账号数据导出。</p></details>
           <details><summary>需要联网吗？能离线用吗？</summary><p>词库与日常口语句库都随 App 缓存到本机，断网也能查询和学习。首次载入、主动同步词库和播放原音录音需要网络；内置句子女声载入后，即使设备没有安装英语语音也可以离线朗读。</p></details>
         </div>
       </div>
@@ -1617,7 +1637,6 @@
     </div>
   </footer>
 
-  <dialog class="dialog" id="voiceDialog" aria-labelledby="voiceTitle"><div class="dialog-content"><button class="dialog-close" data-close-dialog aria-label="关闭">×</button><small>SENTENCE VOICES</small><h2 id="voiceTitle">选择美式句子声音</h2><p>两个内置女声可在本机朗读完整句子，约 0.75 倍速。词卡单词的发音不受影响。</p><label>句子音色 <select id="sentenceVoice"><option value="slt">SLT · 美式女声</option><option value="clb">CLB · 美式女声</option><option value="original">单词原音 · 联网尝试</option></select></label><p id="voiceHint" role="status"></p><button type="button" class="btn btn-primary" id="voicePreview">试听同一句话</button></div></dialog>
   <dialog class="dialog" id="trialDialog" aria-labelledby="trialTitle">
     <div class="dialog-content"><button class="dialog-close" type="button" data-close-dialog aria-label="关闭">×</button><span class="dialog-badge">✦ 7 天完整 Pro 体验</span><h2 id="trialTitle">给自己 7 天，<br>试试更聪明的记忆。</h2><p class="dialog-copy" id="trialCopy">体验期内可探索完整学习流程。正式版本需要在启用自动续订前绑定付款方式。</p><div class="dialog-timeline"><div class="dialog-day"><span>DAY 01</span><strong>开始学习，设置你的目标</strong></div><div class="dialog-day"><span>到期前</span><strong>第 14 / 7 / 1 天在本机提醒</strong></div><div class="dialog-day"><span>DAY 07</span><strong id="trialPlanRenewal">按选定方案续订</strong></div></div><p class="dialog-notice"><strong>演示环境说明：</strong>点击开始只会在当前设备记录 7 天试用状态，不会要求卡号，也不会扣款。正式上线前需接入支付服务商并明确续费授权。</p><label class="agree-row"><input type="checkbox" id="trialAgree"><span id="trialConsentLabel">我已了解正式版试用结束后的续费价格和取消方式，并同意在本设备开始演示试用。</span></label><button class="btn btn-primary" type="button" id="confirmTrial" disabled>开始 7 天体验 <span class="btn-arrow">↗</span></button><button class="dialog-secondary" type="button" data-close-dialog>先浏览网站</button></div>
   </dialog>
@@ -1633,9 +1652,9 @@
         <source src="./media/install-guide.mp4" type="video/mp4">
         你的浏览器不支持视频播放。请按下方步骤手动添加。
       </video>
-      <p class="install-hint">视频为示意图，按钮位置以你手机上的浏览器为准。</p>
+      <p class="install-hint">36 秒分步演示 · 每步停留 9 秒。可随时暂停，菜单位置以你的手机为准。</p>
       <ol class="install-steps">
-        <li>安卓 Chrome / Edge：点右上角「三个点」菜单 →「安装应用」或「添加到主屏幕」。</li>
+        <li>安卓浏览器：打开浏览器菜单 →「安装应用」或「添加到主屏幕」。</li>
         <li>iPhone / iPad Safari：点底部「分享」→「添加到主屏幕」→「添加」。</li>
         <li>桌面出现 Lexio 图标后，点图标即可全屏打开。</li>
       </ol>
@@ -1863,13 +1882,17 @@
           await idbSetMeta({...meta, contentVersion:BUNDLED_CONTENT_VERSION});
         }
       }
-      async function initializeBank() {
+      const installedMode=()=>!!(navigator.standalone || window.matchMedia?.('(display-mode: standalone), (display-mode: fullscreen)').matches);
+      const wifiReady=()=>navigator.connection?.type==='wifi' && !navigator.connection.saveData;
+      async function initializeBank(manual=false) {
         try {
-          db = await openDB();
+          db ||= await openDB();
           let count = await idbCount();
           let meta = await idbGetMeta('bank');
           const shouldSeedOriginal = count === 0 || !!(meta && meta.isDemo) || (!meta && count <= SAMPLE_WORDS.length);
-          if (shouldSeedOriginal) {
+          const canSeed=manual || !installedMode() || wifiReady() || !!(await window.caches?.match('./data/original-site-wordbank.json'));
+          if (!canSeed && !count) {await idbReplaceWords(SAMPLE_WORDS.map(normalizeWord),{sourceFile:'示例词库',isDemo:true});}
+          if (shouldSeedOriginal && canSeed) {
             try {
               await loadBundledWordBank();
               count = await idbCount();
@@ -1885,7 +1908,7 @@
           }
           bank = await idbGetAll();
           meta = await idbGetMeta('bank');
-          if (meta && !meta.isDemo && meta.contentVersion !== BUNDLED_CONTENT_VERSION) {
+          if (canSeed && meta && !meta.isDemo && meta.contentVersion !== BUNDLED_CONTENT_VERSION) {
             try {
               await mergeBundledStudyContent(meta);
               bank = await idbGetAll();
@@ -2584,65 +2607,27 @@
           finish(new Error('系统语音启动失败。'));
         }
       }
-      let sentenceWorker=null, sentenceContext=null;
-      const voiceSelect=$('#sentenceVoice');
-      try {voiceSelect.value=localStorage.getItem('lexio.sentenceVoice')||'slt';}catch(_){}
-      if(!voiceSelect.value)voiceSelect.value='slt';
-      const voiceHint=()=>$('#voiceHint').textContent=voiceSelect.value==='clb'?'首次使用 CLB 将载入约 26 MB 音色，之后可离线使用。':voiceSelect.value==='original'?'尝试之前的单词音源。若整句无声，请选 SLT 或 CLB。':'默认 SLT 可离线朗读；首次使用需联网载入语音引擎。';
-      voiceHint();
-      voiceSelect.onchange=()=>{stopSpeech();try{localStorage.setItem('lexio.sentenceVoice',voiceSelect.value);}catch(_){}voiceHint();};
-      $$('[data-voices]').forEach(b=>b.onclick=()=>showDialog($('#voiceDialog')));
-      $('#voiceDialog').addEventListener('close',()=>stopSpeech());
-      $('#voicePreview').onclick=()=>{
-        $('#voiceHint').textContent='正在准备试听…';
-        speakExample('Could we schedule a meeting for Tuesday morning?',voiceHint,e=>toastMessage(e.message));
-      };
-      // Resume the output device *in the tap*, before awaiting model/WAV data.
-      // The worker renders a real waveform, even without any OS English voices.
-      function speakLocalSentence(text,voice,done,onError){
-        stopSpeech();
-        const id=speechRequestId;
-        let source,timeout;
-        const finish=()=>{clearTimeout(timeout);if(source){source.onended=null;try{source.stop();source.disconnect();}catch(_){}} if(done)done();};
-        onAudioStop=finish;
-        const failed=()=>{
-          if(id!==speechRequestId)return;
-          stopSpeech();const err=new Error('本机语音未能启动。请确认音量、联网载入音色，再点「选声音」试听。');
-          if(onError)onError(err);else toastMessage(err.message);
-        };
-        try {
-          if(navigator.audioSession)try{navigator.audioSession.type='playback';}catch(_){}
-          sentenceContext ||= new (window.AudioContext||window.webkitAudioContext)();
-          const ready=sentenceContext.resume();ready.catch(failed);
-          sentenceWorker ||= new Worker('./speech/worker.js');
-          sentenceWorker.onerror=()=>{sentenceWorker.terminate();sentenceWorker=null;failed();};
-          sentenceWorker.onmessage=async({data})=>{
-            if(data.id!==id || id!==speechRequestId)return;
-            try {
-              if(data.error)throw Error(data.error);
-              const buffer=await sentenceContext.decodeAudioData(data.wav);await ready;
-              if(id!==speechRequestId)return;
-              clearTimeout(timeout);source=sentenceContext.createBufferSource();source.buffer=buffer;source.connect(sentenceContext.destination);
-              source.onended=()=>{if(id===speechRequestId){onAudioStop=null;finish();}};source.start();
-            }catch(_){failed();}
-          };
-          timeout=setTimeout(failed,60000);sentenceWorker.postMessage({id,text,voice});
-        }catch(_){failed();}
-      }
+      const selectedRecordings = {
+        "If you persevere in reviewing ten words a day, your vocabulary will grow steadily.": "card-1",
+        "His improvement was the result of deliberate practice and careful planning.": "card-2",
+        "There is a subtle difference between the two synonyms in reading comprehension.": "card-3",
+        "Students who are resilient often bounce back quickly from exam setbacks.": "card-4",
+        "It's a pleasure to meet you.": "business-1",
+        "Thank you for reaching out.": "business-2",
+        "I look after our key accounts.": "business-3",
+        "Hi, how's your day going?": "daily-1",
+        "Pretty well, thanks for asking. How about you?": "daily-2",
+        "Sorry, could you say that again a little more slowly?": "daily-3"
+};
       function speakExample(text, onDone, onError) {
-        const sentence = String(text == null ? '' : text)
-          .replace(/[“”"]/g, '')
-          .replace(/\s+/g, ' ')
-          .trim();
-        if (!sentence) {
-          if (typeof onError === 'function') onError(new Error('这个词还没有可朗读的例句。'));
-          if (typeof onDone === 'function') onDone();
-          return;
-        }
-        const voice=voiceSelect.value;
-        if(voice==='original')playPronunciation(sentence, 'en-US', 0.75, '', onDone, onError);
-        else if(window.Worker && (window.AudioContext||window.webkitAudioContext))speakLocalSentence(sentence,voice,onDone,onError);
-        else speak(sentence,'en-US',onDone,onError,0.75);
+        const sentence=String(text||'').replace(/[“”"]/g, '').trim();
+        if(!sentence){onDone?.();return;}
+        const clip=selectedRecordings[sentence];
+        // A native media play() in the actual tap. No delayed AudioContext
+        // resume/decode or iOS handoff from an asynchronous synthesis worker.
+        const url=clip?'./media/voice/'+clip+'.mp3': './local-sentence.wav?text='+encodeURIComponent(sentence);
+        if(!clip && !navigator.serviceWorker?.controller){stopSpeech();speak(sentence,'en-US',onDone,onError,0.75);return;}
+        playPronunciation(sentence,'en-US',0.75,url,onDone,onError,true);
       }
       function speakEntry(entry, lang=activeAccent) {
         if (!entry || !entry.word) return;
@@ -2650,7 +2635,7 @@
       }
       // Use the original word recording service for both accents. Start play()
       // synchronously in the tap; only switch to device TTS if playback fails.
-      function playPronunciation(text, lang, rate, supplied, done, onError) {
+      function playPronunciation(text, lang, rate, supplied, done, onError, local=false) {
         stopSpeech();
         let audio, timer, complete=false;
         const finish=()=>{ if(complete)return; complete=true; clearTimeout(timer); onAudioStop=null; if(done)done(); };
@@ -2661,7 +2646,7 @@
           if(audio){activeAudio=null; try{audio.pause();}catch(_){} }
           speak(text, lang, finish, onError, rate);
         };
-        if (navigator.onLine === false) { fallback(); return; }
+        if (!local && navigator.onLine === false) { fallback(); return; }
         try {
           const source=new URL(supplied || 'https://dict.youdao.com/dictvoice?type='+(lang==='en-GB'?1:2)+'&audio='+encodeURIComponent(text),location.href);
           if(!/^https?:$/.test(source.protocol))throw Error('Unsupported audio URL');
@@ -2670,7 +2655,7 @@
           audio.addEventListener('playing',()=>clearTimeout(timer),{once:true});
           audio.addEventListener('ended',()=>{if(activeAudio===audio){activeAudio=null;finish();}},{once:true});
           audio.addEventListener('error',fallback,{once:true});
-          timer=setTimeout(fallback,4000);
+          timer=setTimeout(fallback,local?60000:4000);
           const started=audio.play(); if(started && started.catch)started.catch(fallback);
         } catch(_){fallback();}
       }
@@ -2990,9 +2975,9 @@
             $('#studySpeak').addEventListener('click',()=>{const word=bank[studyIndex];if(word)speakEntry(word,activeAccent);});
       (function () {
         const card = $('#studyCard');
-        let drag = null, blockClickUntil = 0;
+        let drag = null, blockClickUntil = 0, moving = false;
         card.addEventListener('pointerdown', e => {
-          if (e.isPrimary === false || e.button > 0 || e.target.closest('button,a,input')) return;
+          if (moving || e.isPrimary === false || e.button > 0 || e.target.closest('button,a,input')) return;
           drag = {id:e.pointerId, x:e.clientX, y:e.clientY, horizontal:false};
         });
         window.addEventListener('pointermove', e => {
@@ -3000,21 +2985,31 @@
           const dx=e.clientX-drag.x, dy=e.clientY-drag.y;
           if (!drag.horizontal && Math.abs(dy)>10 && Math.abs(dy)>=Math.abs(dx)) { drag=null; blockClickUntil=performance.now()+350; return; }
           if (Math.abs(dx)>12 && Math.abs(dx)>1.4*Math.abs(dy)) drag.horizontal=true;
-          if (drag.horizontal) card.style.transform=`translateX(${Math.max(-60,Math.min(60,dx*0.35))}px)`;
+          if (drag.horizontal) card.style.transform=`translateX(${Math.max(-110,Math.min(110,dx*0.65))}px) rotate(${Math.max(-7,Math.min(7,dx/34))}deg)`;
         });
-        function finishDrag(e) {
+        async function finishDrag(e) {
           if (!drag || e.pointerId !== drag.id) return;
-          const {x,y,horizontal}=drag; drag=null; card.style.transform='';
-          if (horizontal) blockClickUntil=performance.now()+350;
-          const dx=e.clientX-x;
-          if (e.type==='pointercancel' || !horizontal || Math.abs(dx)<56 || Math.abs(dx)<1.4*Math.abs(e.clientY-y) || !bank.length) return;
-          if (dx<0) $('#knownWord').click();
-          else { studyIndex=(studyIndex+bank.length-1)%bank.length; updateStudyCard(); }
+          const {x,y,horizontal}=drag, start=card.style.transform||'none'; drag=null;
+          const dx=e.clientX-x, dir=Math.sign(dx);
+          const animate=card.animate && !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          const slide=async(frames,duration,easing)=>{if(animate)await card.animate(frames,{duration,easing}).finished.catch(()=>{});};
+          if(horizontal)blockClickUntil=performance.now()+400;
+          const commit=e.type!=='pointercancel' && horizontal && Math.abs(dx)>=56 && Math.abs(dx)>=1.4*Math.abs(e.clientY-y) && bank.length;
+          card.style.transform=''; if(!horizontal)return;
+          moving=true;
+          try {
+            if(!commit){await slide([{transform:start},{transform:'none'}],310,'cubic-bezier(.2,.8,.25,1)');return;}
+            const original=bank[studyIndex];
+            await slide([{transform:start,opacity:1},{transform:`translateX(${dir*108}%) rotate(${dir*8}deg)`,opacity:.1}],330,'cubic-bezier(.28,.02,.66,.7)');
+            if(document.body.dataset.appView!=='study' || bank[studyIndex]!==original)return;
+            if(dx<0)$('#knownWord').click(); else {studyIndex=(studyIndex+bank.length-1)%bank.length;updateStudyCard();}
+            await slide([{transform:`translateX(${-dir*48}px) scale(.96)`,opacity:.45},{transform:`translateX(${dir*2}px) scale(1.003)`,opacity:1,offset:.78},{transform:'none',opacity:1}],460,'cubic-bezier(.18,.72,.25,1)');
+          }finally{moving=false;}
         }
         window.addEventListener('pointerup', finishDrag);
         window.addEventListener('pointercancel', finishDrag);
         card.addEventListener('click', event => {
-          if (performance.now()<blockClickUntil) return;
+          if (moving || performance.now()<blockClickUntil) return;
           if (event.target.closest('a,button,input')) return;
           $('#wordCardFlip').classList.toggle('is-flipped');
         });
@@ -3136,7 +3131,27 @@
         });
       }
       loadPublicConfigs();
-      initializeBank();
+      let bankInit=initializeBank();
+      let preparing=false;
+      async function prepareOffline(manual=false){
+        if(preparing || (!manual && (!installedMode() || !wifiReady())))return;
+        const btn=$('#prepareOffline'),status=$('#packStatus');
+        if(!('serviceWorker' in navigator)){status.textContent='此浏览器不支持离线缓存。';return;}
+        preparing=true;btn.disabled=true;status.textContent='正在准备词库和朗读资源，请保持页面打开…';
+        try{
+          const registration=await Promise.race([navigator.serviceWorker.ready,new Promise((_,reject)=>setTimeout(()=>reject(Error('离线服务尚未就绪')),15000))]);
+          await new Promise((resolve,reject)=>{
+            const port=new MessageChannel(),timeout=setTimeout(()=>{port.port1.close();reject(Error('下载超时'));},120000);
+            port.port1.onmessage=e=>{clearTimeout(timeout);port.port1.close();e.data.ok?resolve():reject(Error('资源下载失败'));};
+            registration.active.postMessage({type:'prepare-offline'},[port.port2]);
+          });
+          await bankInit;await initializeBank(true);status.textContent='离线词库和朗读资源已就绪。';
+        }catch(_){status.textContent='准备未完成，请检查网络和可用空间后重试。';}finally{preparing=false;btn.disabled=false;}
+      }
+      $('#prepareOffline').onclick=()=>prepareOffline(true);
+      navigator.connection?.addEventListener?.('change',()=>prepareOffline());
+      window.addEventListener('online',()=>prepareOffline());
+      prepareOffline();
       window.__lexioMaybeReminder = maybeShowReminder;
       setTimeout(maybeShowReminder, 1200);
     })();
@@ -3145,7 +3160,7 @@
   <a href="#top" data-tab="home"><span class="t-ico">🏠</span>首页</a>
   <a href="#study" data-tab="study"><span class="t-ico">🎯</span>学习</a>
   <a href="#library" data-tab="library"><span class="t-ico">📚</span>词库</a>
-  <a href="#progress" data-tab="progress"><span class="t-ico">◷</span>记录</a>
+  <a href="#progress" data-tab="progress"><span class="t-ico" aria-hidden="true"><svg viewBox="0 0 24 22" width="23" height="21"><rect x="1" y="1" width="22" height="20" rx="6" fill="#fff0cf"/><rect x="5" y="11" width="3.5" height="6" rx="1.5" fill="#ed9168"/><rect x="10" y="7.5" width="3.5" height="9.5" rx="1.5" fill="#46a99a"/><rect x="15" y="4" width="3.5" height="13" rx="1.5" fill="#8477bc"/></svg></span>记录</a>
   <a href="#pricing" data-tab="pricing"><span class="t-ico">💎</span>订阅</a>
 </nav>
 <script>
