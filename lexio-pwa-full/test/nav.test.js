@@ -274,11 +274,14 @@ function animClean() {
     cssText.includes('@keyframes appHomeEnter') && cssText.includes('@keyframes appPricingEnter') &&
     cssText.includes('@keyframes pricePop') && cssText.includes('.price strong.is-changing') &&
     cssText.includes('prefers-reduced-motion: reduce'));
-  check('Service Worker 升到 v15 并预缓存口语句库与安装引导视频',
-    swSource.includes("CACHE_NAME = 'lexio-shell-v15-app-shell-install-guide'") &&
+  check('Service Worker 升到 v16 并预缓存口语句库与安装引导视频',
+    swSource.includes("CACHE_NAME = 'lexio-shell-v16-english-only-examples'") &&
     swSource.includes("'./data/daily-conversation.json'") &&
     swSource.includes("'./media/install-guide.mp4'") &&
     pageHtml.includes('controllerchange') && pageHtml.includes('swRefreshing'));
+  check('词库/口语句库走网络优先，已安装用户也能拿到新的纯英文例句',
+    /if \(url\.pathname\.includes\('\/data\/'\) && url\.pathname\.endsWith\('\.json'\)\)/.test(swSource) &&
+    swSource.indexOf("url.pathname.includes('/data/')") < swSource.indexOf('Static app assets are cache-first'));
 
   // ---------- 5. 三子面板 ----------
   const panels = [...doc.querySelectorAll('.study-panel')];

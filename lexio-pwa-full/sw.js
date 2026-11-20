@@ -1,5 +1,5 @@
 /* Lexio 乐词 PWA shell cache. Bump the cache version whenever app assets change. */
-const CACHE_NAME = 'lexio-shell-v15-app-shell-install-guide';
+const CACHE_NAME = 'lexio-shell-v16-english-only-examples';
 const SHELL_URLS = [
   './',
   './index.html',
@@ -59,6 +59,22 @@ self.addEventListener('fetch', event => {
   if (url.pathname.endsWith('/pricing.config.json') || url.pathname.endsWith('/wordbank.config.json')) {
     event.respondWith(
       fetch(request, {cache:'no-store'})
+        .then(response => {
+          if (response && response.ok) caches.open(CACHE_NAME).then(cache => cache.put(request, response.clone()));
+          return response;
+        })
+        .catch(() => caches.match(request))
+    );
+    return;
+  }
+
+  // Word-bank / phrase content is network-first with a cache fallback.
+  // Precache would otherwise pin returning users to old example sentences
+  // (the app's own content migration reads this file), so a fresh copy wins
+  // whenever the device is online.
+  if (url.pathname.includes('/data/') && url.pathname.endsWith('.json')) {
+    event.respondWith(
+      fetch(request)
         .then(response => {
           if (response && response.ok) caches.open(CACHE_NAME).then(cache => cache.put(request, response.clone()));
           return response;
