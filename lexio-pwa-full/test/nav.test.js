@@ -349,7 +349,9 @@ function animClean() {
   const foeName = doc.getElementById('battleFoeName').textContent;
   check('匹配成功且对手有真实感名字', foeName && foeName !== '匹配中…' && foeName !== '尚未匹配',
     `opponent=${foeName}`);
-  check('对手资料(胜率/场数/延迟)已显示', /胜率/.test(doc.getElementById('battleFoeStats').textContent),
+  check('对手资料明确标注为模拟对手（不假装真人 / 不编造延迟）',
+    /模拟对手/.test(doc.getElementById('battleFoeStats').textContent) &&
+    !/ms|延迟|在线房间/.test(doc.getElementById('battleFoeStats').textContent),
     doc.getElementById('battleFoeStats').textContent);
   battleApi.start(); // 重新匹配 → 必须换新对手
   await sleep(3400);
@@ -418,7 +420,8 @@ function animClean() {
     !!intro.querySelector('#showcasePanel') && intro.textContent.includes('PRODUCT EXPERIENCE'));
   const proofBand = doc.querySelector('.proof-band');
   check('首页宣传改为可核对的产品配置，不显示虚高累计记忆数',
-    !!proofBand && proofBand.textContent.includes('10 题') && proofBand.textContent.includes('30 词') &&
+    !!proofBand && proofBand.textContent.includes('10 题') && proofBand.textContent.includes('1,000 句') &&
+    !proofBand.textContent.includes('本轮学习计划') &&
     !proofBand.textContent.includes('11 亿') && !proofBand.textContent.includes('282 万') &&
     !proofBand.textContent.includes('4.9 / 5'));
 
@@ -589,6 +592,11 @@ function animClean() {
   check('搜索框字号 ≥16px（iOS Safari 不触发聚焦放大）',
     /\.search-input, #wordSearch, #phraseSearch, \.source-url-input \{ font-size: 16px/.test(cssText) &&
     /\.search-input, #wordSearch, #phraseSearch \{ font-size: 16px !important; \}/.test(cssText));
+  check('手机布局不会误把真实进度卡一起隐藏',
+    cssText.includes('body[data-app-view="home"] .hero-visual:not(.hero-progress)') &&
+    !cssText.includes('body[data-app-view="home"] .hero-visual,\n      body[data-app-view="home"] .hero-social'));
+  check('手机首页是仪表盘：标题之后就是真实数字，营销段落只留桌面端',
+    cssText.includes('body[data-app-view="home"] .hero-pill,\n      body[data-app-view="home"] .hero-lede,\n      body[data-app-view="home"] .hero-meta { display: none !important; }'));
   check('搜索框有 16px 内联回退，避免样式加载前的放大',
     doc.getElementById('wordSearch').getAttribute('style') !== null ||
     html.includes('id="wordSearch"') && html.includes('id="phraseSearch"') &&
@@ -608,6 +616,22 @@ function animClean() {
     !!installDialog.querySelector('source[src="./media/install-guide.mp4"]') &&
     !!installDialog.querySelector('source[type="video/mp4"]') &&
     installDialog.textContent.includes('添加到主屏幕'));
+
+  // 6b) 首页「日常口语」入口 → 词库视图的口语模式
+  await setHashSettled('#top');
+  const phraseEntry = doc.querySelector('[data-open-daily-phrases]');
+  check('首页有「日常口语」入口', !!phraseEntry);
+  phraseEntry.click();
+  await sleep(700);
+  const phrasePanel = doc.getElementById('dailyPhrasesMode');
+  const wordPanel = doc.getElementById('wordBankMode');
+  check('点「日常口语」→ 词库视图切换为口语模式并渲染句子',
+    doc.body.getAttribute('data-app-view') === 'library' &&
+    phrasePanel && !phrasePanel.hidden && phrasePanel.classList.contains('is-active') &&
+    wordPanel && wordPanel.hidden &&
+    doc.querySelector('[data-library-mode="phrases"]').getAttribute('aria-selected') === 'true' &&
+    doc.querySelectorAll('#dailyPhraseGrid .phrase-item').length > 0,
+    `phrases=${doc.querySelectorAll('#dailyPhraseGrid .phrase-item').length} hidden=${phrasePanel && phrasePanel.hidden}`);
 
   // 7) 例句来源 → 随机一张词卡背面
   doc.querySelector('[data-close-dialog]').click();
@@ -644,11 +668,23 @@ function animClean() {
   await sleep(50);
   const masteredBefore = progressApi.mastered().length;
   // 确保测试词没有被前面的用例标记过，避免重复点击同一张卡
-  const probeIndex = window.__lexioStudy.current() ? 1 : 0;
-  window.__lexioStudy.goTo(probeIndex);
-  if (progressApi.mastered().includes(window.__lexioStudy.current().word)) window.__lexioStudy.goTo(2);
+  if (window.__lexioStudy && typeof window.__lexioStudy.goTo === 'function') {
+    const masteredSet = new Set(progressApi.mastered());
+    for (let probe = 0; probe < 12; probe += 1) {
+      const cur = window.__lexioStudy.current && window.__lexioStudy.current();
+      if (cur && !masteredSet.has(cur.word)) break;
+      window.__lexioStudy.goTo(probe + 1);
+    }
+  }
+  // 今日计数只加一次：按钮本身记录一次，markMastered 不再重复记录
+  const histBefore = JSON.parse(window.localStorage.getItem('lexio.studyHistory') || '[]');
+  const todayKey = (() => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; })();
+  const knownBeforeDay = (histBefore.find(r => r.day === todayKey) || {}).known || 0;
   await sleep(40);
   doc.getElementById('knownWord').click();
+  const histAfter = JSON.parse(window.localStorage.getItem('lexio.studyHistory') || '[]');
+  const knownAfterDay = (histAfter.find(r => r.day === todayKey) || {}).known || 0;
+  check('点“记住了”今日计数只 +1，不重复记录', knownAfterDay - knownBeforeDay === 1);
   await sleep(80);
   const masteredAfterKnown = progressApi.mastered().length;
   doc.getElementById('againWord').click();
@@ -662,6 +698,18 @@ function animClean() {
     doc.getElementById('memoryMastered').textContent === String(progressApi.mastered().length) &&
     doc.getElementById('memoryWeak').textContent === String(progressApi.weak()) &&
     /^\d+$/.test(doc.getElementById('studyStreak').textContent));
+  // 学习页左下“今日学习进度”条必须来自真实比例，而不是虚构的每日 30 词配额
+  const stats = JSON.parse(window.localStorage.getItem('lexio.dailyStats') || '{}');
+  window.__lexioProgress.refresh();
+  const expectedPct = (Number(stats.known) + Number(stats.again))
+    ? Math.round((Number(stats.known) / (Number(stats.known) + Number(stats.again))) * 100) : 0;
+  const meterWidth = parseFloat(doc.getElementById('studyProgress').style.width) || 0;
+  check('学习页进度条按今日真实标记比例显示',
+    Math.abs(meterWidth - expectedPct) < 0.6,
+    `width=${meterWidth}% expected=${expectedPct}% (known=${stats.known} again=${stats.again})`);
+  check('页面里不再出现虚构的 30 词每日配额',
+    !html.includes('const target = 30') && !html.includes('本轮学习计划'));
+
   check('最近 7 天柱状图按本机记录渲染 7 根柱子',
     doc.querySelectorAll('#memoryBars > div').length === 7);
 

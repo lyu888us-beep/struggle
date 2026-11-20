@@ -741,7 +741,11 @@
     .showcase-intro .study-side-copy { max-width: 740px; margin-top: 12px; }
     /* v5: GPU-only view transitions. Nothing repaints: sections are
        pre-laid-out, so a transition is one composited translate/fade. */
-    body.view-anim-lock { overflow: hidden; }
+    /* Never lock body overflow during a transition: on iOS setting
+       overflow:hidden on <body> resets the scroll offset, which reads as a
+       jump. The animation is 210ms and transform-only, so scrolling during
+       it is harmless. */
+    body.view-anim-lock { overscroll-behavior: contain; }
     main.is-animating { position: relative; }
     main.is-animating > section.is-active { animation-fill-mode: both; animation-duration: .2s; animation-timing-function: cubic-bezier(.22,.68,.24,1); }
     .anim-push-in { animation-name: viewPushIn; }
@@ -942,10 +946,19 @@
       #installBtn { display: inline-flex; }
       body[data-app-view="home"] .site-header { position: fixed; top: 0; left: 0; right: 0; }
       body[data-app-view="home"] main { padding-top: calc(60px + env(safe-area-inset-top)); }
-      body[data-app-view="home"] .hero { padding: 16px 0 14px; background: transparent; }
-      body[data-app-view="home"] .hero-grid { display: block; }
-      body[data-app-view="home"] .hero-copy { padding: 2px 0 10px; }
-      body[data-app-view="home"] .hero-progress { display: block; padding: 0 16px; }
+      /* The hero actions sit right under the numbers; on a phone the primary
+         CTA should be reachable without scrolling. */
+      body[data-app-view="home"] .hero-ctas .btn-primary { min-height: 46px; }
+      body[data-app-view="home"] .progress-card { box-shadow: 0 10px 26px rgba(24,58,40,.07); }
+      body[data-app-view="home"] .hero { padding: 14px 0 12px; background: transparent; }
+      /* Dashboard order: title → real numbers → actions. The marketing lede,
+         trust row and floating pill are desktop-only. */
+      body[data-app-view="home"] .hero-grid { display: flex; flex-direction: column; gap: 12px; }
+      body[data-app-view="home"] .hero-copy { display: flex; flex-direction: column; align-items: stretch; padding: 0; }
+      body[data-app-view="home"] .hero-pill,
+      body[data-app-view="home"] .hero-lede,
+      body[data-app-view="home"] .hero-meta { display: none !important; }
+      body[data-app-view="home"] .hero-progress { display: block; width: 100%; padding: 0; }
       body[data-app-view="home"] .progress-card { padding: 15px; border-radius: 18px; }
       body[data-app-view="home"] .progress-head strong { font-size: 15px; }
       body[data-app-view="home"] .progress-stats { margin-top: 11px; gap: 7px; }
@@ -954,15 +967,15 @@
       body[data-app-view="home"] .progress-tip { margin-top: 8px; font-size: 9.5px; }
       body[data-app-view="home"] .progress-actions .btn { min-height: 38px; }
       body[data-app-view="home"] .hero-pill { min-height: 26px; padding: 3px 9px; font-size: 9.5px; }
-      body[data-app-view="home"] .hero h1 { max-width: 420px; margin: 10px 0 8px; font-size: clamp(29px, 8.2vw, 40px); line-height: 1.12; letter-spacing: -.055em; }
+      body[data-app-view="home"] .hero h1 { max-width: 100%; margin: 0; font-size: clamp(25px, 7.4vw, 34px); line-height: 1.16; letter-spacing: -.05em; }
       body[data-app-view="home"] .hero h1 .highlight { white-space: normal; }
       body[data-app-view="home"] .hero-lede { max-width: 440px; font-size: 12px; line-height: 1.65; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
-      body[data-app-view="home"] .hero-ctas { display: grid; grid-template-columns: 1.1fr .9fr; gap: 8px; margin-top: 13px; }
+      body[data-app-view="home"] .hero-ctas { display: grid; grid-template-columns: 1.1fr .9fr; gap: 8px; margin-top: 11px; }
       body[data-app-view="home"] .hero-ctas .btn { min-height: 44px; padding-inline: 10px; border-radius: 13px; font-size: 11px; }
       body[data-app-view="home"] .hero-meta { gap: 5px 10px; margin-top: 10px; font-size: 8.5px; }
       body[data-app-view="home"] .hero-meta span { gap: 4px; }
       body[data-app-view="home"] .check-mini { width: 13px; height: 13px; font-size: 8px; }
-      body[data-app-view="home"] .hero-visual,
+      body[data-app-view="home"] .hero-visual:not(.hero-progress),
       body[data-app-view="home"] .hero-social,
       body[data-app-view="home"] .proof-band,
       body[data-app-view="home"] .school-strip { display: none !important; }
@@ -1084,7 +1097,7 @@
               <div><small>还没记牢</small><strong id="heroWeakCount">0</strong></div>
               <div><small>今日已学</small><strong id="heroTodayCount">0</strong></div>
             </div>
-            <div class="progress-bar" role="img" aria-label="已记住与本轮计划的比例"><span id="heroProgressBar"></span></div>
+            <div class="progress-bar" role="img" aria-label="已记住的词占全部标记过的词的比例"><span id="heroProgressBar"></span></div>
             <p class="progress-note" id="heroProgressNote">记录保存在这台设备上，只统计你实际标记过的单词。</p>
             <div class="progress-actions"><a class="btn btn-primary btn-small" href="#study">去学习</a><a class="btn btn-outline btn-small" href="#study" data-open-memory>看待巩固词</a></div>
           </div>
@@ -1110,9 +1123,9 @@
           <div class="proof-item" data-reveal><strong>25,024</strong><span>已保存在本机的学习词条</span></div>
           <div class="proof-item" data-reveal><strong>5 类</strong><span>内置考试词库</span></div>
           <div class="proof-item" data-reveal><strong>10 题</strong><span>每局挑战题数</span></div>
-          <div class="proof-item" data-reveal><strong>30 词</strong><span>本轮学习计划</span></div>
+          <div class="proof-item" data-reveal><strong>1,000 句</strong><span>日常口语句，按十个场景分类</span></div>
         </div>
-        <p class="proof-note">词库记录已按原站内嵌数据提取并核验（25,000 条考试列表记录 + 100 条精讲词，合并后 25,024 条；分类间含重复拼写）。其余展示为应用内可核对的词库数量、挑战题数与本轮计划，不宣称用户规模、累计记忆次数或效果统计。</p>
+        <p class="proof-note">词库记录已按原站内嵌数据提取并核验（25,000 条考试列表记录 + 100 条精讲词，合并后 25,024 条；分类间含重复拼写）。其余展示为应用内可核对的词库数量、口语句数与挑战题数，不宣称用户规模、累计记忆次数或效果统计。</p>
       </div>
     </section>
 
@@ -1199,7 +1212,7 @@
           <div class="study-app" data-reveal>
             <div class="study-app-top"><div class="study-app-brand"><span class="mini-logo"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M6 18V6.5c0-.8.7-1.5 1.5-1.5H18M6 18h11.5c.8 0 1.5-.7 1.5-1.5V8" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"/><path d="m10 13 2 2 5-6" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Lexio 学习空间<small id="studyDate">今日学习 · 15 分钟</small></span></div><span class="session-status"><i></i><span id="sessionStatusText">学习中</span></span><button class="study-control" type="button" id="returnLibraryBtn" hidden>← 返回词库</button></div>
             <div class="study-stats"><div class="study-stat"><span>今天记住了</span><strong id="knownCount">0</strong></div><div class="study-stat"><span>还没记牢</span><strong id="weakCountInline">0</strong></div><div class="study-stat"><span>累计已记住</span><strong id="masteredAllCount">0</strong></div></div>
-            <div class="study-meter" aria-label="今日学习进度"><span id="studyProgress"></span></div>
+            <div class="study-meter" aria-label="今天标记过的词里，已记住的比例"><span id="studyProgress"></span></div>
             <article class="study-word-card" id="studyCard" aria-live="polite">
               <div class="card-flip" id="wordCardFlip">
                 <div class="card-face card-front">
@@ -1256,7 +1269,7 @@
               </div>
               <div class="foe-card">
                 <div class="foe-avatar" id="battleFoeAvatar">👤</div>
-                <div class="foe-info"><strong id="battleFoeName">尚未匹配</strong><small id="battleFoeStats">开始对战后自动匹配在线对手</small></div>
+                <div class="foe-info"><strong id="battleFoeName">尚未匹配</strong><small id="battleFoeStats">开始对战后由本机生成模拟对手</small></div>
                 <span class="foe-status" id="battleFoeStatus">在线</span>
               </div>
               <div class="battle-stage">
@@ -1319,8 +1332,8 @@
       <div class="container">
         <div class="section-heading" data-reveal><div class="eyebrow"><span class="dot"></span> SIMPLE, STUDENT-FRIENDLY PRICING</div><h2>先完整体验 7 天，<br>再决定是否 <em>继续前进。</em></h2><p>价格、试用天数和提醒方式都写在下面。这一版不会自动扣款，也不会要求卡号。</p></div>
         <div class="pricing-layout">
-          <div class="trial-info-card" data-reveal><div><div class="eyebrow"><span class="dot"></span> 7-DAY FULL ACCESS</div><h3>给自己 7 天，感受真正高效的背词节奏。</h3><p>试用期间开放 Pro 学习体验。你可以自由探索词库、记忆卡片、英美音与学习报告。</p><div class="trial-timeline-mini"><div class="timeline-mini-row"><span>1</span>设置目标，开始第一组单词</div><div class="timeline-mini-row"><span>3</span>到期前 2 周 / 1 周 / 1 天在本机提醒</div><div class="timeline-mini-row"><span>7</span>按已授权方式续订，可提前取消</div></div></div><p class="trial-info-foot">正式上线时，将在开始试用前清楚展示付款方式、续费日期、<span id="trialInfoPrice">选定方案的价格</span>与取消入口。</p></div>
-          <div class="price-card" data-reveal><span class="popular-pill">✦ 学生 Pro · 全部学习功能</span><h3>Lexio Pro</h3><p class="price-desc">适合希望稳定提升词汇量的学生</p><div class="plan-switch" role="group" aria-label="选择订阅周期"><button class="plan-option active" type="button" data-plan-select="monthly" aria-pressed="true">连续包月</button><button class="plan-option" type="button" data-plan-select="annual" aria-pressed="false">连续包年 <b id="annualBadge">省 40%</b></button></div><div class="price"><strong id="priceAmount">¥15</strong><span id="pricePeriod">/ 月</span><span class="price-original" id="priceOriginal" hidden>¥180</span></div><p class="after-trial" id="priceTerms">前 7 天免费体验 · 之后 ¥15 / 月（正式收款时按此价格，当前不扣款）</p><p class="student-promo" id="studentPromo" hidden>🎓 凭学生证可享优惠（正式版需完成学生身份验证）</p><div class="price-divider"></div><ul class="plan-list"><li><span>✓</span>五大考试词库与自定义词单</li><li><span>✓</span>间隔复习、错词强化与每日学习计划</li><li><span>✓</span>例句来源标注、词族拓展与英美音发音</li><li><span>✓</span>学习统计、进度同步与离线 PWA</li><li><span>✓</span>随时管理或取消订阅</li></ul><button class="btn btn-primary" type="button" data-open-trial>免费体验 7 天 <span class="btn-arrow">↗</span></button><button class="btn btn-outline secondary-subscribe" type="button" id="directSubscribe">选择此方案并继续</button><p class="terms-small">试用结束前会在这台设备上提醒你，付款前也会明确显示续费日期、价格和取消入口。当前预览不会收款。</p></div>
+          <div class="trial-info-card" data-reveal><div><div class="eyebrow"><span class="dot"></span> 7-DAY FULL ACCESS</div><h3>给自己 7 天，感受真正高效的背词节奏。</h3><p>试用期间开放 Pro 学习体验。你可以自由探索词库、记忆卡片、英美音与学习报告。</p><div class="trial-timeline-mini"><div class="timeline-mini-row"><span>1</span>设置目标，开始第一组单词</div><div class="timeline-mini-row"><span>3</span>到期前 2 周 / 1 周 / 1 天在本机提醒</div><div class="timeline-mini-row"><span>7</span>体验结束：本机提醒，当前版本不会自动扣款</div></div></div><p class="trial-info-foot">正式上线时，将在开始试用前清楚展示付款方式、续费日期、<span id="trialInfoPrice">选定方案的价格</span>与取消入口。</p></div>
+          <div class="price-card" data-reveal><span class="popular-pill">✦ 学生 Pro · 全部学习功能</span><h3>Lexio Pro</h3><p class="price-desc">适合希望稳定提升词汇量的学生</p><div class="plan-switch" role="group" aria-label="选择订阅周期"><button class="plan-option active" type="button" data-plan-select="monthly" aria-pressed="true">连续包月</button><button class="plan-option" type="button" data-plan-select="annual" aria-pressed="false">连续包年 <b id="annualBadge">省 40%</b></button></div><div class="price"><strong id="priceAmount">¥15</strong><span id="pricePeriod">/ 月</span><span class="price-original" id="priceOriginal" hidden>¥180</span></div><p class="after-trial" id="priceTerms">前 7 天免费体验 · 之后 ¥15 / 月（正式收款时按此价格，当前不扣款）</p><p class="student-promo" id="studentPromo" hidden>🎓 凭学生证可享优惠（正式版需完成学生身份验证）</p><div class="price-divider"></div><ul class="plan-list"><li><span>✓</span>五大考试词库 25,024 条，随 App 保存在本机</li><li><span>✓</span>「记住了 / 还不熟悉」标记与薄弱词强化队列</li><li><span>✓</span>例句来源标注、英式 / 美式发音与整句朗读</li><li><span>✓</span>本机学习统计、7 天记录与离线可用</li><li><span>✓</span>随时查看方案、取消或继续学习</li></ul><button class="btn btn-primary" type="button" data-open-trial>免费体验 7 天 <span class="btn-arrow">↗</span></button><button class="btn btn-outline secondary-subscribe" type="button" id="directSubscribe">选择此方案并继续</button><p class="terms-small">试用结束前会在这台设备上提醒你，付款前也会明确显示续费日期、价格和取消入口。当前预览不会收款。</p></div>
         </div>
         <div class="team-row" data-reveal><div><h3>老师与学校：学习跟进服务</h3><p>我们面向中学、大学等学校提供学习跟进服务，并按学校需要提供词表模板、练习模板等教学模板；具体内容与范围可与学校沟通后确定。</p></div><a href="#faq">查看服务说明 <span aria-hidden="true">→</span></a></div>
       </div>
@@ -1363,7 +1376,7 @@
     <div class="dialog-content"><button class="dialog-close" type="button" data-close-dialog aria-label="关闭">×</button><span class="dialog-badge">WORD BANK · ONLINE SOURCE</span><h2 id="wordSourceTitle">同步一份新的词库。</h2><p class="dialog-copy">填写词库文件的直链（JSON 或 CSV），或同源 `/api/wordbank` 地址。同步成功后会替换这台设备上的词库，学习进度不会丢失，词库仍然离线可用。</p><label for="wordSourceUrl" style="display:block;margin-top:16px;color:#526159;font-size:10px;font-weight:750">词库文件直链</label><input id="wordSourceUrl" class="source-url-input" type="url" inputmode="url" placeholder="https://example.com/wordbank.json" autocomplete="url"><p class="dialog-notice">链接只保存在这台设备上。跨域直链需要对方服务器允许 CORS。词库由 App 自动载入，也可以在这个窗口联网同步。</p><button class="btn btn-primary" type="button" id="saveWordSource">保存并开始同步 <span class="btn-arrow">↗</span></button><button class="dialog-secondary" type="button" id="clearWordSource">清除此设备地址</button><p class="pay-status" id="wordSourceStatus" role="status" aria-live="polite"></p></div>
   </dialog>
   <dialog class="dialog" id="paymentDialog" aria-labelledby="paymentTitle">
-    <div class="dialog-content"><button class="dialog-close" type="button" data-close-dialog aria-label="关闭">×</button><span class="dialog-badge">LEXIO PRO · 安全结账</span><h2 id="paymentTitle">继续你的学习计划。</h2><p class="dialog-copy">支持多种方式支付，具体可用选项以正式结账页面为准。当前演示不会收集付款信息。</p><div class="payment-box"><div class="payment-row"><span id="checkoutPlanLabel">Lexio Pro · 连续包月</span><strong id="checkoutAmount">¥15 / 月</strong></div><div class="payment-row"><span>试用政策</span><strong id="checkoutTrial">先体验 7 天</strong></div><div class="payment-row"><span>优惠</span><strong id="checkoutDiscount">按运维活动配置</strong></div><div class="payment-row"><span>取消方式</span><strong>账户内随时取消</strong></div></div><p class="dialog-notice">当前演示尚未接入真实收银服务，因此不会产生扣款。正式上线后由安全的服务端创建订单并校验支付结果。</p><button class="btn btn-primary" type="button" id="checkoutBtn">连接安全收银台 <span class="btn-arrow">↗</span></button><p class="pay-status" id="payStatus" role="status" aria-live="polite"></p><button class="dialog-secondary" type="button" data-close-dialog>返回</button></div>
+    <div class="dialog-content"><button class="dialog-close" type="button" data-close-dialog aria-label="关闭">×</button><span class="dialog-badge">LEXIO PRO · 安全结账</span><h2 id="paymentTitle">继续你的学习计划。</h2><p class="dialog-copy">支持多种方式支付，具体可用选项以正式结账页面为准。当前演示不会收集付款信息。</p><div class="payment-box"><div class="payment-row"><span id="checkoutPlanLabel">Lexio Pro · 连续包月</span><strong id="checkoutAmount">¥15 / 月</strong></div><div class="payment-row"><span>试用政策</span><strong id="checkoutTrial">先体验 7 天</strong></div><div class="payment-row"><span>优惠</span><strong id="checkoutDiscount">年付或学生优惠</strong></div><div class="payment-row"><span>取消方式</span><strong>本机提醒中查看，无需联系客服</strong></div></div><p class="dialog-notice">当前演示尚未接入真实收银服务，因此不会产生扣款。正式上线后由安全的服务端创建订单并校验支付结果。</p><button class="btn btn-primary" type="button" id="checkoutBtn">连接安全收银台 <span class="btn-arrow">↗</span></button><p class="pay-status" id="payStatus" role="status" aria-live="polite"></p><button class="dialog-secondary" type="button" data-close-dialog>返回</button></div>
   </dialog>
   <dialog class="dialog install-dialog" id="installDialog" aria-labelledby="installTitle">
     <div class="dialog-content"><button class="dialog-close" type="button" data-close-dialog aria-label="关闭">×</button><span class="dialog-badge">安装到桌面</span><h2 id="installTitle">把 Lexio 装到手机上。</h2><p class="dialog-copy">安装后从桌面图标打开，全屏运行，词库与学习记录都留在本机。</p>
@@ -1667,12 +1680,13 @@
         $('#pricePeriod').textContent=`/ ${plan.period}`;
         $('#priceOriginal').textContent=formatPrice(plan.originalAmount);
         $('#priceOriginal').hidden=!(plan.originalAmount>plan.amount);
-        $('#priceTerms').textContent=`前 ${pricingConfig.trialDays} 天免费 · 之后 ${formatPrice(plan.amount)} / ${plan.period}自动续费`;
+        /* This build has no billing backend: never print “自动续费” as if it were live. */
+        $('#priceTerms').textContent=`前 ${pricingConfig.trialDays} 天免费体验 · 之后 ${formatPrice(plan.amount)} / ${plan.period}（当前版本不扣款）`;
         $('#annualBadge').textContent=annual && annual.discountPercent ? `省 ${annual.discountPercent}%` : '年付优惠';
         $('#studentPromo').hidden=!(pricingConfig.studentPromotion && pricingConfig.studentPromotion.enabled);
         if(pricingConfig.studentPromotion && pricingConfig.studentPromotion.enabled) $('#studentPromo').textContent=`🎓 ${pricingConfig.studentPromotion.label || `学生专属优惠 ${pricingConfig.studentPromotion.discountPercent || ''}%`}（正式版需完成学生身份验证）`;
         $$('.plan-option').forEach(button=>{const active=button.dataset.planSelect===selectedPlanId;button.classList.toggle('active',active);button.setAttribute('aria-pressed',String(active));});
-        const renewal=`${plan.name} · ${formatPrice(plan.amount)} / ${plan.period}，按授权续订`;
+        const renewal=`${plan.name} · ${formatPrice(plan.amount)} / ${plan.period}（正式收款时按此价格）`;
         $('#trialPlanRenewal').textContent=renewal;
         $('#trialConsentLabel').textContent=`我已了解正式版 ${pricingConfig.trialDays} 天试用结束后的续费价格（${formatPrice(plan.amount)} / ${plan.period}）和取消方式，并同意在本设备开始演示试用。`;
         $('#trialInfoPrice').textContent=`${formatPrice(plan.amount)} / ${plan.period}`;
@@ -1906,7 +1920,7 @@
       }
       function writeJSON(key, value) { try { localStorage.setItem(key, JSON.stringify(value)); } catch (_) {} }
       function masteredWords() { return readJSONArray(MASTERED_KEY); }
-      function markMastered(word, on) {
+      function markMastered(word, on, record) {
         if (!word) return;
         const list = masteredWords();
         const i = list.indexOf(word);
@@ -1914,7 +1928,7 @@
         else if (!on && i >= 0) list.splice(i, 1);
         else return;
         writeJSON(MASTERED_KEY, list);
-        bumpHistory(on ? 'known' : null);
+        if (record !== false) bumpHistory(on ? 'known' : null);
       }
       function bumpHistory(kind) {
         if (!kind) return;
@@ -1949,11 +1963,13 @@
         const weak = (typeof window.__lexioWeakCount === 'function') ? window.__lexioWeakCount() : 0;
         const todayKnown = Number(dailyStats && dailyStats.known) || 0;
         const todayAgain = Number(dailyStats && dailyStats.again) || 0;
-        const target = 30;
         if ($('#knownCount')) $('#knownCount').textContent = todayKnown.toLocaleString();
         if ($('#weakCountInline')) $('#weakCountInline').textContent = weak.toLocaleString();
         if ($('#masteredAllCount')) $('#masteredAllCount').textContent = mastered.toLocaleString();
-        if ($('#studyProgress')) $('#studyProgress').style.width = `${Math.min(100, (todayKnown / target) * 100)}%`;
+        /* The meter shows today's real ratio of “记住了” to all marks made today;
+           there is no invented daily quota behind it. */
+        const todayMarks = todayKnown + todayAgain;
+        if ($('#studyProgress')) $('#studyProgress').style.width = `${todayMarks ? Math.min(100, Math.round((todayKnown / todayMarks) * 100)) : 0}%`;
         const studyDate = $('#studyDate');
         if (studyDate) studyDate.textContent = `今日学习 · ${new Intl.DateTimeFormat('zh-CN',{month:'long',day:'numeric'}).format(new Date())}`;
         const streakEl = $('#studyStreak');
@@ -2367,10 +2383,10 @@
       $$('.plan-option').forEach(button=>button.addEventListener('click',()=>{selectedPlanId=button.dataset.planSelect;try{localStorage.setItem('lexio.selectedPlan',selectedPlanId);}catch(_){}updatePricingUI();}));
       let weakWords = (()=>{ try { const v=JSON.parse(localStorage.getItem('lexio.weakWords')||'[]'); return Array.isArray(v)?v.filter(Boolean):[]; } catch(_) { return []; } })();
       function persistWeak(){ try { localStorage.setItem('lexio.weakWords',JSON.stringify(weakWords)); } catch(_) {} }
-      function markWeak(wordKey, on) {
+      function markWeak(wordKey, on, record) {
         if (!wordKey) return;
         const i = weakWords.indexOf(wordKey);
-        if (on && i < 0) { weakWords.push(wordKey); bumpHistory('again'); }
+        if (on && i < 0) { weakWords.push(wordKey); if (record !== false) bumpHistory('again'); }
         else if (!on && i >= 0) { weakWords.splice(i, 1); }
         else { renderWeakList(); return; }
         persistWeak();
@@ -2425,19 +2441,19 @@
           avatar: FOE_AVATARS[Math.floor(Math.random() * FOE_AVATARS.length)],
           matches: 40 + Math.floor(Math.random() * 460),
           winRate: 52 + Math.floor(Math.random() * 31),
-          ping: 18 + Math.floor(Math.random() * 90)
+          style: ['稳扎稳打', '反应很快', '爱赌冷门义项', '稳中带快'][Math.floor(Math.random() * 4)]
         };
       }
       function showFoeMeta(foe) {
         $('#battleFoeAvatar').textContent = foe.avatar;
         $('#battleFoeName').textContent = foe.name;
-        $('#battleFoeStats').textContent = `${foe.winRate}% 胜率 · ${foe.matches} 场 · ${foe.ping}ms`;
+        $('#battleFoeStats').textContent = `模拟对手 · ${foe.style}`;
       }
       function battleEnd() {
         battle.over = true;
         battleClearTimers();
         $('#battleState').textContent = '已结束';
-        foeStatus('在线', 'online');
+        foeStatus('已结束', 'done');
         const win = battle.me > battle.foeScore, draw = battle.me === battle.foeScore;
         const foeName = foeNameNow();
         $('#battleWord').textContent = win ? '🏆 胜利' : draw ? '🤝 平局' : '💪 再战';
@@ -2522,13 +2538,13 @@
         $('#battleOptions').innerHTML = '';
         $('#battleFoeAvatar').textContent = '🔎';
         $('#battleFoeName').textContent = '匹配中…';
-        $('#battleFoeStats').textContent = '正在在线房间里挑选对手…';
-        foeStatus('搜索中', 'searching');
-        $('#battleMsg').textContent = '通常几秒钟就会有人应战。';
+        $('#battleFoeStats').textContent = '本机正在生成模拟对手…';
+        foeStatus('准备中', 'searching');
+        $('#battleMsg').textContent = '这是本机生成的模拟对手，不需要网络，也不会邀请真人。';
         battleT(() => {
           showFoeMeta(battle.foe);
-          foeStatus('已接受挑战', 'online');
-          $('#battleMsg').textContent = `${foeNameNow()} 接受了你的挑战。`;
+          foeStatus('已就位', 'online');
+          $('#battleMsg').textContent = `${foeNameNow()}（模拟对手）已就位，10 题词义快答开始。`;
           battleT(() => { battleRound(); }, 1100);
         }, 1300 + Math.random() * 1500);
       });
@@ -2693,11 +2709,11 @@
       });
       $('#knownWord').addEventListener('click',()=>{
         if (getTrialState().expired) { openPayment(); return; }
-        const masteredWord = bank[studyIndex] && bank[studyIndex].word; dailyStats.known+=1;bumpHistory('known');persistStats();markWeak(masteredWord,false);markMastered(masteredWord,true);studyIndex=(studyIndex+1)%Math.max(1,bank.length);updateStudyCard();toastMessage('记得不错，已记入这台设备的学习记录。');
+        const masteredWord = bank[studyIndex] && bank[studyIndex].word; dailyStats.known+=1;bumpHistory('known');persistStats();markWeak(masteredWord,false);markMastered(masteredWord,true,false);studyIndex=(studyIndex+1)%Math.max(1,bank.length);updateStudyCard();toastMessage('记得不错，已记入这台设备的学习记录。');
       });
       $('#againWord').addEventListener('click',()=>{
         if (getTrialState().expired) { openPayment(); return; }
-        const weakWord = bank[studyIndex] && bank[studyIndex].word; dailyStats.again+=1;bumpHistory('again');persistStats();markMastered(weakWord,false);markWeak(weakWord,true);$('#studyMeaning').classList.remove('is-hidden');$('#revealMeaning').textContent='隐藏释义';toastMessage('已加入记忆引擎：薄弱词已收集。');
+        const weakWord = bank[studyIndex] && bank[studyIndex].word; dailyStats.again+=1;bumpHistory('again');persistStats();markMastered(weakWord,false);markWeak(weakWord,true,false);$('#studyMeaning').classList.remove('is-hidden');$('#revealMeaning').textContent='隐藏释义';toastMessage('已加入记忆引擎：薄弱词已收集。');
       });
       $('#nextWord').addEventListener('click',()=>{studyIndex=(studyIndex+1)%Math.max(1,bank.length);updateStudyCard();});
       $$('.accent-toggle button').forEach(button=>button.addEventListener('click',()=>{$$('.accent-toggle button').forEach(b=>b.classList.remove('active'));button.classList.add('active');activeAccent=button.dataset.accent;renderWordGrid();if(bank[studyIndex])$('#studyPhonetic').textContent=`${displayedPhonetic(bank[studyIndex])||'音标待补充'}${bank[studyIndex].pos?' · '+bank[studyIndex].pos:''}`;}));
@@ -2877,6 +2893,8 @@
     if (lbl) lbl.textContent = VIEW_LABEL[view] || view;
     syncTabbar(view);
     booted = true;
+    if (anchorTimer) clearTimeout(anchorTimer);
+    anchorTimer = setTimeout(function () { anchorTimer = null; placeAnchor(view, anchor); }, 0);
 
     /* Only the two primary sections get a transform layer. Everything else
        is switched instantly, which keeps the compositor work constant no
@@ -2910,8 +2928,7 @@
     outgoing.style.willChange = 'transform, opacity';
     outgoing.style.zIndex = anim === 'pop' ? '3' : '1';
     outgoing.classList.add(outCls);
-    pending = { main: main, outers: outers, inn: inn, inCls: inCls, outCls: outCls, timer: null,
-      done: function () { placeAnchor(view, anchor); } };
+    pending = { main: main, outers: outers, inn: inn, inCls: inCls, outCls: outCls, timer: null };
     pending.timer = setTimeout(endAnim, ANIM_TOTAL);
   }
   function route() {
