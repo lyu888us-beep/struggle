@@ -185,6 +185,26 @@ function animClean() {
   check('左滑 → 进入下一张词卡', pos1 !== pos0, `${pos0} → ${pos1}`);
   check('滑动本身不再冒充“已记住”', parseInt((doc.getElementById('knownCount').textContent || '0').replace(/\D/g, ''), 10) === known0,
     `known=${doc.getElementById('knownCount').textContent}`);
+  // 滑动是纯导航：既不能标记已掌握，也不能把薄弱词从复习队列里删掉
+  if (window.__lexioWeak) {
+    const weakWord = (window.__lexioStudy.current() || {}).word;
+    if (weakWord) {
+      window.__lexioWeak.add(weakWord);
+      const weakBefore = window.__lexioWeak.count();
+      fire('pointerdown', doc.getElementById('studyCard'), 300, 400);
+      fire('pointermove', window, 200, 400);
+      fire('pointerup', window, 200, 400);
+      await sleep(520);
+      check('滑动不会把薄弱词从复习队列里删掉',
+        window.__lexioWeak.count() === weakBefore && window.__lexioWeak.list().includes(weakWord),
+        `weak ${weakBefore} → ${window.__lexioWeak.count()}`);
+      fire('pointerdown', doc.getElementById('studyCard'), 200, 400);
+      fire('pointermove', window, 300, 400);
+      fire('pointerup', window, 300, 400);
+      await sleep(520);
+      window.__lexioWeak.remove(weakWord);
+    }
+  }
   check('左滑未误触发翻面', !cardFlip.classList.contains('is-flipped'));
   fire('pointerdown', doc.getElementById('studyCard'), 120, 400);
   fire('pointermove', window, 220, 398);
@@ -785,6 +805,15 @@ function animClean() {
     !/多所中学|多所大学|合作学校|已有\s*\d+\s*所/.test(doc.getElementById('faq').textContent));
   check('宣传页无虚构成绩/用户数字',
     !pageHtml.includes('平均词汇量') && !pageHtml.includes('提升 23%') && !pageHtml.includes('% 记忆保持'));
+
+  // 13b) 所有页内链接都指向真实存在的区块（App 外壳不能有死链）
+  {
+    const ids = new Set([...doc.querySelectorAll('[id]')].map((el) => el.id));
+    const dead = [...new Set([...doc.querySelectorAll('a[href^="#"]')]
+      .map((a) => a.getAttribute('href').slice(1))
+      .filter((target) => target && target !== 'main' && !ids.has(target)))];
+    check('页内锚点全部有对应区块（无死链）', dead.length === 0, dead.join(', ') || 'ok');
+  }
 
   // 14) 老用户升级：安装过的词库会被内容迁移修正（不再夹带中文例句）
   {

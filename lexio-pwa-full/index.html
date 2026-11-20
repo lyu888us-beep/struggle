@@ -2649,10 +2649,9 @@
         }
         function swipeGo(dir) {
           if (!bank.length) return;
-          const left = bank[studyIndex];
-          /* Swiping no longer claims "mastered": it only moves the card.
-             A word counts as known when the learner taps "记住了". */
-          if (left && left.word && dir > 0) markWeak(left.word, false);
+          /* Swiping only moves the card. It must not mark a word known (that
+             would fake progress) and must not remove it from the review queue
+             either — only an explicit 记住了 tap does that. */
           studyIndex = (((studyIndex + dir) % bank.length) + bank.length) % bank.length;
           updateStudyCard();
           toastMessage(dir > 0 ? '下一张词卡' : '上一张词卡');
