@@ -603,6 +603,21 @@ function animClean() {
   check('每个词条的例句都是可朗读的英文，不含中文说明',
     bundledWords.length === 25024 && missingExamples === 0 && cjkExamples === 0 && realExamples > 22000,
     `total=${bundledWords.length} missing=${missingExamples} cjk=${cjkExamples} real=${realExamples}`);
+  {
+    // 词典短语（没有完整句子的词）要明确标注，且不提供“整句朗读”
+    const phraseWord = doc.querySelector('#studyExampleSource');
+    check('例句来源标签区分「词典原句」与「词典短语」',
+      pageHtml.includes('词典短语 · ') && pageHtml.includes('exampleIsPhrase'));
+    check('词典短语不会伪装成句子朗读（按钮会被禁用）',
+      pageHtml.includes("exSpeakBtn.disabled = exampleIsPhrase") &&
+      pageHtml.includes('这是词典短语，不是完整句子'));
+    // 生成的练习提示句必须标注“不是真实语料例句”
+    check('自动生成的提示句明确标注非真实语料',
+      pageHtml.includes('练习提示句 · 不是真实语料例句') &&
+      pageHtml.includes('自动生成的学习句 · 非真实语料例句'));
+    void phraseWord;
+  }
+
   check('词卡例句朗读会去掉中文引号并整句交给 en-US 语音',
     html.includes("replace(/[“”\"]/g, '')") && html.includes("speak(sentence, 'en-US', onDone, onError)"));
   check('内置词库逐词有记忆线索/复习提示', missingMnemonics === 0 &&
@@ -746,11 +761,15 @@ function animClean() {
   check('点“记住了”今日计数只 +1，不重复记录', knownAfterDay - knownBeforeDay === 1);
   await sleep(80);
   const masteredAfterKnown = progressApi.mastered().length;
+  const weakAfterKnown = progressApi.weak();
   doc.getElementById('againWord').click();
   await sleep(80);
+  // 点「还不熟悉」：当前词进入薄弱队列、退出已记住；已记住总数不因这次点击减少
   check('已记住 / 没记牢随实际标记变化',
-    masteredAfterKnown === masteredBefore + 1 && progressApi.weak() >= weakBefore,
-    `mastered=${masteredBefore}→${masteredAfterKnown} weak=${weakBefore}→${progressApi.weak()}`);
+    masteredAfterKnown === masteredBefore + 1 &&
+    progressApi.weak() === weakAfterKnown + 1 &&
+    !progressApi.mastered().includes(window.__lexioStudy.current().word),
+    `mastered=${masteredBefore}→${masteredAfterKnown} weak=${weakBefore}→${weakAfterKnown}→${progressApi.weak()}`);
   doc.querySelector('[data-demo-tab="memory"]').click();
   await sleep(60);
   check('记忆面板显示真实已记住 / 没记牢 / 连续天数',

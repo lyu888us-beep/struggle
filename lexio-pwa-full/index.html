@@ -2061,8 +2061,16 @@
         $('#studyMeaning').classList.add('is-hidden');
         $('#studyExample').textContent = word.example ? `“${word.example}”` : '本词暂无例句。先在正面自测回忆，想不起再翻回来对照。';
         const exampleSource = word.exampleSource || '';
+        /* Some exam dictionaries only ship a usage phrase ("a honeymoon
+           suite") and no full sentence exists in any licensed source. That is
+           shown and labelled as a phrase, never padded into a fake sentence. */
+        const exampleText = String(word.example || '').trim();
+        const exampleIsPhrase = !!exampleText && (
+          exampleText.indexOf('...') === 0 ||
+          (/^[a-z]/.test(exampleText) && !/[.!?]["'\u201d)]?$/.test(exampleText))
+        );
         const sourceLabel = exampleSource.startsWith('dictionary:')
-          ? `词典原句 · ${exampleSource.slice('dictionary:'.length)}`
+          ? (exampleIsPhrase ? `词典短语 · ${exampleSource.slice('dictionary:'.length)}` : `词典原句 · ${exampleSource.slice('dictionary:'.length)}`)
           : exampleSource.startsWith('generated-practice')
             ? '练习提示句 · 不是真实语料例句'
             : exampleSource.startsWith('generated-context')
@@ -2083,7 +2091,14 @@
         $('#studyMnemonic').hidden = !word.mnemonic;
         const flipEl = $('#wordCardFlip'); if (flipEl) flipEl.classList.remove('is-flipped');
         const revealBtn = $('#revealMeaning'); if (revealBtn) revealBtn.textContent = '显示释义';
-        const exSpeakBtn = $('#exampleSpeak'); if (exSpeakBtn) exSpeakBtn.hidden = !word.example;
+        const exSpeakBtn = $('#exampleSpeak');
+        if (exSpeakBtn) {
+          exSpeakBtn.hidden = !word.example;
+          exSpeakBtn.disabled = exampleIsPhrase;
+          exSpeakBtn.title = exampleIsPhrase ? '这是词典短语，不是完整句子：请用上方单词发音。' : '朗读整句例句';
+          exSpeakBtn.textContent = '🔊 朗读例句';
+          exSpeakBtn.dataset.speaking = '0';
+        }
         updateProgressUI();
         $('#studyDate').textContent = `今日学习 · ${new Intl.DateTimeFormat('zh-CN',{month:'long',day:'numeric'}).format(new Date())}`;
         const trial = getTrialState();
