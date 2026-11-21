@@ -31,3 +31,5 @@
 6. 运行 `npm test`、`node scripts/voice-queue.mjs`、`git diff --check`。核对新增文件数、媒体可播放性、剩余数量；更新此表与声音档案。提交并推送当前工作分支，检查此次提交对应的 Pages 工作流成功后再通知用户。
 
 第 12 批试听：[Would you like some salad with your pasta?](media/voice/s-cd0be31bedd3c712.mp3)
+
+第 13 批试听：[Could you wrap this separately, please?](media/voice/s-690c03e8a4777e71.mp3)
