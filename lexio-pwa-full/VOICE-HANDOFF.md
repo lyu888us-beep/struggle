@@ -28,3 +28,5 @@
 4. 离线切分：在 Python 环境安装 `numpy pocketsphinx imageio-ffmpeg`；执行 `python scripts/cut-voice-batch.py groups.json wav_dir staging_dir`。数字需先明确口头读法，未知词需补发音。切点有疑问时优先核验波形和原文；脚本允许第四个参数传已核对的切点 JSON。**未对齐或静音不要发布。** 输出为暂存 MP3 和 `clips.json`；这一步不会修改线上映射。
 5. 检查本批键均不在旧 `selectedRecordings` 中；将 MP3 复制到 `media/voice`，把 `clips.json` 合入 `index.html` 的完整文本映射，更新 `sw.js` 的 `bulkAssets`、缓存版本及相应测试。不要覆盖旧录音、变更词条 ID、或移除未录的文字。
 6. 运行 `npm test`、`node scripts/voice-queue.mjs`、`git diff --check`。核对新增文件数、媒体可播放性、剩余数量；更新此表与声音档案。提交并推送当前工作分支，检查此次提交对应的 Pages 工作流成功后再通知用户。
+
+第 12 批试听：[Would you like some salad with your pasta?](media/voice/s-cd0be31bedd3c712.mp3)
