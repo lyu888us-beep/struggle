@@ -38,3 +38,5 @@
 第 12 批试听：[Would you like some salad with your pasta?](media/voice/s-cd0be31bedd3c712.mp3)
 
 第 13 批试听：[Could you wrap this separately, please?](media/voice/s-690c03e8a4777e71.mp3)
+
+第 18 批试听：[Excuse me, but is this the right way to the subway station?](media/voice/s-4eee582d1a62cf87.mp3)
