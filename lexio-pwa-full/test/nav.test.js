@@ -290,8 +290,8 @@ function animClean() {
   check('例句首选完整 en-US 录音，避免异步音频链',
     pageHtml.includes("playPronunciation(sentence,'en-US',1,url,onDone,onError,true)") &&
     !pageHtml.includes('function speakExample(text, onDone, onError) {\n        const sentence = String(text || \'\').trim();\n        const matches ='));
-  check('例句朗读按钮和状态明确标记美式发音',
-    pageHtml.includes('使用美式发音播放例句') && pageHtml.includes('正在播放美式例句'));
+  check('例句按钮保留美式发音说明，播放时不弹提示',
+    pageHtml.includes('使用美式发音播放例句') && !pageHtml.includes('正在播放美式例句'));
   check('页面移除原站跳转及外部 Arena 联系链接',
     !pageHtml.includes('原站入口') && !pageHtml.includes('arena.site') && !doc.querySelector('a[href^="https://"]'));
   check('支付宣传统一为“支持多种方式支付”且不展示个人结算承诺',
@@ -309,8 +309,8 @@ function animClean() {
     cssText.includes('@keyframes appHomeEnter') && cssText.includes('@keyframes appPricingEnter') &&
     cssText.includes('@keyframes pricePop') && cssText.includes('.price strong.is-changing') &&
     cssText.includes('prefers-reduced-motion: reduce'));
-  check('Service Worker 升到 v49 并预缓存口语句库与安装引导视频',
-    swSource.includes("CACHE_NAME = 'lexio-shell-v49-card-batch-20'") &&
+  check('Service Worker 升到 v50 并预缓存口语句库与安装引导视频',
+    swSource.includes("CACHE_NAME = 'lexio-shell-v50-card-batch-21'") &&
     swSource.includes("'./data/daily-conversation.json'") &&
     swSource.includes("'./media/install-guide.mp4'") &&
     pageHtml.includes('controllerchange') && pageHtml.includes('swRefreshing'));
