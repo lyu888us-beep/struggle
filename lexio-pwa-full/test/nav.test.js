@@ -309,8 +309,8 @@ function animClean() {
     cssText.includes('@keyframes appHomeEnter') && cssText.includes('@keyframes appPricingEnter') &&
     cssText.includes('@keyframes pricePop') && cssText.includes('.price strong.is-changing') &&
     cssText.includes('prefers-reduced-motion: reduce'));
-  check('Service Worker 升到 v69 并预缓存口语句库与安装引导视频',
-    swSource.includes("CACHE_NAME = 'lexio-shell-v69-card-batch-40'") &&
+  check('Service Worker 升到 v70 并预缓存口语句库与安装引导视频',
+    swSource.includes("CACHE_NAME = 'lexio-shell-v70-card-batch-41'") &&
     swSource.includes("'./data/daily-conversation.json'") &&
     swSource.includes("'./media/install-guide.mp4'") &&
     pageHtml.includes('controllerchange') && pageHtml.includes('swRefreshing'));
