@@ -49,6 +49,7 @@
 | v71 / 词卡 42 | 旅行见闻、校园学习、友谊与职场交流 | 315 | 13,462 | 4,112 |
 | v72 / 词卡 43 | 旅行住宿、语言学习、购物与日常交流 | 341 | 13,803 | 3,771 |
 | v73 / 词卡 44 | 餐饮、交通、校园与日常交流（首组 35 句未生成，保留待录） | 320 | 14,123 | 3,451 |
+| v74 / 词卡 45 | 上批补录 19 句，另录 284 句；本次失败清单见文末 | 303 | 14,426 | 3,148 |
 
 分母是当前 `voice-queue.mjs` 从内置数据去重得到的 17,574 条目标文本，不是词条数。不要按表中起止词跳过前面未录的句子。以剩余队列为准。用户要求：完成一批，测试、上传 GitHub、确认 Pages 部署、在对话里报告；需要换窗口时先更新此文档并给链接。不把后台离线下载描述成后台继续配音。
 
@@ -70,3 +71,27 @@
 - v61 / 词卡 32 试听：[We are traveling on a tight budget](https://lyu888us-beep.github.io/struggle/media/voice/s-a8b28599ce83cc65.mp3)
 - v62 / 词卡 33 试听：[I would like to pay with a credit card](https://lyu888us-beep.github.io/struggle/media/voice/s-ba89c1319545298a.mp3)
 - v64 / 词卡 35 试听：[Please call me at my hotel later](https://lyu888us-beep.github.io/struggle/media/voice/s-dcef833afa4a697c.mp3)
+
+### v74 历史失败项复核
+
+v73 的 35 句已补录 19 句；其余 16 句与 v50 原计划复核出的 3 个待录候选同组重试，整组未通过语音服务审核，未返回音频。服务未指出具体是哪一句触发；以下 19 项不计入已完成。v36 的两句已在 v37 补录。
+
+- v50 候选：Do you have difficulty understanding what women or small children say to you?
+- v50 候选：Are you an idiot?
+- v73：My grandfather often nods over his newspaper
+- v73：He seized me by the neck
+- v73：He was too tired to go any farther
+- v73：I look on watching TV as a waste of time
+- v73：Mary tried to comfort Tom
+- v73：I've never lived on a farm, but both of my parents grew up on farms
+- v73：This intersection is dangerous
+- v73：There are no taxis, so I must walk
+- v73：There are four seasons in this country
+- v73：He is mad about music
+- v73：They seldom watch television these days
+- v73：I fell asleep while I was watching TV
+- v73：Let us weigh one catty of cuttlefish
+- v73：The space race was an exciting time in history
+- v73：The knife is not sharp
+- v73：The bird escaped from its cage
+- v50 候选：Esperanto, an official language of the European Union, now!
