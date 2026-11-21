@@ -57,3 +57,4 @@
 第 18 批试听：[Excuse me, but is this the right way to the subway station?](media/voice/s-4eee582d1a62cf87.mp3)
 
 - v61 / 词卡 32 试听：[We are traveling on a tight budget](https://lyu888us-beep.github.io/struggle/media/voice/s-a8b28599ce83cc65.mp3)
+- v62 / 词卡 33 试听：[I would like to pay with a credit card](https://lyu888us-beep.github.io/struggle/media/voice/s-ba89c1319545298a.mp3)
