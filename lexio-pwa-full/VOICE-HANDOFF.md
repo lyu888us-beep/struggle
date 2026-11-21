@@ -60,3 +60,4 @@
 
 - v61 / 词卡 32 试听：[We are traveling on a tight budget](https://lyu888us-beep.github.io/struggle/media/voice/s-a8b28599ce83cc65.mp3)
 - v62 / 词卡 33 试听：[I would like to pay with a credit card](https://lyu888us-beep.github.io/struggle/media/voice/s-ba89c1319545298a.mp3)
+- v64 / 词卡 35 试听：[Please call me at my hotel later](https://lyu888us-beep.github.io/struggle/media/voice/s-dcef833afa4a697c.mp3)
