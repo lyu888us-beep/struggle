@@ -522,6 +522,11 @@ phones = {
     "manicouagan":"M AE N IH K W EY G AH N",
     "supertrams":"S UW P ER T R AE M Z",
     "lao":"L AW",
+    "covid":"K OW V IH D",
+    "nursling":"N ER S L IH NG",
+    "plantlets":"P L AE N T L AH T S",
+    "yalu":"Y AA L UW",
+    "liaoning":"L Y AW N IH NG",
 }
 
 
