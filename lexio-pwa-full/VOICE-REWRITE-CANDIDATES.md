@@ -37,3 +37,54 @@
 | pep-4-1:schoolbag | He schoolbag are cheap and nice. | 机翻病句 |
 | ielts:proterozoic | The word proterozoic appears in this sentence. | 元语言学模板句 |
 | pep-7-1:How about…? | Er…How about some tea? | 已在 v91 录成 "Er, how about some tea?" |
+
+---
+
+# 第二批待改写（v95 后，第 1–40 条）
+
+这批是「疑似机翻」桶里**只剩语法/拼写缺陷**的句子，改法与原文一一对应。确认后我按批录制。
+
+| # | 原文 | 建议朗读版 | 缺陷 |
+|---|---|---|---|
+| 1 | Tom is teaching me to how to sail | Tom is teaching me how to sail. | 多 `to` |
+| 2 | Ten movies are elected every year | Ten movies are released every year. | 动词误用（elect→release） |
+| 3 | My lunch was an apple and pears and pomegranate | My lunch was an apple, a pear, and a pomegranate. | 冠词/单复数 |
+| 4 | He is on goods terms with all of his classmates | He is on good terms with all of his classmates. | `goods`→`good` |
+| 5 | My wife's underwear is all old, I want to buy her some new ones online | My wife's underwear is all old; I want to buy her some new ones online. | 逗号粘连 |
+| 6 | The use of mosquito lure female mosquitoes. | The use of a mosquito lure attracts female mosquitoes. | 缺谓语 |
+| 7 | I like dolphin. | I like dolphins. | 单复数 |
+| 8 | I ordered a sesame seed buns for the veggie burgers | I ordered sesame seed buns for the veggie burgers. | 冠词多余 |
+| 9 | Nothing lasts forever, not for a long time, anyone can find an excuse to go ahead | Nothing lasts forever; anyone can find an excuse to move on. | 语义打结 |
+| 10 | The train had already left when we got to station | The train had already left when we got to the station. | 缺冠词 |
+| 11 | Thus I tell you don't just go alone | So I tell you, don't go alone. | 连接词 |
+| 12 | Analysts content that the stock market is due for a technical rally | Analysts contend that the stock market is due for a technical rally. | `content`→`contend` |
+| 13 | She moistenend the soil round the plant. | She moistened the soil around the plant. | 拼写 |
+| 14 | I to the kindergarten at the age of three. | I went to kindergarten at the age of three. | 缺动词 |
+| 15 | We brunch in Sundays | We brunch on Sundays. | 介词 |
+| 16 | Either as a waiter at a restaurant or a bartender, both are OK | Either a waiter at a restaurant or a bartender is fine. | 句法 |
+| 17 | Because I want to be a translator | I study English because I want to be a translator. | 残句补全 |
+| 18 | I talked to him on the telephone yesterday night | I talked to him on the telephone last night. | 时间状语 |
+| 19 | What do you have the first period? | What do you have first period? | 多 `the` |
+| 20 | The governor also expressed concerned over the deteriorating standard of education in the country. | The governor also expressed concern over the deteriorating standard of education in the country. | `concerned`→`concern` |
+| 21 | We require the agency in our market for your precision apparatus. | We require an agent in our market for your precision apparatus. | `agency`→`agent` |
+| 22 | Here you should use plural pronoun. | Here you should use a plural pronoun. | 缺冠词 |
+| 23 | She rented a flat close the to the city centre | She rented a flat close to the city centre. | 词序 |
+| 24 | Although the production of electric fans was reduced in February, it still beats January | Although production of electric fans fell in February, it still beat January. | 时态 |
+| 25 | The owner of this house has two twins | The owner of this house has twins. | 冗余数词 |
+| 26 | It is presently very difficult to calm down and treat oneself with a book | It is hard to calm down and treat oneself to a book these days. | 搭配 |
+| 27 | Every nation should help each other | Every nation should help the others. | 搭配 |
+| 28 | I hope to graduate at the exams. | I hope to graduate with good exam results. | 介词 |
+| 29 | Coldness sometimes don't mean apathy. It's just a tool to avoid being hurt | Coldness sometimes doesn't mean apathy. It's just a tool to avoid being hurt. | 主谓一致 |
+| 30 | In Netherlands you can see windmills wherever you go | In the Netherlands you can see windmills wherever you go. | 缺冠词 |
+| 31 | There something undeniably soulful about the eerie whine of the highland bagpipes. | There is something undeniably soulful about the eerie whine of the Highland bagpipes. | 缺系动词 |
+| 32 | The apprentice lingered his work. | The apprentice lingered over his work. | 缺介词 |
+| 33 | Inside, it's very hot, but outside its freezing | Inside, it's very hot, but outside it's freezing. | `its`→`it's` |
+| 34 | Common units of volume are cubic centimeter. | Common units of volume are the cubic centimetre and the litre. | 单复数 |
+| 35 | English stills bears the imprint of the Norman invasion | English still bears the imprint of the Norman invasion. | `stills`→`still` |
+| 36 | Mathematics are the foundation of all sciences | Mathematics is the foundation of all sciences. | 主谓一致 |
+| 37 | An hexagon has six sides | A hexagon has six sides. | `An`→`A` |
+| 38 | The gas station just neighbours to the motel. | The gas station is right next to the motel. | 搭配 |
+| 39 | She fell of her horse | She fell off her horse. | `of`→`off` |
+| 40 | You have done it totally incorrect! | You have done it totally incorrectly! | 副词形式 |
+
+**建议放弃（语义已不可复原）**：`When chickens pancake-shape maintain, the tractor must have won again`、`She was really of the cold frog.`、`Creating creativity itself is improving creativity`、`Steam is water is the gaseous state`、`Since namely namely misconceive, that explanation clear nice.`、`Different is, the exam in the life often does not have person invigilate.`
