@@ -163,8 +163,8 @@ function animClean() {
     (window.__audioInstances||[]).length===audioBeforeQueueWord+1);
   if(queueWordAudio)queueWordAudio.emit('ended');
   const usAudioCount=(window.__audioInstances||[]).length;
-  const firstUsWord=window.__lexioStudy.current(), originalFirstUs=firstUsWord.us;
-  firstUsWord.us='https://example.invalid/us-voice-one.mp3';
+  const firstUsWord=window.__lexioStudy.current(), originalFirstUs=firstUsWord.us, originalFirstWord=firstUsWord.word;
+  firstUsWord.word='system-test-word-one'; firstUsWord.us='https://example.invalid/us-voice-one.mp3';
   doc.getElementById('studySpeak').click();
   await sleep(30);
   const firstUsUtterance=window.__lastUtterance;
@@ -172,8 +172,8 @@ function animClean() {
   const firstUsLang=firstUsUtterance && firstUsUtterance.lang;
   window.__testVoices=[{lang:'en-US',name:'Other US'}];
   window.__lexioStudy.goTo(1);
-  const secondUsWord=window.__lexioStudy.current(), originalSecondUs=secondUsWord.us;
-  secondUsWord.us='https://example.invalid/us-voice-two.mp3';
+  const secondUsWord=window.__lexioStudy.current(), originalSecondUs=secondUsWord.us, originalSecondWord=secondUsWord.word;
+  secondUsWord.word='system-test-word-two'; secondUsWord.us='https://example.invalid/us-voice-two.mp3';
   doc.getElementById('studySpeak').click();
   await sleep(30);
   const secondUsUtterance=window.__lastUtterance;
@@ -182,12 +182,15 @@ function animClean() {
     firstUsLang==='en-US' && secondUsUtterance.lang==='en-US' && firstUsVoice==='Test US' &&
     secondUsVoice===firstUsVoice && (window.__audioInstances||[]).length===usAudioCount,
     `${firstUsVoice} → ${secondUsVoice}; audio requests=${(window.__audioInstances||[]).length-usAudioCount}`);
-  firstUsWord.us=originalFirstUs; secondUsWord.us=originalSecondUs;
+  firstUsWord.us=originalFirstUs; firstUsWord.word=originalFirstWord;
+  secondUsWord.us=originalSecondUs; secondUsWord.word=originalSecondWord;
   window.__lexioStudy.goTo(0);
   doc.getElementById('studyCard').click(); await sleep(30); // restore the pre-test flipped state
   doc.querySelector('[data-accent="en-GB"]').click(); doc.querySelector('#studySpeak').click();
   check('英式录音入口不变',new URL(window.__lastAudio.src).searchParams.get('type')==='1');
   doc.querySelector('[data-accent="en-US"]').click();
+  const fallbackTestWord=window.__lexioStudy.current(), fallbackOriginalWord=fallbackTestWord.word;
+  fallbackTestWord.word='system-fallback-test';
   window.__failSpeech=true;
   doc.getElementById('studySpeak').click();
   const fallbackWordAudio=window.__lastAudio;
@@ -196,9 +199,12 @@ function animClean() {
   window.__failSpeech=false;
   const failedUtterance=window.__lastUtterance;
   window.__lexioStudy.goTo(1);
+  const stickyTestWord=window.__lexioStudy.current(), stickyOriginalWord=stickyTestWord.word;
+  stickyTestWord.word='system-fallback-sticky';
   doc.getElementById('studySpeak').click();
   check('美音回退后本会话不再逐词切换来源',
     new URL(window.__lastAudio.src).searchParams.get('type')==='2' && window.__lastUtterance===failedUtterance);
+  fallbackTestWord.word=fallbackOriginalWord; stickyTestWord.word=stickyOriginalWord;
   window.__lexioStudy.goTo(0);
   doc.getElementById('studyCard').click(); await sleep(30); // restore the pre-test flipped state
   check('点发音按钮不触发翻面', cardFlip.classList.contains('is-flipped'));
@@ -363,8 +369,8 @@ function animClean() {
     cssText.includes('@keyframes appHomeEnter') && cssText.includes('@keyframes appPricingEnter') &&
     cssText.includes('@keyframes pricePop') && cssText.includes('.price strong.is-changing') &&
     cssText.includes('prefers-reduced-motion: reduce'));
-  check('Service Worker 升到 v117 并预缓存口语句库与安装引导视频',
-    swSource.includes("CACHE_NAME = 'lexio-shell-v117-ios-audio-fallback'") &&
+  check('Service Worker 升到 v118 并预缓存口语句库与安装引导视频',
+    swSource.includes("CACHE_NAME = 'lexio-shell-v118-word-audio-batch-002'") &&
     swSource.includes("'./data/daily-conversation.json'") &&
     swSource.includes("'./media/install-guide.mp4'") &&
     pageHtml.includes('controllerchange') && pageHtml.includes('swRefreshing'));

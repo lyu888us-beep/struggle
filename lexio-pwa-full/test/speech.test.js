@@ -23,13 +23,18 @@ const dir=path.join(__dirname,'..');
     assert.equal(recordings[text],id);
   }
   console.log('✓ 501 个改写目标已移除旧音频别名，仅保留 3 条精确目标句录音');
-  const approvedWords=['comfortable','entrepreneur','rural','schedule','thorough'];
-  const generatedBatchWords=['persevere','deliberate','subtle','resilient','comprehensive','ambitious','contribute','essential','accessible','significant'];
+  const wordManifest=JSON.parse(fs.readFileSync(path.join(dir,'media/voice/word-audio-manifest.json')));
+  assert.equal(wordManifest.voice_id,'voice-00');
+  const approvedWords=wordManifest.userApprovedSampleWords;
+  const generatedBatchWords=wordManifest.generatedBatches.flatMap(batch=>batch.words);
   const expectedWords=[...approvedWords,...generatedBatchWords].sort();
+  assert.equal(wordManifest.count,expectedWords.length);
   assert.deepEqual(Object.keys(wordRecordings).sort(),expectedWords);
+  assert.deepEqual(Object.keys(wordManifest.clips).sort(),expectedWords);
   for(const word of expectedWords){
     const id='w-'+require('node:crypto').createHash('sha256').update(word).digest('hex').slice(0,16);
     assert.equal(wordRecordings[word],id);
+    assert.equal(wordManifest.clips[word],id);
   }
   assert.ok(html.includes("selectedWordRecordings[String(entry.word).trim().toLowerCase()]"));
   const phrases=JSON.parse(fs.readFileSync(path.join(dir,'data/daily-conversation.json'))).phrases;
