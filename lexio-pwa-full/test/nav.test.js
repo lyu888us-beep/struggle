@@ -42,11 +42,12 @@ const dom = new JSDOM(html, {
       return Promise.reject(new Error('Network disabled in test environment'));
     };
     window.SpeechSynthesisUtterance = function (text) { this.text = text; this.lang = ''; this.rate = 1; };
+    window.__testVoices = [{ lang: 'en-US', name: 'Test US' }, { lang: 'en-GB', name: 'Test GB' }];
     window.speechSynthesis = {
       speaking: false,
       pending: false,
       paused: false,
-      getVoices: () => [{ lang: 'en-US', name: 'Test US' }, { lang: 'en-GB', name: 'Test GB' }],
+      getVoices: () => window.__testVoices,
       addEventListener() {},
       resume() { this.paused = false; },
       cancel() { this.speaking = false; this.pending = false; },
@@ -141,9 +142,29 @@ function animClean() {
   doc.getElementById('studyCard').click();
   await sleep(30);
   check('点击卡片 → 翻到背面', cardFlip.classList.contains('is-flipped'));
+  const usAudioCount=(window.__audioInstances||[]).length;
+  const firstUsWord=window.__lexioStudy.current(), originalFirstUs=firstUsWord.us;
+  firstUsWord.us='https://example.invalid/us-voice-one.mp3';
   doc.getElementById('studySpeak').click();
   await sleep(30);
-  check('词卡默认使用原美式录音，单词正常速度',new URL(window.__lastAudio.src).searchParams.get('type')==='2' && window.__lastAudio.playbackRate===1);
+  const firstUsUtterance=window.__lastUtterance;
+  const firstUsVoice=firstUsUtterance && firstUsUtterance.voice && firstUsUtterance.voice.name;
+  const firstUsLang=firstUsUtterance && firstUsUtterance.lang;
+  window.__testVoices=[{lang:'en-US',name:'Other US'}];
+  window.__lexioStudy.goTo(1);
+  const secondUsWord=window.__lexioStudy.current(), originalSecondUs=secondUsWord.us;
+  secondUsWord.us='https://example.invalid/us-voice-two.mp3';
+  doc.getElementById('studySpeak').click();
+  await sleep(30);
+  const secondUsUtterance=window.__lastUtterance;
+  const secondUsVoice=secondUsUtterance && secondUsUtterance.voice && secondUsUtterance.voice.name;
+  check('不同词条的美式读音锁定同一 en-US 系统声音',
+    firstUsLang==='en-US' && secondUsUtterance.lang==='en-US' && firstUsVoice==='Test US' &&
+    secondUsVoice===firstUsVoice && (window.__audioInstances||[]).length===usAudioCount,
+    `${firstUsVoice} → ${secondUsVoice}; audio requests=${(window.__audioInstances||[]).length-usAudioCount}`);
+  firstUsWord.us=originalFirstUs; secondUsWord.us=originalSecondUs;
+  window.__lexioStudy.goTo(0);
+  doc.getElementById('studyCard').click(); await sleep(30); // restore the pre-test flipped state
   doc.querySelector('[data-accent="en-GB"]').click(); doc.querySelector('#studySpeak').click();
   check('英式录音入口不变',new URL(window.__lastAudio.src).searchParams.get('type')==='1');
   doc.querySelector('[data-accent="en-US"]').click();
@@ -309,8 +330,8 @@ function animClean() {
     cssText.includes('@keyframes appHomeEnter') && cssText.includes('@keyframes appPricingEnter') &&
     cssText.includes('@keyframes pricePop') && cssText.includes('.price strong.is-changing') &&
     cssText.includes('prefers-reduced-motion: reduce'));
-  check('Service Worker 升到 v109 并预缓存口语句库与安装引导视频',
-    swSource.includes("CACHE_NAME = 'lexio-shell-v109-card-batch-80'") &&
+  check('Service Worker 升到 v110 并预缓存口语句库与安装引导视频',
+    swSource.includes("CACHE_NAME = 'lexio-shell-v110-card-batch-81'") &&
     swSource.includes("'./data/daily-conversation.json'") &&
     swSource.includes("'./media/install-guide.mp4'") &&
     pageHtml.includes('controllerchange') && pageHtml.includes('swRefreshing'));

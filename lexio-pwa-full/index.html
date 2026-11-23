@@ -2632,7 +2632,7 @@
       }
       if ('speechSynthesis' in window) {
         refreshVoices();
-        try { window.speechSynthesis.addEventListener('voiceschanged', () => { refreshVoices(); nudgePreferredVoice(); }); } catch(_) {
+        try { window.speechSynthesis.addEventListener('voiceschanged', refreshVoices); } catch(_) {
           try { window.speechSynthesis.onvoiceschanged = refreshVoices; } catch(__) {}
         }
       }
@@ -2651,50 +2651,38 @@
       };
       const FEMALE_HINTS = /female|woman|girl|samantha|ava|allison|susan|zoe|nicky|karen|serena|aria|jenny|michelle|zira|sonia|kate|stephanie|libby|moira|tessa|fiona/i;
       const MALE_HINTS = /\bmale\b|\bman\b|daniel|alex|fred|tom|david|mark|guy|george|james|arthur|oliver|aaron|matthew/i;
+      // Lock one browser voice per accent for this page session. Some devices
+      // populate getVoices() late; if the first request has no list, keep using
+      // that browser's default rather than switching voice mid-session later.
+      const selectedVoices = new Map();
       function pickVoice(lang) {
-        const voices = refreshVoices();
-        if (!voices.length) return null;
         const want = String(lang || 'en-US').toLowerCase().replace('_','-');
+        if (selectedVoices.has(want)) return selectedVoices.get(want);
+        const voices = refreshVoices();
+        if (!voices.length) { selectedVoices.set(want,null); return null; }
         const base = want.split('-')[0];
         const norm = value => String(value || '').toLowerCase().replace('_','-');
         const sameBase = voices.filter(v => v && v.lang && norm(v.lang).startsWith(base));
-        if (!sameBase.length) return null;
-        const exact = sameBase.filter(v => norm(v.lang) === want);
-        const pool = exact.length ? exact : sameBase;
+        const exact = sameBase.filter(v => norm(v.lang) === want || norm(v.lang).startsWith(want+'-'));
+        const pool = want.includes('-') ? exact : sameBase;
+        if (!pool.length) { selectedVoices.set(want,null); return null; }
+        const stablePool = pool.slice().sort((a,b)=>String(a.name||'').localeCompare(String(b.name||'')));
         /* Object keys are case-sensitive while `want` is lowercased for
            matching, so a direct VOICE_PREFERENCE[want] lookup always missed. */
         const prefKey = Object.keys(VOICE_PREFERENCE).find(key => key.toLowerCase() === want)
           || Object.keys(VOICE_PREFERENCE).find(key => key.toLowerCase() === base);
         const named = (prefKey && VOICE_PREFERENCE[prefKey]) || [];
-        for (let i = 0; i < named.length; i++) {
-          const hit = pool.find(v => String(v.name || '').toLowerCase().includes(named[i].toLowerCase()));
-          if (hit) return hit;
+        let selected = null;
+        for (let i = 0; i < named.length && !selected; i++) {
+          selected = stablePool.find(v => String(v.name || '').toLowerCase().includes(named[i].toLowerCase())) || null;
         }
-        const female = pool.find(v => FEMALE_HINTS.test(String(v.name || '')) && !MALE_HINTS.test(String(v.name || '')));
-        if (female) return female;
-        const neutral = pool.find(v => !MALE_HINTS.test(String(v.name || '')));
-        return neutral || pool[0] || sameBase[0] || null;
+        if (!selected) selected = stablePool.find(v => FEMALE_HINTS.test(String(v.name || '')) && !MALE_HINTS.test(String(v.name || ''))) || null;
+        if (!selected) selected = stablePool.find(v => !MALE_HINTS.test(String(v.name || ''))) || stablePool[0] || null;
+        selectedVoices.set(want,selected);
+        return selected;
       }
       function resumeSynth() {
         try { const synth = window.speechSynthesis; if (synth && synth.paused) synth.resume(); } catch(_) {}
-      }
-      /* Some phones only expose their voice list after the first utterance
-         (iOS fires "voiceschanged" late). If a sentence is already speaking
-         with the system default, swap in the preferred voice as soon as the
-         list arrives, so the first read is not the flat/male default. */
-      let lastRequestedLang = 'en-US';
-      function nudgePreferredVoice() {
-        const synth = window.speechSynthesis;
-        if (!synth || !activeUtterance || !synth.speaking) return;
-        const want = pickVoice(lastRequestedLang);
-        if (!want || activeUtterance.voice === want) return;
-        try {
-          synth.cancel();
-          activeUtterance.voice = want;
-          activeUtterance.lang = want.lang || lastRequestedLang;
-          synth.speak(activeUtterance);
-          resumeSynth();
-        } catch (_) {}
       }
       function speak(text, lang='en-US', done, onError, rate=1) {
         if (activeAudio) { try { activeAudio.pause(); } catch(_) {} activeAudio = null; }
@@ -2711,7 +2699,6 @@
           return;
         }
         const synth = window.speechSynthesis;
-        lastRequestedLang = lang;
         const token = ++speechRequestId;
         let finished = false, started = false, startWatchdog = null, finishWatchdog = null;
         const utterance = new SpeechSynthesisUtterance(sentence);
@@ -20347,10 +20334,14 @@
       }
       function speakEntry(entry, lang=activeAccent) {
         if (!entry || !entry.word) return;
-        playPronunciation(entry.word, lang, 1, lang==='en-GB' ? entry.uk : entry.us);
+        const accent = lang === 'en-GB' ? 'en-GB' : 'en-US';
+        // American word cards always use the same locked browser voice instead
+        // of mixing dictionary clips that may have different speakers.
+        if (accent === 'en-US') { speak(entry.word, accent, undefined, undefined, 1); return; }
+        playPronunciation(entry.word, accent, 1, entry.uk);
       }
-      // Use the original word recording service for both accents. Start play()
-      // synchronously in the tap; only switch to device TTS if playback fails.
+      // The British toggle may use its per-entry recording or Youdao audio.
+      // American word cards bypass this function and use their locked system voice.
       function playPronunciation(text, lang, rate, supplied, done, onError, local=false) {
         stopSpeech();
         let audio, timer, complete=false;
