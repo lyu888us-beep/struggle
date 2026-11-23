@@ -534,6 +534,7 @@ phones = {
     "numerate":"N UW M ER AH T",
     "numerate's":"N UW M ER AH T S",
     "leckar":"L EH K ER",
+    "ceviche":"S AH B IY CH EY",
 }
 
 

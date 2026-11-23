@@ -137,3 +137,50 @@
 | Want to be an assistant judge or notary. | I want to be an assistant judge or a notary. | notary |
 | I can't remember when was the last time I've seen him smile | I can't remember the last time I saw him smile. | remember |
 | An igneous desert atmosphere | The igneous rock was hard and dark. | igneous |
+
+## 第四批：模板/说明片段自动改写（v98 已录）
+
+| 原句 | 改写后朗读 | 保留目标词 |
+|---|---|---|
+| The word monkey-pox appears in this sentence. | The monkey-pox virus spreads through close contact. | monkey-pox |
+| The word cretaceous appears in this sentence. | The cretaceous period ended with a giant asteroid impact. | cretaceous |
+| They used northwest in the sentence. | The wind blew from the northwest all night long. | northwest |
+| Please read goodby in context. | He waved goodby as the train pulled away. | goodby |
+| They used mesozoic in the sentence. | The mesozoic era is known as the age of reptiles. | mesozoic |
+| Please read northwest in context. | The northwest region is famous for its deep forests. | northwest |
+| The word martian appears in this sentence. | The martian landscape looks red and dusty. | martian |
+| Please read roost in context. | The chickens roost on the fence at night. | roost |
+| The word capillary appears in this sentence. | Blood flows through tiny capillary vessels. | capillary |
+| They used peruvian in the sentence. | Peruvian food is famous for its fresh ceviche. | peruvian |
+| NOTE The supply cord may be specially prepared and only available from the manufacturer or its service agent. A specially prepared cord may include a part of the appliance. | The supply cord for this appliance may only be replaced by the manufacturer. | appliance |
+| give them an airing. | The committee gave the proposal an airing. | airing |
+| Well, we know nitrogen has what? | Nitrogen makes up most of the air we breathe. | nitrogen |
+| She wrote a note about the /. | She wrote a note about the boycott. | boycott |
+| They used life-saving in the sentence. | This life-saving device can rescue people from floods. | life-saving |
+| They used pleistocene in the sentence. | Many pleistocene animals disappeared during the ice age. | pleistocene |
+| The word mesozoic appears in this sentence. | Dinosaurs lived during the mesozoic era. | mesozoic |
+| Please read cretaceous in context. | Fossils from the cretaceous period are found in this valley. | cretaceous |
+| The word egyptian appears in this sentence. | The egyptian pyramids were built thousands of years ago. | egyptian |
+| Please read mesozoic in context. | Mesozoic fossils were discovered near the river bank. | mesozoic |
+| The word ruminant appears in this sentence. | A cow is a ruminant animal that chews its food twice. | ruminant |
+| Please read caledonian in context. | The caledonian forest is home to many rare birds. | caledonian |
+| Please read cuneiform in context. | Cuneiform writing was used in ancient Mesopotamia. | cuneiform |
+| Please read trance in context. | The DJ played a trance beat all night long. | trance |
+| In order to see and use this exciting feature, you will need to open and clear out all your existing unopened Mystery Boxes. | Please clear out the old boxes from the storage room. | clear out |
+| So if we just sketch that. | Let me sketch that picture on the paper. | sketch |
+| (= it is likely) that he will commit the same crime again. | The odds are that he will commit the same crime again. | odds |
+| Everyone said the room was /. | The golfer shouted fore before he swung his club. | fore |
+| They used washing-machine in the sentence. | She put the dirty clothes into the washing machine. | washing-machine |
+| The word southeast appears in this sentence. | The storm is moving toward the southeast coast. | southeast |
+| Please read molt in context. | The snake will molt its skin in the spring. | molt |
+| The word pleistocene appears in this sentence. | The pleistocene epoch lasted until about twelve thousand years ago. | pleistocene |
+| They used southeast in the sentence. | They live in the southeast part of the country. | southeast |
+| They used invertebrate in the sentence. | An octopus is a smart invertebrate animal. | invertebrate |
+| The word proterozoic appears in this sentence. | The proterozoic eon lasted for billions of years. | proterozoic |
+| The word northeast appears in this sentence. | The northeast coast has very cold winters. | northeast |
+| Please read broadway in context. | We watched a musical on broadway last night. | broadway |
+| Date of last revision of this page: 2010-11-03 | The date of the last revision of this page is November third. | revision |
+| With the compliments of J. Smith & Son. J. | He paid her a compliment on her new dress. | compliment |
+| RSVP opened a session (2) with QFS. | Please RSVP to the invitation by Friday. | RSVP |
+| {"COLLOINEXA":["sexual repression"]} | The people lived under political repression for many years. | repression |
+| I am writing to confirm /enquire/inform you… | I am writing to enquire about the meeting time. | enquire |
