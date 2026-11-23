@@ -527,6 +527,9 @@ phones = {
     "plantlets":"P L AE N T L AH T S",
     "yalu":"Y AA L UW",
     "liaoning":"L Y AW N IH NG",
+    "telle":"T EH L",
+    "coziar":"K OW Z IY AA R",
+    "bravesentry":"B R EY V S EH N T R IY",
 }
 
 
