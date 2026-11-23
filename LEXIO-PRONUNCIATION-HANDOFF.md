@@ -7,9 +7,9 @@
 - 仓库：`lyu888us-beep/struggle`
 - 当前分支：`arena/749eb136-struggle`（active；不要切换或改名）
 - 分支基点：`acf72ed4b80c34f0ec92ef462f02155557fc8fe4`
-- 本文件提交时的 HEAD：`41e3e17`（提交交接文件后 HEAD 会再前进一个提交）
-- 除本交接文件外，Lexio 源码修改仍在本地工作区、尚未提交。生成音频位于忽略的 `.tmp-voice/`，没有上传到 GitHub，也没有部署。
-- Pages workflow `.github/workflows/deploy-lexio-pages.yml` 对 `lexio-pwa-full/**` 的 push 会触发部署；本交接文件在仓库根目录，只提交它不会触发 Pages 部署。
+- 交接文档最初提交：`908e5a7`；音频／源码交接包之后会另有一个根目录提交。
+- Lexio 源码修改仍未直接提交到应用目录；为新窗口可取用，根目录压缩包 `LEXIO-PRONUNCIATION-BUNDLE-2026-11.zip` 内含 472 个短语 MP3、5 个获用户确认的单词样音、3 个尚未对齐的目标句音频，以及相对当前 HEAD 的源码 patch。原始 `.tmp-voice/` 仍被忽略，压缩包不等同于部署。
+- Pages workflow `.github/workflows/deploy-lexio-pages.yml` 对 `lexio-pwa-full/**` 的 push 会触发部署；根目录交接文档／压缩包的提交不会触发 Pages 部署。
 
 ## 用户目标与约束
 
@@ -38,19 +38,20 @@
 - 473 个缺录短语中，472 个可处理，1 个被内容审核阻止并保持排除。
 - 此前已有 173 个临时切片，映射在 `.tmp-voice/phrases/partial-clips.json`，文件在 `.tmp-voice/stage-test/`、`stage-phrase-5/`、`stage-phrase-6/`、`stage-phrase-7/`。
 - 本轮新生成并完成程序对齐／切分 299 个片段。完整临时映射：`.tmp-voice/phrases/final-candidate-clips/clips.json`；片段目录：`.tmp-voice/phrases/final-candidate-clips/`。切分 12 组分别为 32、36、49、1、47、48、8、1、29、1、36、11 条，总计 299。
-- 299 条与先前 173 条无文本重叠；合计 472 条。未复制到 `media/voice/`、未加入 `selectedRecordings`／Service Worker、未部署。
+- 299 条与先前 173 条无文本重叠；合计 472 条。尚未复制到应用的 `media/voice/`、未加入 `selectedRecordings`／Service Worker、未部署。原始临时目录仍忽略；GitHub 根目录交接 ZIP 包含这 472 个 MP3 与合并映射。
 - “a 100-watt bulb” 的口播形式已规范为 “a hundred watt bulb.”，对应 p2 音频已重录；`pending-audio.json` 和 `phrase-groups.json` 已同步。
 - 进度摘要：`.tmp-voice/phrases/generation-status.json`。拒绝项、历史切分失败备注见同目录 `segmentation-review.json`（p9/p10 已通过拆分批次解决；该文件是历史记录）。
 
 ### 单词与精确改写句
 
-- 用户已试听并认可 5 个 voice-00 单词样音：`comfortable`、`rural`、`schedule`、`entrepreneur`、`thorough`。单独 MP3 在 `.tmp-voice/words/samples/`，合并试听文件是 `word-pronunciation-samples.mp3`。它们**尚未集成或部署**；全库 9,830 个唯一单词、70 批仍未开始生成。
+- 用户已试听并认可 5 个 voice-00 单词样音：`comfortable`、`rural`、`schedule`、`entrepreneur`、`thorough`。单独 MP3 在 `.tmp-voice/words/samples/`，合并试听文件是 `word-pronunciation-samples.mp3`；这 5 个样音现已包含在根目录 GitHub 交接 ZIP 中，但仍**尚未集成或部署**。全库 9,830 个唯一单词、70 批仍未开始生成。
 - 本轮额外生成 3 条精确目标句音频（尚未做 PocketSphinx 对齐、切音或集成）：
   - `.tmp-voice/phrases/exact-targets/breath.mp3` — `Take a slow breath before you begin speaking.`
   - `.tmp-voice/phrases/exact-targets/count-by-tens.mp3` — `Let's count by tens: ten, twenty, thirty, forty, fifty, sixty, seventy, eighty, ninety, and one hundred.`
   - `.tmp-voice/phrases/exact-targets/led-semiconductor.mp3` — `In the Ohmic contacts of LED electrodes, carriers have different transmission mechanisms between a metal electrode and a semiconductor.`
-- 这三句分别解决两处重复目标来源冲突和 LED 音频文本不一致风险，但由于尚未对齐／映射，不能称为已修复。
+- 这三句分别解决两处重复目标来源冲突和 LED 音频文本不一致风险，但由于尚未对齐／映射，不能称为已修复。三条原始 MP3 也已包含在交接 ZIP 中的 `assets/exact-targets/`。
 - **部署前必须处理已知映射风险：**当前 `selectedRecordings` 有 501 个例句改写目标键，全部复用了旧 MP3；基线中 501 个目标文本原本均无映射。不能把这些别名当作文本与音频匹配。集成时应移除未验证目标的旧音频映射，只加入已精确生成并验证的目标（目前 3 条），其余目标保持“本句暂无录音／待配音”，直到正确音频完成。
+- 新窗口下载／读取：仓库根目录 `LEXIO-PRONUNCIATION-BUNDLE-2026-11.zip`，内含 472 个短语 clip、5 个单词样音、3 个未对齐目标音频、清单以及未提交源码 diff patch。压缩包不在 `lexio-pwa-full/` 下，不会触发站点部署。
 
 ## 检查状态（不要混为一谈）
 
@@ -61,10 +62,10 @@
 
 ## 新窗口的下一步（按顺序）
 
-1. 先 `git status --short`，确认仍在 `arena/749eb136-struggle`，工作区包含本交接记录所述未提交源码修改和 `.tmp-voice/` 音频。
-2. 校验 `.tmp-voice/phrases/final-candidate-clips/clips.json` 299 项和 `partial-clips.json` 173 项：文件完整、无映射冲突；随后复制 472 个 MP3 到 `lexio-pwa-full/media/voice/`。
-3. 对 3 条 `.tmp-voice/phrases/exact-targets/*.mp3` 运行文本对齐检查，复制并映射为文本哈希 `s-<sha256(text)[:16]>`；修复 501 个目标键的旧音频别名风险，不能播放不匹配的旧录音。
-4. 将 5 个已获用户认可的单词样音复制到 `media/voice/`，按 `w-<sha256(word)[:16]>` 命名；在 `index.html` 加 `selectedWordRecordings` 并仅为这些词的 `en-US` 入口播放本地 voice-00 录音。英音和其余单词路线保持原状；本轮只覆盖 5 个样词，不是全库 9,830 词。
+1. 先 `git status --short`，确认仍在 `arena/749eb136-struggle`。若新窗口是干净 clone，从当前分支下载并检查根目录 `LEXIO-PRONUNCIATION-BUNDLE-2026-11.zip`；若 patch 对应源码修改尚未存在，再在仓库根目录应用其中的 `source-changes.patch`。
+2. 从 ZIP 中 `assets/media/voice/s-*.mp3` 和 `manifests/phrase-clips.json` 核对 472 项完整且 ID 无冲突，再复制至 `lexio-pwa-full/media/voice/`。不要重新生成这 472 条。
+3. 对 ZIP 的 `assets/exact-targets/*.mp3` 运行文本对齐检查，复制并映射为文本哈希 `s-<sha256(text)[:16]>`；修复 501 个目标键的旧音频别名风险，不能播放不匹配的旧录音。
+4. 使用 ZIP 中 `assets/media/voice/w-*.mp3` 和 `manifests/word-samples.json` 集成用户认可的 5 个单词样音；在 `index.html` 加 `selectedWordRecordings` 并仅为这些词的 `en-US` 入口播放本地 voice-00 录音。英音和其余单词路线保持原状；这不是全库 9,830 词。
 5. 更新 `sw.js` 离线音频清单和缓存版本（当前 v114），同步更新语音测试与 `media/voice/README.md`。
 6. 运行 `npm test`、`node --check sw.js`、`git diff --check`，核对每个 manifest ID 对应文件、数量和音频帧；记录这些是程序检查，不是听检。
 7. 按用户要求部署：只提交并 push 到当前分支 `arena/749eb136-struggle`。部署工作流监听 `lexio-pwa-full/**` 的 push；push 后用 `gh run list`／`gh run watch` 确认 Pages 部署结果。不要切分支、不要谎称 iPhone 测试或全库听检已通过。
@@ -72,6 +73,7 @@
 
 ## 重要文件
 
+- GitHub 交接资产包（根目录，不触发部署）：`LEXIO-PRONUNCIATION-BUNDLE-2026-11.zip`
 - 词库迁移：`lexio-pwa-full/index.html`、`lexio-pwa-full/data/original-site-wordbank.json`
 - 切音脚本：`lexio-pwa-full/scripts/cut-voice-batch.py`
 - Service Worker：`lexio-pwa-full/sw.js`
