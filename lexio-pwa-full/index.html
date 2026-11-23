@@ -20371,7 +20371,10 @@
           }
           speak(text, lang, finish, onError, rate);
         };
-        if (!local && navigator.onLine === false) { fallback(); return; }
+        // navigator.onLine is only a hint and can be false on iOS even when a
+        // request can succeed. The direct iOS en-US route should always try.
+        const directIosAmerican = USE_IOS_WORD_AUDIO && lang === 'en-US' && !allowSystemFallback;
+        if (!local && navigator.onLine === false && !directIosAmerican) { fallback(); return; }
         try {
           const source=new URL(supplied || 'https://dict.youdao.com/dictvoice?type='+(lang==='en-GB'?1:2)+'&audio='+encodeURIComponent(text),location.href);
           if(!/^https?:$/.test(source.protocol))throw Error('Unsupported audio URL');
@@ -20380,7 +20383,9 @@
           audio.addEventListener('playing',()=>clearTimeout(timer),{once:true});
           audio.addEventListener('ended',()=>{if(activeAudio===audio){activeAudio=null;finish();}},{once:true});
           audio.addEventListener('error',fallback,{once:true});
-          timer=setTimeout(fallback,local?60000:4000);
+          // Dictionary audio may take longer to start on a mobile cross-region
+          // connection; do not pause it after the old four-second cutoff.
+          timer=setTimeout(fallback,local?60000:(directIosAmerican?15000:4000));
           const started=audio.play(); if(started && started.catch)started.catch(fallback);
         } catch(_){fallback();}
       }

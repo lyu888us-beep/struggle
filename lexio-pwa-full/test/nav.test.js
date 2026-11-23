@@ -344,8 +344,8 @@ function animClean() {
     cssText.includes('@keyframes appHomeEnter') && cssText.includes('@keyframes appPricingEnter') &&
     cssText.includes('@keyframes pricePop') && cssText.includes('.price strong.is-changing') &&
     cssText.includes('prefers-reduced-motion: reduce'));
-  check('Service Worker 升到 v112 并预缓存口语句库与安装引导视频',
-    swSource.includes("CACHE_NAME = 'lexio-shell-v112-card-batch-83'") &&
+  check('Service Worker 升到 v113 并预缓存口语句库与安装引导视频',
+    swSource.includes("CACHE_NAME = 'lexio-shell-v113-card-batch-84'") &&
     swSource.includes("'./data/daily-conversation.json'") &&
     swSource.includes("'./media/install-guide.mp4'") &&
     pageHtml.includes('controllerchange') && pageHtml.includes('swRefreshing'));
@@ -742,13 +742,14 @@ function animClean() {
     check('无媒体播放器时不拿系统声音冒充所选配音', w2.__picked===null);
     dom2.window.close();
 
-    // iPhone Safari must start the remote en-US clip synchronously in the tap;
-    // a delayed Web Speech error can otherwise arrive after iOS user activation expires.
+    // iPhone Safari must try the en-US clip synchronously in the tap, even
+    // when navigator.onLine is a false negative; this is not a real-device test.
     const iosDom = new JSDOM(fs.readFileSync(htmlPath, 'utf8'), {
       url: 'https://lexio.test/', runScripts: 'dangerously', pretendToBeVisual: true,
       virtualConsole: vc,
       beforeParse(w3) {
-        Object.defineProperty(w3.navigator,'userAgent',{configurable:true,value:'Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0 Mobile/15E148 Safari/604.1'});
+        Object.defineProperty(w3.navigator,'userAgent',{configurable:true,value:'Mozilla/5.0 (iPhone; CPU iPhone OS 27_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/27.0 Mobile/15E148 Safari/604.1'});
+        Object.defineProperty(w3.navigator,'onLine',{configurable:true,value:false});
         w3.SpeechSynthesisUtterance = function (t) { this.text=t; this.lang=''; };
         w3.speechSynthesis = {
           speaking:false, paused:false, getVoices:()=>[{lang:'en-US',name:'Samantha'}],
@@ -770,7 +771,7 @@ function animClean() {
     iosWordButton.addEventListener('click',()=>{iw.__iosTapActive=true;},{capture:true});
     iosWordButton.addEventListener('click',()=>{iw.__iosTapActive=false;});
     iosWordButton.click();
-    check('iPhone Safari 美音在点击手势内直接播放 en-US 音频',
+    check('iPhone Safari 美音在 onLine=false 时仍在点击手势内启动 en-US 音频',
       !!iw.__lastIosAudio && new URL(iw.__lastIosAudio.src).searchParams.get('type')==='2' &&
       iw.__iosPlayInsideTap===true && (iw.__iosTtsCalls||0)===0,
       `audio=${!!iw.__lastIosAudio} type=${iw.__lastIosAudio&&new URL(iw.__lastIosAudio.src).searchParams.get('type')} tts=${iw.__iosTtsCalls||0}`);
