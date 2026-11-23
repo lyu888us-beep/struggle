@@ -6,7 +6,7 @@
 
 - 仓库：`lyu888us-beep/struggle`
 - 当前固定分支：`arena/749eb136-struggle`（active；不得切换或改名），基点 `acf72ed4b80c34f0ec92ef462f02155557fc8fe4`。
-- 批次 004 的应用代码、清单、测试、说明和 1,250 个新 MP3 在提交 `ed68ef7f`（`Publish 1,250 safe voice-00 word clips`），已推送；后续交接文档更新也已推送。Pages workflow `deploy-lexio-pages` 对该应用提交的 run **45193368197** 成功。Node 20 弃用警告非阻断。
+- 批次 004 的应用代码、清单、测试和 1,250 个新 MP3 在提交 `ed68ef7f`（`Publish 1,250 safe voice-00 word clips`）。其后修订了说明、归档文字和交接文档；最新相关提交 `becef18b` 已推送。Pages workflow `deploy-lexio-pages` 在 run **45193368197** 成功发布批次，最新文档更新也由 run **45194350190** 成功部署。Node 20 弃用警告非阻断。
 - Service Worker 缓存版本：`lexio-shell-v121-word-audio-batch-005`。
 - 最新站点部署不表示人工逐条听检或 iOS 真机验证。
 - iOS 美式单词“点了没声音”回退代码在 `535aa1c` / Pages run `45175726808` 已部署：iPhone/iPad 上有道 `type=2` 音频失败或超时后尝试系统 `en-US` 语音。自动测试模拟了媒体失败回退，但**尚未在 iPhone 16 Pro Max／iOS 27 真机验证**，不能声称真机问题已确认解决。
