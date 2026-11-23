@@ -52,8 +52,9 @@ const dom = new JSDOM(html, {
       resume() { this.paused = false; },
       cancel() { this.speaking = false; this.pending = false; },
       speak(utterance) {
-        this.speaking = true;
         window.__lastUtterance = utterance;
+        if (window.__failSpeech) throw new Error('simulated system TTS failure');
+        this.speaking = true;
         if (utterance.onstart) utterance.onstart();
       },
     };
@@ -168,6 +169,19 @@ function animClean() {
   doc.querySelector('[data-accent="en-GB"]').click(); doc.querySelector('#studySpeak').click();
   check('英式录音入口不变',new URL(window.__lastAudio.src).searchParams.get('type')==='1');
   doc.querySelector('[data-accent="en-US"]').click();
+  window.__failSpeech=true;
+  doc.getElementById('studySpeak').click();
+  const fallbackWordAudio=window.__lastAudio;
+  check('系统美音无法启动时回退到 en-US 词典音频',
+    !!fallbackWordAudio && new URL(fallbackWordAudio.src).searchParams.get('type')==='2');
+  window.__failSpeech=false;
+  const failedUtterance=window.__lastUtterance;
+  window.__lexioStudy.goTo(1);
+  doc.getElementById('studySpeak').click();
+  check('美音回退后本会话不再逐词切换来源',
+    new URL(window.__lastAudio.src).searchParams.get('type')==='2' && window.__lastUtterance===failedUtterance);
+  window.__lexioStudy.goTo(0);
+  doc.getElementById('studyCard').click(); await sleep(30); // restore the pre-test flipped state
   check('点发音按钮不触发翻面', cardFlip.classList.contains('is-flipped'));
   doc.getElementById('studyCard').click();
   await sleep(30);
@@ -330,8 +344,8 @@ function animClean() {
     cssText.includes('@keyframes appHomeEnter') && cssText.includes('@keyframes appPricingEnter') &&
     cssText.includes('@keyframes pricePop') && cssText.includes('.price strong.is-changing') &&
     cssText.includes('prefers-reduced-motion: reduce'));
-  check('Service Worker 升到 v110 并预缓存口语句库与安装引导视频',
-    swSource.includes("CACHE_NAME = 'lexio-shell-v110-card-batch-81'") &&
+  check('Service Worker 升到 v111 并预缓存口语句库与安装引导视频',
+    swSource.includes("CACHE_NAME = 'lexio-shell-v111-card-batch-82'") &&
     swSource.includes("'./data/daily-conversation.json'") &&
     swSource.includes("'./media/install-guide.mp4'") &&
     pageHtml.includes('controllerchange') && pageHtml.includes('swRefreshing'));

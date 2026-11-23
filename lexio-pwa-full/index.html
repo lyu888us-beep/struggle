@@ -1867,6 +1867,7 @@
       let activePhraseCategory = '全部';
       let phraseVisibleLimit = 50;
       let activeAccent = 'en-US';
+      let americanWordUsesDictionaryFallback = false;
       let activeAudio = null, onAudioStop = null;
       let activeUtterance = null;
       let speechRequestId = 0;
@@ -2723,7 +2724,7 @@
         utterance.onstart = () => {
           started = true;
           if (startWatchdog) { clearTimeout(startWatchdog); startWatchdog = null; }
-          finishWatchdog = setTimeout(() => finish(), Math.min(30000, sentence.length * 150 + 6000));
+          finishWatchdog = setTimeout(() => finish(new Error('系统语音播放超时。')), Math.min(30000, sentence.length * 150 + 6000));
         };
         utterance.onend = () => finish();
         utterance.onerror = event => {
@@ -20335,14 +20336,22 @@
       function speakEntry(entry, lang=activeAccent) {
         if (!entry || !entry.word) return;
         const accent = lang === 'en-GB' ? 'en-GB' : 'en-US';
-        // American word cards always use the same locked browser voice instead
-        // of mixing dictionary clips that may have different speakers.
-        if (accent === 'en-US') { speak(entry.word, accent, undefined, undefined, 1); return; }
+        if (accent === 'en-US') {
+          const useDictionaryFallback = () => {
+            americanWordUsesDictionaryFallback = true;
+            playPronunciation(entry.word,'en-US',1,'',undefined,error=>toastMessage(error.message),false,false);
+          };
+          // Use one locked browser voice normally. If it cannot start, switch
+          // the whole page session to the same en-US dictionary route for sound.
+          if (americanWordUsesDictionaryFallback) { useDictionaryFallback(); return; }
+          speak(entry.word,accent,undefined,useDictionaryFallback,1);
+          return;
+        }
         playPronunciation(entry.word, accent, 1, entry.uk);
       }
-      // The British toggle may use its per-entry recording or Youdao audio.
-      // American word cards bypass this function and use their locked system voice.
-      function playPronunciation(text, lang, rate, supplied, done, onError, local=false) {
+      // British pronunciation may use its per-entry recording or Youdao audio.
+      // American word cards reach this path only after system TTS has failed.
+      function playPronunciation(text, lang, rate, supplied, done, onError, local=false, allowSystemFallback=true) {
         stopSpeech();
         let audio, timer, complete=false;
         const finish=()=>{ if(complete)return; complete=true; clearTimeout(timer); onAudioStop=null; if(done)done(); };
@@ -20351,7 +20360,12 @@
           if(complete || (audio && activeAudio!==audio))return;
           clearTimeout(timer);
           if(audio){activeAudio=null; try{audio.pause();}catch(_){} }
-          if(local){finish();onError?.(new Error('这段录音未能播放，请联网后重试。'));return;}
+          if(local || !allowSystemFallback){
+            finish();
+            const error=new Error(local?'这段录音未能播放，请联网后重试。':'单词音频暂不可用，请检查网络后重试。');
+            if(typeof onError==='function')onError(error);else toastMessage(error.message);
+            return;
+          }
           speak(text, lang, finish, onError, rate);
         };
         if (!local && navigator.onLine === false) { fallback(); return; }
