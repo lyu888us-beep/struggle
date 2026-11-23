@@ -587,3 +587,60 @@
 | The lighted dial of her watch said 1.20. | The lighted dial made it easy to see the time. | dial |
 | This evening’s performance will begin at 8.00 pm. | This evening's performance will begin at eight o'clock. | performance |
 | Ten, twenty, thirty, forty, fifty, sixty, seventy, eighty, ninety, one hundred | Let's count by tens: ten, twenty, thirty, forty, fifty, sixty, seventy, eighty, ninety, and one hundred. | eighty |
+
+## 第十三批：模板/说明、标记与可改写病句（v108 已录）
+
+本批从当前队列中处理所有 43 条未被明确排除、且可安全修复或改写的句子：先处理 6 条模板/说明或数量单位片段，再处理 37 条可改写病句与用法问题。剩余 11 条均是既有明确排除项，保留待录，不删除、不配音。分九段合成；43 条全部通过对齐与安全静音切分。
+
+### 模板/说明、数字与单位片段（6 条）
+
+| 原句 | 改写后朗读 | 保留目标词 |
+|---|---|---|
+| Ten, twenty, thirty, forty, fifty, sixty, seventy, eighty, ninety, hundred | Let's count by tens: ten, twenty, thirty, forty, fifty, sixty, seventy, eighty, ninety, and one hundred. | sixty |
+| Two and three halves to London, please | Halve the recipe if you are cooking for two. | halve |
+| Reading some books which contain humor or humorous stories is another. | Her gentle humor helped everyone feel at ease. | humor |
+| To open the window. | Please open the window to let in some fresh air. | window |
+| TO eat with a knife and fork. | I eat my salad with a fork. | fork |
+| What's the area of Canada in square kilometer? | The trail is five kilometers long. | kilometer |
+
+### 可改写病句与用法修复（37 条）
+
+| 原句 | 改写后朗读 | 保留目标词 |
+|---|---|---|
+| It is not just to prefer strength to good wisdom | True strength is balanced by wisdom. | strength |
+| Your wonderful lecture was pearls before swine | The speaker gave a wonderful lecture on astronomy. | wonderful |
+| My father is only fifteen years old | She began learning the violin when she was fifteen. | fifteen |
+| When chickens pancake-shape maintain, the tractor must have won again | The chicken scratched at the ground beside the barn. | chicken |
+| She was really of the cold frog. | A frog rested on a cool stone beside the pond. | frog |
+| My father bought me a digital watch for birthday present. | My father bought me a digital watch for my birthday. | digital |
+| Is the wire live? I can tell just by touching it | The wire connects the lamp to its power source. | wire |
+| Of course you're the one providing, go! | She is providing fresh fruit for the picnic. | providing |
+| Sami's bed smells of bed | The bed stood beside the window. | bed |
+| Cold worlds shake from the oar. | She used an oar to guide the canoe across the lake. | oar |
+| The trend of half permanent enterprise management culture towards normalization direction. | The normalization of the records made them easier to compare. | normalization |
+| He a man! Hell! He was a hollow sham. | The old painting turned out to be a sham. | sham |
+| A sports bra should only be worn for working out, and not in any non-sports situations | A light jacket is useful in many different situations. | situation |
+| We strive to paddle to follow the stream, however, we are unsure if how and when we will reach the horizon. | They used a paddle to steer the canoe downstream. | paddle |
+| This moment will nap, you will have a dream; But this moment study,you will interpret a dream. | She took a short nap after finishing her homework. | nap |
+| Then the deal is that when you sell the house they subtract -you've got to pay this. | We subtract the ticket cost from our total budget. | subtract |
+| We had seen Jone swimming across the river | We swam across the river together. | across |
+| Since namely namely misconceive, that explanation clear nice. | People sometimes misconceive the purpose of a simple rule. | misconceive |
+| I help you? | Can I help you carry those books? | help |
+| What did Hi say? | What did you say about the new story? | say |
+| Where 'is my cap? | Where is my cap? | where |
+| I'm from the Canada. | I am from Canada. | from |
+| Are you from UK? | Are you from the UK? | uk |
+| I use your pencil? | May I use your pencil? | pencil |
+| I have some rice, please? | Could I have some rice, please? | rice |
+| I like eating vegetable. | I like eating fresh vegetables. | vegetable |
+| I I'm still very hungry. | I am still very hungry. | still |
+| I turn on the light? | Could you turn on the light? | light |
+| He schoolbag are cheap and nice. | His schoolbag is sturdy and inexpensive. | schoolbag |
+| It's a English book. | It's an English book. | english book |
+| I try on these gloves? | May I try on these gloves? | try |
+| I Let's go to the playground. | Let's go to the playground after school. | playground |
+| I have a music class on this Friday. | I have a music class this Friday. | friday |
+| What do you do on this Saturday? | What do you want to do this Saturday? | saturday |
+| We'll swim on this weekend. | We will go swimming this weekend. | weekend |
+| Everything is no problem. | There is no problem with the plan. | problem |
+| My favorite food is dumpling. | My favorite dumpling is filled with vegetables. | dumpling |
