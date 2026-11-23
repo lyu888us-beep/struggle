@@ -344,8 +344,8 @@ function animClean() {
     cssText.includes('@keyframes appHomeEnter') && cssText.includes('@keyframes appPricingEnter') &&
     cssText.includes('@keyframes pricePop') && cssText.includes('.price strong.is-changing') &&
     cssText.includes('prefers-reduced-motion: reduce'));
-  check('Service Worker 升到 v111 并预缓存口语句库与安装引导视频',
-    swSource.includes("CACHE_NAME = 'lexio-shell-v111-card-batch-82'") &&
+  check('Service Worker 升到 v112 并预缓存口语句库与安装引导视频',
+    swSource.includes("CACHE_NAME = 'lexio-shell-v112-card-batch-83'") &&
     swSource.includes("'./data/daily-conversation.json'") &&
     swSource.includes("'./media/install-guide.mp4'") &&
     pageHtml.includes('controllerchange') && pageHtml.includes('swRefreshing'));
@@ -741,6 +741,40 @@ function animClean() {
     w2.__picked=null;w2.document.getElementById('exampleSpeak').click();
     check('无媒体播放器时不拿系统声音冒充所选配音', w2.__picked===null);
     dom2.window.close();
+
+    // iPhone Safari must start the remote en-US clip synchronously in the tap;
+    // a delayed Web Speech error can otherwise arrive after iOS user activation expires.
+    const iosDom = new JSDOM(fs.readFileSync(htmlPath, 'utf8'), {
+      url: 'https://lexio.test/', runScripts: 'dangerously', pretendToBeVisual: true,
+      virtualConsole: vc,
+      beforeParse(w3) {
+        Object.defineProperty(w3.navigator,'userAgent',{configurable:true,value:'Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0 Mobile/15E148 Safari/604.1'});
+        w3.SpeechSynthesisUtterance = function (t) { this.text=t; this.lang=''; };
+        w3.speechSynthesis = {
+          speaking:false, paused:false, getVoices:()=>[{lang:'en-US',name:'Samantha'}],
+          addEventListener(){}, resume(){}, cancel(){}, speak(){w3.__iosTtsCalls=(w3.__iosTtsCalls||0)+1;},
+        };
+        w3.Audio = function(src) {
+          this.src=src; this.listeners={}; w3.__lastIosAudio=this;
+          this.addEventListener=(type,fn)=>{(this.listeners[type]||=[]).push(fn);};
+          this.play=()=>{w3.__iosPlayInsideTap=!!w3.__iosTapActive;return Promise.resolve();};
+          this.pause=()=>{};
+        };
+        w3.fetch=()=>Promise.reject(new Error('offline test'));
+      },
+    });
+    await sleep(350);
+    const iw=iosDom.window, iosWordButton=iw.document.getElementById('studySpeak');
+    const iosUsToggle=iw.document.querySelector('.accent-toggle [data-accent="en-US"]');
+    if(iosUsToggle)iosUsToggle.click();
+    iosWordButton.addEventListener('click',()=>{iw.__iosTapActive=true;},{capture:true});
+    iosWordButton.addEventListener('click',()=>{iw.__iosTapActive=false;});
+    iosWordButton.click();
+    check('iPhone Safari 美音在点击手势内直接播放 en-US 音频',
+      !!iw.__lastIosAudio && new URL(iw.__lastIosAudio.src).searchParams.get('type')==='2' &&
+      iw.__iosPlayInsideTap===true && (iw.__iosTtsCalls||0)===0,
+      `audio=${!!iw.__lastIosAudio} type=${iw.__lastIosAudio&&new URL(iw.__lastIosAudio.src).searchParams.get('type')} tts=${iw.__iosTtsCalls||0}`);
+    iosDom.window.close();
   }
 
   check('词卡和口语不使用合成 WAV 端点', !html.includes('local-sentence.wav') && !swSource.includes('renderLexioWave'));

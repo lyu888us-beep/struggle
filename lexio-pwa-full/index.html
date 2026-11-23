@@ -1867,6 +1867,8 @@
       let activePhraseCategory = '全部';
       let phraseVisibleLimit = 50;
       let activeAccent = 'en-US';
+      const USE_IOS_WORD_AUDIO = /iPhone|iPad|iPod/i.test(navigator.userAgent || '') ||
+        (navigator.platform === 'MacIntel' && Number(navigator.maxTouchPoints || 0) > 1);
       let americanWordUsesDictionaryFallback = false;
       let activeAudio = null, onAudioStop = null;
       let activeUtterance = null;
@@ -20341,16 +20343,17 @@
             americanWordUsesDictionaryFallback = true;
             playPronunciation(entry.word,'en-US',1,'',undefined,error=>toastMessage(error.message),false,false);
           };
-          // Use one locked browser voice normally. If it cannot start, switch
-          // the whole page session to the same en-US dictionary route for sound.
-          if (americanWordUsesDictionaryFallback) { useDictionaryFallback(); return; }
+          // iOS WebKit may expose voices late and reject a delayed Audio.play().
+          // Start its single en-US audio route directly inside the user's tap.
+          if (USE_IOS_WORD_AUDIO || americanWordUsesDictionaryFallback) { useDictionaryFallback(); return; }
           speak(entry.word,accent,undefined,useDictionaryFallback,1);
           return;
         }
         playPronunciation(entry.word, accent, 1, entry.uk);
       }
-      // British pronunciation may use its per-entry recording or Youdao audio.
-      // American word cards reach this path only after system TTS has failed.
+      // British pronunciation keeps its per-entry recording / Youdao route.
+      // iOS American cards enter this route directly from the tap; other
+      // American cards reach it only if system TTS fails during this session.
       function playPronunciation(text, lang, rate, supplied, done, onError, local=false, allowSystemFallback=true) {
         stopSpeech();
         let audio, timer, complete=false;
