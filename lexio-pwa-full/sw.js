@@ -1,5 +1,5 @@
 /* Lexio 乐词 PWA shell cache. Bump the cache version whenever app assets change. */
-const CACHE_NAME = 'lexio-shell-v92-card-batch-63';
+const CACHE_NAME = 'lexio-shell-v93-card-batch-64';
 const SHELL_URLS = [
   './',
   './index.html',
