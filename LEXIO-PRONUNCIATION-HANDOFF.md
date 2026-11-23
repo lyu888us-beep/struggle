@@ -9,8 +9,8 @@
 - 分支基点：`acf72ed4b80c34f0ec92ef462f02155557fc8fe4`
 - 交接文档初次提交 `908e5a7`；真实音频包曾在 `a6c5100` 先行上传到 GitHub 根目录。
 - 先前 480 个资源已在 `839c59d` 集成、推送并由 Pages run `45171863549` 成功部署。
-- 本轮新增的十个单词 clip 已使用同一 voice-00 生成并通过 PocketSphinx 对齐；应用映射、离线清单和测试已更新到工作区，尚待本轮提交、推送及新一轮 Pages 部署确认。此前 480 个资源不需重生成。
-- 最近一次 Pages run 的两个 job 均成功；日志仅有 GitHub Actions Node.js 20 弃用提示，不影响部署。
+- 本轮新增的 10 个单词 clip 使用同一 voice-00 生成并通过 PocketSphinx 对齐，已在 `4ad9b4f` 集成并推送；Pages run `45173204698` 的打包和部署两个 job 均成功。此前 480 个资源没有重生成。
+- 最近两次 Pages run 均只有 GitHub Actions Node.js 20 弃用提示，不影响部署。
 - 根目录 `LEXIO-PRONUNCIATION-BUNDLE-2026-11.zip` 本轮已更新为 490 个音频及清单备份；不包含源码补丁，也不在 Pages 网站目录中。干净 clone 可直接从当前分支读取应用代码和 `media/voice/` 中的已跟踪 MP3。
 - `.github/workflows/deploy-lexio-pages.yml` 对 `lexio-pwa-full/**` 的 push 会触发 Pages 部署；仅提交根目录文档或 ZIP 不会触发部署。
 
@@ -20,7 +20,7 @@
 - iPhone 目标设备为 iPhone 16 Pro Max、iOS 27。程序测试和自动对齐不能替代真机测试，也不能替代逐条人工听检。
 - 不得把 PocketSphinx 对齐或 FFmpeg 解码说成人工听检；不得把未生成的词库队列说成已生成音频。
 - 被内容审核阻止的短语继续排除，不得改音色或绕过审核。
-- 用户要求生成后立即部署；上一批五个已确认单词样音已在 `839c59d` 部署。本轮再生成并集成十个词，待本轮部署。9,830 个唯一词条队列中目前仅 15 个有本地单词 MP3（五个已确认样音 + 十个新批次），并未生成完整词库。
+- 用户要求生成后立即部署；五个已确认单词样音在 `839c59d` 部署，本轮新增十词已随 `4ad9b4f` 部署。9,830 个唯一词条队列中目前仅 15 个有本地单词 MP3（五个已确认样音 + 十个新批次），并未生成完整词库。
 
 ## 已集成的音频与代码
 
@@ -37,8 +37,9 @@
 ### 单词样音
 
 - 用户已试听认可的 5 个样音：`comfortable`、`rural`、`schedule`、`entrepreneur`、`thorough`。
-- 本轮新增下一批 10 个队列单词：`persevere`、`deliberate`、`subtle`、`resilient`、`comprehensive`、`ambitious`、`contribute`、`essential`、`accessible`、`significant`。使用 `voice-00`／`en-US` 逐词生成，PocketSphinx 自动对齐成功；尚未逐条人工听检。
-- 这 15 个单词已加入 `selectedWordRecordings`；其美音 `en-US` 入口播放本地 MP3，英音及其他词的路线不变。当前对应源码和新增 10 个文件仍待提交／部署。
+- 已生成并部署的十个队列单词：`persevere`、`deliberate`、`subtle`、`resilient`、`comprehensive`、`ambitious`、`contribute`、`essential`、`accessible`、`significant`。使用 `voice-00`／`en-US` 逐词生成，PocketSphinx 自动对齐成功；尚未逐条人工听检。
+- 接下来按队列顺序待生成十词为：`absorb`、`accomplish`、`acknowledge`、`adapt`、`appreciate`、`assume`、`curiosity`、`distinguish`、`estimate`、`potential`。本回合的生成请求因达到 10 段上限而未产出音频；待后续回合使用同一 `voice-00`／`en-US` 生成。
+- 这 15 个单词已加入 `selectedWordRecordings`，随 `4ad9b4f` 部署；其美音 `en-US` 入口播放本地 MP3，英音及其他词的路线不变。
 - `.tmp-voice/words-unique.json` 和 `word-groups.json` 的 9,830 项只是生成队列／元数据；只有上述 15 个单词现有实际 MP3，不能称全库已生成。
 
 ### 数量与离线资源
@@ -56,8 +57,8 @@
 
 ## 接下来
 
-1. 将本轮十个单词 MP3、映射、v116 离线清单、更新测试与 ZIP 提交并推送至固定分支 `arena/749eb136-struggle`；再用 `gh run list --workflow deploy-lexio-pages.yml --branch arena/749eb136-struggle` 和 `gh run watch <run-id>` 确认新一轮 Pages 部署成功。不要重生成此前已有音频。
-2. 部署后安排 iPhone 16 Pro Max／iOS 27 实测，分别检查离线短语、例句、15 个本地单词音频、英式单词及普通美音回退。只有前五个样音经过用户听检确认。
+1. 后续新增录音仍沿用 `voice-00 / en-US`，不得重生成已存在的音频。
+2. 安排 iPhone 16 Pro Max／iOS 27 实测，检查离线短语、例句、15 个本地单词音频、英式单词及普通美音回退。只有前五个样音经过用户听检确认；其余录音未逐条人工听检。
 3. 继续处理剩余 498 条改写句的正确录音、9,830 个唯一单词音频生成队列及其他读音入口；不得将待生成元数据计作已生成文件，也不得声称已完成全库听检。
 
 ## 相关文件
