@@ -122,6 +122,65 @@
           "ffmpegDecoded": true
         }
       ]
+    },
+    {
+      "id": "sentence-batch-003",
+      "itemsConsidered": 5,
+      "clipsPublished": 5,
+      "skippedAfterSafetyChecks": 0,
+      "individuallyHumanListened": false,
+      "items": [
+        {
+          "text": "Creating something creative yourself is a way of improving your creativity.",
+          "source": "gaokao:creativity",
+          "clip": "s-c63cdc02f5ef6e55",
+          "sha256": "d77f2863270a3e8ec1d3c79d0ceac9090e21938cf3fc250e7c04b3d8b1c0174d",
+          "bytes": 25868,
+          "alignment": "PocketSphinx exact token sequence",
+          "ffmpegDecoded": true,
+          "miniaudioDecoded": true
+        },
+        {
+          "text": "He is addicted to solving crossword puzzles.",
+          "source": "gaokao:addicted",
+          "clip": "s-25aa6b749858f824",
+          "sha256": "88ef46fea7a95332b8991ded84dd2433bce3803623bc8575876a8d431b9e98ac",
+          "bytes": 16652,
+          "alignment": "PocketSphinx exact token sequence",
+          "ffmpegDecoded": true,
+          "miniaudioDecoded": true
+        },
+        {
+          "text": "For example, our library stays open until eight.",
+          "source": "gaokao:example",
+          "clip": "s-e30434c1abc79d56",
+          "sha256": "d41cc665ed1c24f777f2141d00e41f432b482d10889bd2fafd9e7562fb07b3fb",
+          "bytes": 21260,
+          "alignment": "PocketSphinx exact token sequence",
+          "ffmpegDecoded": true,
+          "miniaudioDecoded": true
+        },
+        {
+          "text": "I've noticed that having fun doesn't interfere at all with your studies.",
+          "source": "gaokao:notice",
+          "clip": "s-41342bfc50178d9d",
+          "sha256": "3510f17f4f7a97b32bb600fed0348ec34c2a520c9c54551171d4a6413dc34ecc",
+          "bytes": 24284,
+          "alignment": "PocketSphinx exact token sequence",
+          "ffmpegDecoded": true,
+          "miniaudioDecoded": true
+        },
+        {
+          "text": "She was fourteen when she joined the school orchestra.",
+          "source": "gaokao:fourteen",
+          "clip": "s-e45dec12f36d9c4a",
+          "sha256": "e9e9e8dc5666453405342944d5a2318c1d98973681e6cf94d2024c630f30ac3b",
+          "bytes": 20540,
+          "alignment": "PocketSphinx exact token sequence",
+          "ffmpegDecoded": true,
+          "miniaudioDecoded": true
+        }
+      ]
     }
   ]
 }

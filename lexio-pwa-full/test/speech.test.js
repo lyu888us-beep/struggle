@@ -24,7 +24,12 @@ const dir=path.join(__dirname,'..');
     'The speaker gave a wonderful lecture on astronomy.',
     'The past can teach us something useful about the future.',
     'The photographer was shooting portraits outdoors.',
-    'Tom is teaching me how to sail.'
+    'Tom is teaching me how to sail.',
+    'Creating something creative yourself is a way of improving your creativity.',
+    'He is addicted to solving crossword puzzles.',
+    'For example, our library stays open until eight.',
+    "I've noticed that having fun doesn't interfere at all with your studies.",
+    'She was fourteen when she joined the school orchestra.'
   ];
   const mappedTargets=[...migrationTargets].filter(text=>Object.hasOwn(recordings,text));
   assert.deepEqual(mappedTargets.sort(),exactTargets.slice().sort());
@@ -32,7 +37,7 @@ const dir=path.join(__dirname,'..');
     const id='s-'+require('node:crypto').createHash('sha256').update(text).digest('hex').slice(0,16);
     assert.equal(recordings[text],id);
   }
-  console.log('✓ 501 个改写目标已移除旧音频别名，仅为 13 条已有精确 voice-00 录音保留映射');
+  console.log('✓ 501 个改写目标已移除旧音频别名，仅为 18 条已有精确 voice-00 录音保留映射');
   const correctedExample='The hikers stayed on the trail so they would not molest the nesting birds.';
   const correctedEntry=wordbank.books.find(book=>book.id==='ielts').words.find(row=>row.id==='ielts::molest');
   assert.equal(correctedEntry.example,correctedExample);
@@ -116,7 +121,19 @@ const dir=path.join(__dirname,'..');
   assert.deepEqual(batch009.sourceGroups,[70,71,72,73,74,75,76,77]);
   assert.deepEqual(batch009.alignmentFailedGroups,[]);
   assert.equal(batch009.individuallyHumanListened,false);
-  assert.equal(wordManifest.count,9732);
+  const batch010=wordManifest.generatedBatches.find(batch=>batch.id==='next-batch-010-safe-pending-words-groups-78-82');
+  assert.ok(batch010,'final safe-cut batch 010 is recorded');
+  assert.equal(batch010.words.length,98);
+  assert.equal(batch010.rowsConsidered,98);
+  assert.equal(batch010.skippedAlreadyMappedBeforeGeneration,0);
+  assert.equal(batch010.decodedClips,98);
+  assert.equal(batch010.unsafeBoundaries,0);
+  assert.equal(batch010.skippedRows,0);
+  assert.deepEqual(batch010.skippedWords,[]);
+  assert.deepEqual(batch010.sourceGroups,[78,79,80,81,82]);
+  assert.deepEqual(batch010.alignmentFailedGroups,[]);
+  assert.equal(batch010.individuallyHumanListened,false);
+  assert.equal(wordManifest.count,9830);
   const expectedWords=[...approvedWords,...generatedBatchWords].sort();
   assert.equal(wordManifest.count,expectedWords.length);
   assert.deepEqual(Object.keys(wordRecordings).sort(),expectedWords);
@@ -186,15 +203,43 @@ const dir=path.join(__dirname,'..');
   assert.equal(require('node:crypto').createHash('sha256').update(correctedBytes).digest('hex'),correctedItem.sha256);
   assert.ok(cached.includes(`./media/voice/${correctedId}.mp3`));
   console.log('✓ 被审核阻止的词典例句已替换并以精确文本映射发布（未重试原文、未人工听检）');
+  const sentenceBatch003=sentenceManifest.generatedBatches.find(batch=>batch.id==='sentence-batch-003');
+  assert.ok(sentenceBatch003,'exact-text sentence batch 003 is recorded');
+  assert.equal(sentenceBatch003.itemsConsidered,5);
+  assert.equal(sentenceBatch003.clipsPublished,5);
+  assert.equal(sentenceBatch003.skippedAfterSafetyChecks,0);
+  assert.equal(sentenceBatch003.individuallyHumanListened,false);
+  assert.equal(sentenceBatch003.items.length,5);
+  const batch003Texts=[
+    'Creating something creative yourself is a way of improving your creativity.',
+    'He is addicted to solving crossword puzzles.',
+    'For example, our library stays open until eight.',
+    "I've noticed that having fun doesn't interfere at all with your studies.",
+    'She was fourteen when she joined the school orchestra.'
+  ];
+  assert.deepEqual(sentenceBatch003.items.map(item=>item.text).sort(),batch003Texts.slice().sort());
+  for(const item of sentenceBatch003.items){
+    const id='s-'+require('node:crypto').createHash('sha256').update(item.text).digest('hex').slice(0,16);
+    assert.equal(item.clip,id);
+    assert.equal(recordings[item.text],id);
+    assert.equal(item.alignment,'PocketSphinx exact token sequence');
+    assert.equal(item.ffmpegDecoded,true);
+    assert.equal(item.miniaudioDecoded,true);
+    const bytes=fs.readFileSync(path.join(dir,'media/voice',`${id}.mp3`));
+    assert.equal(bytes.length,item.bytes);
+    assert.equal(require('node:crypto').createHash('sha256').update(bytes).digest('hex'),item.sha256);
+    assert.ok(cached.includes(`./media/voice/${id}.mp3`));
+  }
+  console.log('✓ 句子补录批次 003：5 条逐词对齐、MP3 双解码、哈希及离线映射通过（未人工听检）');
   const voiceQueue=spawnSync(process.execPath,['scripts/voice-queue.mjs'],{cwd:dir,encoding:'utf8'});
   assert.equal(voiceQueue.status,0,voiceQueue.stderr||voiceQueue.stdout);
   const queueSummary=JSON.parse(voiceQueue.stdout);
   assert.equal(queueSummary.uniqueRecordableSentences,17573);
-  assert.equal(queueSummary.recordedRecordableSentences,17085);
-  assert.equal(queueSummary.pendingRecordableSentences,488);
+  assert.equal(queueSummary.recordedRecordableSentences,17090);
+  assert.equal(queueSummary.pendingRecordableSentences,483);
   assert.equal(queueSummary.uniqueDictionaryPhrases,472);
   assert.equal(queueSummary.recordedDictionaryPhrases,472);
   assert.equal(queueSummary.pendingDictionaryPhrases,0);
   assert.equal(queueSummary.missingMappedAudioFiles,0);
-  console.log('✓ 句子与词典短语分开校验：17,573 条完整句中 488 条待补；472 个词典短语均已录制，映射音频文件齐全');
+  console.log('✓ 句子与词典短语分开校验：17,573 条完整句中 483 条待补；472 个词典短语均已录制，映射音频文件齐全');
 })().catch(e=>{console.error(e);process.exitCode=1;});
