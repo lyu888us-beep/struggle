@@ -88,3 +88,52 @@
 | 40 | You have done it totally incorrect! | You have done it totally incorrectly! | 副词形式 |
 
 **建议放弃（语义已不可复原）**：`When chickens pancake-shape maintain, the tractor must have won again`、`She was really of the cold frog.`、`Creating creativity itself is improving creativity`、`Steam is water is the gaseous state`、`Since namely namely misconceive, that explanation clear nice.`、`Different is, the exam in the life often does not have person invigilate.`
+
+---
+
+# 第三批改写（v97 已录，40 条）
+
+语义断裂、按词卡目标词重建的句子（已按用户「允许重写」确认执行）：
+
+| 原文 | 朗读版 | 保留目标词 |
+|---|---|---|
+| Creating creativity itself is improving creativity | Creating something creative yourself is a way of improving your creativity. | creativity |
+| I've noticed that having fun doesn't interfere at all with your studies. I just can't | I've noticed that having fun doesn't interfere at all with your studies. | interfere |
+| This person's worldview is officially unhealthy | This person's worldview is rather unhealthy. | worldview |
+| The turkeys in my grandfather's farm are very noisy, I can't wait for them to get eaten | The turkeys on my grandfather's farm are very noisy. | turkey |
+| A woman is ever fickle and changeable | Public opinion is fickle and changeable. | fickle |
+| Mother-in-law and daughter-in-law are a tempest and hailstorm | Their argument was a tempest in a teapot. | tempest |
+| She is your indispensable oxygen, carbon dioxide is not essential you me. | She is indispensable to your team. | indispensable |
+| Lines AB and CD are parallel. AB | Lines A B and C D are parallel. | parallel |
+| In the Ohmic contacts of LED electrodes, carriers have different transmission mechanisms be- tween metal electrode and semiconductor. | 同句，修复断词 `between`、补冠词 | ohmic |
+| In the wagon. | The children were sitting in the wagon. | wagon |
+| The interaction between user and expert system arising from the expert system 's use. | The interaction between the user and the expert system arises from the expert system's use. | interaction |
+| There isa certain logicin their choice of architect. | There is a certain logic in their choice of architect. | logic |
+| Because we need to give profit to the capital, otherwise we get no capital. | Because we need to give a return to capital; otherwise we get no capital. | capital |
+| Before welcoming a beautiful tomorrow, every rich man will ensure that he gets sufficient rest! | Everyone needs sufficient rest before a big day. | sufficient |
+| He is fantasizing the ideal wife | He is fantasizing about the ideal wife. | fantasize |
+| Steam is water is the gaseous state | Steam is water in the gaseous state. | gaseous |
+| When there is no tigers in mountains, the monkey becomes the king | When there are no tigers in the mountains, the monkey becomes the king. | tiger |
+| She knelt down, hands on the thighs, breathe in the smell of sulfur. | She knelt down, hands on her thighs, breathing in the smell of sulfur. | kneel |
+| His body type is born balanced! Wide shoulders, slim waist, belly not popping outwards | He is naturally well built: wide shoulders, slim waist, no belly. | waist |
+| Objective To observe the disinfection effect of gastroscope by ozone water. | Objective: to observe the disinfection effect of ozone water on the gastroscope. | disinfection |
+| Dairy source of protein and calcium. | Dairy is a source of protein and calcium. | dairy |
+| Ideological application of a theory | The ideological application of a theory is always risky. | ideological |
+| Was immensely more important to the project as a scientist than as an administrator | She was immensely more important to the project as a scientist than as an administrator. | immensely |
+| An acutely debilitating virus | An acutely debilitating virus swept through the camp. | debilitating |
+| The abolition of capital punishment | The abolition of capital punishment took years. | abolition |
+| Irreversible momentum toward revolution | The reforms gained irreversible momentum. | irreversible |
+| Interested tapered off | Interest in the project tapered off. | taper |
+| The boy fell of fright when he saw a ghost | The boy fell down in fright when he saw a ghost. | fright |
+| I'm only reading the scraps on news on the Internet, but, well, I get the general picture | I'm only reading scraps of news on the Internet, but I get the general picture. | scraps |
+| She seems to devote all her effects to her career. | She seems to devote all her efforts to her career. | devote |
+| Entry of pool is prohibited | Entry to the pool is prohibited. | entry |
+| Men are portly and women are stout | The men are portly and the women are stout. | portly |
+| These are all languages of the Altaic language family group | These are all languages of the Altaic family. | Altaic |
+| Asked for a collar on program trading in the stock market | He asked for a collar on program trading in the stock market. | collar |
+| The United States are a republic | The United States is a republic. | republic |
+| The fort flanked on a swamp. | The fort flanked a swamp. | flank |
+| These students work hard, but it's not that much efficient. | These students work hard, but they are not that efficient. | efficient |
+| Want to be an assistant judge or notary. | I want to be an assistant judge or a notary. | notary |
+| I can't remember when was the last time I've seen him smile | I can't remember the last time I saw him smile. | remember |
+| An igneous desert atmosphere | The igneous rock was hard and dark. | igneous |
