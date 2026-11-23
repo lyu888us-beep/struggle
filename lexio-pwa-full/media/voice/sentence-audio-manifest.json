@@ -1,0 +1,108 @@
+{
+  "voice_id": "voice-00",
+  "language": "en-US",
+  "generatedBatches": [
+    {
+      "id": "sentence-batch-001",
+      "itemsConsidered": 10,
+      "clipsPublished": 10,
+      "skippedAfterSafetyChecks": 0,
+      "captureMethod": "one complete generated WAV per exact source text; no inter-sentence cutting",
+      "alignment": "PocketSphinx word-level forced alignment; all expected tokens matched in order",
+      "decodeCheck": "FFmpeg decoded all 10 MP3 files successfully",
+      "individuallyHumanListened": false,
+      "items": [
+        {
+          "text": "She remained faithful to her promise, even when the journey became difficult.",
+          "source": "gaokao:faithful",
+          "clip": "s-650b502e41ad3322",
+          "sha256": "40b2ac53ec7ce838f1d787f5789740c5471c4e645031302f09d5ab1329db0e11",
+          "bytes": 26444,
+          "alignment": "PocketSphinx exact token sequence",
+          "ffmpegDecoded": true
+        },
+        {
+          "text": "Ten movies are released every year.",
+          "source": "gaokao:every",
+          "clip": "s-4dca8d866d3ee520",
+          "sha256": "fcd5a1308b0935f3ab8b52f29e1589c8101cb1c6e4c4dc5afe184ef30eddf717",
+          "bytes": 14348,
+          "alignment": "PocketSphinx exact token sequence",
+          "ffmpegDecoded": true
+        },
+        {
+          "text": "He is gay and proud of his partner.",
+          "source": "gaokao:gay",
+          "clip": "s-f79698d50d4bb103",
+          "sha256": "bad55a970442fda043ac629b9e4c8408d2a0ae8a457713ec4cabf66d1e95e4d0",
+          "bytes": 15644,
+          "alignment": "PocketSphinx exact token sequence",
+          "ffmpegDecoded": true
+        },
+        {
+          "text": "Show your sister the photos from the trip.",
+          "source": "gaokao:show",
+          "clip": "s-ea26f9c7a6df8da3",
+          "sha256": "b3acf0a77bd29e877fe4bf6c32cd6b1940a1dd24c54c008b60d6b536e65c7627",
+          "bytes": 15212,
+          "alignment": "PocketSphinx exact token sequence",
+          "ffmpegDecoded": true
+        },
+        {
+          "text": "The teacher was merciful when she gave the class extra time.",
+          "source": "gaokao:merciful",
+          "clip": "s-5b630d0fdc5557a6",
+          "sha256": "e14ed06385dee2b1e402b07ad4ccbeec8c6b7c39fde1b4fc47c4c4a1188d3053",
+          "bytes": 18956,
+          "alignment": "PocketSphinx exact token sequence",
+          "ffmpegDecoded": true
+        },
+        {
+          "text": "True strength is balanced by wisdom.",
+          "source": "gaokao:strength",
+          "clip": "s-ff5ed233666b3e67",
+          "sha256": "b0e4eb2268888daa6ede2ee19e53c2ad124342ced5ea6adc70786b36bcac3ab1",
+          "bytes": 15212,
+          "alignment": "PocketSphinx exact token sequence",
+          "ffmpegDecoded": true
+        },
+        {
+          "text": "The speaker gave a wonderful lecture on astronomy.",
+          "source": "gaokao:wonderful",
+          "clip": "s-6bfe0ea1039a1d69",
+          "sha256": "3789af10220a25ac3279b7af0e36ca7f69a4b4f88cea14e3da478990828deb32",
+          "bytes": 18524,
+          "alignment": "PocketSphinx exact token sequence",
+          "ffmpegDecoded": true
+        },
+        {
+          "text": "The past can teach us something useful about the future.",
+          "source": "gaokao:past",
+          "clip": "s-2a73ba30ccb9c2a8",
+          "sha256": "2923be50e09676d31f1a1c73f4cce3f2a321c054d50e9cf84b3095cade9a7c27",
+          "bytes": 19820,
+          "alignment": "PocketSphinx exact token sequence",
+          "ffmpegDecoded": true
+        },
+        {
+          "text": "The photographer was shooting portraits outdoors.",
+          "source": "gaokao:shooting",
+          "clip": "s-f66eaf70b08c6142",
+          "sha256": "6a12e1ea7dd7a241ac1363c374020547efb20101ba79017fc4ac1bafdf8c1c80",
+          "bytes": 18524,
+          "alignment": "PocketSphinx exact token sequence",
+          "ffmpegDecoded": true
+        },
+        {
+          "text": "Tom is teaching me how to sail.",
+          "source": "gaokao:teaching",
+          "clip": "s-b16b29aafe8bcc8d",
+          "sha256": "3623f87aa9dbd94acf05bce33e939a5605ac71c8efd2e865c74aa92b1bacc544",
+          "bytes": 12908,
+          "alignment": "PocketSphinx exact token sequence",
+          "ffmpegDecoded": true
+        }
+      ]
+    }
+  ]
+}

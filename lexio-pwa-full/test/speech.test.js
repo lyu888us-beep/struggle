@@ -14,7 +14,17 @@ const dir=path.join(__dirname,'..');
   const exactTargets=[
     'Take a slow breath before you begin speaking.',
     "Let's count by tens: ten, twenty, thirty, forty, fifty, sixty, seventy, eighty, ninety, and one hundred.",
-    'In the Ohmic contacts of LED electrodes, carriers have different transmission mechanisms between a metal electrode and a semiconductor.'
+    'In the Ohmic contacts of LED electrodes, carriers have different transmission mechanisms between a metal electrode and a semiconductor.',
+    'She remained faithful to her promise, even when the journey became difficult.',
+    'Ten movies are released every year.',
+    'He is gay and proud of his partner.',
+    'Show your sister the photos from the trip.',
+    'The teacher was merciful when she gave the class extra time.',
+    'True strength is balanced by wisdom.',
+    'The speaker gave a wonderful lecture on astronomy.',
+    'The past can teach us something useful about the future.',
+    'The photographer was shooting portraits outdoors.',
+    'Tom is teaching me how to sail.'
   ];
   const mappedTargets=[...migrationTargets].filter(text=>Object.hasOwn(recordings,text));
   assert.deepEqual(mappedTargets.sort(),exactTargets.slice().sort());
@@ -22,7 +32,7 @@ const dir=path.join(__dirname,'..');
     const id='s-'+require('node:crypto').createHash('sha256').update(text).digest('hex').slice(0,16);
     assert.equal(recordings[text],id);
   }
-  console.log('✓ 501 个改写目标已移除旧音频别名，仅保留 3 条精确目标句录音');
+  console.log('✓ 501 个改写目标已移除旧音频别名，仅为 13 条已有精确 voice-00 录音保留映射');
   const wordManifest=JSON.parse(fs.readFileSync(path.join(dir,'media/voice/word-audio-manifest.json')));
   assert.equal(wordManifest.voice_id,'voice-00');
   const approvedWords=wordManifest.userApprovedSampleWords;
@@ -116,13 +126,35 @@ const dir=path.join(__dirname,'..');
     assert.ok(mp3.length>1000,`${word} clip is missing or implausibly small`);
   }
   console.log(`✓ ${Object.keys(wordRecordings).length} 个单词音频已纳入 en-US 播放和离线资源（5 个此前确认样音 + ${generatedBatchWords.length} 个累计生成）`);
+  const sentenceManifest=JSON.parse(fs.readFileSync(path.join(dir,'media/voice/sentence-audio-manifest.json')));
+  assert.equal(sentenceManifest.voice_id,'voice-00');
+  assert.equal(sentenceManifest.language,'en-US');
+  const sentenceBatch001=sentenceManifest.generatedBatches.find(batch=>batch.id==='sentence-batch-001');
+  assert.ok(sentenceBatch001,'first exact-text sentence batch is recorded');
+  assert.equal(sentenceBatch001.itemsConsidered,10);
+  assert.equal(sentenceBatch001.clipsPublished,10);
+  assert.equal(sentenceBatch001.skippedAfterSafetyChecks,0);
+  assert.equal(sentenceBatch001.individuallyHumanListened,false);
+  assert.equal(sentenceBatch001.items.length,10);
+  for(const item of sentenceBatch001.items){
+    const id='s-'+require('node:crypto').createHash('sha256').update(item.text).digest('hex').slice(0,16);
+    assert.equal(item.clip,id);
+    assert.equal(recordings[item.text],id);
+    assert.equal(item.alignment,'PocketSphinx exact token sequence');
+    assert.equal(item.ffmpegDecoded,true);
+    const bytes=fs.readFileSync(path.join(dir,'media/voice',`${id}.mp3`));
+    assert.equal(bytes.length,item.bytes);
+    assert.equal(require('node:crypto').createHash('sha256').update(bytes).digest('hex'),item.sha256);
+    assert.ok(cached.includes(`./media/voice/${id}.mp3`));
+  }
+  console.log('✓ 句子补录批次 001：10 条逐词对齐、MP3 哈希和离线映射均通过（未人工听检）');
   const voiceQueue=spawnSync(process.execPath,['scripts/voice-queue.mjs'],{cwd:dir,encoding:'utf8'});
   assert.equal(voiceQueue.status,0,voiceQueue.stderr||voiceQueue.stdout);
   const queueSummary=JSON.parse(voiceQueue.stdout);
-  assert.equal(queueSummary.pendingRecordableSentences,498);
+  assert.equal(queueSummary.pendingRecordableSentences,488);
   assert.equal(queueSummary.uniqueDictionaryPhrases,473);
   assert.equal(queueSummary.recordedDictionaryPhrases,472);
   assert.equal(queueSummary.pendingDictionaryPhrases,1);
   assert.equal(queueSummary.missingMappedAudioFiles,0);
-  console.log('✓ 句子与词典短语分开校验：498 个完整文本待补、1 个短语保持单独待审、现有映射音频文件均存在');
+  console.log('✓ 句子与词典短语分开校验：488 个完整文本待补、1 个短语保持单独待审、现有映射音频文件均存在');
 })().catch(e=>{console.error(e);process.exitCode=1;});
