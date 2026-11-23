@@ -76,6 +76,7 @@
 | v98 / 词卡 69 | 模板/说明片段自动改写（42 条，逐条对照见 VOICE-REWRITE-CANDIDATES.md 第四批） | 42 | 17,200 键 | 374 |
 | v99 / 词卡 70 | 敏感内容自动改写（40 条，逐条对照见 VOICE-REWRITE-CANDIDATES.md 第五批） | 40 | 17,240 键 | 334 |
 | v100 / 词卡 71 | 敏感内容自动改写第二批（40 条，逐条对照见 VOICE-REWRITE-CANDIDATES.md 第六批） | 40 | 17,280 键 | 294 |
+| v101 / 词卡 72 | 敏感内容自动改写第三批（40 条，逐条对照见 VOICE-REWRITE-CANDIDATES.md 第七批） | 40 | 17,320 键 | 254 |
 
 分母是当前 `voice-queue.mjs` 从内置数据去重得到的 17,574 条目标文本，不是词条数。不要按表中起止词跳过前面未录的句子。以剩余队列为准。用户要求：完成一批，测试、上传 GitHub、确认 Pages 部署、在对话里报告；需要换窗口时先更新此文档并给链接。不把后台离线下载描述成后台继续配音。
 
@@ -101,6 +102,8 @@
 - v99 / 词卡 70 试听：[My sister works as a professional photographer.](media/voice/s-3fbf83d8700f775d.mp3)
 
 - v100 / 词卡 71 试听：[A steady drumbeat guided the dancers.](media/voice/s-4d017ead00990e8b.mp3)
+
+- v101 / 词卡 72 试听：[The road seemed endless as we drove across the desert.](media/voice/s-fc2630d0b80723c2.mp3)
 
 ### v74 历史失败项复核
 

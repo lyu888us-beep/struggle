@@ -280,3 +280,51 @@
 | Guards! Slap that vile woman's face! | The guard checked tickets at the entrance. | guard |
 | Tom confided in his friend that he was going to hang himself | Tom confided in his friend about his plans for the future. | friend |
 | Every time I fall in love, Dad tells me the girl is my half sister | Please tell me where the nearest library is. | tell |
+
+
+## 第七批：敏感内容自动改写（v101 已录）
+
+从剩余内容中选取 40 条涉及战争、暴力、歧视、成瘾或其他敏感语境的例句，改写为日常、非露骨或尊重性的表达，并保留词卡目标词（必要时使用自然屈折形式）。
+
+| 原句 | 改写后朗读 | 保留目标词 |
+|---|---|---|
+| Sought merciful treatment for the captives | The teacher was merciful when she gave the class extra time. | merciful |
+| The killers will be brought to justice(= caught and punished ). | The judge worked to ensure justice for everyone. | justice |
+| If you're not a loser by nature, then people won't trust you | Nobody is a loser for asking a thoughtful question. | loser |
+| Your soul has been condemned to hell | She put her whole soul into the song. | soul |
+| Yesterday night, I was almost bitten to death by the laboratory mosquitoes. | The laboratory studies how insects help pollinate plants. | laboratory |
+| The might of the army is "invincible," according to state media but the refugees are rather cynical about the ill equipped force. | The team felt invincible after winning its first match. | invincible |
+| He was sent on over 200 missions before being killed in action. | The rescue mission brought clean water to the village. | mission |
+| The reproductive or generative organs | The biology class studied reproductive health. | reproductive |
+| Southern men, Northern women | The northern lights shimmered above the frozen lake. | northern |
+| The bomb went off at 9.30 in the morning. | The bath bomb makes bubbles in warm water. | bomb |
+| So it seems that cloud of odorless deadly gas had a silver lining after all | Every challenge has a silver lining if we learn from it. | silver |
+| They battled against other Indian tribes, but rarely fought with the whites. | The two teams rarely disagree during practice. | rarely |
+| The attackers were said to be taking revenge on the 14-year-old, claiming he was a school bully. | She chose kindness rather than revenge. | revenge |
+| To investigate, his team injected cocaine, capsaicin or both at once into the abdomens of several groups of about 30 mice. | The health class discussed how cocaine can harm the brain. | cocaine |
+| I'm not very Chinese. For example, I don't believe that Taiwan is Chinese territory | For example, our library stays open until eight. | example |
+| Afrikaners are the people originated in South Africa | Africa is home to many languages, landscapes, and cultures. | africa |
+| The police is searching for an escaped prisoner | We search the garden every spring for new flowers. | search |
+| She’s deaf and dumb (= unable to hear or speak ) and communicates using sign language. | She is deaf and uses sign language to communicate. | deaf |
+| We flew over 200 combat missions in the war. | The museum exhibit describes combat history in the region. | combat |
+| She was blind, deaf, and dumb. | My grandfather is deaf and enjoys films with captions. | deaf |
+| Godwin's law teaches us that any infinite discussion about an arbitrary subject converges to a Nazi comparison. | The committee chose an arbitrary date for the picnic. | arbitrary |
+| I can't believe he had the balls to ask the boss for a raise | The soccer ball rolled under the bench. | ball |
+| A man can no more become a woman than a monkey can develop into a man | Children develop new skills through practice. | develop |
+| When only death remains, the last resort is to beg for food | She did not have to beg; her neighbors gladly shared their lunch. | beg |
+| Afflict with the plague | A lack of sunlight can afflict plants that grow indoors. | afflict |
+| The group are holding two tourists hostage (= keeping them as hostages). | The rescued hostage was reunited with her family. | hostage |
+| Indeed, dwarf tossing is an Olympic sport! | Pluto is a dwarf planet that orbits the sun. | dwarf |
+| The plane crashed, killing all 200 people aboard. | Everyone was safely aboard the ferry before it left the dock. | aboard |
+| I aimed at a sparrow, but shot down a goose | A goose walked along the pond’s edge. | goose |
+| Europeans tried to civilise the tribe | European museums preserve many historical works of art. | european |
+| There was a look of sheer terror (= complete terror) on his face. | The child overcame her terror of thunderstorms. | terror |
+| He’s been in a lot of trouble – drugs, guns, blackmail – the list is endless. | The road seemed endless as we drove across the desert. | endless |
+| At least 50 people died when a bus plunged into a river. | The diver plunged into the pool after checking the water. | plunge |
+| Everybody knows that Cold War is the confrontation between two nations | The confrontation between the two chess players ended with a handshake. | confrontation |
+| Though I may be in the jaws of death, I am as a firm as a rock | Her firm handshake made a strong first impression. | firm |
+| China has the means to destroy your aircraft carriers | The storm may destroy the old fence. | destroy |
+| I shot the horse because it had trouble breathing | Take a slow breath before you begin speaking. | breath |
+| His successor died after only 15 months in office. | The successor continued the project with a fresh plan. | successor |
+| It is a prevalent belief, according to a nationwide poll in the United States, that Muslims are linked with terrorism. | A prevalent belief is that regular exercise supports good health. | prevalent |
+| He's only 24 years old and a drug addict. | He is a crossword addict who solves puzzles each morning. | addict |
