@@ -79,6 +79,7 @@
 | v101 / 词卡 72 | 敏感内容自动改写第三批（40 条，逐条对照见 VOICE-REWRITE-CANDIDATES.md 第七批） | 40 | 17,320 键 | 254 |
 | v102 / 词卡 73 | 敏感内容自动改写第四批（40 条，逐条对照见 VOICE-REWRITE-CANDIDATES.md 第八批） | 40 | 17,360 键 | 214 |
 | v103 / 词卡 74 | 敏感内容自动改写第五批：40 条中 27 条安全切分上线；另 13 条因句间无安全静音且本轮合成额度用尽而暂缓，详见第九批 | 27 | 17,387 键 | 187 |
+| v104 / 词卡 75 | 补录 v103 暂缓的 13 条敏感例句（拆为 11 句与 2 句两段重录并安全切分） | 13 | 17,400 键 | 174 |
 
 分母是当前 `voice-queue.mjs` 从内置数据去重得到的 17,574 条目标文本，不是词条数。不要按表中起止词跳过前面未录的句子。以剩余队列为准。用户要求：完成一批，测试、上传 GitHub、确认 Pages 部署、在对话里报告；需要换窗口时先更新此文档并给链接。不把后台离线下载描述成后台继续配音。
 
@@ -110,6 +111,8 @@
 - v102 / 词卡 73 试听：[The rain began to intensify as evening approached.](media/voice/s-3affee2c5a898afa.mp3)
 
 - v103 / 词卡 74 试听：[Spain is known for its art, music, and regional traditions.](media/voice/s-fd476b558751f990.mp3)
+
+- v104 / 词卡 75 试听：[The firefighter became a local hero after the rescue.](media/voice/s-1f9d5ba51be86bde.mp3)
 
 ### v74 历史失败项复核
 

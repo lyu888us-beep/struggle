@@ -380,7 +380,7 @@
 
 ## 第九批：敏感内容自动改写（v103 部分上线）
 
-本批从剩余敏感语境中选取 40 条进行中性改写。27 条已安全切分并上线；另 13 条所在的 WAV 在句间找不到安全切点，未作不可靠切分，且本轮 10 段合成额度已用尽。以下 13 条仍在待录队列，下一批优先拆组重录。
+本批从剩余敏感语境中选取 40 条进行中性改写。27 条于 v103 安全切分上线；另 13 条所在 WAV 的句间找不到安全切点，未作不可靠切分。该组已于 v104 拆为 11 句与 2 句两段重新合成、复核切分并发布。
 
 ### v103 已安全切分上线（27 条）
 
@@ -414,9 +414,9 @@
 | The kidnappers were demanding a ransom of $250,000. | The ransom note in the mystery novel revealed a hidden clue. | ransom |
 | He applied for asylum in 1987 after fleeing the police back home. | She applied for asylum after leaving an unsafe situation at home. | asylum |
 
-### v103 已改写但暂未安全切分发布（13 条，待后续拆组重录）
+### v103 暂缓条目，已于 v104 拆组重录发布（13 条）
 
-| 原句 | 拟朗读版 | 保留目标词 |
+| 原句 | 改写后朗读 | 保留目标词 |
 |---|---|---|
 | Released the prisoner for humanitarian reasons | The group provided humanitarian aid after the flood. | humanitarian |
 | Chinese people have the most patriotic stomachs. | She felt patriotic while watching the national team. | patriotic |
