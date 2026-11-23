@@ -115,11 +115,14 @@ def cut(rows, path, stage, reviewed):
     if any(row['voice_id'] != 'voice-00' for row in rows):
         raise ValueError('Unexpected requested voice')
     # Require explicit normalization for numbers and unusual spellings.
+    # Rows may carry a 'spoken' form (digits already written out); it must match
+    # the audio that was generated, while 'text' stays the catalogue key.
     tokens = []
-    for text in sentences:
-        if re.search(r'[0-9]', text):
-            raise ValueError(f'Normalize numeral pronunciation before alignment: {text}')
-        tokens.append(re.findall("[a-z]+(?:'[a-z]+)*", text.lower().replace('’', "'")))
+    for row in rows:
+        spoken = row.get('spoken', row['text'])
+        if re.search(r'[0-9]', spoken):
+            raise ValueError(f'Normalize numeral pronunciation before alignment: {spoken}')
+        tokens.append(re.findall("[a-z]+(?:'[a-z]+)*", spoken.lower().replace('’', "'")))
     words = sum(tokens, [])
     for w in set(words):
         if not d.lookup_word(w):
