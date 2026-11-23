@@ -533,6 +533,7 @@ phones = {
     "loutish":"L AW T IH SH",
     "numerate":"N UW M ER AH T",
     "numerate's":"N UW M ER AH T S",
+    "leckar":"L EH K ER",
 }
 
 

@@ -1,19 +1,19 @@
-# 待确认重写清单（v91 之后）
+# 待确认重写清单（v92 后：8 条已全部录制）
 
-统计口径：全库 17,574 句，已录 16,890，待录 684。
+统计口径：全库 17,574 句，已录 16,898，待录 676。
 其中 568 条命中历史排除清单、81 条为真实敏感内容，不再讨论。
-下面 8 条是**语义可辨、只差一处修补**的条目，需要你确认改动方式后才会录。
+下面 8 条已经用户确认「全部录」，于 v92 / 词卡 63 录制上线。
 
-| # | 词卡来源 | 原文 | 建议朗读版 | 改动性质 | 建议 |
+| # | 词卡来源 | 原文 | 建议朗读版 | 改动性质 | 状态 |
 |---|---|---|---|---|---|
-| 1 | cet4:nasty | I went to school with him e_SEnD he was nasty then and he’s nasty now. | I went to school with him. He was nasty then and he's nasty now. | `e_SEnD` 是丢失的断句标记，拆成两句 | 录 |
-| 2 | ielts:endow | The ambassador has endowed a $1 million public-service fellowships programme. | The ambassador has endowed a one million dollar public-service fellowships programme. | 金额口头化 + `dollars`→`dollar` 单复数 | 录 |
-| 3 | ielts:aggregate | (= as a group or in total), women outlive men by 7 or more years. | As a group, women outlive men by seven or more years. | 括号释义升格为主句 | 录（会改变句首结构） |
-| 4 | ielts:freudian | The n&a is important in this discussion. | The letters n and a are important in this discussion. | `n&a` 展开为字母组合 | 录（原句语法不通） |
-| 5 | pep-4-2:PE class | I have a PE class on this Tuesday. | I have a PE class this Tuesday. | 去掉多余 `on` | 录 |
-| 6 | pep-9-1:Thomas Watson | ”, or Thomas Watson of IBM declaring in 1943, “I think there is a world market for maybe five computers.” | Thomas Watson of IBM declared in nineteen forty three, I think there is a world market for maybe five computers. | 去掉残缺引号头 + `declaring`→`declared` | 录 |
-| 7 | gaokao:tap | (= water that comes out of a tap) is usually heavily treated with chemicals. | Water that comes out of a tap is usually heavily treated with chemicals. | 括号释义升格为主语 | 录（会改变句首结构） |
-| 8 | ielts:trespass | Stephen Leckar has 30 minutes to represent Jones, …（约 330 字符的法庭陈述） | 同原文，仅 `30`→thirty，补人名音素 `L EH K ER` | 纯数字口头化 | 录（句子很长） |
+| 1 | cet4:nasty | I went to school with him e_SEnD he was nasty then and he’s nasty now. | I went to school with him. He was nasty then and he's nasty now. | `e_SEnD` 是丢失的断句标记，拆成两句 | ✅ 已录 v92 |
+| 2 | ielts:endow | The ambassador has endowed a $1 million public-service fellowships programme. | The ambassador has endowed a one million dollar public-service fellowships programme. | 金额口头化 + `dollars`→`dollar` 单复数 | ✅ 已录 v92 |
+| 3 | ielts:aggregate | (= as a group or in total), women outlive men by 7 or more years. | As a group, women outlive men by seven or more years. | 括号释义升格为主句 | ✅ 已录 v92 |
+| 4 | ielts:freudian | The n&a is important in this discussion. | The letters n and a are important in this discussion. | `n&a` 展开为字母组合 | ✅ 已录 v92 |
+| 5 | pep-4-2:PE class | I have a PE class on this Tuesday. | I have a PE class this Tuesday. | 去掉多余 `on` | ✅ 已录 v92 |
+| 6 | pep-9-1:Thomas Watson | ”, or Thomas Watson of IBM declaring in 1943, “I think there is a world market for maybe five computers.” | Thomas Watson of IBM declared in nineteen forty three, I think there is a world market for maybe five computers. | 去掉残缺引号头 + `declaring`→`declared` | ✅ 已录 v92 |
+| 7 | gaokao:tap | (= water that comes out of a tap) is usually heavily treated with chemicals. | Water that comes out of a tap is usually heavily treated with chemicals. | 括号释义升格为主语 | ✅ 已录 v92 |
+| 8 | ielts:trespass | Stephen Leckar has 30 minutes to represent Jones, …（约 330 字符的法庭陈述） | 同原文，仅 `30`→thirty，补人名音素 `L EH K ER` | 纯数字口头化 | ✅ 已录 v92 |
 
 ## 明确建议放弃（不要录）
 
