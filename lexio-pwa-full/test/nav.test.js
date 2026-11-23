@@ -369,8 +369,8 @@ function animClean() {
     cssText.includes('@keyframes appHomeEnter') && cssText.includes('@keyframes appPricingEnter') &&
     cssText.includes('@keyframes pricePop') && cssText.includes('.price strong.is-changing') &&
     cssText.includes('prefers-reduced-motion: reduce'));
-  check('Service Worker 升到 v123 并预缓存口语句库与安装引导视频',
-    swSource.includes("CACHE_NAME = 'lexio-shell-v123-word-audio-batch-007'") &&
+  check('Service Worker 升到 v124 并预缓存口语句库与安装引导视频',
+    swSource.includes("CACHE_NAME = 'lexio-shell-v124-word-audio-batch-008'") &&
     swSource.includes("'./data/daily-conversation.json'") &&
     swSource.includes("'./media/install-guide.mp4'") &&
     pageHtml.includes('controllerchange') && pageHtml.includes('swRefreshing'));
@@ -759,6 +759,8 @@ function animClean() {
     const usVoice = w2.document.querySelector('.accent-toggle [data-accent="en-US"]');
     if (usVoice) usVoice.click(); // 默认英式，先切到美式再测
     await sleep(60);
+    // Use an intentionally unmapped demo word so growing queue coverage does not change this fallback test.
+    w2.__lexioStudy.goTo(4); // sustainable
     w2.document.getElementById('studySpeak').click();
     await sleep(120);
     check('美式发音在有 Alex 与 Samantha 的设备上会挑 Samantha（女声）',
@@ -795,6 +797,8 @@ function animClean() {
     const iw=iosDom.window, iosWordButton=iw.document.getElementById('studySpeak');
     const iosUsToggle=iw.document.querySelector('.accent-toggle [data-accent="en-US"]');
     if(iosUsToggle)iosUsToggle.click();
+    // Exercise the remote dictionary fallback on a word with no local clip.
+    iw.__lexioStudy.goTo(4); // sustainable
     iosWordButton.addEventListener('click',()=>{iw.__iosTapActive=true;},{capture:true});
     iosWordButton.addEventListener('click',()=>{iw.__iosTapActive=false;});
     iosWordButton.click();
