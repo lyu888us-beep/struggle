@@ -1,14 +1,14 @@
 # Lexio 发音补录与发布交接
 
-> 后续窗口从此状态继续。新增录音只用用户确认的 `voice-00 / en-US`；不要试听新音色、重做已有录音，也不要把队列或临时合并音频说成已发布的逐词 MP3。
+> 后续窗口从此状态继续。新增录音只用用户确认的 `voice-00 / en-US`；不要试听新音色、重做已发布录音，也不要把队列或临时合并音频说成已发布的逐词 MP3。无需更换新窗口：当前语音生成工具本轮 10 个音频额度已用完，下一批源音频需下一轮对话调用；可留在本对话继续。
 
 ## 分支与发布状态
 
 - 仓库：`lyu888us-beep/struggle`
 - 当前固定分支：`arena/749eb136-struggle`（active；不得切换或改名），基点 `acf72ed4b80c34f0ec92ef462f02155557fc8fe4`。
 - iOS 美式单词“点了没声音”回退代码在 `535aa1c` / Pages run `45175726808` 已部署：iPhone/iPad 上有道 `type=2` 音频失败或超时后尝试系统 `en-US` 语音。自动测试模拟了媒体失败回退，但**尚未在 iPhone 16 Pro Max／iOS 27 真机验证**，不能声称真机问题已确认解决。
-- 先前 403 个安全切分词音频在 `e54a810` / Pages run `45177816478` 已部署；后续状态交接在 `b7b7b52` 已推送。
-- **新增的 925 个安全切分 MP3 已在 `d44a7b3` 提交并推送，Pages run `45184494757` 成功打包和部署。** 生产映射、manifest、Service Worker 离线清单与 ZIP 一并更新；线上缓存版本为 `lexio-shell-v119-word-audio-batch-003`。部署只确认发布成功，不等于 925 个片段逐条人工听检或 iOS 真机验证。
+- 组 0–9 安全切分词音频：403 个在 `e54a810` / Pages run `45177816478` 部署，另 925 个在 `d44a7b3` / Pages run `45184494757` 部署。
+- 新增组 10–19 的 **1,082 个**安全切分词音频已在 `38e7973d` 提交推送；Pages run `45190478870` 已成功打包并部署，Service Worker 缓存版本为 `lexio-shell-v120-word-audio-batch-004`。此部署不代表逐条人工听检或 iOS 真机验证。
 
 ## 用户约束与真实范围
 
@@ -16,47 +16,39 @@
 - 不得把 PocketSphinx 对齐、FFmpeg 解码或模拟浏览器测试说成人工逐条听检／真机测试。
 - 被语音生成审核阻止的内容不得换音色、拆分或改写来绕过审核。
 - `.tmp-voice/words-unique.json` 有 **9,830** 条唯一词条；应用内置词库有 **28,414** 条记录。9,830 是当前子队列，不等于全库 20,000+ 的完整范围；若目标是全库，必须先核对并补齐队列。
-- 当前本地集成 **1,343 个**队列词条映射（5 个先前由用户认可的样音 + 1,338 个经自动对齐切分的新词音频）；该队列仍有 **8,487** 条没有本地逐词音频。完整词库远未完成。
-- 五个原始样音 `comfortable`、`rural`、`schedule`、`entrepreneur`、`thorough` 经用户听检确认。用户另试听了六词 review sample，确认 `voice-00` 音色合适并要求继续。**新增批次的 1,338 个片段均未逐条人工听检**；用户对音色的认可不等于听检了每个切片。
+- 当前有 **2,425 个**队列词条映射（5 个用户确认样音 + 2,420 个经自动对齐切分的队列音频），队列仍有 **7,405** 条没有本地逐词音频。完整词库远未完成。
+- 五个原始样音 `comfortable`、`rural`、`schedule`、`entrepreneur`、`thorough` 经用户听检确认；用户另试听六词 review sample，确认 `voice-00` 音色合适并要求继续。**新增队列片段尚未逐条人工听检**；音色认可不等于听检了每个切片。
 
-## 1,423 词试跑批次结果
+## 组 0–19 的批量结果
 
-- `.tmp-voice/words/word-groups.json` 将 9,830 条待录词分为 70 组；每组约 112–163 条，朗读文本约 1,255–1,320 字符。批量合并 TTS 比逐词调用更高效，但 TTS 源音频数量不等于成品数：每组仍须安全对齐、切分并检查。
-- 此次 10 个 `voice-00 / en-US` 合并源音频位于 `lexio-pwa-full/.tmp-voice/words/next-batch-002/b0.mp3` 至 `b9.mp3`，原始文本覆盖 **1,423** 个队列词条。
-- 源组 0、1、3 已安全切出 **403** 个词音频，随 `e54a810` / run `45177816478` 部署；FFmpeg 解码 403/403 通过。
-- 源组 2、4–9 的 1,020 条里，第二轮保守切点检查新切出 **925** 个 MP3；FFmpeg 解码 925/925 通过，与已有映射无重名，且 925 个词都在队列中。本地映射数因此由 418 增至 **1,343**，媒体 MP3 数由 18,462 增至 **19,387**，Service Worker 离线版本升至 `lexio-shell-v119-word-audio-batch-003`。改动随 `d44a7b3` 推送，Pages run `45184494757` 已成功部署。
-- 仍有 **95 条**因相邻词间没有可靠静音边界而跳过（组 2: 2、组 4: 2、组 5: 2、组 6: 47、组 7: 7、组 8: 24、组 9: 11）。未强行切开、未纳入映射或发布。继续先改善停顿/对齐验证，不能强行在发音中间切片。
-- 临时源音频及报告在 `.tmp-voice/words/next-batch-002/`；925 个暂存成品在 `.tmp-voice/words/aligned-next-batch-002-partial/`；已发布目录副本为 `media/voice/w-*.mp3`。合并源音频不算独立词条 MP3。
-- 队列剩余 8,487 条，其中包括这 95 个跳过项；尚未确定后续各批的安全切分率和端到端吞吐，因此仍**不能给 20,000+ 全量目标一个可信完成时间**。
+- `.tmp-voice/words/word-groups.json` 将 9,830 条待录词分为 70 组；每组约 112–163 条，朗读文本约 1,255–1,320 字符。十段一轮的合并 TTS 产量较大，但来源段数不等于安全成品数；每组仍须对齐并保守检查边界。
+- 组 0–9 的十段 `voice-00 / en-US` 合并音频在 `.tmp-voice/words/next-batch-002/`，原始试跑覆盖 1,423 条。安全切出 **1,328** 个逐词 MP3 并部署（组 0、1、3 为 403；组 2、4–9 为 925）。另有 **95 条**因相邻词没有可靠静音边界而跳过，未发布。
+- 本轮生成了组 10–19 的十段合并音频（`.tmp-voice/words/next-batch-003/b10.mp3` 至 `b19.mp3`）。生成前排除了 **4 个已映射词**，避免重复；剩余 1,336 行经 PocketSphinx 和低能量切点检查后，切出 **1,082 个**逐词 MP3，FFmpeg 解码 1,082/1,082 成功，与已有映射无重名，且全都在 9,830 词队列中。
+- 组 10 的 145 行精确对齐失败，安全起见全部留待处理，未切片或发布。组 11–19 有 **109 行**因低能量安全切点不足而跳过；不能强行切开语音。完整报告在 `.tmp-voice/words/next-batch-003/safe-cut-report.json`。这批总计考虑 1,336 个未映射行，1,082 个发布，254 个保留（145 对齐失败 +109 不安全边界）。
+- 目前组 0–19 已切出并发布 **2,410** 个批量队列音频（1,328 + 1,082）；加五个原始样音后映射总数为 **2,425**。生产 `media/voice/` 总量 **20,469 个 MP3**；`LEXIO-PRONUNCIATION-BUNDLE-2026-11.zip` 当前含 **2,900 个发布 MP3**及清单/状态报告。
+- 当前队列剩余 **7,405** 条；其中包含 95 + 254 个既有批次跳过/失败项。队列与 28,414 条内置词库仍未完全对齐。以组密度粗算 20,000 条约需 140–150 段源音频（约 14–15 个 10 段回合），但不包括对齐失败重做、安全性/听检、部署；没有可信墙钟完成时间。
 
-## 资源与应用状态
+## 资源、自动测试与发布
 
-- `index.html` 的 `selectedWordRecordings` 和 `media/voice/word-audio-manifest.json` 各有 1,343 个一致映射；新增批次保留 95 条不安全边界的统计。所有新增音频都已加进 `sw.js` 的 `bulkAssets` 预缓存列表。
-- 生产媒体目录现在有 **19,387 个 MP3**（原有 17,569 个 + 累计新增 1,818 个）。累计新增包括 472 个缺录词典短语、3 个精确改写例句、5 个样音、10 个首批词、403 个安全切分词和本轮 925 个安全切分词。
-- `LEXIO-PRONUNCIATION-BUNDLE-2026-11.zip` 已更新为包含 1,818 个新增发布 MP3 及映射/状态清单的备份包；不是 Pages 网站资源，也不单独包含可部署源码。
-- 新增批次 925 个逐词文件已全部由 FFmpeg 解码，但尚未逐条人工听检。`npm test`（含 1,343 个映射、离线资源和 iOS 模拟回退）、`node --check sw.js`、根仓库 `git diff --check` 均通过；ZIP 无坏块，并已逐文件与 1,818 个 production MP3 核对。Pages run `45184494757` 已成功打包和部署。
-- 原有 472 个 `voice-00 / en-US` 词典短语（原 173 + 后续 299），及三条精确改写例句音频保留。501 个旧改写目标中，只有三条准确生成并对齐的目标句恢复本地录音，其余 498 条仍待正确录音。
+- `index.html` 的 `selectedWordRecordings` 与 `media/voice/word-audio-manifest.json` 有一致的 **2,425** 个映射；Service Worker `bulkAssets` 已登记新增离线资源。
+- 最新批次 1,082 个 MP3 已全部 FFmpeg 解码。`npm test`（含所有词映射、离线资源和 iOS 模拟回退）、`node --check sw.js`、根仓库 `git diff --check` 均通过；ZIP 无坏块，2,900 个档案 MP3 与 production 文件逐个一致。Pages run `45190478870` 已成功部署。
+- 472 个 `voice-00 / en-US` 词典短语和三条精确改写例句音频保留。501 个旧改写目标中，仅三条准确目标句映射到录音，其他 498 条仍待正确录音。
+- GitHub Actions 对旧 Node 运行时有非阻断弃用提示；本次打包与 Pages 部署均成功。
 
-## iOS 美音播放问题
+## 后续工作
 
-- 旧实现对 iPhone/iPad 未录制美音单词依赖有道在线 `dictvoice type=2`；远程媒体失败时禁用了系统语音回退。JSDOM 测试此前只验证 `Audio.play()` 被调用，并不证明可听输出。
-- `535aa1c` 已部署系统语音回退及“模拟远程媒体错误后必须尝试系统 `en-US`”测试。此修复覆盖代码中高风险失败路径，不证明用户真机已恢复；仍待用户在实际 iPhone 16 Pro Max／iOS 27 上验证。
-
-## 下一步
-
-1. 本批自动化测试、媒体存在性/离线映射、925 个新片段与 95 个跳过项记录，以及 ZIP 1,818 个 MP3 的逐文件一致性核对均已通过；提交 `d44a7b3` / Pages run `45184494757` 已完成成功部署。
-2. 真机 iOS 测试仍单独待办；用户在 iPhone 16 Pro Max／iOS 27 实测时，请记录 Safari/主屏 App、联网状态、词条及是否出现提示，不能把模拟测试当作真机通过。
-3. 继续生成时优先用同一 `voice-00 / en-US` 合并批次；对齐后保守检查安全切点，保留不能可靠切开的词。不要重生成已发布内容，不要绕过审核。
-4. 继续先对齐 9,830 队列与 28,414 条内置词库以及 20,000+ 目标。以现有组密度估算 20,000 条约需 140–150 段源音频（约 14–15 个 10 段工具回合），不含失败切分重做、校验、部署与真机验证；没有可信的墙钟 ETA。
+1. **无需新窗口。** 本轮 10 个语音生成文件额度已用完；同一对话下一轮可继续。建议先把组 10 的 145 个未映射词分成两段、留出更清楚停顿后重录，再用剩余额度从组 20 开始；绝不把原失败长段硬切。
+2. 继续同一 `voice-00 / en-US`，核对本地映射以免重录，批量生成后逐组 PocketSphinx 对齐、FFmpeg 解码和静音检查。只发布安全片段；把失败项和行数留在 manifest/report。
+3. 用户在 iPhone 16 Pro Max／iOS 27 上的真实单词发音回归仍待做；记录 Safari 或主屏 App、网络状态、测试词和是否有提示，不把模拟测试当成真机通过。
+4. 先对齐 9,830 词队列与 28,414 条内置词库以及 20,000+ 目标；在安全切分率与全流程耗时稳定前，不承诺全量完成时间。
 
 ## 相关路径
 
-- 应用、词映射：`lexio-pwa-full/index.html`
+- 应用与映射：`lexio-pwa-full/index.html`
 - Service Worker：`lexio-pwa-full/sw.js`
-- 词音频清单：`lexio-pwa-full/media/voice/word-audio-manifest.json`
-- 语音档案说明：`lexio-pwa-full/media/voice/README.md`
+- 词音频清单与说明：`lexio-pwa-full/media/voice/word-audio-manifest.json`、`lexio-pwa-full/media/voice/README.md`
 - 测试：`lexio-pwa-full/test/nav.test.js`、`lexio-pwa-full/test/speech.test.js`
-- 词队列：`lexio-pwa-full/.tmp-voice/words-unique.json`、`lexio-pwa-full/.tmp-voice/words/word-groups.json`
-- 原始合并音频及安全切分报告：`lexio-pwa-full/.tmp-voice/words/next-batch-002/`
-- 本轮安全切片暂存目录：`lexio-pwa-full/.tmp-voice/words/aligned-next-batch-002-partial/`
-- 根目录音频备份包：`LEXIO-PRONUNCIATION-BUNDLE-2026-11.zip`
+- 词队列与分组：`lexio-pwa-full/.tmp-voice/words-unique.json`、`lexio-pwa-full/.tmp-voice/words/word-groups.json`
+- 组 0–9 临时源与报告：`lexio-pwa-full/.tmp-voice/words/next-batch-002/`
+- 组 10–19 临时源与报告：`lexio-pwa-full/.tmp-voice/words/next-batch-003/`
+- 根目录归档包：`LEXIO-PRONUNCIATION-BUNDLE-2026-11.zip`
