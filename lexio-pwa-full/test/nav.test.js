@@ -809,8 +809,10 @@ function animClean() {
     const usVoice = w2.document.querySelector('.accent-toggle [data-accent="en-US"]');
     if (usVoice) usVoice.click(); // 默认英式，先切到美式再测
     await sleep(60);
-    // Use an intentionally unmapped demo word so growing queue coverage does not change this fallback test.
-    w2.__lexioStudy.goTo(4); // sustainable
+    // All demo words may gain local recordings in later batches. Use a test-only
+    // spelling so this fallback test remains stable as the queue grows.
+    w2.__lexioStudy.goTo(4);
+    w2.__lexioStudy.current().word = '__unmapped_voice_fallback_test__';
     w2.document.getElementById('studySpeak').click();
     await sleep(120);
     check('美式发音在有 Alex 与 Samantha 的设备上会挑 Samantha（女声）',
@@ -852,8 +854,9 @@ function animClean() {
     const iw=iosDom.window, iosWordButton=iw.document.getElementById('studySpeak');
     const iosUsToggle=iw.document.querySelector('.accent-toggle [data-accent="en-US"]');
     if(iosUsToggle)iosUsToggle.click();
-    // This word has no local voice-00 clip. Offline playback must not wait on the remote request.
-    iw.__lexioStudy.goTo(4); // sustainable
+    // Use an explicitly unmapped test spelling; sample words may gain local clips as batches ship.
+    iw.__lexioStudy.goTo(4);
+    iw.__lexioStudy.current().word='__unmapped_voice_fallback_test__';
     iosWordButton.addEventListener('click',()=>{iw.__iosTapActive=true;},{capture:true});
     iosWordButton.addEventListener('click',()=>{iw.__iosTapActive=false;});
     iosWordButton.click();

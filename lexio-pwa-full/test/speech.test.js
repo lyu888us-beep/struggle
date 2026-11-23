@@ -1,5 +1,5 @@
 // Match each exact-text selected-voice recording to a playable, cached file.
-const fs=require('node:fs'),path=require('node:path'),vm=require('node:vm'),assert=require('node:assert/strict');
+const fs=require('node:fs'),path=require('node:path'),vm=require('node:vm'),assert=require('node:assert/strict'),{spawnSync}=require('node:child_process');
 const dir=path.join(__dirname,'..');
 (async()=>{
   const ctx={self:{addEventListener(){}},Response};vm.runInNewContext(fs.readFileSync(path.join(dir,'sw.js'),'utf8'),ctx);
@@ -77,7 +77,17 @@ const dir=path.join(__dirname,'..');
   assert.equal(batch007.skippedRows,205);
   assert.deepEqual(batch007.alignmentFailedGroups,[]);
   assert.equal(batch007.individuallyHumanListened,false);
-  assert.equal(wordManifest.count,7441);
+  const batch008=wordManifest.generatedBatches.find(batch=>batch.id==='next-batch-008-safe-groups-58-67');
+  assert.ok(batch008,'new safe-cut batch is recorded');
+  assert.equal(batch008.words.length,1240);
+  assert.equal(batch008.rowsConsidered,1397);
+  assert.equal(batch008.skippedAlreadyMappedBeforeGeneration,0);
+  assert.equal(batch008.unsafeBoundaries,87);
+  assert.equal(batch008.skippedRows,157);
+  assert.deepEqual(batch008.sourceGroups,[58,59,60,61,62,63,64,65,66,67]);
+  assert.deepEqual(batch008.alignmentFailedGroups,[]);
+  assert.equal(batch008.individuallyHumanListened,false);
+  assert.equal(wordManifest.count,8681);
   const expectedWords=[...approvedWords,...generatedBatchWords].sort();
   assert.equal(wordManifest.count,expectedWords.length);
   assert.deepEqual(Object.keys(wordRecordings).sort(),expectedWords);
@@ -105,5 +115,14 @@ const dir=path.join(__dirname,'..');
     const mp3=fs.readFileSync(path.join(dir,url));
     assert.ok(mp3.length>1000,`${word} clip is missing or implausibly small`);
   }
-  console.log(`✓ ${Object.keys(wordRecordings).length} 个单词音频已纳入 en-US 播放和离线资源（5 个此前确认样音 + ${generatedBatchWords.length} 个本批新生成）`);
+  console.log(`✓ ${Object.keys(wordRecordings).length} 个单词音频已纳入 en-US 播放和离线资源（5 个此前确认样音 + ${generatedBatchWords.length} 个累计生成）`);
+  const voiceQueue=spawnSync(process.execPath,['scripts/voice-queue.mjs'],{cwd:dir,encoding:'utf8'});
+  assert.equal(voiceQueue.status,0,voiceQueue.stderr||voiceQueue.stdout);
+  const queueSummary=JSON.parse(voiceQueue.stdout);
+  assert.equal(queueSummary.pendingRecordableSentences,498);
+  assert.equal(queueSummary.uniqueDictionaryPhrases,473);
+  assert.equal(queueSummary.recordedDictionaryPhrases,472);
+  assert.equal(queueSummary.pendingDictionaryPhrases,1);
+  assert.equal(queueSummary.missingMappedAudioFiles,0);
+  console.log('✓ 句子与词典短语分开校验：498 个完整文本待补、1 个短语保持单独待审、现有映射音频文件均存在');
 })().catch(e=>{console.error(e);process.exitCode=1;});

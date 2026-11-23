@@ -9,23 +9,43 @@ const clips=JSON.parse(html.match(/const selectedRecordings = (\{[\s\S]*?\});/)[
 const demo=vm.runInNewContext(html.match(/const SAMPLE_WORDS = (\[[\s\S]*?\n      \]);/)[1]);
 const books=JSON.parse(read('data/original-site-wordbank.json')).books;
 const phrases=JSON.parse(read('data/daily-conversation.json')).phrases;
-const sentences=new Map();
-function add(text,source){
-  text=text?.trim();if(!text || sentences.has(text))return;
-  sentences.set(text,source);
+const sentences=new Map(),dictionaryFragments=new Map();
+function add(target,text,source){
+  text=text?.trim();if(!text||target.has(text))return;
+  target.set(text,source);
+}
+function isDictionaryFragment(text){
+  return text.startsWith('...')||(/^[a-z]/.test(text)&&!/[.!?]["'”)]?$/.test(text));
 }
 for(const {id,words} of [...books,{id:'demo',words:demo}]){
-  for(const {example,word} of words){const text=example?.trim();
-    // Same dictionary-fragment rule as the study card; these are not sentences.
-    if(text && !text.startsWith('...') && !(/^[a-z]/.test(text)&&!/[.!?]["'”)]?$/.test(text)))add(text,`${id}:${word}`);
+  for(const {example,word} of words){const text=example?.trim();if(!text)continue;
+    // Incomplete dictionary examples are retained as phrase clips, never queued
+    // or counted as complete sentences.
+    add(isDictionaryFragment(text)?dictionaryFragments:sentences,text,`${id}:${word}`);
   }
 }
-for(const p of phrases)add(p.en,`phrase:${p.id}`);
+for(const p of phrases)add(sentences,p.en,`phrase:${p.id}`);
+const phraseOnly=[...dictionaryFragments].filter(([text])=>!sentences.has(text));
 for(const [text,clip] of Object.entries(clips)){
-  if(!sentences.has(text)||!existsSync(new URL(`media/voice/${clip}.mp3`,root)))throw Error(`Unmatched recording: ${clip}`);
+  if(!sentences.has(text)&&!dictionaryFragments.has(text))throw Error(`Unmatched recording text: ${clip} (${text})`);
+  if(!existsSync(new URL(`media/voice/${clip}.mp3`,root)))throw Error(`Missing recording file: ${clip} (${text})`);
 }
 const missing=[...sentences].filter(([text])=>!Object.hasOwn(clips,text));
+const missingDictionaryPhrases=phraseOnly.filter(([text])=>!Object.hasOwn(clips,text));
+const summary={
+  uniqueRecordableSentences:sentences.size,
+  recordedRecordableSentences:sentences.size-missing.length,
+  pendingRecordableSentences:missing.length,
+  uniqueDictionaryPhrases:phraseOnly.length,
+  recordedDictionaryPhrases:phraseOnly.length-missingDictionaryPhrases.length,
+  pendingDictionaryPhrases:missingDictionaryPhrases.length,
+  missingMappedAudioFiles:0,
+};
 if(process.argv.includes('--pending')){
   for(const [text,source] of missing){const id=createHash('sha256').update(text).digest('hex').slice(0,16);
     console.log(JSON.stringify({voice_id:'voice-00',text,source,file:`media/voice/s-${id}.mp3`}));}
-}else console.log(JSON.stringify({uniqueSentences:sentences.size,recorded:Object.keys(clips).length,pending:missing.length}));
+  if(missingDictionaryPhrases.length)console.error(JSON.stringify({
+    note:'Dictionary fragments are reported separately and are not emitted as full-sentence jobs.',
+    pendingDictionaryPhrases:missingDictionaryPhrases.length,
+  }));
+}else console.log(JSON.stringify(summary));
