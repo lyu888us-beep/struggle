@@ -530,6 +530,9 @@ phones = {
     "telle":"T EH L",
     "coziar":"K OW Z IY AA R",
     "bravesentry":"B R EY V S EH N T R IY",
+    "loutish":"L AW T IH SH",
+    "numerate":"N UW M ER AH T",
+    "numerate's":"N UW M ER AH T S",
 }
 
 
