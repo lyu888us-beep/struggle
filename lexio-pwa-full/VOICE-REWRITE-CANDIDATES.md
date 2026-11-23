@@ -431,3 +431,51 @@
 | Are you an idiot? | I called myself an idiot when I forgot my keys. | idiot |
 | The "anti-woke" propaganda being imported into your country's media comes straight from actual fascists. | The class studied how propaganda can shape public opinion. | propaganda |
 | The tip of the spear was dipped in a deadly poison. | The warning label says the poison is deadly if swallowed. | deadly |
+
+
+## 第十批：敏感内容自动改写（v105 已录）
+
+从剩余队列中选取 40 条涉及健康、暴力、战争、政治、宗教、身份或其他敏感语境的例句，改写为中性、日常表达，并保留词卡目标词。所有 40 条均在本批分组合成后通过对齐与安全静音切分。
+
+| 原句 | 改写后朗读 | 保留目标词 |
+|---|---|---|
+| It's been said that one should not smell deer musk when pregnant | A deer paused beside the path before crossing the meadow. | deer |
+| Gambling site lets users bet on which species will go extinct because of the oil spill in the Gulf of Mexico. | We watched the sunset over the Gulf from a quiet beach. | gulf |
+| There are two major political parties in the United States: the conservative Republican Party, and the liberal Democratic Party. | The team used a conservative estimate when planning its budget. | conservative |
+| Cancer can be cured easily if it is found in its first phase. | The project entered a new phase after the review. | phase |
+| Europeans drink, on average, 12.5 liters of pure alcohol per year | The European art festival attracted visitors from many countries. | european |
+| In a horrifying chain of events, Christopher Columbus once bit his own lip | A chain of events led to the town's annual festival. | chain |
+| Investigate thoroughly the bushes where the enemy may be hiding | The puppy tried to hide behind the chair. | hide |
+| Cancer can be cured easily if it is found in its first phase | The kitten curled up in its soft bed. | its |
+| By 1944, Fletcher had command of a B-17 bomber and a ten-man crew. | The pilot gave the crew a clear command before takeoff. | command |
+| The best refutation of the imaginary Malthusian laws of "land depletion" is the practice of Soviet collective farming. | The collective chose to plant a garden for the neighborhood. | collective |
+| They hymned their love of God | The choir chose a familiar hymn for the winter concert. | hymn |
+| These may either be the drug in question or some analogue of it that. | The engineers tested an analogue model of the new bridge. | analogue |
+| The reclamation of delinquent children | The reclamation project restored wetlands along the river. | reclamation |
+| The Eastern religions | The eastern sky glowed pink as the sun rose. | eastern |
+| Yes, people usually curse at someone they are acquainted with | The old tale tells of a curse that fades at sunrise. | curse |
+| Death holds no terrors for (= does not frighten) me. | The suspenseful music created a sense of terror in the film. | terror |
+| Yea, though I walk through the valley of the shadow of death, I will fear no evil: for thou art with me; thy rod and thy staff they comfort me. | A wooden rod helped support the young tree. | rod |
+| He had been questing for religious belief from an early age. | Her quest for knowledge led her to a new library. | quest |
+| It should not be limited or constrained by any transcendent standards or moral laws that do not derive from politics itself, whether a law of God or some kind of transcendent moral order or code. | We can derive a simple rule from the test results. | derive |
+| Germany is expecting about 1.5 million asylum seekers this year | The town expects many visitors during the summer festival. | expect |
+| If you sign up to Facebook, your information will be sent to intelligence agencies | The app keeps your information private and secure. | information |
+| In front of the Buddhist Hall, a sign says: "Beware of all the life under your steps." | The school hall was decorated for the spring concert. | hall |
+| The proletarians lose nothing in this revolution but their chains | A sturdy chain secured the gate during the storm. | chain |
+| I lost my father to a subarachnoid haemorrhage when I was fourteen | She joined the orchestra when she was fourteen. | fourteen |
+| Silvio Berlusconi is an Italian politician, the current Prime Minister of Italy, as well as a successful entrepreneur. | The minister answered questions at the community meeting. | minister |
+| There are two things in the world that cannot wait: 1. Filial piety, 2. Doing good. | Her piety was reflected in quiet acts of kindness. | piety |
+| The inherent antagonism of capitalism and socialism | Their antagonism faded as they began to work together. | antagonism |
+| Through this incision, the abdominal cavity is distended with carbon dioxide gas. | Warm air can distend a balloon. | distend |
+| Arriving late is a woman’s prerogative. | Choosing the music is the host's prerogative. | prerogative |
+| Anorexics may overeat before purging themselves or vomiting. | The librarian will purge outdated records from the archive. | purge |
+| There are no rules about when to transfuse and who to do it to. | Doctors may transfuse blood when a patient needs it. | transfuse |
+| Europeans tried to civilize the tribe | The European museum displayed art from across the continent. | european |
+| No one can deprive of your human rights | Everyone has the right to ask questions. | right |
+| Tom biked 30 km to the store to buy strawberries for his pregnant wife | They stopped at the store to buy fruit for the picnic. | store |
+| One out of 455 women doesn't realize she's pregnant until the twentieth week of pregnancy | The twentieth chapter introduces a new character. | twentieth |
+| Operation Yoav was a military operation carried out by Israel in its war for independence. | The military museum displayed uniforms from different eras. | military |
+| In the Netherlands they want to ban the Qur'an | The Netherlands is known for its canals and cycling routes. | netherlands |
+| I am going to shoot! | The film crew will shoot a short scene in the garden. | shoot |
+| It's not an issue if he argues with his wife, but he shouldn't hit her | His wife joined him for a walk through the garden. | wife |
+| Predatory capitalists | The owl is a predatory bird that hunts at night. | predatory |
