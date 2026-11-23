@@ -143,6 +143,16 @@ function animClean() {
   doc.getElementById('studyCard').click();
   await sleep(30);
   check('点击卡片 → 翻到背面', cardFlip.classList.contains('is-flipped'));
+  const audioBeforeApprovedWord=(window.__audioInstances||[]).length;
+  const auditionEntry=window.__lexioStudy.current(), auditionOriginalWord=auditionEntry.word;
+  auditionEntry.word='comfortable';
+  doc.getElementById('studySpeak').click();
+  const approvedWordAudio=window.__lastAudio;
+  auditionEntry.word=auditionOriginalWord;
+  check('用户确认的单词样音优先用本地 voice-00 MP3',
+    !!approvedWordAudio && approvedWordAudio.src.endsWith('/media/voice/w-46fd05f35b5591e2.mp3') &&
+    (window.__audioInstances||[]).length===audioBeforeApprovedWord+1);
+  if(approvedWordAudio)approvedWordAudio.emit('ended');
   const usAudioCount=(window.__audioInstances||[]).length;
   const firstUsWord=window.__lexioStudy.current(), originalFirstUs=firstUsWord.us;
   firstUsWord.us='https://example.invalid/us-voice-one.mp3';
@@ -344,8 +354,8 @@ function animClean() {
     cssText.includes('@keyframes appHomeEnter') && cssText.includes('@keyframes appPricingEnter') &&
     cssText.includes('@keyframes pricePop') && cssText.includes('.price strong.is-changing') &&
     cssText.includes('prefers-reduced-motion: reduce'));
-  check('Service Worker 升到 v113 并预缓存口语句库与安装引导视频',
-    swSource.includes("CACHE_NAME = 'lexio-shell-v113-card-batch-84'") &&
+  check('Service Worker 升到 v115 并预缓存口语句库与安装引导视频',
+    swSource.includes("CACHE_NAME = 'lexio-shell-v115-pronunciation-backfill'") &&
     swSource.includes("'./data/daily-conversation.json'") &&
     swSource.includes("'./media/install-guide.mp4'") &&
     pageHtml.includes('controllerchange') && pageHtml.includes('swRefreshing'));
@@ -684,13 +694,15 @@ function animClean() {
     bundledWords.length === 28414 && missingExamples === 0 && cjkExamples === 0 && realExamples > 22000,
     `total=${bundledWords.length} missing=${missingExamples} cjk=${cjkExamples} real=${realExamples}`);
   {
-    // 词典短语（没有完整句子的词）要明确标注，且不提供“整句朗读”
+    // Short dictionary examples should be playable when a matching voice-00
+    // recording exists, and remain visibly pending until then.
     const phraseWord = doc.querySelector('#studyExampleSource');
     check('例句来源标签区分「词典原句」与「词典短语」',
       pageHtml.includes('词典短语 · ') && pageHtml.includes('exampleIsPhrase'));
-    check('词典短语不会伪装成句子朗读（按钮会被禁用）',
-      pageHtml.includes("exSpeakBtn.disabled = exampleIsPhrase") &&
-      pageHtml.includes('这是词典短语，不是完整句子'));
+    check('词典短语有匹配录音时可朗读，未录时明确显示待配音',
+      pageHtml.includes('const exampleClip = recordingFor(word.example);') &&
+      pageHtml.includes('exSpeakBtn.disabled = !exampleClip;') &&
+      pageHtml.includes('🔊 朗读短语') && pageHtml.includes('短语待配音'));
     // 生成的练习提示句必须标注“不是真实语料例句”
     check('自动生成的提示句明确标注非真实语料',
       pageHtml.includes('练习提示句 · 不是真实语料例句') &&
@@ -1125,7 +1137,59 @@ function animClean() {
       `before=${chineseBefore} after=${chineseAfter}`);
     const version = (pageHtml.match(/BUNDLED_CONTENT_VERSION\s*=\s*'([^']+)'/) || [])[1];
     check('内容版本号已递增，老客户端会触发这次迁移',
-      version === 'school-grades-2026-11-v2', String(version));
+      version === 'school-grades-2026-11-v3', String(version));
+
+    const explicitMigrations = bundled.metadata.exampleTextMigrations || {};
+    const migrationEntries = Object.entries(explicitMigrations);
+    const bundledById = new Map(bundledRecords.map(record => [record.id, record]));
+    const migrationRecord = bundledById.get(migrationEntries[0]?.[0]);
+    const rewrittenInstall = migrationEntries.map(([id, migration]) => {
+      const record = bundledById.get(id);
+      return normalize({
+        ...record,
+        example: migration.from,
+        exampleSource: 'dictionary:old-source',
+        exampleTranslation: '这条旧译文应在改写同步时隐藏。',
+      });
+    });
+    let migrationPersisted = null;
+    const migratedRewrite = await runner(
+      async () => ({ ok: true, json: async () => bundled }),
+      () => bundledRecords,
+      normalize,
+      async records => { migrationPersisted = records; },
+      async () => {},
+      version,
+      rewrittenInstall,
+      { isDemo: false, contentVersion: 'school-grades-2026-11-v2' }
+    );
+    const everyRewriteMigrated = migrationEntries.every(([id, migration], index) =>
+      migratedRewrite[index]?.id === id && migratedRewrite[index]?.example === migration.to &&
+      migratedRewrite[index]?.exampleTranslation === ''
+    );
+    check('731 条精确例句迁移按词条 ID 生效，并隐藏旧译文',
+      migrationEntries.length === 731 && everyRewriteMigrated && !!migrationPersisted,
+      `entries=${migrationEntries.length} migrated=${migratedRewrite.filter((record,index)=>record?.example===migrationEntries[index]?.[1].to && record?.exampleTranslation==='').length}`);
+
+    const userEditedInstall = [normalize({
+      ...migrationRecord,
+      example: 'My own carefully edited sentence.',
+      exampleSource: 'user-edited',
+      exampleTranslation: '保留的用户译文。',
+    })];
+    await runner(
+      async () => ({ ok: true, json: async () => bundled }),
+      () => bundledRecords,
+      normalize,
+      async () => {},
+      async () => {},
+      version,
+      userEditedInstall,
+      { isDemo: false, contentVersion: 'school-grades-2026-11-v2' }
+    );
+    check('例句迁移不覆盖与旧版本不完全匹配的用户自定义内容',
+      userEditedInstall[0].example === 'My own carefully edited sentence.' &&
+      userEditedInstall[0].exampleTranslation === '保留的用户译文。');
 
     const installedExam = bundledRecords.filter(r => !r.id.startsWith('school-')).map(normalize);
     const migrate = rows => runner(async()=>({ok:true,json:async()=>bundled}),()=>bundledRecords,normalize,async()=>{},async()=>{},version,rows,{sourceFile:'原站内嵌词库 · original-site-wordbank.json'});

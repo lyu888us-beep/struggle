@@ -536,6 +536,142 @@ phones = {
     "numerate's":"N UW M ER AH T S",
     "leckar":"L EH K ER",
     "ceviche":"S AH B IY CH EY",
+    # Phrase-bank proper nouns and OOV spellings reviewed for the 473-item
+    # dictionary-phrase backfill; retain American English phone values.
+    "baringo":"B AH R IH NG G OW",
+    "bottle's":"B AA T AH L Z",
+    "derbyville":"D ER B IY V IH L",
+    "fantastical":"F AE N T AE S T IH K AH L",
+    "formless":"F AO R M L AH S",
+    "gutrune":"G AH T R UW N AH",
+    "inapt":"IH N AE P T",
+    "jonson's":"JH AA N S AH N Z",
+    "kelman's":"K EH L M AH N Z",
+    "litre":"L IH T ER",
+    "perplexities":"P ER P L EH K S AH T IY Z",
+    "postgraduate":"P OW S T G R AE JH UW AH T",
+    "rurally":"R UH R AH L IY",
+    "vapour":"V EY P ER",
+    "violin's":"V AY AH L IH N Z",
+    # Additional headword OOV pronunciations for the uniform-word-voice queue.
+    "accessary":"AH K S EH S ER IY",
+    "advocator":"AE D V AH K EY T ER",
+    "angiosperm":"AE N JH IY OW S P ER M",
+    "annoyingly":"AH N OY IH NG L IY",
+    "anthocyanin":"AE N TH OW S AY AH N IH N",
+    "appal":"AH P AO L",
+    "archaeopteryx":"AA R K IY AA P T ER IH K S",
+    "aspirational":"AE S P ER EY SH AH N AH L",
+    "aupair":"OW P EH R",
+    "aviate":"EY V IY EY T",
+    "beringia":"B ER IH NG IY AH",
+    "billfish":"B IH L F IH SH",
+    "carotenoid":"K ER AA T AH N OY D",
+    "chapbook":"CH AE P B UH K",
+    "characterise":"K EH R AH K T ER AY Z",
+    "cheep":"CH IY P",
+    "chiche":"SH IH SH",
+    "chlorosis":"K L ER OW S IH S",
+    "chondrite":"K AA N D R AY T",
+    "chondrule":"K AA N D R UW L",
+    "cigaret":"S IH G ER EH T",
+    "commensalism":"K AH M EH N S AH L IH Z AH M",
+    "compaction":"K AH M P AE K SH AH N",
+    "conductance":"K AH N D AH K T AH N S",
+    "countercurrent":"K AW N T ER K ER AH N T",
+    "defile":"D IH F AY L",
+    "dependant":"D IH P EH N D AH N T",
+    "despatch":"D IH S P AE CH",
+    "destine":"D EH S T IH N",
+    "dishonour":"D IH S AA N ER",
+    "disused":"D IH S Y UW Z D",
+    "drowse":"D R AW Z",
+    "entreat":"IH N T R IY T",
+    "eusocial":"Y UW S OW SH AH L",
+    "expectedly":"IH K S P EH K T IH D L IY",
+    "expressiveness":"IH K S P R EH S IH V N AH S",
+    "faultless":"F AO L T L AH S",
+    "firn":"F ER N",
+    "fossilization":"F AA S AH L IH Z EY SH AH N",
+    "frontality":"F R AH N T AE L IH T IY",
+    "gramme":"G R AE M",
+    "gramophone":"G R AE M AH F OW N",
+    "greengrocer":"G R IY N G R OW S ER",
+    "groa":"G R OW",
+    "groundlessly":"G R AW N D L AH S L IY",
+    "groundsheet":"G R AW N D SH IY T",
+    "habituation":"HH AH B IH CH UW EY SH AH N",
+    "ichthyosaur":"IH K TH IY AH S AO R",
+    "immersive":"IH M ER S IH V",
+    "impermanency":"IH M P ER M AH N AH N S IY",
+    "instalment":"IH N S T AO L M AH N T",
+    "interglacial":"IH N T ER G L EY SH AH L",
+    "kestrel":"K EH S T R AH L",
+    "kinetoscope":"K IH N EH T AH S K OW P",
+    "kohoutek":"K OW HH UW T EH K",
+    "lithosphere":"L IH TH AH S F IH R",
+    "lithospheric":"L IH TH AH S F EH R IH K",
+    "magnetosphere":"M AE G N IH T AH S F IH R",
+    "maltreat":"M AO L T R IY T",
+    "manacle":"M AE N AH K AH L",
+    "mandan":"M AE N D AE N",
+    "mooncake":"M UW N K EY K",
+    "mutoscope":"M Y UW T AH S K OW P",
+    "neonate":"N IY AH N EY T",
+    "nitinol":"N AY T IH N AO L",
+    "nomadism":"N OW M AH D IH Z AH M",
+    "nought":"N AO T",
+    "ogallala":"OW G AH L AA L AH",
+    "outwork":"AW T W ER K",
+    "overirrigation":"OW V ER IH R AH G EY SH AH N",
+    "overlearn":"OW V ER L ER N",
+    "paralyse":"P AE R AH L AY Z",
+    "parasitism":"P AE R AH S AH T IH Z AH M",
+    "pastoralist":"P AE S T ER AH L IH S T",
+    "pedlar":"P EH D L ER",
+    "peepshow":"P IY P SH OW",
+    "phytoremediation":"F AY T OW R IH M IY D IY EY SH AH N",
+    "pollinator":"P AA L AH N EY T ER",
+    "porosity":"P ER AA S AH T IY",
+    "prehistory":"P R IY HH IH S T ER IY",
+    "preindustrial":"P R IY IH N D AH S T R IY AH L",
+    "proximately":"P R AA K S AH M AH T L IY",
+    "pterosaur":"T EH R AH S AO R",
+    "putrefy":"P Y UW T R AH F AY",
+    "reflexion":"R IH F L EH K SH AH N",
+    "reframe":"R IY F R EY M",
+    "regenerative":"R IH JH EH N ER AH T IH V",
+    "relinguish":"R IH L IH NG K W IH SH",
+    "remonstrate":"R IH M AA N S T R EY T",
+    "repave":"R IY P EY V",
+    "salesgirl":"S EY L Z G ER L",
+    "seafloor":"S IY F L AO R",
+    "semicircle":"S EH M IY S ER K AH L",
+    "semiskilled":"S EH M IY S K IH L D",
+    "silversmith":"S IH L V ER S M IH TH",
+    "skilful":"S K IH L F AH L",
+    "stateswoman":"S T EY T S W UH M AH N",
+    "statical":"S T AE T IH K AH L",
+    "subscript":"S AH B S K R IH P T",
+    "sumerian":"S UW M IH R IY AH N",
+    "sunburnt":"S AH N B ER N T",
+    "superorganism":"S UW P ER AO R G AH N IH Z AH M",
+    "sympathise":"S IH M P AH TH AY Z",
+    "tannin":"T AE N IH N",
+    "tethys":"T IY TH IH S",
+    "timescale":"T AY M S K EY L",
+    "topi":"T OW P IY",
+    "tradesman":"T R EY D Z M AH N",
+    "trolleybus":"T R AA L IY B AH S",
+    "trolly":"T R AA L IY",
+    "undercharge":"AH N D ER CH AA R JH",
+    "unfreeze":"AH N F R IY Z",
+    "untiring":"AH N T AY ER IH NG",
+    "watercraft":"W AO T ER K R AE F T",
+    "wildebeest":"W IH L D AH B IY S T",
+    "woodcut":"W UH D K AH T",
+    "workpiece":"W ER K P IY S",
+    "wreathe":"R IY DH",
 }
 
 
@@ -569,17 +705,31 @@ def cut(rows, path, stage, reviewed):
         index += len(row)
         end, start = spans[index-1][2], spans[index][1]
         mid = (end+start)/2
-        times = np.arange(max(end-.04,mid-.1),min(start+.04,mid+.1)+.002,.002)
+        # Search the entire aligned inter-word gap, not just 100 ms around its
+        # midpoint. Speech batches often have a long natural pause near one
+        # edge; the lowest-energy sample is the safer phrase boundary.
+        duration = len(x)/16000
+        lo, hi = max(0.0,min(end,start)-.04), min(duration,max(end,start)+.04)
+        times = np.arange(lo,hi+.002,.002)
+        if not len(times): times = np.arange(max(0,mid-.1),min(duration,mid+.1)+.002,.002)
         def level(t):
             sample = int(t*16000)
             return np.sqrt(np.mean(x[sample-160:sample+160]**2))
-        t = reviewed.get(str(len(cuts)), min(times, key=level))
-        if abs(t-mid)>.25: raise ValueError(f'Reviewed cut too far from aligned word boundary: {t}')
+        t = float(reviewed.get(str(len(cuts)), min(times, key=level)))
+        # np.arange may include its upper endpoint with a tiny floating-point
+        # overshoot (e.g. hi + 1e-13). Clamp only that numerical noise; do not
+        # move a genuinely out-of-range reviewed cut into the allowed window.
+        if t < lo - 1e-6 or t > hi + 1e-6:
+            raise ValueError(f'Reviewed cut outside aligned word boundary: {t}')
+        t = min(hi, max(lo, t))
         if level(t)>160: raise ValueError(f'No quiet cut: {path} at {t:.3f}s')
         cuts.append(float(t))
     cuts.append(len(x)/16000)
-    for text,start,end in zip(sentences,cuts,cuts[1:]):
-        name = 's-'+hashlib.sha256(text.encode()).hexdigest()[:16]
+    for row,text,start,end in zip(rows,sentences,cuts,cuts[1:]):
+        prefix = row.get('clip_prefix','s')
+        if prefix not in ('s','w'):
+            raise ValueError(f'Unexpected clip prefix: {prefix}')
+        name = prefix+'-'+hashlib.sha256(text.encode()).hexdigest()[:16]
         if end-start<.25 or max(abs(x[int(start*16000):int(end*16000)]))<400:
             raise ValueError(f'Empty or implausibly short audio: {text}')
         subprocess.run([ffmpeg,'-loglevel','error','-y','-ss',str(start),'-i',str(path),'-t',str(end-start),
