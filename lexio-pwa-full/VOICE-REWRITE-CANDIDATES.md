@@ -479,3 +479,51 @@
 | I am going to shoot! | The film crew will shoot a short scene in the garden. | shoot |
 | It's not an issue if he argues with his wife, but he shouldn't hit her | His wife joined him for a walk through the garden. | wife |
 | Predatory capitalists | The owl is a predatory bird that hunts at night. | predatory |
+
+
+## 第十一批：敏感内容自动改写（v106 已录）
+
+继续处理中性化可改写的敏感语境，选取 40 条涉及性别刻板印象、政治/宗教表述、战争、药物、健康或身份描述的例句；改写为自然日常英文并保留目标词。为避免句间无静音，本批分成九段合成；40 条均通过对齐和安全切分。既有明确排除项未改写，仍留在待录队列。
+
+| 原句 | 改写后朗读 | 保留目标词 |
+|---|---|---|
+| The feelings of "love at first sight" and "faithful unto death" are unrealistic; this sort of unrealistic and illusory feeling is not what we need. | She remained faithful to her promise, even when the journey became difficult. | faithful |
+| Danger past, God forgotten | The past can teach us something useful about the future. | past |
+| This pub has very beautiful waitresses | The waitress brought a fresh glass of water to our table. | waitress |
+| Breathless at thought of what I had done | We were breathless after climbing the hill together. | breathless |
+| Contradictory attributes of unjust justice and loving vindictiveness | The report contained contradictory details, so we checked the original notes. | contradictory |
+| Chechens have inclinations towards independence | She walked toward the garden gate as the sun went down. | toward |
+| The security level, as established by the Department of Homeland Security, is orange | After many years abroad, she returned to her homeland. | homeland |
+| Translation is like a woman. If it is beautiful, it is not faithful. If it is faithful, it is most certainly not beautiful. | The faithful dog stayed close to its owner on the hike. | faithful |
+| Tatoeba: As if the geek invasion wasn't enough. | A sudden invasion of ladybugs covered the garden plants. | invasion |
+| Day and day I take pains to enquire myself my reason for doing so, in no time will I stoop so low as to beg you sympathy, though I can feel your scoff all the time. | She called the library to enquire about its opening hours. | enquire |
+| His teachings are incorporated in a profound book Daode Jing which Taoists regard as the final authority and doctrines of the religion. | The teacher's advice had a profound effect on the student's confidence. | profound |
+| Without love, the best in the bud before killing! | A small bud opened in the warm morning sunlight. | bud |
+| "God knows," she muttered, "what's happening in that madman's mind." | She muttered a quiet reminder to herself before the meeting. | mutter |
+| That has been an evil rabbit. | The old story shows how kindness can overcome evil. | evil |
+| The Bantu population of Sierra Leone | Bantu languages are spoken in many regions of Africa. | bantu |
+| The more you follow the fear, the more you live like a lower mammal. | A whale is a large mammal that lives in the ocean. | mammal |
+| He kept reading the Quran for months | She read a new chapter of the novel each month. | month |
+| When a Chinese girl gets old, her family becomes nervous | She felt nervous before her first school performance. | nervous |
+| The laser cow in WHAT THE CAR? is both hilarious and terrifying! | The cow stood quietly beside the fence. | cow |
+| It is said that Dutch are tolerant | The Dutch museum displayed paintings from the seventeenth century. | dutch |
+| His body type is born balanced! Wide shoulders, slim waist, belly not popping outwards. | A slim path wound through the quiet garden. | slim |
+| We evolved to stay away from poo, from bodily fluids, from mucous, from foods that have gone off, from worms in the garden. | Mucous membranes help protect the inside of the nose. | mucous |
+| Belushi imitates a giant pimple by squeezing his cheeks and spewing chewed food out of his mouth. | The pharmacist suggested a gentle cream for the pimple. | pimple |
+| Europeans tried to civilise the tribe. | The tribe shared stories and music at the community gathering. | tribe |
+| You're bleeding everywhere; I'll help you up | Bright tulips bloomed everywhere in the park. | everywhere |
+| The majority of Irani are Persian Shiite Muslims | Persian carpets are known for their detailed patterns. | persian |
+| Traditionally, we eat fried foods on Hanukah | The family traditionally shares a festive meal at year's end. | traditionally |
+| A wealthy class parasitic upon the labor of the masses | Some parasitic plants draw nutrients from a host plant. | parasitic |
+| Political consequences of incomplete military success | The report is incomplete without its final section. | incomplete |
+| Communism will never be reached in my lifetime | She collected postcards throughout her lifetime. | lifetime |
+| Many countries have abolished capital punishment | The coach chose encouragement instead of punishment. | punishment |
+| The lions ravened the bodies | A raven perched on the fence and watched the field. | raven |
+| However, apart from Buddhists, hardly anyone can consistently follow this principle | She practiced consistently and improved a little each day. | consistently |
+| The Old Testament forbids eating shellfish | The market sells fresh shellfish every morning. | shellfish |
+| Pakistan is a Muslim country | Pakistan is home to mountains, rivers, and diverse landscapes. | pakistan |
+| Socrates refused to flee and died by drinking hemlock | The nature guide pointed out hemlock growing beside the trail. | hemlock |
+| The sacrificed newborn doesn't fear the tiger | The newborn slept peacefully in a warm crib. | newborn |
+| Our feckless opposition party didn't do enough to stop him | The opposition proposed a different plan at the town meeting. | opposition |
+| They endured five years of privation during the World War II. | The museum exhibit describes daily life during World War Two. | world war ii |
+| The CIA had requested our help to penetrate a drug ring operating out of Munich. | Munich is known for its parks, museums, and historic architecture. | munich |
