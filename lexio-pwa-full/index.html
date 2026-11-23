@@ -231,7 +231,10 @@
     .phrase-item-meta b { padding: 3px 7px; border-radius: 999px; color: #48634f; background: #edf4e5; font-weight: 730; }
     .phrase-en { margin: 0; color: var(--ink); font-size: 13px; font-weight: 670; line-height: 1.5; }
     .phrase-zh { margin: 3px 0 0; color: #748076; font-size: 11px; line-height: 1.5; }
+    .phrase-audio-status { display: block; margin-top: 4px; color: #386b4c; font-size: 9px; line-height: 1.4; }
+    .phrase-audio-status[hidden] { display: none; }
     .phrase-speak { width: 36px; height: 36px; border: 0; border-radius: 12px; color: var(--forest); background: #edf4e5; font-size: 16px; cursor: pointer; }
+    .phrase-speak:disabled { opacity: .5; cursor: not-allowed; }
     .pending-voice { color:#52665a; text-align:center; font-size:10px; }
     .phrase-empty { grid-column: 1 / -1; padding: 22px; color: #839087; text-align: center; font-size: 11px; }
     .phrase-load-more { flex: 0 0 auto; min-height: 40px; margin: 2px 4px 10px; border: 1px solid #dfe9dc; border-radius: 13px; color: var(--forest); background: #fff; font-size: 11px; font-weight: 750; cursor: pointer; }
@@ -239,6 +242,11 @@
     .library-top-left h3 { margin: 0; color: var(--ink); font-size: 16px; letter-spacing: -.03em; }
     .library-top-left p { margin: 2px 0 0; color: #859087; font-size: 10px; }
     .library-actions { display: flex; align-items: center; gap: 9px; }
+    .offline-audio-panel { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 0 0 12px; padding: 10px 12px; background: #f5f8f1; border: 1px solid #e7eee0; border-radius: 13px; }
+    .offline-audio-copy { min-width: 0; }
+    .offline-audio-copy strong { display: block; color: var(--forest); font-size: 10px; }
+    .offline-audio-copy p { margin: 3px 0 0; color: #829087; font-size: 9px; line-height: 1.5; }
+    .offline-audio-panel .import-button { flex: 0 0 auto; }
     .search-wrap { position: relative; }
     .search-wrap svg { position: absolute; top: 50%; left: 11px; width: 15px; height: 15px; color: #839087; transform: translateY(-50%); pointer-events: none; }
     .search-input { width: min(230px, 42vw); height: 39px; padding: 0 12px 0 34px; border: 1px solid #e1e8e0; border-radius: 11px; background: #fbfcfa; color: var(--ink); font-size: 11px; outline: none; }
@@ -1035,6 +1043,7 @@
       .library-actions { display: flex; flex-wrap: nowrap; gap: 8px; width: 100%; }
       .library-actions .search-wrap { flex: 1 1 auto; min-width: 0; }
       .library-actions .import-button { flex: 0 0 auto; }
+      .offline-audio-panel { align-items: flex-start; flex-direction: column; }
       .phrase-top { display: flex; flex-direction: column; align-items: stretch; gap: 8px; }
       .phrase-search-wrap { width: 100%; }
       .library-mode-tabs { position: sticky; top: 0; z-index: 3; background: rgba(252,253,250,.97); }
@@ -1578,6 +1587,10 @@
                 <button class="import-button" id="syncWordsBtn" type="button" aria-label="联网同步词库"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 16.6A4.3 4.3 0 0 0 18 8.5 6.3 6.3 0 0 0 6 9.8 3.5 3.5 0 0 0 6.5 17H18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="m12 11 0 8m0 0-3-3m3 3 3-3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>联网同步</button>
               </div>
             </div>
+            <div class="offline-audio-panel" role="group" aria-label="离线发音缓存">
+              <div class="offline-audio-copy"><strong>离线发音</strong><p id="voiceCacheStatus" role="status" aria-live="polite">当前词卡及接下来 20 张词卡的单词/例句读音会优先缓存；点过的音频也会自动缓存。全库预下载可选，建议使用 Wi-Fi，可能占用较多存储。</p></div>
+              <button class="import-button" id="prepareOfflineAudioBtn" type="button">准备全库离线读音</button>
+            </div>
             <div class="word-grid" id="wordGrid" aria-live="polite"><div class="empty-state">正在准备词库…</div></div>
           </div>
           <div class="library-mode-panel" id="dailyPhrasesMode" role="tabpanel" aria-labelledby="dailyPhrasesTab" hidden>
@@ -1767,9 +1780,9 @@
           <details><summary>词库里到底有多少词，存在哪里？</summary><p>词库合计 28,414 条分类学习记录，其中原考试词库 25,024 条，新增中小学和美国分级词汇 3,390 条（跨书保留重复拼写）。第一次联网打开时会自动保存到这台设备，之后没有网络也能搜索与学习，学习记录也只留在这台设备上。</p></details>
           <details><summary>7 天试用结束后会怎样？</summary><p>这一版只在本机记录试用开始日期，并在到期前 14 天、7 天、1 天打开 App 时弹出提醒，不发短信、不发邮件。当前版本没有接入收银服务，不会自动扣款；付款前会明确显示续费日期、金额和取消方式。</p></details>
           <details><summary>支持哪些支付方式？</summary><p>支持多种方式支付，具体方式以正式结账页面为准。当前演示尚未接入真实收银服务，不会产生扣款。</p></details>
-          <details><summary>它可以离线使用、添加到主屏幕吗？</summary><p>可以。用手机浏览器打开后，按页面里的「安装」引导添加到主屏幕，就能像普通 App 一样全屏打开；首次联网打开后即可离线使用。</p></details>
-          <details><summary>原站的发音、例句和学习进度也能保留吗？</summary><p>已迁移英 / 美音标、词性、中文释义与考试分类。精讲内容保留原有资料；另有匹配到词典的真实句例/记忆法，以及明确标注的释义提示和通用复习提示。词库数据本身未内嵌音频文件；单词保留原音源，整句只播放聊天中选定的音色，按正常速度播放；尚无录音的句子保留文字。公开 HTML 未包含个人学习进度，迁移进度仍需原站账号数据导出。</p></details>
-          <details><summary>需要联网吗？能离线用吗？</summary><p>词库与日常口语句库都随 App 缓存到本机，断网也能查询和学习。首次载入、主动同步词库和播放原音录音需要网络；所选音色的录音缓存后可离线播放。</p></details>
+          <details><summary>它可以离线使用、添加到主屏幕吗？</summary><p>可以。用手机浏览器打开后，按页面里的「安装」引导添加到主屏幕，就能像普通 App 一样全屏打开；首次联网载入后，词库与学习记录可离线使用，音频则在点播或主动下载后可离线播放。</p></details>
+          <details><summary>原站的发音、例句和学习进度也能保留吗？</summary><p>已迁移英 / 美音标、词性、中文释义与考试分类。精讲内容保留原有资料；另有匹配到词典的真实句例/记忆法，以及明确标注的释义提示和通用复习提示。单词优先播放本地 voice-00 发音；已有例句录音优先播放精确匹配的 MP3，缺录完整句或录音失败时使用设备英语语音兜底（不是 voice-00），词典短语不伪装成整句。审核阻止的文本不走该回退。公开 HTML 未包含个人学习进度，迁移进度仍需原站账号数据导出。</p></details>
+          <details><summary>需要联网吗？能离线用吗？</summary><p>词库与日常口语句库会缓存到本机，断网也能查询和学习。未缓存音频首次点播需要网络，之后可离线播放；也可在词库里主动准备全库离线读音，建议使用 Wi-Fi 并预留存储空间。</p></details>
         </div>
       </div>
     </section>
@@ -2283,7 +2296,12 @@
         const visible=filtered.slice(0,phraseVisibleLimit);
         count.textContent=`显示 ${visible.length} / ${filtered.length} 条匹配表达 · 共 ${dailyPhraseBank.length} 条`;
         if(!filtered.length){grid.innerHTML='<div class="phrase-empty">没有找到匹配的表达，试试其他关键词或场景。</div>';return;}
-        grid.innerHTML=visible.map(item=>`<article class="phrase-item"><div class="phrase-item-main"><div class="phrase-item-meta"><b>${escapeHTML(item.category)}</b><span>${escapeHTML(item.scene)}</span></div><p class="phrase-en">${escapeHTML(item.en)}</p><p class="phrase-zh">${escapeHTML(item.zh)}</p><div class="phrase-marks">${['我记住了','再练一次'].map(mark=>`<button type="button" aria-pressed="${phraseMarks[item.id]===mark}" data-mark="${mark}" data-id="${escapeHTML(item.id)}">${mark==='再练一次'?'还没记住 · 再练一次':mark}</button>`).join('')}</div></div>${recordingFor(item.en)?`<button class="phrase-speak" type="button" aria-label="朗读：${escapeHTML(item.en)}" data-phrase-speak="${escapeHTML(item.id)}">🔊</button>`:'<small class="pending-voice">待配音</small>'}</article>`).join('');
+        grid.innerHTML=visible.map(item=>{
+          const clip=recordingFor(item.en), excluded=isModerationExcludedText(item.en);
+          const title=excluded?'这段内容暂不提供语音播放':clip?'播放已录制的句子':'使用设备英语语音朗读（不是 voice-00 录音）';
+          const label=excluded?'该内容暂不提供语音播放':clip?`播放录制的句子：${item.en}`:`使用设备英语语音朗读（不是 voice-00 录音）：${item.en}`;
+          return `<article class="phrase-item"><div class="phrase-item-main"><div class="phrase-item-meta"><b>${escapeHTML(item.category)}</b><span>${escapeHTML(item.scene)}</span></div><p class="phrase-en">${escapeHTML(item.en)}</p><p class="phrase-zh">${escapeHTML(item.zh)}</p><small class="phrase-audio-status" aria-live="polite" hidden></small><div class="phrase-marks">${['我记住了','再练一次'].map(mark=>`<button type="button" aria-pressed="${phraseMarks[item.id]===mark}" data-mark="${mark}" data-id="${escapeHTML(item.id)}">${mark==='再练一次'?'还没记住 · 再练一次':mark}</button>`).join('')}</div></div><button class="phrase-speak" type="button" aria-label="${escapeHTML(label)}" title="${escapeHTML(title)}" ${excluded?'disabled':''} data-phrase-speak="${escapeHTML(item.id)}">🔊</button></article>`;
+        }).join('');
         if(filtered.length>visible.length){
           const more=document.createElement('button');
           more.type='button';more.className='phrase-load-more';more.textContent=`加载更多（${filtered.length-visible.length} 条）`;
@@ -2526,6 +2544,21 @@
         streak: studyStreak,
         refresh: updateProgressUI
       };
+      // Content explicitly excluded by speech-generation moderation must not
+      // be rerouted through browser TTS, even as a missing-clip fallback.
+      const MODERATION_EXCLUDED_SPEECH_TEXTS = ['men who molest young boys'];
+      function normalizeSpeechCheckText(text) {
+        return String(text || '').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
+      }
+      function isModerationExcludedText(text) {
+        const normalized=normalizeSpeechCheckText(text);
+        return MODERATION_EXCLUDED_SPEECH_TEXTS.some(blocked=>
+          (` ${normalized} `).includes(` ${normalizeSpeechCheckText(blocked)} `));
+      }
+      function isDictionaryPhrase(text) {
+        const value=String(text || '').trim();
+        return !!value && (value.indexOf('...')===0 || (/^[a-z]/.test(value) && !/[.!?]["'\u201d)]?$/.test(value)));
+      }
       function updateStudyCard() {
         if (!bank.length) return;
         if(activeAudio || activeUtterance) stopSpeech();
@@ -2546,10 +2579,7 @@
            suite") and no full sentence exists in any licensed source. That is
            shown and labelled as a phrase, never padded into a fake sentence. */
         const exampleText = String(word.example || '').trim();
-        const exampleIsPhrase = !!exampleText && (
-          exampleText.indexOf('...') === 0 ||
-          (/^[a-z]/.test(exampleText) && !/[.!?]["'\u201d)]?$/.test(exampleText))
-        );
+        const exampleIsPhrase = isDictionaryPhrase(exampleText);
         const sourceLabel = exampleSource.startsWith('dictionary:')
           ? (exampleIsPhrase ? `词典短语 · ${exampleSource.slice('dictionary:'.length)}` : `词典原句 · ${exampleSource.slice('dictionary:'.length)}`)
           : exampleSource.startsWith('generated-practice')
@@ -2575,16 +2605,30 @@
         const exSpeakBtn = $('#exampleSpeak');
         if (exSpeakBtn) {
           const exampleClip = recordingFor(word.example);
+          const moderationExcluded = isModerationExcludedText(exampleText);
+          const canUseDeviceVoice = !exampleIsPhrase && !moderationExcluded;
           exSpeakBtn.hidden = !word.example;
-          exSpeakBtn.disabled = !exampleClip;
-          exSpeakBtn.title = exampleClip
-            ? (exampleIsPhrase ? '使用所选美式女声朗读词典短语' : '使用所选美式女声朗读整句')
-            : (exampleIsPhrase ? '这个短语尚无所选音色的录音' : '这句暂无所选音色的录音');
-          exSpeakBtn.textContent = exampleClip
-            ? (exampleIsPhrase ? '🔊 朗读短语' : '🔊 朗读例句')
-            : (exampleIsPhrase ? '短语待配音' : '本句暂无录音');
+          exSpeakBtn.disabled = moderationExcluded || (!exampleClip && !canUseDeviceVoice);
+          exSpeakBtn.title = moderationExcluded
+            ? '这段内容暂不提供语音播放'
+            : exampleClip
+              ? (exampleIsPhrase ? '播放已录制的词典短语' : '播放已录制的完整例句')
+              : canUseDeviceVoice
+                ? '使用设备 en-US 系统语音朗读；不是 voice-00 录音'
+                : '这个词典短语暂无录音';
+          exSpeakBtn.textContent = moderationExcluded
+            ? '暂不提供朗读'
+            : exampleClip
+              ? (exampleIsPhrase ? '🔊 朗读短语' : '🔊 朗读例句')
+              : canUseDeviceVoice
+                ? '🔊 设备语音朗读例句'
+                : '短语待配音';
+          exSpeakBtn.setAttribute('aria-label',moderationExcluded?'该内容暂不提供语音播放':exampleClip?(exampleIsPhrase?'播放录制的词典短语':'播放录制的例句'):canUseDeviceVoice?'使用设备 en-US 语音朗读例句（不是 voice-00 录音）':'词典短语待配音');
+          exSpeakBtn.dataset.idleText=exSpeakBtn.textContent;
+          exSpeakBtn.dataset.idleTitle=exSpeakBtn.title;
+          exSpeakBtn.dataset.idleAriaLabel=exSpeakBtn.getAttribute('aria-label')||'朗读例句';
           exSpeakBtn.dataset.speaking = '0';
-          $('#tryVoicedCard').hidden=!exSpeakBtn.disabled && !exSpeakBtn.hidden;
+          $('#tryVoicedCard').hidden = !word.example || (!!exampleClip && !moderationExcluded);
         }
         updateProgressUI();
         $('#studyDate').textContent = `今日学习 · ${new Intl.DateTimeFormat('zh-CN',{month:'long',day:'numeric'}).format(new Date())}`;
@@ -27757,11 +27801,32 @@
         const key=String(text||'').trim();
         return Object.hasOwn(selectedRecordings,key) ? selectedRecordings[key] : null;
       }
-      function speakExample(text, onDone, onError) {
+      function speakExample(text, onDone, onError, allowSystemFallback=true, onDeviceFallback) {
         const sentence=String(text||'').trim(), clip=recordingFor(sentence);
-        if(!clip){onError?.(new Error('这句暂无所选音色的录音。'));return;}
+        if(isModerationExcludedText(sentence)){
+          const error=new Error('这段内容暂不提供语音播放。');
+          if(typeof onError==='function')onError(error);else toastMessage(error.message);
+          if(typeof onDone==='function')onDone();
+          return;
+        }
+        if(!clip){
+          if(!allowSystemFallback){
+            const error=new Error('这个词典短语暂无录音。');
+            if(typeof onError==='function')onError(error);else toastMessage(error.message);
+            if(typeof onDone==='function')onDone();
+            return;
+          }
+          stopSpeech();
+          let finished=false;
+          const finish=()=>{if(finished)return;finished=true;if(onAudioStop===finish)onAudioStop=null;if(typeof onDone==='function')onDone();};
+          const fail=error=>{if(finished)return;if(typeof onError==='function')onError(error);else toastMessage(error.message||'设备语音未能播放。');finish();};
+          onAudioStop=finish;
+          onDeviceFallback?.();
+          speak(sentence,'en-US',finish,fail,1);
+          return;
+        }
         const url='./media/voice/'+clip+'.mp3';
-        playPronunciation(sentence,'en-US',1,url,onDone,onError,true);
+        playPronunciation(sentence,'en-US',1,url,onDone,onError,true,allowSystemFallback,onDeviceFallback);
       }
       function speakEntry(entry, lang=activeAccent) {
         if (!entry || !entry.word) return;
@@ -27793,7 +27858,7 @@
       // British pronunciation keeps its per-entry recording / Youdao route.
       // iOS American cards enter this route directly from the tap; other
       // American cards reach it only if system TTS fails during this session.
-      function playPronunciation(text, lang, rate, supplied, done, onError, local=false, allowSystemFallback=true) {
+      function playPronunciation(text, lang, rate, supplied, done, onError, local=false, allowSystemFallback=true, onDeviceFallback) {
         stopSpeech();
         let audio, timer, complete=false;
         const finish=()=>{ if(complete)return; complete=true; clearTimeout(timer); onAudioStop=null; if(done)done(); };
@@ -27802,18 +27867,22 @@
           if(complete || (audio && activeAudio!==audio))return;
           clearTimeout(timer);
           if(audio){activeAudio=null; try{audio.pause();}catch(_){} }
-          if(local || !allowSystemFallback){
+          if(!allowSystemFallback){
             finish();
-            const error=new Error(local?'这段录音未能播放，请联网后重试。':'单词音频暂不可用，请检查网络后重试。');
+            const error=new Error(local?'voice-00 录音暂不可用，请联网后重试。':'单词音频暂不可用，请检查网络后重试。');
             if(typeof onError==='function')onError(error);else toastMessage(error.message);
             return;
           }
+          // Sentence clips keep their selected recording first, but a playback
+          // failure falls back to the device voice so the tap is not silent.
+          onDeviceFallback?.();
           speak(text, lang, finish, onError, rate);
         };
-        // navigator.onLine is only a hint and can be false on iOS even when a
-        // request can succeed. The direct iOS en-US route should always try.
         const directIosAmerican = USE_IOS_WORD_AUDIO && lang === 'en-US' && !local;
-        if (!local && navigator.onLine === false && !directIosAmerican) { fallback(); return; }
+        // If iOS reports offline, do not leave the learner waiting for a remote
+        // dictionary timeout; use its en-US system voice immediately. A false
+        // negative may choose the device voice, but still produces prompt audio.
+        if (!local && navigator.onLine === false) { fallback(); return; }
         try {
           const source=new URL(supplied || 'https://dict.youdao.com/dictvoice?type='+(lang==='en-GB'?1:2)+'&audio='+encodeURIComponent(text),location.href);
           if(!/^https?:$/.test(source.protocol))throw Error('Unsupported audio URL');
@@ -27822,9 +27891,10 @@
           audio.addEventListener('playing',()=>clearTimeout(timer),{once:true});
           audio.addEventListener('ended',()=>{if(activeAudio===audio){activeAudio=null;finish();}},{once:true});
           audio.addEventListener('error',fallback,{once:true});
-          // Dictionary audio may take longer to start on a mobile cross-region
-          // connection; do not pause it after the old four-second cutoff.
-          timer=setTimeout(fallback,local?60000:(directIosAmerican?15000:4000));
+          // Do not let a stalled short clip hold the speaker button indefinitely.
+          // Local sentence clips get a little more time on first download; iOS
+          // dictionary audio has a bounded wait before device-voice fallback.
+          timer=setTimeout(fallback,local?8000:(directIosAmerican?6000:4000));
           const started=audio.play(); if(started && started.catch)started.catch(fallback);
         } catch(_){fallback();}
       }
@@ -27973,12 +28043,24 @@
         if(mark){phraseMarks[mark.dataset.id]=mark.dataset.mark; writeJSON(phraseMarksKey,phraseMarks);renderPhraseCategories();renderDailyPhrases();return;}
         const button=event.target.closest('[data-phrase-speak]');
         if(!button) return;
-        if(button.dataset.speaking==='1'){stopSpeech();button.dataset.speaking='0';button.textContent='🔊';return;}
+        const status=button.closest('.phrase-item')?.querySelector('.phrase-audio-status');
+        const idleTitle=button.title, idleLabel=button.getAttribute('aria-label')||'朗读句子';
+        const reset=()=>{
+          button.dataset.speaking='0';button.textContent='🔊';
+          button.title=idleTitle;button.setAttribute('aria-label',idleLabel);
+          if(status){status.hidden=true;status.textContent='';}
+        };
+        if(button.dataset.speaking==='1'){stopSpeech();reset();return;}
         const phrase=dailyPhraseBank.find(item=>item.id===button.dataset.phraseSpeak);
         if(!phrase) return;
         button.dataset.speaking='1';button.textContent='⏸';
-        const reset=()=>{button.dataset.speaking='0';button.textContent='🔊';};
-        speakExample(phrase.en,reset,error=>{reset();toastMessage(error.message||'口语句朗读失败，请检查设备语音设置。');});
+        button.setAttribute('aria-label','停止朗读句子');
+        const markDeviceVoice=()=>{
+          button.title='正在使用设备 en-US 系统语音，不是 voice-00 录音';
+          button.setAttribute('aria-label','停止设备英语语音朗读（不是 voice-00 录音）');
+          if(status){status.textContent='设备英语语音 · 非 voice-00 录音';status.hidden=false;}
+        };
+        speakExample(phrase.en,reset,error=>{reset();toastMessage(error.message||'口语句朗读失败，请检查设备语音设置。');},true,markDeviceVoice);
       });
       async function repairSchoolBank(){
         // A grade click is an explicit request, not a background cellular download.
@@ -28248,10 +28330,21 @@
         const word=bank[studyIndex];
         const btn=$('#exampleSpeak');
         if(!word || !word.example){ toastMessage('这个词还没有例句。'); return; }
-        if(btn.dataset.speaking==='1'){ stopSpeech(); btn.dataset.speaking='0'; btn.textContent='🔊 朗读例句'; return; }
+        const resetButton=()=>{
+          btn.dataset.speaking='0';
+          btn.textContent=btn.dataset.idleText||'🔊 朗读例句';
+          btn.title=btn.dataset.idleTitle||'';
+          btn.setAttribute('aria-label',btn.dataset.idleAriaLabel||'朗读例句');
+        };
+        if(btn.dataset.speaking==='1'){ stopSpeech(); resetButton(); return; }
         btn.dataset.speaking='1'; btn.textContent='⏸ 停止朗读';
-        const resetButton=()=>{ btn.dataset.speaking='0'; btn.textContent='🔊 朗读例句'; };
-        speakExample(word.example, resetButton, error=>{ resetButton(); toastMessage(error.message || '例句朗读失败，请检查设备音量。'); });
+        btn.setAttribute('aria-label','停止朗读例句');
+        const markDeviceVoice=()=>{
+          btn.textContent='⏸ 设备语音 · 停止';
+          btn.title='正在使用设备 en-US 系统语音，不是 voice-00 录音';
+          btn.setAttribute('aria-label','正在使用设备英语语音朗读例句（不是 voice-00 录音），点按停止');
+        };
+        speakExample(word.example, resetButton, error=>{ resetButton(); toastMessage(error.message || '例句朗读失败，请检查设备音量。'); }, !isDictionaryPhrase(word.example), markDeviceVoice);
       });
 
       /* “例句来源” card: open the study view on a random word that really
@@ -28360,15 +28453,65 @@
       }
       loadPublicConfigs();
       let bankInit=initializeBank();
-      // No install-mode or network-type test: iOS often doesn't expose either.
-      // The worker checks Cache Storage first and coalesces concurrent requests.
+      const voiceCacheStatus=$('#voiceCacheStatus');
+      const prepareOfflineAudioBtn=$('#prepareOfflineAudioBtn');
+      let fullAudioCacheRequested=false;
+      const setVoiceCacheStatus=text=>{if(voiceCacheStatus)voiceCacheStatus.textContent=text;};
+      function priorityAudioAssets(){
+        const assets=new Set();
+        if(!bank.length)return [];
+        const upcoming=Math.min(21,bank.length);
+        for(let offset=0;offset<upcoming;offset++){
+          const entry=bank[(studyIndex+offset)%bank.length];
+          if(!entry)continue;
+          const wordClip=selectedWordRecordings[String(entry.word||'').trim().toLowerCase()];
+          const exampleClip=recordingFor(entry.example);
+          if(wordClip)assets.add('./media/voice/'+wordClip+'.mp3');
+          if(exampleClip)assets.add('./media/voice/'+exampleClip+'.mp3');
+        }
+        return [...assets];
+      }
+      async function requestOfflineAudio(scope){
+        const registration=await navigator.serviceWorker.ready;
+        await bankInit;
+        const worker=registration.active||navigator.serviceWorker.controller;
+        if(!worker)throw new Error('离线缓存服务尚未就绪，请稍后重试。');
+        worker.postMessage({type:'prepare-offline',scope,assets:priorityAudioAssets()});
+      }
+      function onOfflineCacheProgress(event){
+        const data=event.data||{};
+        if(data.type!=='offline-cache-progress')return;
+        if(data.scope==='all'){
+          if(data.complete){
+            fullAudioCacheRequested=false;
+            if(prepareOfflineAudioBtn)prepareOfflineAudioBtn.disabled=false;
+            setVoiceCacheStatus(data.failed
+              ? `已缓存约 ${Math.max(0,data.done-data.failed).toLocaleString()} / ${data.total.toLocaleString()} 项；${data.failed.toLocaleString()} 项失败，可点击重试。`
+              : `全库离线读音已准备完成（${data.total.toLocaleString()} 项）。`);
+          }else setVoiceCacheStatus(`正在缓存全库离线读音：${data.done.toLocaleString()} / ${data.total.toLocaleString()}，失败 ${data.failed.toLocaleString()} 项…`);
+          return;
+        }
+        if(fullAudioCacheRequested)return;
+        if(data.complete)setVoiceCacheStatus(data.failed
+          ? `当前学习附近有 ${data.failed} 项未缓存；联网后点播会自动重试。`
+          : `当前词卡及接下来 20 张词卡的读音已优先准备（${data.total} 项）；其他点播音频也会自动缓存。`);
+        else setVoiceCacheStatus(`正在优先缓存当前词卡与例句：${data.done} / ${data.total}…`);
+      }
+      if(navigator.serviceWorker)navigator.serviceWorker.addEventListener('message',onOfflineCacheProgress);
+      if(prepareOfflineAudioBtn)prepareOfflineAudioBtn.addEventListener('click',async()=>{
+        if(fullAudioCacheRequested)return;
+        fullAudioCacheRequested=true;
+        prepareOfflineAudioBtn.disabled=true;
+        setVoiceCacheStatus('正在准备全库离线读音；资源较多，建议保持 Wi-Fi 和页面打开。');
+        try{await requestOfflineAudio('all');}
+        catch(error){fullAudioCacheRequested=false;prepareOfflineAudioBtn.disabled=false;setVoiceCacheStatus(error.message||'离线读音准备失败，请稍后重试。');}
+      });
+      // Install only a small shell. Prioritize the active and next 20 cards;
+      // the learner can opt into the entire audio pack with visible progress.
       async function cacheInBackground(){
         if(!navigator.serviceWorker || navigator.onLine===false)return;
-        try{
-          const registration=await navigator.serviceWorker.ready;
-          await bankInit;
-          registration.active?.postMessage({type:'prepare-offline'});
-        }catch(e){console.info('Offline resources will be retried on the next visit.',e);}
+        try{await requestOfflineAudio('priority');}
+        catch(e){console.info('Priority audio cache will be retried on the next visit.',e);}
       }
       window.addEventListener('online',async()=>{
         await bankInit;

@@ -2,7 +2,7 @@
   "name": "lexio-pwa-full",
   "private": true,
   "scripts": {
-    "test": "node test/nav.test.js && node test/speech.test.js"
+    "test": "node test/nav.test.js && node test/speech.test.js && node test/sw.test.js"
   },
   "devDependencies": {
     "jsdom": "31.0.1"

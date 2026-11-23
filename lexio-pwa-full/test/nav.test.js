@@ -52,6 +52,7 @@ const dom = new JSDOM(html, {
       resume() { this.paused = false; },
       cancel() { this.speaking = false; this.pending = false; },
       speak(utterance) {
+        window.__speechCalls=(window.__speechCalls||0)+1;
         window.__lastUtterance = utterance;
         if (window.__failSpeech) throw new Error('simulated system TTS failure');
         this.speaking = true;
@@ -212,14 +213,37 @@ function animClean() {
   await sleep(30);
   check('再点卡片 → 翻回正面', !cardFlip.classList.contains('is-flipped'));
 
-  // 例句点击时立即调用设备 en-US 系统语音，避免异步逐词音频失去 iOS 用户手势授权。
+  // 例句先尝试精确本地录音；无录音/播放失败时在同一次点击内调用 en-US 设备语音。
   const exampleSpeakButton = doc.getElementById('exampleSpeak');
   const audioCountBeforeSentence = (window.__audioInstances || []).length;
   Object.defineProperty(window.navigator,'serviceWorker',{configurable:true,value:{controller:{}}});
   exampleSpeakButton.click();
   await sleep(30);
-  check('示例词库也能播放所选配音',!exampleSpeakButton.disabled && /media\/voice\/.+\.mp3$/.test(window.__lastAudio.src) && window.__audioInstances.length===audioCountBeforeSentence+1);
+  check('示例词库优先播放精确录音',!exampleSpeakButton.disabled && /media\/voice\/.+\.mp3$/.test(window.__lastAudio.src) && window.__audioInstances.length===audioCountBeforeSentence+1);
   window.__lastAudio.emit('ended');
+  window.__lexioStudy.goTo(0);
+  const fallbackExampleEntry=window.__lexioStudy.current();
+  const savedExample=fallbackExampleEntry.example, savedExampleSource=fallbackExampleEntry.exampleSource;
+  fallbackExampleEntry.example='This complete sentence has no matching recording yet.';
+  fallbackExampleEntry.exampleSource='dictionary:test';
+  window.__lexioStudy.goTo(0);
+  const exampleAudioCount=(window.__audioInstances||[]).length;
+  exampleSpeakButton.click();
+  check('未录制的完整例句可用并明确标注设备 en-US 语音',
+    !exampleSpeakButton.disabled && window.__lastUtterance?.text===fallbackExampleEntry.example &&
+    (window.__audioInstances||[]).length===exampleAudioCount && window.__lastUtterance.lang==='en-US' &&
+    exampleSpeakButton.textContent.includes('设备语音') && exampleSpeakButton.getAttribute('aria-label').includes('不是 voice-00 录音'));
+  window.__lastUtterance?.onend?.();
+  const blockedExample='Men who molest young boys must not be normalized.';
+  fallbackExampleEntry.example=blockedExample;
+  window.__lexioStudy.goTo(0);
+  const audioBeforeBlocked=(window.__audioInstances||[]).length, utteranceBeforeBlocked=window.__lastUtterance;
+  exampleSpeakButton.click();
+  check('审核阻止短语及其嵌入句不会由设备语音兜底朗读',
+    exampleSpeakButton.disabled && (window.__audioInstances||[]).length===audioBeforeBlocked &&
+    window.__lastUtterance===utteranceBeforeBlocked);
+  fallbackExampleEntry.example=savedExample; fallbackExampleEntry.exampleSource=savedExampleSource;
+  window.__lexioStudy.goTo(0);
 
   // 释义自测开关
   const meaningEl = doc.getElementById('studyMeaning');
@@ -347,11 +371,13 @@ function animClean() {
     cssText.includes('data-app-view="library"].is-active > .container { height: 100%;') &&
     cssText.includes('padding: 12px 0 calc(12px + env(safe-area-inset-bottom))'));
   const pageHtml = doc.documentElement.outerHTML;
-  check('例句首选完整 en-US 录音，避免异步音频链',
-    pageHtml.includes("playPronunciation(sentence,'en-US',1,url,onDone,onError,true)") &&
-    !pageHtml.includes('function speakExample(text, onDone, onError) {\n        const sentence = String(text || \'\').trim();\n        const matches ='));
-  check('例句按钮保留美式发音说明，播放时不弹提示',
-    pageHtml.includes('使用美式发音播放例句') && !pageHtml.includes('正在播放美式例句'));
+  check('例句优先播放精确录音，缺录完整句用设备英语语音兜底',
+    pageHtml.includes("playPronunciation(sentence,'en-US',1,url,onDone,onError,true,allowSystemFallback,onDeviceFallback)") &&
+    pageHtml.includes("speak(sentence,'en-US',finish,fail,1)") &&
+    pageHtml.includes('isModerationExcludedText(sentence)') && pageHtml.includes('onDeviceFallback?.()'));
+  check('例句按钮区分录音与设备语音回退，不把合成声称作 voice-00',
+    pageHtml.includes('使用设备 en-US 系统语音朗读；不是 voice-00 录音') &&
+    pageHtml.includes('⏸ 设备语音 · 停止') && !pageHtml.includes('正在播放美式例句'));
   check('页面移除原站跳转及外部 Arena 联系链接',
     !pageHtml.includes('原站入口') && !pageHtml.includes('arena.site') && !doc.querySelector('a[href^="https://"]'));
   check('支付宣传统一为“支持多种方式支付”且不展示个人结算承诺',
@@ -369,11 +395,14 @@ function animClean() {
     cssText.includes('@keyframes appHomeEnter') && cssText.includes('@keyframes appPricingEnter') &&
     cssText.includes('@keyframes pricePop') && cssText.includes('.price strong.is-changing') &&
     cssText.includes('prefers-reduced-motion: reduce'));
-  check('Service Worker 升到 v124 并预缓存口语句库与安装引导视频',
+  check('Service Worker 保留 v124 音频缓存，安装时不再下载大安装视频',
     swSource.includes("CACHE_NAME = 'lexio-shell-v124-word-audio-batch-008'") &&
     swSource.includes("'./data/daily-conversation.json'") &&
-    swSource.includes("'./media/install-guide.mp4'") &&
+    !swSource.slice(0,swSource.indexOf('const bulkAssets')).includes("'./media/install-guide.mp4'") &&
     pageHtml.includes('controllerchange') && pageHtml.includes('swRefreshing'));
+  check('离线全库下载是用户主动选择并显示进度',
+    !!doc.getElementById('prepareOfflineAudioBtn') && !!doc.getElementById('voiceCacheStatus') &&
+    pageHtml.includes("requestOfflineAudio('all')") && pageHtml.includes('offline-cache-progress'));
   check('词库/口语句库走网络优先，已安装用户也能拿到新的纯英文例句',
     /if \(url\.pathname\.includes\('\/data\/'\) && url\.pathname\.endsWith\('\.json'\)\)/.test(swSource) &&
     swSource.indexOf("url.pathname.includes('/data/')") < swSource.indexOf('Static app assets are cache-first'));
@@ -586,13 +615,23 @@ function animClean() {
   const pharmacyPhrase = doc.querySelector('#dailyPhraseGrid .phrase-item');
   check('日常口语可以按英文/中文/场景搜索',
     !!pharmacyPhrase && pharmacyPhrase.textContent.includes('pharmacy nearby'));
-  const oldUtterance=window.__lastUtterance;
+  const oldSpeechCalls=window.__speechCalls||0;
   pharmacyPhrase.querySelector('[data-phrase-speak]').click();
   await sleep(30);
   const phraseAudio=window.__lastAudio, phraseURL=new URL(phraseAudio.src);
   check('口语播放所选音色的整句 MP3，正常速度', phraseURL.pathname.endsWith('/media/voice/pharmacy.mp3') && phraseAudio.playbackRate===1);
   phraseAudio.emit('error');
-  check('录音出错不切换系统语音',window.__lastUtterance===oldUtterance && pharmacyPhrase.querySelector('[data-phrase-speak]').dataset.speaking==='0');
+  const phraseFallbackUtteranceMatches=window.__lastUtterance?.text===pharmacyPhrase.querySelector('.phrase-en').textContent;
+  const phraseFallbackStatus=pharmacyPhrase.querySelector('.phrase-audio-status').textContent;
+  const phraseFallbackAria=pharmacyPhrase.querySelector('[data-phrase-speak]').getAttribute('aria-label');
+  check('口语录音出错时明确标注设备英语语音且不冒称 voice-00',
+    window.__speechCalls>oldSpeechCalls && phraseFallbackUtteranceMatches &&
+    phraseFallbackStatus.includes('非 voice-00 录音') && phraseFallbackAria.includes('不是 voice-00 录音'),
+    `speechCalls=${window.__speechCalls} before=${oldSpeechCalls} textMatch=${phraseFallbackUtteranceMatches} actual=${JSON.stringify(window.__lastUtterance?.text)} expected=${JSON.stringify(pharmacyPhrase.querySelector('.phrase-en').textContent)} status=${phraseFallbackStatus} aria=${phraseFallbackAria}`);
+  window.__lastUtterance.onend?.();
+  check('设备语音结束后恢复口语播放按钮与状态提示',
+    pharmacyPhrase.querySelector('[data-phrase-speak]').dataset.speaking==='0' &&
+    pharmacyPhrase.querySelector('.phrase-audio-status').hidden);
   phraseSearch.value = '';
   phraseSearch.dispatchEvent(new window.Event('input', {bubbles:true}));
   const medicalChip = [...doc.querySelectorAll('#phraseCategories [data-phrase-category]')].find(button => button.dataset.phraseCategory === '医疗药房');
@@ -689,7 +728,14 @@ function animClean() {
   const bundledWords = bundled.books.flatMap((book) => book.words || []);
   const schoolShelf=doc.querySelector('[data-stage="小学"]').closest('section');
   check('中小学在同一个分组，保留三个独立的年级入口', [...schoolShelf.querySelectorAll('[data-stage]')].map(b=>b.textContent).join('/')==='小学/初中/美国1-9年级');
-  check('自动缓存不需要用户点击，也不需要浏览器报告 Wi-Fi', !doc.querySelector('#prepareOffline') && !pageHtml.includes('wifiReady') && pageHtml.includes("postMessage({type:'prepare-offline'})"));
+  check('启动后只优先预缓存当前及接下来 20 张词卡的音频',
+    pageHtml.includes('const upcoming=Math.min(21,bank.length)') &&
+    pageHtml.includes("requestOfflineAudio('priority')") &&
+    pageHtml.includes('点过的音频也会自动缓存'));
+  check('全库离线预下载需用户主动点击，不会在首屏抢跑全量音频',
+    !!doc.getElementById('prepareOfflineAudioBtn') &&
+    pageHtml.includes("prepareOfflineAudioBtn.addEventListener('click'") &&
+    pageHtml.includes("requestOfflineAudio('all')"));
   check('词库首页不直接列出各年级', !doc.querySelector('#wordCatalog [data-grade]') && doc.querySelectorAll('#wordCatalog [data-stage]').length===3);
   for(const [stage,total] of Object.entries({小学:6,初中:3,美国:9})){
     doc.querySelector(`[data-stage="${stage}"]`).click();
@@ -709,15 +755,19 @@ function animClean() {
     bundledWords.length === 28414 && missingExamples === 0 && cjkExamples === 0 && realExamples > 22000,
     `total=${bundledWords.length} missing=${missingExamples} cjk=${cjkExamples} real=${realExamples}`);
   {
-    // Short dictionary examples should be playable when a matching voice-00
-    // recording exists, and remain visibly pending until then.
+    // Short dictionary fragments remain labelled as phrases and are not
+    // promoted to full-sentence TTS; complete sentences may use device TTS.
     const phraseWord = doc.querySelector('#studyExampleSource');
     check('例句来源标签区分「词典原句」与「词典短语」',
-      pageHtml.includes('词典短语 · ') && pageHtml.includes('exampleIsPhrase'));
-    check('词典短语有匹配录音时可朗读，未录时明确显示待配音',
+      pageHtml.includes('词典短语 · ') && pageHtml.includes('isDictionaryPhrase(exampleText)'));
+    check('词典短语只播放已有片段，未录时不伪装成整句',
       pageHtml.includes('const exampleClip = recordingFor(word.example);') &&
-      pageHtml.includes('exSpeakBtn.disabled = !exampleClip;') &&
+      pageHtml.includes('const canUseDeviceVoice = !exampleIsPhrase && !moderationExcluded;') &&
+      pageHtml.includes('exSpeakBtn.disabled = moderationExcluded || (!exampleClip && !canUseDeviceVoice);') &&
       pageHtml.includes('🔊 朗读短语') && pageHtml.includes('短语待配音'));
+    check('审核阻止文本被明确排除在系统语音兜底之外',
+      pageHtml.includes("MODERATION_EXCLUDED_SPEECH_TEXTS = ['men who molest young boys']") &&
+      pageHtml.includes('if(isModerationExcludedText(sentence))'));
     // 生成的练习提示句必须标注“不是真实语料例句”
     check('自动生成的提示句明确标注非真实语料',
       pageHtml.includes('练习提示句 · 不是真实语料例句') &&
@@ -767,12 +817,17 @@ function animClean() {
       w2.__picked === 'Samantha', String(w2.__picked));
     check('朗读参数为 rate 1 / pitch 1.08',
       w2.__rate === 1 && w2.__pitch === 1.08, `rate=${w2.__rate} pitch=${w2.__pitch}`);
-    w2.__picked=null;w2.document.getElementById('exampleSpeak').click();
-    check('无媒体播放器时不拿系统声音冒充所选配音', w2.__picked===null);
+    w2.__picked=null;
+    const w2ExampleButton=w2.document.getElementById('exampleSpeak');
+    w2ExampleButton.click();
+    check('例句录音无法启动时清楚标注设备 en-US 语音且不冒称 voice-00',
+      w2.__picked==='Samantha' && w2.__rate===1 && w2.__pitch===1.08 &&
+      w2ExampleButton.textContent.includes('设备语音') && w2ExampleButton.getAttribute('aria-label').includes('不是 voice-00 录音'),
+      `voice=${w2.__picked} rate=${w2.__rate} pitch=${w2.__pitch} label=${w2ExampleButton.textContent}`);
     dom2.window.close();
 
-    // iPhone Safari must try the en-US clip synchronously in the tap, even
-    // when navigator.onLine is a false negative; this is not a real-device test.
+    // iPhone Safari should use device speech immediately when the browser
+    // reports offline; online taps still start dictionary audio synchronously.
     const iosDom = new JSDOM(fs.readFileSync(htmlPath, 'utf8'), {
       url: 'https://lexio.test/', runScripts: 'dangerously', pretendToBeVisual: true,
       virtualConsole: vc,
@@ -782,7 +837,7 @@ function animClean() {
         w3.SpeechSynthesisUtterance = function (t) { this.text=t; this.lang=''; };
         w3.speechSynthesis = {
           speaking:false, paused:false, getVoices:()=>[{lang:'en-US',name:'Samantha'}],
-          addEventListener(){}, resume(){}, cancel(){}, speak(){w3.__iosTtsCalls=(w3.__iosTtsCalls||0)+1;},
+          addEventListener(){}, resume(){}, cancel(){}, speak(){w3.__iosTtsCalls=(w3.__iosTtsCalls||0)+1;w3.__iosTtsInsideTap=!!w3.__iosTapActive;},
         };
         w3.Audio = function(src) {
           this.src=src; this.listeners={}; w3.__lastIosAudio=this;
@@ -797,22 +852,27 @@ function animClean() {
     const iw=iosDom.window, iosWordButton=iw.document.getElementById('studySpeak');
     const iosUsToggle=iw.document.querySelector('.accent-toggle [data-accent="en-US"]');
     if(iosUsToggle)iosUsToggle.click();
-    // Exercise the remote dictionary fallback on a word with no local clip.
+    // This word has no local voice-00 clip. Offline playback must not wait on the remote request.
     iw.__lexioStudy.goTo(4); // sustainable
     iosWordButton.addEventListener('click',()=>{iw.__iosTapActive=true;},{capture:true});
     iosWordButton.addEventListener('click',()=>{iw.__iosTapActive=false;});
     iosWordButton.click();
-    check('iPhone Safari 美音在 onLine=false 时仍在点击手势内启动 en-US 音频',
+    check('iPhone Safari 离线时立即在点击手势内使用 en-US 设备语音',
+      !iw.__lastIosAudio && iw.__iosTtsInsideTap===true && (iw.__iosTtsCalls||0)===1,
+      `audio=${!!iw.__lastIosAudio} tts=${iw.__iosTtsCalls||0}`);
+    Object.defineProperty(iw.navigator,'onLine',{configurable:true,value:true});
+    const ttsBeforeOnline=iw.__iosTtsCalls||0;
+    iosWordButton.click();
+    check('iPhone Safari 在线时仍在点击手势内尝试美式词典音频',
       !!iw.__lastIosAudio && new URL(iw.__lastIosAudio.src).searchParams.get('type')==='2' &&
-      iw.__iosPlayInsideTap===true && (iw.__iosTtsCalls||0)===0,
+      iw.__iosPlayInsideTap===true && (iw.__iosTtsCalls||0)===ttsBeforeOnline,
       `audio=${!!iw.__lastIosAudio} type=${iw.__lastIosAudio&&new URL(iw.__lastIosAudio.src).searchParams.get('type')} tts=${iw.__iosTtsCalls||0}`);
-    // A successful Audio.play() promise does not prove that a remote clip
-    // actually decodes. Simulate a real media error and require an en-US TTS fallback.
+    // A successful play() promise is not proof of decoded sound; simulate media failure.
     const mediaError=(iw.__lastIosAudio.listeners.error||[])[0];
     if(mediaError)mediaError();
     await sleep(40);
-    check('iPhone Safari 词典音频媒体错误后回退到系统 en-US 语音',
-      (iw.__iosTtsCalls||0)>0,`tts=${iw.__iosTtsCalls||0}`);
+    check('iPhone Safari 在线词典音频失败后回退系统 en-US 语音',
+      (iw.__iosTtsCalls||0)>ttsBeforeOnline,`tts=${iw.__iosTtsCalls||0}`);
     iosDom.window.close();
   }
 
