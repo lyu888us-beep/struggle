@@ -1,0 +1,87 @@
+name: deploy-lexio-pages
+
+on:
+  push:
+    branches:
+      - "arena/943304d6-struggle"
+    paths:
+      - "lexio-pwa-full/**"
+      - ".github/workflows/deploy-lexio-pages.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  package:
+    name: Assemble, test, and package Pages site
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout active-branch overlay
+        uses: actions/checkout@v4
+        with:
+          path: overlay
+          fetch-depth: 2
+
+      - name: Checkout pinned PWA source and legacy voice base
+        uses: actions/checkout@v4
+        with:
+          ref: 41e3e170c1d7be74ea9712548c33abe6bf4f73a5
+          path: base
+          sparse-checkout: lexio-pwa-full
+          sparse-checkout-cone-mode: true
+
+      - name: Assemble complete site without changing either branch
+        shell: bash
+        run: |
+          mkdir -p site
+          cp -a base/lexio-pwa-full/. site/
+          cp -a overlay/lexio-pwa-full/. site/
+
+      - name: Check patch whitespace
+        working-directory: overlay
+        run: git diff --check HEAD^ HEAD
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install test dependencies
+        working-directory: site
+        run: npm ci --ignore-scripts --no-audit --no-fund
+
+      - name: Run regression and speech-asset tests
+        working-directory: site
+        run: npm test
+
+      - name: Check Service Worker syntax
+        working-directory: site
+        run: node --check sw.js
+
+      - name: Report current voice queue
+        working-directory: site
+        run: node scripts/voice-queue.mjs
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  deploy:
+    name: Deploy Lexio to GitHub Pages
+    needs: package
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy Pages artifact
+        id: deployment
+        uses: actions/deploy-pages@v4

@@ -1,0 +1,32 @@
+[
+  {
+    "label": "breath",
+    "text": "Take a slow breath before you begin speaking.",
+    "status": "PocketSphinx word-aligned; exact-hash mapped; programmatically checked; not human-listened",
+    "clip_id": "s-fe77dd441deb2195",
+    "aligned_word_count": 8,
+    "alignment_method": "PocketSphinx forced word alignment on the supplied MP3, 16 kHz mono decode",
+    "voice_id": "voice-00",
+    "language": "en-US"
+  },
+  {
+    "label": "count-by-tens",
+    "text": "Let's count by tens: ten, twenty, thirty, forty, fifty, sixty, seventy, eighty, ninety, and one hundred.",
+    "status": "PocketSphinx word-aligned; exact-hash mapped; programmatically checked; not human-listened",
+    "clip_id": "s-f3579888c4d2c760",
+    "aligned_word_count": 16,
+    "alignment_method": "PocketSphinx forced word alignment on the supplied MP3, 16 kHz mono decode",
+    "voice_id": "voice-00",
+    "language": "en-US"
+  },
+  {
+    "label": "led-semiconductor",
+    "text": "In the Ohmic contacts of LED electrodes, carriers have different transmission mechanisms between a metal electrode and a semiconductor.",
+    "status": "PocketSphinx word-aligned; exact-hash mapped; programmatically checked; not human-listened",
+    "clip_id": "s-50050fd56721c726",
+    "aligned_word_count": 19,
+    "alignment_method": "PocketSphinx forced word alignment on the supplied MP3, 16 kHz mono decode",
+    "voice_id": "voice-00",
+    "language": "en-US"
+  }
+]
