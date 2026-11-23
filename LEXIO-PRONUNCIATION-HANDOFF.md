@@ -7,8 +7,9 @@
 - 仓库：`lyu888us-beep/struggle`
 - 固定工作分支：`arena/749eb136-struggle`（active；不得切换或改名）
 - 分支基点：`acf72ed4b80c34f0ec92ef462f02155557fc8fe4`
-- 交接文档初次提交 `908e5a7`；真实音频包已在 `a6c5100` 上传到 GitHub 根目录。
-- 本轮已将音频复制进 `lexio-pwa-full/media/voice/`，更新生产录音映射、词卡单词样音入口、离线资源清单和回归测试；应用变更现在还在工作区，尚待最终提交、推送及 Pages 部署确认。
+- 交接文档初次提交 `908e5a7`；真实音频包曾在 `a6c5100` 先行上传到 GitHub 根目录。
+- 集成变更已在当前分支提交并推送：`839c59d`（`Integrate generated Lexio pronunciation audio`）。工作树干净，`origin/arena/749eb136-struggle` 与本地 HEAD 一致。
+- GitHub Pages workflow `deploy-lexio-pages` run `45171863549` 已完成，打包和 `Deploy to GitHub Pages` 两个 job 均成功。日志仅有 GitHub Actions Node.js 20 弃用提示，不影响此次部署。
 - 根目录 `LEXIO-PRONUNCIATION-BUNDLE-2026-11.zip` 是可选音频／清单备份；不包含源码补丁，也不在 Pages 网站目录中。干净 clone 可直接从当前分支读取应用代码和 `media/voice/` 中的已跟踪 MP3。
 - `.github/workflows/deploy-lexio-pages.yml` 对 `lexio-pwa-full/**` 的 push 会触发 Pages 部署；仅提交根目录文档或 ZIP 不会触发部署。
 
@@ -18,7 +19,7 @@
 - iPhone 目标设备为 iPhone 16 Pro Max、iOS 27。程序测试和自动对齐不能替代真机测试，也不能替代逐条人工听检。
 - 不得把 PocketSphinx 对齐或 FFmpeg 解码说成人工听检；不得把未生成的词库队列说成已生成音频。
 - 被内容审核阻止的短语继续排除，不得改音色或绕过审核。
-- 用户要求生成后立即部署，并部署此前已生成的单词发音；本轮把已有的五个已确认单词样音一起集成。全库 9,830 词并没有生成。
+- 用户要求生成后立即部署，并部署此前已生成的单词发音；本轮把已有的五个已确认单词样音一起集成，已随 `839c59d` 部署。全库 9,830 词并没有生成。
 
 ## 已集成的音频与代码
 
@@ -52,8 +53,8 @@
 
 ## 接下来
 
-1. 在 `arena/749eb136-struggle` 提交并推送当前应用变更；不要切分支。推送后使用 `gh run list --workflow deploy-lexio-pages.yml --branch arena/749eb136-struggle` 和 `gh run watch <run-id>` 核实本次 Pages 部署成功后，再告知用户已上线。
-2. 部署后安排 iPhone 16 Pro Max／iOS 27 实测，分别检查离线短语、例句、五个本地单词样音、英式单词及普通美音回退。
+1. 应用部署已由 `839c59d` 和 run `45171863549` 完成并成功；不要再为同一批资源重复生成或重复部署。若后续有新应用变更，仍只推送至 `arena/749eb136-struggle`，并再次核验对应 Pages run。
+2. 安排 iPhone 16 Pro Max／iOS 27 实测，分别检查离线短语、例句、五个本地单词样音、英式单词及普通美音回退。
 3. 继续处理剩余 498 条改写句的正确录音、9,830 个唯一单词音频生成队列及其他读音入口；不得将待生成元数据计作已生成文件，也不得声称已完成全库听检。
 
 ## 相关文件
