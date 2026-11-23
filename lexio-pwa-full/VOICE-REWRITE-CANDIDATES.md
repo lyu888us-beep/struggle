@@ -232,3 +232,51 @@
 | Sami had Layla perform oral sex on him. | Sami asked Layla to give an oral report. | oral |
 | Tatoeba: Where debates are hotter than two rabbits making babies in a sock! | The baby rabbit slept in its nest. | baby |
 | Claudio had long hair and smoked pot | Claudio had long hair and smoked cigarettes. | smoke |
+
+
+## 第六批：敏感内容自动改写（v100 已录）
+
+从剩余内容中选取 40 条涉及暴力、成瘾、歧视、自伤等敏感语境的例句，改写为日常、非露骨或支持性表述，并保留词卡目标词（必要时使用自然屈折形式）。
+
+| 原句 | 改写后朗读 | 保留目标词 |
+|---|---|---|
+| That was the only way we could defend ourselves against all this terrible shooting | The photographer was shooting portraits outdoors. | shooting |
+| Many children die of starvation in Africa | Local aid workers distribute food to prevent starvation. | starvation |
+| One morning I shot an elephant in my pyjamas | The elephant splashed water with its trunk. | elephant |
+| Belladonna and red arsenic are deadly poisons. | The guide showed us how to recognize poison ivy. | poison |
+| That fateful meeting of the U.N. when...it declared war on North Korea | That fateful choice changed the story's direction. | fateful |
+| Men are hunters, and women are prey | A hunter quietly observed the deer from a trail. | hunter |
+| 13 people were summarily executed (= killed without any trial or legal process) by the guerrillas. | The computer will execute the command after confirmation. | execute |
+| An awful lot of people (= a large number of people) died in the war. | An awful lot of people enjoy the summer festival. | awful |
+| More people commit suicide at Christmas than at any other time. | Suicide prevention services offer confidential support to people in crisis. | suicide |
+| Over 500 people died during last year’s flu epidemic. | The town prepared early for the annual flu epidemic. | epidemic |
+| Interracial conflict | The school hosted a discussion about interracial families. | interracial |
+| Maybe he thought you were gay | He is gay and proud to be himself. | gay |
+| After careful examination, it can be seen that the skull was smashed to pieces | She broke the chocolate bar into small pieces. | piece |
+| He narrowly escaped an assassination attempt (= when someone tries but fails to kill someone else). | The historical novel explores a failed assassination attempt. | assassination |
+| Many criminals in the United States are addicted to drugs | He is addicted to solving crossword puzzles. | addicted |
+| A true German can't stand the French, yet willingly he drinks their wines | The restaurant offers a selection of local wines. | wine |
+| I cannot forbid a person to marry several wives, for it does not contradict Scripture | Several students volunteered to help after class. | several |
+| They are all cannibals here, except me, I'm just being eaten | Everyone except the teacher brought a notebook. | except |
+| The warmongers kept up their drumbeat on Iraq | A steady drumbeat guided the dancers. | drumbeat |
+| 250 people were killed in the blast. | The fireworks ended with a bright blast of color. | blast |
+| Wonderful, marvelous. Police always are servants of upper caste, money, politicians. You cant expect justice for dalits in this country. | The sunrise over the mountains was marvelous. | marvelous |
+| Murrow’s evidence was enough to convict Hayes of murder. | The scientist presented clear evidence for her conclusion. | evidence |
+| Hundreds and thousands of africans are thrown into gaol each year under pass laws. | The character in the novel spent one night in gaol. | gaol |
+| The poor murdered girl must be revenged. | She decided that forgiveness was better than revenge. | revenge |
+| I am really tired of living | Living near the coast has always been her dream. | living |
+| Guns can be life-savers when used properly | The museum displayed an antique gun from the nineteenth century. | gun |
+| Don't shoot the devil in the back. You might miss | The photographer plans to shoot portraits outdoors. | shoot |
+| My father died of a subarachnoid hemorrhage when I was fourteen | She was fourteen when she joined the school orchestra. | fourteen |
+| Your random firing will scare away the prey | They sat around the fire and told stories. | fire |
+| Tom's not breathing | Take a slow breath before you begin speaking. | breath |
+| Two people were killed in a head-on collision (= between two vehicles that are moving directly towards each other) on highway 218. | The report described a minor collision in a parking lot. | collision |
+| I always keep my gun handy just in case. | Keep a flashlight handy during a storm. | handy |
+| The bullet lodged in the sergeant's leg, shattering his thigh bone. | A popcorn kernel lodged between the couch cushions. | lodge |
+| Years of resistance to misfortune ended when the settlers' village was overcome by the savages and their hopes and lives came to the bitter end. | The hikers faced resistance from strong winds. | resistance |
+| They shot him at point blank range with an automatic rifle. | The museum displayed an antique rifle behind glass. | rifle |
+| She has gone from being a healthy, fit, and sporty young woman to being a cripple. | Heavy traffic can cripple the city's public transit system. | cripple |
+| A man pointed a gun at them and pulled the trigger. | A sudden drop in temperature can trigger the alarm. | trigger |
+| Guards! Slap that vile woman's face! | The guard checked tickets at the entrance. | guard |
+| Tom confided in his friend that he was going to hang himself | Tom confided in his friend about his plans for the future. | friend |
+| Every time I fall in love, Dad tells me the girl is my half sister | Please tell me where the nearest library is. | tell |
