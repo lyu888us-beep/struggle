@@ -103,6 +103,25 @@
           "ffmpegDecoded": true
         }
       ]
+    },
+    {
+      "id": "sentence-batch-002",
+      "itemsConsidered": 1,
+      "clipsPublished": 1,
+      "skippedAfterSafetyChecks": 0,
+      "editorialCorrection": "An incomplete dictionary fragment was replaced in the source data with a neutral complete example; the blocked wording was not re-requested.",
+      "individuallyHumanListened": false,
+      "items": [
+        {
+          "text": "The hikers stayed on the trail so they would not molest the nesting birds.",
+          "source": "ielts:molest",
+          "clip": "s-959c688f5cde5740",
+          "sha256": "70f3285db614491116525fe4fa60b0120d7265a020ac09f20f457ba77817779d",
+          "bytes": 26876,
+          "alignment": "PocketSphinx exact token sequence",
+          "ffmpegDecoded": true
+        }
+      ]
     }
   ]
 }

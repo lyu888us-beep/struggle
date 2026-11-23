@@ -1,0 +1,21 @@
+{
+  "template_id": "voice-00-en-US",
+  "voice_id": "voice-00",
+  "language": "en-US",
+  "intended_use": "Lexio single-word pronunciations and complete English example sentences",
+  "reference_audio": "voice-00-en-US-reference.mp3",
+  "reference_audio_bytes": 144840,
+  "reference_audio_sha256": "cf1eb8dc8a30943e5af30fb08e2b21ea6f122f4a1247c06e9c0411cbbf98a9e7",
+  "reference_transcript": "Here is the voice reference for Lexio American English. The pace is calm and natural, with clear consonants, open vowels, and gentle pauses. Try these words: comfortable, rural, schedule, entrepreneur, and thorough. Now listen to one complete sentence from beginning to end.",
+  "reuse_guidance": [
+    "Continue using the already selected voice-00 identity for en-US Lexio speech; do not audition a replacement voice.",
+    "Generate each complete sentence as its own recording, and preserve exact source-text mappings.",
+    "For word batches, align conservatively and skip clips with unsafe boundaries rather than forcing cuts.",
+    "Use this reference recording to identify and compare the selected voice; it is not a model checkpoint or exportable voice clone."
+  ],
+  "validation": {
+    "mp3_decode": "passed with FFmpeg",
+    "individually_human_listened": false
+  },
+  "portability_note": "The voice-00 identity remains tied to the speech-generation service/session. The MP3 reference alone cannot recreate model weights or guarantee a portable clone."
+}
