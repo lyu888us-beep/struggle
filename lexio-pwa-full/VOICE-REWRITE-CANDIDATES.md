@@ -376,3 +376,58 @@
 | Your father is a gorilla | A gorilla rested quietly in the shade at the zoo. | gorilla |
 | The death toll has risen to 83. | The toll for crossing the bridge is collected at the gate. | toll |
 | "In anthropology, you can't equate third gender with homosexuality," he said. | In anthropology, researchers study how cultures change over time. | anthropology |
+
+
+## 第九批：敏感内容自动改写（v103 部分上线）
+
+本批从剩余敏感语境中选取 40 条进行中性改写。27 条已安全切分并上线；另 13 条所在的 WAV 在句间找不到安全切点，未作不可靠切分，且本轮 10 段合成额度已用尽。以下 13 条仍在待录队列，下一批优先拆组重录。
+
+### v103 已安全切分上线（27 条）
+
+| 原句 | 改写后朗读 | 保留目标词 |
+|---|---|---|
+| Her body was coffined | The museum displayed a replica of an ancient coffin. | coffin |
+| In Spain, they wear red boxers or knickers on Christmas | Spain is known for its art, music, and regional traditions. | spain |
+| My mother often slaps passers-by | He gave the dusty rug a quick slap outside. | slap |
+| He had even contemplated suicide. | She paused to contemplate the painting. | contemplate |
+| So it seems that cloud of odorless deadly gas had a silver lining after all. | The warning label said the chemical could be deadly if swallowed. | deadly |
+| The waste can be fatal if swallowed. Police are investigating what caused the reservoir to break. | The reservoir supplies fresh water to several nearby towns. | reservoir |
+| The unhappy event made him put an end to himself. | The school hosted a spring event for families. | event |
+| Capitalism is poverty | The debate compared capitalism with other economic systems. | capitalism |
+| God said, "Let there be light!" | The word God appears in many historical texts. | god |
+| Who needs science when you've got guns? | The museum displayed antique guns in a glass case. | gun |
+| illegal aliens entering the country. | The alien in the story landed on Earth at night. | alien |
+| Torture and summary execution (= execution without a trial or any legal process ) are common. | The program's execution finished in a few seconds. | execution |
+| Don't you think the name "The Sacred War" sounds a bit sarcastic? | The team treated the old trophy as a sacred symbol of school history. | sacred |
+| Staff use the poison to exterminate moles and rabbits. | The gardeners worked to exterminate invasive weeds from the path. | exterminate |
+| The separation of church and state | The separation of powers helps keep government balanced. | separation |
+| The way we kill animals appals a lot of people. | The litter on the beach appals visitors. | appal |
+| She developed a malignant tumour in her breast. | The doctor explained that malignant cells can spread. | malignant |
+| Police appealed for wit­nesses after a woman was kidnapped at gunpoint. | The police stopped the kidnap plot before anyone was harmed. | kidnap |
+| There were many conspiracy theories (= beliefs that something is the result of a conspiracy) surrounding Princess Diana’s death. | The novel follows a conspiracy that reaches the highest levels of government. | conspiracy |
+| An ultrasound in this case revealed no fetus, only a "snowstorm" effect. | A snowstorm closed the mountain road for several hours. | snowstorm |
+| The American mission is to eliminate communism from the world | The class compared communism with other political systems. | communism |
+| Operation Yoav was a military operation carried out by Israel in its war for independence | The hospital scheduled the operation for early morning. | operation |
+| Fadil didn't mean to shoot someone | The studio will shoot a family portrait next weekend. | shoot |
+| Between you and me, the fat ugly man is on a diet. | The ugly duckling grew into a beautiful swan. | ugly |
+| Landmines still kill or maim about 300 people every month. | Protective gear can prevent accidents from maiming workers. | maim |
+| The kidnappers were demanding a ransom of $250,000. | The ransom note in the mystery novel revealed a hidden clue. | ransom |
+| He applied for asylum in 1987 after fleeing the police back home. | She applied for asylum after leaving an unsafe situation at home. | asylum |
+
+### v103 已改写但暂未安全切分发布（13 条，待后续拆组重录）
+
+| 原句 | 拟朗读版 | 保留目标词 |
+|---|---|---|
+| Released the prisoner for humanitarian reasons | The group provided humanitarian aid after the flood. | humanitarian |
+| Chinese people have the most patriotic stomachs. | She felt patriotic while watching the national team. | patriotic |
+| The defendant was convicted of high treason (= treason of the worst kind) and sentenced to death. | The history book describes a trial for treason. | treason |
+| Religion is just organised superstition with a bestseller. | An old superstition warns against opening an umbrella indoors. | superstition |
+| Tom wrote propaganda online without pay for the government, but cried when everyone in his hometown was massacred by the government. | The professor taught students to recognize propaganda in the media. | propaganda |
+| Israel, which has tried for years to mobilise international action against Iran, suddenly appears more sanguine. | Local volunteers mobilise quickly when neighbors need help. | mobilise |
+| Zelensky is a war hero | The firefighter became a local hero after the rescue. | hero |
+| Many criminals in America are addicted to drugs | The pharmacist explained how to take the drug safely. | drug |
+| Nowadays it's not possible to protect oneself against weapons of mass destruction | It is important to be kind to oneself while learning something new. | oneself |
+| An ounce of wit that is bought is worse a pound that is taught | The bakery weighed a pound of flour for the recipe. | pound |
+| Are you an idiot? | I called myself an idiot when I forgot my keys. | idiot |
+| The "anti-woke" propaganda being imported into your country's media comes straight from actual fascists. | The class studied how propaganda can shape public opinion. | propaganda |
+| The tip of the spear was dipped in a deadly poison. | The warning label says the poison is deadly if swallowed. | deadly |
