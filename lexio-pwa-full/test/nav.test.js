@@ -153,6 +153,15 @@ function animClean() {
     !!approvedWordAudio && approvedWordAudio.src.endsWith('/media/voice/w-46fd05f35b5591e2.mp3') &&
     (window.__audioInstances||[]).length===audioBeforeApprovedWord+1);
   if(approvedWordAudio)approvedWordAudio.emit('ended');
+  const audioBeforeQueueWord=(window.__audioInstances||[]).length;
+  auditionEntry.word='persevere';
+  doc.getElementById('studySpeak').click();
+  const queueWordAudio=window.__lastAudio;
+  auditionEntry.word=auditionOriginalWord;
+  check('本批新生成的单词同样使用 voice-00 本地音频',
+    !!queueWordAudio && queueWordAudio.src.endsWith('/media/voice/w-46459f9bd8c39ba7.mp3') &&
+    (window.__audioInstances||[]).length===audioBeforeQueueWord+1);
+  if(queueWordAudio)queueWordAudio.emit('ended');
   const usAudioCount=(window.__audioInstances||[]).length;
   const firstUsWord=window.__lexioStudy.current(), originalFirstUs=firstUsWord.us;
   firstUsWord.us='https://example.invalid/us-voice-one.mp3';
@@ -354,8 +363,8 @@ function animClean() {
     cssText.includes('@keyframes appHomeEnter') && cssText.includes('@keyframes appPricingEnter') &&
     cssText.includes('@keyframes pricePop') && cssText.includes('.price strong.is-changing') &&
     cssText.includes('prefers-reduced-motion: reduce'));
-  check('Service Worker 升到 v115 并预缓存口语句库与安装引导视频',
-    swSource.includes("CACHE_NAME = 'lexio-shell-v115-pronunciation-backfill'") &&
+  check('Service Worker 升到 v116 并预缓存口语句库与安装引导视频',
+    swSource.includes("CACHE_NAME = 'lexio-shell-v116-word-audio-batch-001'") &&
     swSource.includes("'./data/daily-conversation.json'") &&
     swSource.includes("'./media/install-guide.mp4'") &&
     pageHtml.includes('controllerchange') && pageHtml.includes('swRefreshing'));

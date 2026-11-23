@@ -2,10 +2,10 @@
 
 | 用途 | 当前发布设置 |
 | --- | --- |
-| 读单词 | 对用户试听认可的 5 个样词（`comfortable`、`rural`、`schedule`、`entrepreneur`、`thorough`），美音 `en-US` 优先播放本地 `voice-00` MP3。其余美音仍不读取词条自带的 `us` 录音：iPhone/iPad Safari 直接在点击手势内播放有道 `dictvoice type=2`，不因 `navigator.onLine` 的假阴性跳过请求，并最多等待 15 秒让远程音频启动；其他设备优先使用浏览器语音合成，并在当前页面会话内锁定一个可用的美式音色（如 Samantha / Ava / Google US English）。若系统语音无法启动，当前会话整体切到同一 `type=2` 音源，避免逐词切换来源。可切换英音 `en-GB`，仍优先词条 `uk` 录音，否则使用有道 `dictvoice type=1`；失败后使用设备英音。语速均为 1×。跨设备的系统语音不保证同一说话人。
+| 读单词 | 当前已有 15 个本地单词音频（`comfortable`、`rural`、`schedule`、`entrepreneur`、`thorough`、`persevere`、`deliberate`、`subtle`、`resilient`、`comprehensive`、`ambitious`、`contribute`、`essential`、`accessible`、`significant`），美音 `en-US` 优先播放 `voice-00` MP3。前五个样音由用户试听认可；本批新增十词尚未逐条人工听检。其余未生成美音仍不读取词条自带的 `us` 录音：iPhone/iPad Safari 直接在点击手势内播放有道 `dictvoice type=2`，不因 `navigator.onLine` 的假阴性跳过请求，并最多等待 15 秒让远程音频启动；其他设备优先使用浏览器语音合成，并在当前页面会话内锁定一个可用的美式音色（如 Samantha / Ava / Google US English）。若系统语音无法启动，当前会话整体切到同一 `type=2` 音源，避免逐词切换来源。可切换英音 `en-GB`，仍优先词条 `uk` 录音，否则使用有道 `dictvoice type=1`；失败后使用设备英音。语速均为 1×。跨设备的系统语音不保证同一说话人。
 | 读句子 | **Arena 对话中已选 `voice-00`**，美式英语 `en-US`，1×。已有 MP3 为音色参考（例：`card-1.mp3`、`daily-1.mp3`）。该 ID 属于原会话，不是可在任意语音服务使用的模型名称。只按完整英文匹配录音，无录音时保留文字，不切换系统声音。 |
 
-当前 `media/voice/` 共 18,049 个 MP3 文件（原有 17,569 个 + 本次新增 480 个）。原有录音覆盖 11 个场景全部 1,100 条日常与商务口语，以及部分词卡例句；每条口语都对应本地完整 MP3。本次发布新增 472 个缺录词典短语、3 个精确改写例句和 5 个已确认单词样音。所选语音离线清单同步包含新增文件。
+当前 `media/voice/` 共 18,059 个 MP3 文件（原有 17,569 个 + 本轮累计新增 490 个）。原有录音覆盖 11 个场景全部 1,100 条日常与商务口语，以及部分词卡例句；每条口语都对应本地完整 MP3。本轮新增包含 472 个缺录词典短语、3 个精确改写例句、5 个用户确认样音和 10 个队列单词音频。所选语音离线清单同步包含新增文件。
 
 口语扩充批 989 条：89 条商务表达为连续录制后按原文对齐切分；900 条句型练习中 200 条整句录制，700 条用同一 `voice-00` 的句型前半句和任务短语组合（保留陈述/疑问语调，切口淡入淡出），不是设备合成，也不是换另一个人读。严格按原英文建立映射，重复的英文共享录音。
 
@@ -23,6 +23,6 @@ node scripts/voice-queue.mjs --pending > /tmp/pending.jsonl  # 每行给出原�
 ## 2026-11 发音补录发布状态
 
 - 472 个短语（先前 173 条 + 本轮 299 条）及 3 个精确改写例句均使用 `voice-00`／`en-US`。这些录音通过 PocketSphinx 自动词级对齐／切片检查后发布；这不代表 475 条逐条人工听检。被内容审核阻止的 1 个短语仍排除。
-- 五个单词样音为用户已试听认可的 `voice-00` 录音，仅覆盖上表列出的五词；9,830 个唯一词条的完整单词音频并未生成。
+- 五个单词样音（`comfortable`、`rural`、`schedule`、`entrepreneur`、`thorough`）为用户已试听认可的 `voice-00` 录音；另新增十个队列词 `persevere`、`deliberate`、`subtle`、`resilient`、`comprehensive`、`ambitious`、`contribute`、`essential`、`accessible`、`significant`，经 PocketSphinx 自动对齐检查，但尚未逐条人工听检。它们都是 9,830 个唯一词条中的少量音频，完整词库仍未生成。
 - 例句迁移的 501 个目标文本原有错误音频别名已从 `selectedRecordings` 移除，只为上述 3 条准确生成且程序对齐的目标句恢复本地录音。其余改写目标在正确音频完成前保持待配音。
 - 本次新增 MP3 尚未逐条人工听检；iPhone 16 Pro Max／iOS 27 真机回归尚未完成。

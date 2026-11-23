@@ -8,9 +8,10 @@
 - 固定工作分支：`arena/749eb136-struggle`（active；不得切换或改名）
 - 分支基点：`acf72ed4b80c34f0ec92ef462f02155557fc8fe4`
 - 交接文档初次提交 `908e5a7`；真实音频包曾在 `a6c5100` 先行上传到 GitHub 根目录。
-- 集成变更已在当前分支提交并推送：`839c59d`（`Integrate generated Lexio pronunciation audio`）。工作树干净，`origin/arena/749eb136-struggle` 与本地 HEAD 一致。
-- GitHub Pages workflow `deploy-lexio-pages` run `45171863549` 已完成，打包和 `Deploy to GitHub Pages` 两个 job 均成功。日志仅有 GitHub Actions Node.js 20 弃用提示，不影响此次部署。
-- 根目录 `LEXIO-PRONUNCIATION-BUNDLE-2026-11.zip` 是可选音频／清单备份；不包含源码补丁，也不在 Pages 网站目录中。干净 clone 可直接从当前分支读取应用代码和 `media/voice/` 中的已跟踪 MP3。
+- 先前 480 个资源已在 `839c59d` 集成、推送并由 Pages run `45171863549` 成功部署。
+- 本轮新增的十个单词 clip 已使用同一 voice-00 生成并通过 PocketSphinx 对齐；应用映射、离线清单和测试已更新到工作区，尚待本轮提交、推送及新一轮 Pages 部署确认。此前 480 个资源不需重生成。
+- 最近一次 Pages run 的两个 job 均成功；日志仅有 GitHub Actions Node.js 20 弃用提示，不影响部署。
+- 根目录 `LEXIO-PRONUNCIATION-BUNDLE-2026-11.zip` 本轮已更新为 490 个音频及清单备份；不包含源码补丁，也不在 Pages 网站目录中。干净 clone 可直接从当前分支读取应用代码和 `media/voice/` 中的已跟踪 MP3。
 - `.github/workflows/deploy-lexio-pages.yml` 对 `lexio-pwa-full/**` 的 push 会触发 Pages 部署；仅提交根目录文档或 ZIP 不会触发部署。
 
 ## 用户约束
@@ -19,7 +20,7 @@
 - iPhone 目标设备为 iPhone 16 Pro Max、iOS 27。程序测试和自动对齐不能替代真机测试，也不能替代逐条人工听检。
 - 不得把 PocketSphinx 对齐或 FFmpeg 解码说成人工听检；不得把未生成的词库队列说成已生成音频。
 - 被内容审核阻止的短语继续排除，不得改音色或绕过审核。
-- 用户要求生成后立即部署，并部署此前已生成的单词发音；本轮把已有的五个已确认单词样音一起集成，已随 `839c59d` 部署。全库 9,830 词并没有生成。
+- 用户要求生成后立即部署；上一批五个已确认单词样音已在 `839c59d` 部署。本轮再生成并集成十个词，待本轮部署。9,830 个唯一词条队列中目前仅 15 个有本地单词 MP3（五个已确认样音 + 十个新批次），并未生成完整词库。
 
 ## 已集成的音频与代码
 
@@ -35,26 +36,28 @@
 
 ### 单词样音
 
-- 用户已试听认可的 5 个样音：`comfortable`、`rural`、`schedule`、`entrepreneur`、`thorough`。已集成到 `selectedWordRecordings`，仅这些词的美音 `en-US` 入口优先播放本地 voice-00 MP3；英音及其余单词路线不变。
-- 9,830 个唯一单词／70 批的队列只是待生成元数据，不代表音频存在或已经发布。
+- 用户已试听认可的 5 个样音：`comfortable`、`rural`、`schedule`、`entrepreneur`、`thorough`。
+- 本轮新增下一批 10 个队列单词：`persevere`、`deliberate`、`subtle`、`resilient`、`comprehensive`、`ambitious`、`contribute`、`essential`、`accessible`、`significant`。使用 `voice-00`／`en-US` 逐词生成，PocketSphinx 自动对齐成功；尚未逐条人工听检。
+- 这 15 个单词已加入 `selectedWordRecordings`；其美音 `en-US` 入口播放本地 MP3，英音及其他词的路线不变。当前对应源码和新增 10 个文件仍待提交／部署。
+- `.tmp-voice/words-unique.json` 和 `word-groups.json` 的 9,830 项只是生成队列／元数据；只有上述 15 个单词现有实际 MP3，不能称全库已生成。
 
 ### 数量与离线资源
 
-- 本轮新增生产音频共 **480 个 MP3**（472 短语 + 3 条精确改写例句 + 5 个单词样音），共 7,847,208 字节；应用 `media/voice/` 原有 17,569 个文件，导入后共 18,049 个 MP3。
-- Service Worker 离线资源已加入全部新 clip，缓存版本升至 `lexio-shell-v115-pronunciation-backfill`。
-- `LEXIO-PRONUNCIATION-BUNDLE-2026-11.zip` 内含相同的 480 个发布音频、472 条短语映射、5 个单词映射、3 条目标句映射及原始目标句录音备份。
+- 本轮累计新增生产音频 **490 个 MP3**（472 短语 + 3 条精确改写例句 + 5 个已确认样音 + 10 个新队列单词），共 7,925,168 字节；原有 17,569 个文件，当前工作区合计 18,059 个 MP3。
+- Service Worker 离线资源已加入本批十个新 clip，缓存版本升至 `lexio-shell-v116-word-audio-batch-001`。
+- `LEXIO-PRONUNCIATION-BUNDLE-2026-11.zip` 内含相同的 490 个发布音频、472 条短语映射、15 个单词映射、3 条目标句映射及原始目标句录音备份。
 
 ## 检查与听检边界
 
-- **程序检查已通过：**`npm test`（导航、迁移、语音映射、离线清单及媒体范围请求），`node --check sw.js`，`git diff --check`，切音脚本 `py_compile`。
-- **音频帧检查已通过：**FFmpeg 成功解码 480/480 个本轮新增 MP3；472 个短语自动对齐／切片成功，3 条精确改写句自动文本对齐成功。这些仍属于程序检查。
-- **人工听检：**用户只确认过五个单词样音的声音正确；472 个短语、3 条精确改写句和原有全库录音未逐条人工听检。
+- **程序检查已通过：**`npm test`（导航、迁移、15 个单词映射、离线清单及媒体范围请求），`node --check sw.js`，`git diff --check`，切音脚本 `py_compile`。
+- **音频帧检查已通过：**FFmpeg 成功解码累计新增 490/490 个 MP3；472 个短语自动对齐／切片、3 条精确改写句及本批 10 个单词自动文本对齐成功。这些仍属于程序检查。
+- **人工听检：**用户只确认过五个单词样音的声音正确；本批 10 个单词、472 个短语、3 条精确改写句和原有全库录音未逐条人工听检。
 - **真机复测：**iPhone 16 Pro Max／iOS 27 尚未完成。
 
 ## 接下来
 
-1. 应用部署已由 `839c59d` 和 run `45171863549` 完成并成功；不要再为同一批资源重复生成或重复部署。若后续有新应用变更，仍只推送至 `arena/749eb136-struggle`，并再次核验对应 Pages run。
-2. 安排 iPhone 16 Pro Max／iOS 27 实测，分别检查离线短语、例句、五个本地单词样音、英式单词及普通美音回退。
+1. 将本轮十个单词 MP3、映射、v116 离线清单、更新测试与 ZIP 提交并推送至固定分支 `arena/749eb136-struggle`；再用 `gh run list --workflow deploy-lexio-pages.yml --branch arena/749eb136-struggle` 和 `gh run watch <run-id>` 确认新一轮 Pages 部署成功。不要重生成此前已有音频。
+2. 部署后安排 iPhone 16 Pro Max／iOS 27 实测，分别检查离线短语、例句、15 个本地单词音频、英式单词及普通美音回退。只有前五个样音经过用户听检确认。
 3. 继续处理剩余 498 条改写句的正确录音、9,830 个唯一单词音频生成队列及其他读音入口；不得将待生成元数据计作已生成文件，也不得声称已完成全库听检。
 
 ## 相关文件

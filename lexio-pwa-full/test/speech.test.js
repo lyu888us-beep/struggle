@@ -23,7 +23,9 @@ const dir=path.join(__dirname,'..');
     assert.equal(recordings[text],id);
   }
   console.log('✓ 501 个改写目标已移除旧音频别名，仅保留 3 条精确目标句录音');
-  const expectedWords=['comfortable','entrepreneur','rural','schedule','thorough'];
+  const approvedWords=['comfortable','entrepreneur','rural','schedule','thorough'];
+  const generatedBatchWords=['persevere','deliberate','subtle','resilient','comprehensive','ambitious','contribute','essential','accessible','significant'];
+  const expectedWords=[...approvedWords,...generatedBatchWords].sort();
   assert.deepEqual(Object.keys(wordRecordings).sort(),expectedWords);
   for(const word of expectedWords){
     const id='w-'+require('node:crypto').createHash('sha256').update(word).digest('hex').slice(0,16);
@@ -47,5 +49,5 @@ const dir=path.join(__dirname,'..');
     const mp3=fs.readFileSync(path.join(dir,url));
     assert.ok(mp3.length>1000,`${word} clip is missing or implausibly small`);
   }
-  console.log(`✓ ${Object.keys(wordRecordings).length} 个获用户认可的单词样音已纳入 en-US 播放和离线资源`);
+  console.log(`✓ ${Object.keys(wordRecordings).length} 个单词音频已纳入 en-US 播放和离线资源（5 个此前确认样音 + ${generatedBatchWords.length} 个本批新生成）`);
 })().catch(e=>{console.error(e);process.exitCode=1;});
