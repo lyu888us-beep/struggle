@@ -328,3 +328,51 @@
 | His successor died after only 15 months in office. | The successor continued the project with a fresh plan. | successor |
 | It is a prevalent belief, according to a nationwide poll in the United States, that Muslims are linked with terrorism. | A prevalent belief is that regular exercise supports good health. | prevalent |
 | He's only 24 years old and a drug addict. | He is a crossword addict who solves puzzles each morning. | addict |
+
+
+## 第八批：敏感内容自动改写（v102 已录）
+
+从剩余内容中选取 40 条含战争、死亡、歧视、药物或其他敏感语境的例句，改写为日常、非露骨或尊重性的表达，并保留词卡目标词（必要时使用自然屈折形式）。
+
+| 原句 | 改写后朗读 | 保留目标词 |
+|---|---|---|
+| On a rainy day, we keep guests; Heaven keeps you, but I won't | The painting shows heaven as a peaceful garden. | heaven |
+| He was sentenced to prison and stripped of his rank (= had his rank taken from him). | She earned the highest rank in her class. | rank |
+| Comrades! Let's transform Moscow into a model communist city | He met his old comrade at the reunion. | comrade |
+| Baldry’s 20-year prison sentence was commuted to three years. | She commutes to work by train each morning. | commute |
+| The army massacred more than 150 unarmed civilians. | The museum exhibit honors those lost in a historical massacre. | massacre |
+| The atomic bomb is the offspring of 20th century physics. | The young bird is the offspring of two nesting robins. | offspring |
+| My message is "If you try to smuggle drugs you are stupid." | Customs officers help prevent people from trying to smuggle protected plants. | smuggle |
+| Trump is a Russian asset. | A reliable laptop is a valuable asset for any student. | asset |
+| Invasive cancer cells | The gardener removed an invasive vine from the fence. | invasive |
+| Prepare to launch torpedoes | A torpedo-shaped fish darted through the water. | torpedo |
+| St. Stephen, the first Christian martyr | The history book describes a martyr who stood up for justice. | martyr |
+| Everybody rushing about on some incomprehensible errand someone forced him to do at pain of death. | She ran a quick errand to the post office. | errand |
+| In its more extreme variants, cis ideology can include denial of the empirical reality of intersex and transgender people. | Their ideology emphasizes cooperation and shared responsibility. | ideology |
+| A teenage mother was accused of smothering her 3-month-old daughter. | The child smothered the cake in chocolate sauce. | smother |
+| Spirits of Heaven and Earth, heed my call; manifest swiftly by divine decree! | Good team spirit made the event more enjoyable. | spirit |
+| Even though I walk through the valley of the shadow of death, I will fear no evil, for you are with me; your rod and your staff, they comfort me. | A wooden rod supported the young tomato plant. | rod |
+| Karl Marx says, "The history of all hitherto existing societies is the history of class struggles." | Hitherto, the library had closed at five each evening. | hitherto |
+| Scientists first conceived the idea of the atomic bomb in the 1930’s. | She conceived a clever plan for the school festival. | conceive |
+| Weeks of aerial bombardment had destroyed factories and motorways. | Aerial photographs show the river winding through the valley. | aerial |
+| He lured her to his home and shot her with his father's gun. | Bright flowers lure butterflies into the garden. | lure |
+| The bombs ignited a fire which destroyed some 60 houses. | Dry leaves can ignite quickly in hot weather. | ignite |
+| Russia is sending battleships, marines, and landing craft tanks against Syria, and submarine equiment against Iran. | She learned to craft a bowl from clay. | craft |
+| A surgical air strike | The surgical team prepared the room for the operation. | surgical |
+| A sorrowful tale of death and despair | The sorrowful ending of the story still offered hope. | sorrowful |
+| A frightful crime of decapitation | The weather turned frightful during the storm. | frightful |
+| Murdering elephants, tigers and other endangered species is not just cruel; it's also illegal. | It is illegal to park in front of the fire exit. | illegal |
+| The best hairdressers are gay | A gay hairdresser opened a studio near the park. | gay |
+| Karl Marx said: "Workers of the world, unite!" | Every worker deserves a safe and respectful workplace. | worker |
+| While camping, Tom gave Mary dysentery by not thoroughly cleaning the pots and pans | The soup simmered in a large pot on the stove. | pot |
+| Ethnic amalgamation ethnic assimilation and ethnic fusion of culture are three kinds of different phenomena in ethnic relation. | Assimilation helps the body turn food into useful nutrients. | assimilation |
+| The two men face execution (= They will be killed as a punishment ). | Program execution begins when you press the start button. | execution |
+| In Junethe civil war intensified. | The rain began to intensify as evening approached. | intensify |
+| But "the hostile part can be mobilized from time to time, " by what he calls "anti-immigrant entrepreneurs. | The immigrant family opened a small bakery in their new town. | immigrant |
+| Side effects from prescribed drugs are being reported with increasing frequency (= more and more often). | The bus service runs at high frequency during rush hour. | frequency |
+| A wife is usually considered unqualified to testify against her husband | She felt unqualified for the role until she received more training. | unqualified |
+| Drugged and senseless | It is senseless to waste clean water. | senseless |
+| Tom slit his own throat. | She slit the envelope open with a letter opener. | slit |
+| Your father is a gorilla | A gorilla rested quietly in the shade at the zoo. | gorilla |
+| The death toll has risen to 83. | The toll for crossing the bridge is collected at the gate. | toll |
+| "In anthropology, you can't equate third gender with homosexuality," he said. | In anthropology, researchers study how cultures change over time. | anthropology |
