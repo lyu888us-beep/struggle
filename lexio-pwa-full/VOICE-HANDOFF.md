@@ -84,8 +84,9 @@
 | v106 / 词卡 77 | 敏感内容自动改写第七批（40 条，逐条对照见 VOICE-REWRITE-CANDIDATES.md 第十一批） | 40 | 17,480 键 | 94 |
 | v107 / 词卡 78 | 11 条敏感语境尾项 + 26 条模板/说明片段 + 3 条数字/标记修整（第十二批） | 40 | 17,520 键 | 54 |
 | v108 / 词卡 79 | 清理其余 43 条可改写模板/片段、标记与病句；11 条明确排除项保留待录 | 43 | 17,563 键 | 11 |
+| v109 / 词卡 80 | 用户指示继续后，将此前保留的 11 条尾项中性改写并完成配音 | 11 | 17,574 键 | 0 |
 
-分母是当前 `voice-queue.mjs` 从内置数据去重得到的 17,574 条目标文本，不是词条数。不要按表中起止词跳过前面未录的句子。以剩余队列为准。用户要求：完成一批，测试、上传 GitHub、确认 Pages 部署、在对话里报告；需要换窗口时先更新此文档并给链接。不把后台离线下载描述成后台继续配音。v107 已处理剩余可安全中性改写的敏感尾项；v108 已完成其余 43 条非排除的模板/说明片段、标记和可改写病句。当前待录的 11 条均是既有明确排除项：gaokao:emperor、gaokao:legend、gaokao:keyboard、cet6:differentiation、cet6:province、kaoyan:millimeter、ielts:invigilate、ielts:plastic、pep-7-2:turn right/left、pep-8-1:be up to、pep-9-1:regret。保持原文和待录状态，不继续配音或从队列删除，除非用户明确更改决定。
+分母是当前 `voice-queue.mjs` 从内置数据去重得到的 17,574 条目标文本，不是词条数。不要按表中起止词跳过前面未录的句子。以剩余队列为准。用户要求：完成一批，测试、上传 GitHub、确认 Pages 部署、在对话里报告；需要换窗口时先更新此文档并给链接。不把后台离线下载描述成后台继续配音。v107 已处理剩余可安全中性改写的敏感尾项；v108 已完成其余 43 条非排除的模板/说明片段、标记和可改写病句；用户随后指示“继续”，v109 因此将此前保留的 11 条全部中性改写并完成配音，原始例句仍作为映射键保留。当前队列已清空：17,574 / 17,574 条已录，待录 0 条；改写对照见 `VOICE-REWRITE-CANDIDATES.md` 第十四批。
 
 ## 下一窗口如何接上
 
@@ -125,6 +126,8 @@
 - v107 / 词卡 78 试听：[Fresh grass covered the hillside after the spring rain.](media/voice/s-222c77d398c610b8.mp3)
 
 - v108 / 词卡 79 试听：[The speaker gave a wonderful lecture on astronomy.](media/voice/s-c6c96592ce61cf8b.mp3)
+
+- v109 / 词卡 80 试听：[This lunch box is made from recycled plastic.](media/voice/s-4091ede944d4407f.mp3)
 
 ### v74 历史失败项复核
 

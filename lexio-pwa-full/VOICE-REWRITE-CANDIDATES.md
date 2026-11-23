@@ -15,7 +15,9 @@
 | 7 | gaokao:tap | (= water that comes out of a tap) is usually heavily treated with chemicals. | Water that comes out of a tap is usually heavily treated with chemicals. | 括号释义升格为主语 | ✅ 已录 v92 |
 | 8 | ielts:trespass | Stephen Leckar has 30 minutes to represent Jones, …（约 330 字符的法庭陈述） | 同原文，仅 `30`→thirty，补人名音素 `L EH K ER` | 纯数字口头化 | ✅ 已录 v92 |
 
-## 明确建议放弃（不要录）
+## 先前明确建议放弃（状态更新见下）
+
+> **v109 状态更新：** 用户在 v108 后指示“继续”，此前待录的 11 条现已于 v109 中性改写并录制，逐条对照见“第十四批”。下表保留原先的排除理由作为历史记录；其余项目的状态不因本次更新改变。
 
 | 词卡来源 | 原文 | 原因 |
 |---|---|---|
@@ -644,3 +646,21 @@
 | We'll swim on this weekend. | We will go swimming this weekend. | weekend |
 | Everything is no problem. | There is no problem with the plan. | problem |
 | My favorite food is dumpling. | My favorite dumpling is filled with vegetables. | dumpling |
+
+## 第十四批：此前保留的 11 条尾项（v109 已录）
+
+应用户在 v108 之后“继续”的指示，本批将此前队列中保留的 11 条纳入处理。原始英文仍作为例句映射键；朗读版中性化原有宗教、政治、犯罪或机翻语境，并修复模板与病句，同时保留目标词。所有词典发音检查无缺项，三段录音均通过对齐和安全静音切分。
+
+| 原句 | 改写后朗读 | 保留目标词 |
+|---|---|---|
+| I am napoleon, I am emperor… burned it! | The emperor welcomed visitors to the palace. | emperor |
+| Local legend has it that (= says that) the island was the original Garden of Eden. | According to local legend, a hidden spring flows beneath the old bridge. | legend |
+| The Swiss keyboard doesn't have a ß. | I use a keyboard to type notes for class. | keyboard |
+| Excuse me each other a debate on the web, the virtual space, the interaction between people often with a mask, this month, the mirror with water flowers have what differentiation? | The chart shows clear differentiation between the two plant species. | differentiation |
+| Taoism was founded on the teachings of Laozi, a sage born in 604 B.C. in present-day Henan Province. | The province opened a new library for local families. | province |
+| It used materials is 0.4 millimeter stainless steel spring steel of powder coatings. | The screw is only one millimeter wide. | millimeter |
+| Different is, the exam in the life often does not have person invigilate. | Two teachers will invigilate the final exam. | invigilate |
+| On May 18, a young Japanese couple was arrested after their one-year-old baby was found wrapped in a plastic bag and dumped in a gutter. | This lunch box is made from recycled plastic. | plastic |
+| Go down this street/road until you reach the 1st/2nd/… traffic lights. Turn right/left. Atthe end of the road/street you'll see the … | At the next intersection, turn right for the library or turn left for the park. | turn right/left |
+| For the nursling of plantlets, the soil of the rotten leaves was the best materials, and the survival rate could be up to 80%. | The repair bill can be up to one hundred dollars. | be up to |
+| I regret some of my posts about President @realDonaldTrump last week. They went too far. | I regret leaving my umbrella at home on a rainy day. | regret |
