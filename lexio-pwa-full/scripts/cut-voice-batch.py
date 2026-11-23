@@ -415,6 +415,7 @@ phones = {
     "square's":"S K W EH R Z",
     "squatted":"S K W AA T IH D",
     "stomachache":"S T AH M AH K EY K",
+    "strutted":"S T R AH T IH D",
     "streetlight":"S T R IY T L AY T",
     "stuntman":"S T AH N T M AE N",
     "subjunctive":"S AH B JH AH NG K T IH V",

@@ -184,3 +184,51 @@
 | RSVP opened a session (2) with QFS. | Please RSVP to the invitation by Friday. | RSVP |
 | {"COLLOINEXA":["sexual repression"]} | The people lived under political repression for many years. | repression |
 | I am writing to confirm /enquire/inform you… | I am writing to enquire about the meeting time. | enquire |
+
+
+## 第五批：敏感内容自动改写（v99 已录）
+
+从敏感内容队列中选取 40 条，将原句改写为非露骨、语境中性的英语例句，并保留词卡目标词（必要时使用自然屈折形式）。
+
+| 原句 | 改写后朗读 | 保留目标词 |
+|---|---|---|
+| I'm not gay, but I like to masturbate with other males | He is gay and proud of his partner. | gay |
+| Life is a sexually transmitted terminal disease. | The doctor said the illness was terminal. | terminal |
+| She likes wearing boxer briefs, she doesn't like briefs, and also doesn't like thongs | He put on his boxer shorts before bed. | boxer |
+| I want to pluck your facial hair | She plucked a few strands of facial hair. | facial |
+| The film reinforces the idea that women should be pretty and dumb. | The teacher reinforced the lesson with a quiz. | reinforce |
+| Femdom is short for Female Domination | The old empire's domination lasted for centuries. | domination |
+| I don't like using dildos, I prefer real cocks | The cock crowed at dawn in the farmyard. | cock |
+| Life is a fatal sexually transmitted disease. | The accident was fatal for the driver. | fatal |
+| She had been raped and stabbed. | Rape is a serious crime punished by the law. | rape |
+| I've got a big cock! | The cock strutted around the farmyard. | cock |
+| I am reaching the climax | We are reaching the top of the hill. | reach |
+| My boss tried to cop a feel but I slapped his hand before he got any further. | The cop wrote down the details of the accident. | cop |
+| Shove a stick up your ass | He is as brave as a lion. | as |
+| In Amsterdam the girls all stand in the windows shimmering as tantalising as tropical fish beyond the gleam of aquarium glass. | We watched the tropical fish swimming in the aquarium. | aquarium |
+| Tell your sister her thong is showing | Show your sister the photos from the trip. | show |
+| Every dumbass with a camera thinks he is a photographer | My sister works as a professional photographer. | photographer |
+| The "drop the T" movement was started by a guy who now identifies as ex-gay | The movement started in a small town and grew quickly. | movement |
+| It meant that I, a humble Negro girl, had just as much chance as anybody in the sight and love of God. | The term Negro appears in some older books, but it is now considered outdated. | negro |
+| What is oral sex? | What is oral hygiene? | oral |
+| The extracurricular activities of a philandering husband | She joined many extracurricular activities at school. | extracurricular |
+| Your see-through dress really excites me | The good news excites me a lot. | excite |
+| We know the rapist stalks his victims at night. | A leopard stalked its prey in the dark. | stalk |
+| There is no greater insult to life than premature ejaculation. | Premature birth can pose serious health risks. | premature |
+| However, it seems that just because it's a 'low risk day' doesn't mean that you won't get pregnant from intravaginal ejaculation. | She did not know she was pregnant until the test. | pregnant |
+| "What's the difference between erotic and kinky?" "Erotic is when you use a feather and kinky is when you use a whole chicken." | A soft feather landed on the table. | feather |
+| She was wearing pink panties under the skirt | She was wearing a pink jacket under the coat. | pink |
+| Even if we don't get lucky on the first try we can just keep fucking till I get pregnant. | She visited the clinic after learning she was pregnant. | pregnant |
+| I don't give a rat's ass | He is as strong as an ox. | as |
+| She doesn't like oral sex. | The dentist gave her a thorough oral examination. | oral |
+| I like it when you talk dirty to me! | I like it when you talk to me about your day. | like |
+| That's not what I mean. Sex discrimination, female discrimination, whatever, men and women are just different. | The law protects people from discrimination at work. | discrimination |
+| Tom has a tiny dick | Tom has a tiny desk in his room. | tiny |
+| She's got a nice ass | She is as tall as her brother. | as |
+| He is really a queer fellow! | He is really a quiet fellow. | fellow |
+| If so, this would add to a growing list of physiological and biological markers of sexual orientation. | The doctor studied the physiological effects of exercise. | physiological |
+| Erectile dysfunction | The doctor explained the cause of the heart dysfunction. | dysfunction |
+| Please take off all your clothes except your underpants and bra | Everyone left the room except the teacher. | except |
+| Sami had Layla perform oral sex on him. | Sami asked Layla to give an oral report. | oral |
+| Tatoeba: Where debates are hotter than two rabbits making babies in a sock! | The baby rabbit slept in its nest. | baby |
+| Claudio had long hair and smoked pot | Claudio had long hair and smoked cigarettes. | smoke |
