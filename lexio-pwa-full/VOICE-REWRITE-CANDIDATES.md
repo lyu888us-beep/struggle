@@ -527,3 +527,63 @@
 | Our feckless opposition party didn't do enough to stop him | The opposition proposed a different plan at the town meeting. | opposition |
 | They endured five years of privation during the World War II. | The museum exhibit describes daily life during World War Two. | world war ii |
 | The CIA had requested our help to penetrate a drug ring operating out of Munich. | Munich is known for its parks, museums, and historic architecture. | munich |
+
+
+## 第十二批：敏感尾项、模板/说明和标记（v107 已录）
+
+本批依用户指定顺序，先完成 11 条剩余可安全中性改写的敏感/刻板印象例句，再处理 26 条模板、说明或带说话人标记的片段，最后口头化 3 条时间/数字内容。分九段合成；40 条均通过对齐和安全静音切分。明确排除项继续保留在待录队列。
+
+### 敏感语境尾项（11 条）
+
+| 原句 | 改写后朗读 | 保留目标词 |
+|---|---|---|
+| In conversation among the small grasses, do not offend the big tree | Fresh grass covered the hillside after the spring rain. | grass |
+| ‘I’m a prisoner in my own home.’ ‘Nonsense!’ | The children laughed at the nonsense in the cartoon. | nonsense |
+| This is the ideology to which my speech is written. | Her ideology emphasizes cooperation and respect for nature. | ideology |
+| The Nobel Prize is awarded annually on December 10, the day of Alfred Nobel's death | Our neighborhood holds its harvest festival annually in October. | annually |
+| A little church with a squat tower | A squat stone tower stands beside the old town hall. | squat |
+| Mr. Goat Butt never told me there would be a partner | The young goats butt heads as they play in the meadow. | butt |
+| This man is like a filthy electronic without a battery. | An electronic timer helps the baker keep track of the oven. | electronic |
+| Next to China, Switzerland is an abandoned village | A quiet village rests beside a lake in the Alps. | village |
+| Esperanto, an official language of the European Union, now! | The city issued an official notice about the library's new hours. | official |
+| The government has agreed to underwrite the project with a grant of £5 million. | A local foundation agreed to underwrite the community arts program. | underwrite |
+| Put some clothes on, don't you feel sick of yourself? | I felt sick after eating too much candy. | sick |
+
+### 模板/说明及标记片段（26 条）
+
+| 原句 | 改写后朗读 | 保留目标词 |
+|---|---|---|
+| Exploring hidden treasures behind waterfalls is one of my favorite parts of WHAT THE CAR? | They found a hidden treasure beneath the old lighthouse. | treasure |
+| The level editor in WHAT THE CAR? lets you create your own wacky challenges. | The video editor trimmed the clips before the film was shown. | editor |
+| Rice: No, I only have a handbag. | She packed a notebook and a water bottle in her handbag. | handbag |
+| Rachael:Do you like our owl? | An owl settled quietly on a branch at dusk. | owl |
+| I can't stop laughing at the jetpack-powered car in "WHAT THE CAR?"! | We shared a laugh while playing a silly racing game. | laugh |
+| We gonna mosh through the marsh, take us right through the doors. | The trail passed through a quiet marsh filled with birds. | marsh |
+| Kids open their presents in Christmas morning | The children opened their presents on Christmas morning. | present |
+| Ankle, ankle, where are you? | My ankle felt stiff after the long walk. | ankle |
+| I like how WHAT THE CAR? combines racing with fun puzzle gameplay and exploration | The science museum encourages exploration through hands-on exhibits. | exploration |
+| The word roost appears in this sentence. | The hens returned to the roost just before sunset. | roost |
+| If human life is convex, we can optimize it | A convex lens bends light toward a single point. | convex |
+| No, but a fridge and a stove. | The fridge and stove were delivered this morning. | fridge |
+| Why should you spring my cricket bat? | She practiced cricket with a new bat after school. | cricket |
+| In WHAT THE CAR?, you play as a car with legs, racing through absurdly creative levels | Each level of the course introduces a new skill. | level |
+| Nearly lost Chinese etiquette terms. | Good etiquette helps guests feel welcome at a formal dinner. | etiquette |
+| We could reprint at a cost of X, or she had found a service that would affix stickers over the price to correct at a cost of X. | She will affix a label to each folder. | affix |
+| I love how WHAT THE CAR? combines racing with quirky puzzles and exploration | The research team planned an exploration of the forest. | exploration |
+| He-heh... there's a tale behind that, for that place | My grandfather told a tale about a lighthouse. | tale |
+| B Thank you. Have a good day. | Have a good day, and thanks for your help. | have a good day! |
+| How long does it take to go from... to... by train? | The train travels from Boston to New York each morning. | from... to... |
+| A a story. | She wrote a story about a lost kitten. | story |
+| This table shows the differences between... and... | A narrow path runs between the lake and the forest. | between... and... |
+| Let the tea set and tea combine perfectly. | The tea set matched the cups and tray. | tea set |
+| I think Gama-Go is one of the coolest like, quintessential San Francisco places to go check out. | Let's check out the new art exhibit after lunch. | check out |
+| Everything he said is all my lines! | She wrote a line of dialogue for the play. | line |
+| Not only…but also. | She is not only kind but also thoughtful. | not only ... but also |
+
+### 时间与数字口头化（3 条）
+
+| 原句 | 改写后朗读 | 保留目标词 |
+|---|---|---|
+| The lighted dial of her watch said 1.20. | The lighted dial made it easy to see the time. | dial |
+| This evening’s performance will begin at 8.00 pm. | This evening's performance will begin at eight o'clock. | performance |
+| Ten, twenty, thirty, forty, fifty, sixty, seventy, eighty, ninety, one hundred | Let's count by tens: ten, twenty, thirty, forty, fifty, sixty, seventy, eighty, ninety, and one hundred. | eighty |
