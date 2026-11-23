@@ -1,5 +1,5 @@
 /* Lexio 乐词 PWA shell cache. Bump the cache version whenever app assets change. */
-const CACHE_NAME = 'lexio-shell-v116-word-audio-batch-001';
+const CACHE_NAME = 'lexio-shell-v117-ios-audio-fallback';
 const SHELL_URLS = [
   './',
   './index.html',

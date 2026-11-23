@@ -20352,9 +20352,13 @@
             americanWordUsesDictionaryFallback = true;
             playPronunciation(entry.word,'en-US',1,'',undefined,error=>toastMessage(error.message),false,false);
           };
-          // iOS WebKit may expose voices late and reject a delayed Audio.play().
-          // Start its single en-US audio route directly inside the user's tap.
-          if (USE_IOS_WORD_AUDIO || americanWordUsesDictionaryFallback) { useDictionaryFallback(); return; }
+          // Start iOS dictionary audio directly inside the tap, but keep system
+          // en-US speech as a fallback if that network clip fails.
+          if (USE_IOS_WORD_AUDIO) {
+            playPronunciation(entry.word,'en-US',1,'',undefined,error=>toastMessage(error.message),false,true);
+            return;
+          }
+          if (americanWordUsesDictionaryFallback) { useDictionaryFallback(); return; }
           speak(entry.word,accent,undefined,useDictionaryFallback,1);
           return;
         }
@@ -20382,7 +20386,7 @@
         };
         // navigator.onLine is only a hint and can be false on iOS even when a
         // request can succeed. The direct iOS en-US route should always try.
-        const directIosAmerican = USE_IOS_WORD_AUDIO && lang === 'en-US' && !allowSystemFallback;
+        const directIosAmerican = USE_IOS_WORD_AUDIO && lang === 'en-US' && !local;
         if (!local && navigator.onLine === false && !directIosAmerican) { fallback(); return; }
         try {
           const source=new URL(supplied || 'https://dict.youdao.com/dictvoice?type='+(lang==='en-GB'?1:2)+'&audio='+encodeURIComponent(text),location.href);

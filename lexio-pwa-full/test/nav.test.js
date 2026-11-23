@@ -363,8 +363,8 @@ function animClean() {
     cssText.includes('@keyframes appHomeEnter') && cssText.includes('@keyframes appPricingEnter') &&
     cssText.includes('@keyframes pricePop') && cssText.includes('.price strong.is-changing') &&
     cssText.includes('prefers-reduced-motion: reduce'));
-  check('Service Worker 升到 v116 并预缓存口语句库与安装引导视频',
-    swSource.includes("CACHE_NAME = 'lexio-shell-v116-word-audio-batch-001'") &&
+  check('Service Worker 升到 v117 并预缓存口语句库与安装引导视频',
+    swSource.includes("CACHE_NAME = 'lexio-shell-v117-ios-audio-fallback'") &&
     swSource.includes("'./data/daily-conversation.json'") &&
     swSource.includes("'./media/install-guide.mp4'") &&
     pageHtml.includes('controllerchange') && pageHtml.includes('swRefreshing'));
@@ -796,6 +796,13 @@ function animClean() {
       !!iw.__lastIosAudio && new URL(iw.__lastIosAudio.src).searchParams.get('type')==='2' &&
       iw.__iosPlayInsideTap===true && (iw.__iosTtsCalls||0)===0,
       `audio=${!!iw.__lastIosAudio} type=${iw.__lastIosAudio&&new URL(iw.__lastIosAudio.src).searchParams.get('type')} tts=${iw.__iosTtsCalls||0}`);
+    // A successful Audio.play() promise does not prove that a remote clip
+    // actually decodes. Simulate a real media error and require an en-US TTS fallback.
+    const mediaError=(iw.__lastIosAudio.listeners.error||[])[0];
+    if(mediaError)mediaError();
+    await sleep(40);
+    check('iPhone Safari 词典音频媒体错误后回退到系统 en-US 语音',
+      (iw.__iosTtsCalls||0)>0,`tts=${iw.__iosTtsCalls||0}`);
     iosDom.window.close();
   }
 
