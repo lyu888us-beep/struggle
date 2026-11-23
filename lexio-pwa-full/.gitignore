@@ -1,0 +1,6 @@
+node_modules/
+__pycache__/
+.venv/
+
+# Temporary voice synthesis and alignment artifacts; publish only reviewed MP3 clips.
+.tmp-voice/

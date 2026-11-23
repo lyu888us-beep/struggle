@@ -1,0 +1,14 @@
+{
+  "voice_id": "voice-00",
+  "language": "en-US",
+  "userApprovedVoiceSample": true,
+  "count": 5,
+  "clips": {
+    "comfortable": "w-46fd05f35b5591e2",
+    "rural": "w-d359e52a5efb652d",
+    "schedule": "w-5f72005e81c4ecbd",
+    "entrepreneur": "w-4594a1dfbd0c1151",
+    "thorough": "w-a06d7b2b0415505d"
+  },
+  "integration_status": "integrated into en-US word playback only; not a full-dictionary recording set"
+}

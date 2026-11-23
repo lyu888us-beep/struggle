@@ -1,0 +1,7 @@
+{
+  "sourceUrl": "./data/original-site-wordbank.json",
+  "format": "json",
+  "expectedCount": 28414,
+  "cacheOnDevice": true,
+  "notes": "25,024 条原考试记录，3,252 条大陆教材记录、48 条原创启蒙词条和 90 条美国分级精选。"
+}
