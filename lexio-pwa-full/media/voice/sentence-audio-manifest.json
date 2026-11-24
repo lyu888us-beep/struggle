@@ -7340,6 +7340,267 @@
           "sourceEndSeconds": 2.763
         }
       ]
+    },
+    {
+      "id": "sentence-batch-007",
+      "itemsConsidered": 10,
+      "clipsPublished": 10,
+      "skippedAfterSafetyChecks": 0,
+      "individuallyHumanListened": false,
+      "sourceAudioGroups": [
+        "isolated-015",
+        "isolated-016",
+        "isolated-025",
+        "isolated-026",
+        "isolated-027",
+        "isolated-030",
+        "isolated-038",
+        "isolated-043",
+        "isolated-048",
+        "isolated-049"
+      ],
+      "isolatedReviewItemsPublished": 10,
+      "groupCount": 10,
+      "groupCutMethod": "Individual single-sentence WAVs; PocketSphinx exact transcript alignment; no inter-sentence cuts",
+      "automatedKeywordFlagsAreSafetyVerdicts": false,
+      "items": [
+        {
+          "group": "isolated-015",
+          "index": 0,
+          "source": "gaokao:poison",
+          "text": "The guide showed us how to recognize poison ivy.",
+          "file": "s-403cff3b9afb8660.mp3",
+          "clip": "s-403cff3b9afb8660",
+          "bytes": 18524,
+          "sha256": "c5ba6685791dc2b04f3f03c408752e71ef9edaee3e8d7664483476875943736a",
+          "alignment": "PocketSphinx exact token sequence",
+          "alignedTokens": 9,
+          "ffmpegDecoded": true,
+          "miniaudioDecoded": true,
+          "safe": true,
+          "sourceStartSeconds": 0.0,
+          "sourceEndSeconds": 2.984
+        },
+        {
+          "group": "isolated-016",
+          "index": 0,
+          "source": "gaokao:terror",
+          "text": "The child overcame her terror of thunderstorms.",
+          "file": "s-6af53bda20b2444b.mp3",
+          "clip": "s-6af53bda20b2444b",
+          "bytes": 18524,
+          "sha256": "88986048399d4217a61efe0e385b08f3757f8b1deb9f5f0d3c16cb61f4eb0709",
+          "alignment": "PocketSphinx exact token sequence",
+          "alignedTokens": 7,
+          "ffmpegDecoded": true,
+          "miniaudioDecoded": true,
+          "safe": true,
+          "sourceStartSeconds": 0.0,
+          "sourceEndSeconds": 2.984
+        },
+        {
+          "group": "isolated-025",
+          "index": 0,
+          "source": "cet4:interracial",
+          "text": "The school hosted a discussion about interracial families.",
+          "file": "s-19e18553cd4aa11c.mp3",
+          "clip": "s-19e18553cd4aa11c",
+          "bytes": 21980,
+          "sha256": "8b67690b7bea93e989e1c5498b7af5f4c7c35fef9a3cc430c97e912bbc3f040d",
+          "alignment": "PocketSphinx exact token sequence",
+          "alignedTokens": 8,
+          "ffmpegDecoded": true,
+          "miniaudioDecoded": true,
+          "safe": true,
+          "sourceStartSeconds": 0.0,
+          "sourceEndSeconds": 3.576
+        },
+        {
+          "group": "isolated-026",
+          "index": 0,
+          "source": "cet4:reproductive",
+          "text": "The biology class studied reproductive health.",
+          "file": "s-34aefab6fb875f96.mp3",
+          "clip": "s-34aefab6fb875f96",
+          "bytes": 17516,
+          "sha256": "76dd820a55d8ec7a335ebc36dcacba9aad7365fe755a31735f6a3de6661e06b0",
+          "alignment": "PocketSphinx exact token sequence",
+          "alignedTokens": 6,
+          "ffmpegDecoded": true,
+          "miniaudioDecoded": true,
+          "safe": true,
+          "sourceStartSeconds": 0.0,
+          "sourceEndSeconds": 2.81
+        },
+        {
+          "group": "isolated-027",
+          "index": 0,
+          "source": "cet4:domination",
+          "text": "The old empire's domination lasted for centuries.",
+          "file": "s-fd0a9b9001dfe819.mp3",
+          "clip": "s-fd0a9b9001dfe819",
+          "bytes": 19964,
+          "sha256": "a01bcbcbe900693053e19afe52a36b9803ce5628d068a1bdc318c415e4b11235",
+          "alignment": "PocketSphinx exact token sequence",
+          "alignedTokens": 7,
+          "ffmpegDecoded": true,
+          "miniaudioDecoded": true,
+          "safe": true,
+          "sourceStartSeconds": 0.0,
+          "sourceEndSeconds": 3.239
+        },
+        {
+          "group": "isolated-030",
+          "index": 0,
+          "source": "cet4:gay",
+          "text": "He is gay and proud to be himself.",
+          "file": "s-c4ddeaffa31fb650.mp3",
+          "clip": "s-c4ddeaffa31fb650",
+          "bytes": 15500,
+          "sha256": "17d37cac08a4ff64026f1a7b782bda1959f8962102395c23b9e31b466fb83150",
+          "alignment": "PocketSphinx exact token sequence",
+          "alignedTokens": 8,
+          "ffmpegDecoded": true,
+          "miniaudioDecoded": true,
+          "safe": true,
+          "sourceStartSeconds": 0.0,
+          "sourceEndSeconds": 2.473
+        },
+        {
+          "group": "isolated-038",
+          "index": 0,
+          "source": "cet6:execution",
+          "text": "Program execution begins when you press the start button.",
+          "file": "s-ea764dd4cff0c419.mp3",
+          "clip": "s-ea764dd4cff0c419",
+          "bytes": 20252,
+          "sha256": "0a7ea1329ff174e60fe967606749a47d67f55c03d999d0a78577009afdc5c6a0",
+          "alignment": "PocketSphinx exact token sequence",
+          "alignedTokens": 9,
+          "ffmpegDecoded": true,
+          "miniaudioDecoded": true,
+          "safe": true,
+          "sourceStartSeconds": 0.0,
+          "sourceEndSeconds": 3.274
+        },
+        {
+          "group": "isolated-043",
+          "index": 0,
+          "source": "cet6:premature",
+          "text": "Premature birth can pose serious health risks.",
+          "file": "s-abe0323ff8613813.mp3",
+          "clip": "s-abe0323ff8613813",
+          "bytes": 17516,
+          "sha256": "f7b75f0a171ac9d6a05ae3a3b6741165e9a2e1a0ce7f330f75b245fa675874c3",
+          "alignment": "PocketSphinx exact token sequence",
+          "alignedTokens": 7,
+          "ffmpegDecoded": true,
+          "miniaudioDecoded": true,
+          "safe": true,
+          "sourceStartSeconds": 0.0,
+          "sourceEndSeconds": 2.81
+        },
+        {
+          "group": "isolated-048",
+          "index": 0,
+          "source": "cet6:dysfunction",
+          "text": "The doctor explained the cause of the heart dysfunction.",
+          "file": "s-a63dbd6f6d8324ea.mp3",
+          "clip": "s-a63dbd6f6d8324ea",
+          "bytes": 17948,
+          "sha256": "61f455402e8495ce19eb1206bd3ba3066a156dfdfb9cffa0bd3323c97be5270b",
+          "alignment": "PocketSphinx exact token sequence",
+          "alignedTokens": 9,
+          "ffmpegDecoded": true,
+          "miniaudioDecoded": true,
+          "safe": true,
+          "sourceStartSeconds": 0.0,
+          "sourceEndSeconds": 2.891
+        },
+        {
+          "group": "isolated-049",
+          "index": 0,
+          "source": "cet6:surgical",
+          "text": "The surgical team prepared the room for the operation.",
+          "file": "s-fdc17c2af2cc83e6.mp3",
+          "clip": "s-fdc17c2af2cc83e6",
+          "bytes": 19244,
+          "sha256": "d5d52d2fbb43010ced7e1fd81960e9495076806bcf17f7f22ae97f3758284c8b",
+          "alignment": "PocketSphinx exact token sequence",
+          "alignedTokens": 9,
+          "ffmpegDecoded": true,
+          "miniaudioDecoded": true,
+          "safe": true,
+          "sourceStartSeconds": 0.0,
+          "sourceEndSeconds": 3.111
+        }
+      ],
+      "contextualReview": {
+        "method": "Item-by-item contextual text review; automated keyword flags are screening cues only, not safety verdicts.",
+        "automatedKeywordFlagsAreSafetyVerdicts": false,
+        "items": [
+          {
+            "group": "isolated-015",
+            "source": "gaokao:poison",
+            "decision": "eligible for generation after context review",
+            "rationale": "Botanical identification: poison ivy is a plant; no poisoning instructions."
+          },
+          {
+            "group": "isolated-016",
+            "source": "gaokao:terror",
+            "decision": "eligible for generation after context review",
+            "rationale": "A child overcomes fear of thunderstorms; ordinary emotional and weather context."
+          },
+          {
+            "group": "isolated-025",
+            "source": "cet4:interracial",
+            "decision": "eligible for generation after context review",
+            "rationale": "Inclusive discussion of interracial families; neutral educational context."
+          },
+          {
+            "group": "isolated-026",
+            "source": "cet4:reproductive",
+            "decision": "eligible for generation after context review",
+            "rationale": "Non-explicit biology-class discussion of reproductive health."
+          },
+          {
+            "group": "isolated-027",
+            "source": "cet4:domination",
+            "decision": "eligible for generation after context review",
+            "rationale": "Historical description of an empire; no endorsement or operational instruction."
+          },
+          {
+            "group": "isolated-030",
+            "source": "cet4:gay",
+            "decision": "eligible for generation after context review",
+            "rationale": "Positive, affirming statement about sexual orientation."
+          },
+          {
+            "group": "isolated-038",
+            "source": "cet6:execution",
+            "decision": "eligible for generation after context review",
+            "rationale": "Computer-program execution context."
+          },
+          {
+            "group": "isolated-043",
+            "source": "cet6:premature",
+            "decision": "eligible for generation after context review",
+            "rationale": "Non-graphic health-education statement about premature birth."
+          },
+          {
+            "group": "isolated-048",
+            "source": "cet6:dysfunction",
+            "decision": "eligible for generation after context review",
+            "rationale": "Non-graphic medical explanation of heart dysfunction."
+          },
+          {
+            "group": "isolated-049",
+            "source": "cet6:surgical",
+            "decision": "eligible for generation after context review",
+            "rationale": "Routine hospital preparation for a surgical operation."
+          }
+        ]
+      }
     }
   ]
 }
