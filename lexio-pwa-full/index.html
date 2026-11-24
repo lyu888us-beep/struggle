@@ -1868,7 +1868,7 @@
       const DB_WORDS = 'words';
       const DB_STAGING = 'stagingWords';
       const DB_META = 'meta';
-      const BUNDLED_CONTENT_VERSION = 'school-grades-2026-11-v5';
+      const BUNDLED_CONTENT_VERSION = 'school-grades-2026-11-v6';
       let db = null;
       let bankReady = false, bankMeta = null;
       let bank = SAMPLE_WORDS.map((w, i) => normalizeWord(w, i));
@@ -30689,6 +30689,12 @@
         "younger": "w-153096a54e34e7e8",
         "youngster": "w-dbc9a3eeab8fb9d6"
       };
+      const selectedWordAudioRevisions = { the: 'review-2026-11-20' };
+      function wordAudioUrl(word, clip) {
+        const base='./media/voice/'+clip+'.mp3';
+        const revision=selectedWordAudioRevisions[String(word||'').trim().toLowerCase()];
+        return revision ? `${base}?rev=${encodeURIComponent(revision)}` : base;
+      }
       function recordingFor(text) {
         const key=String(text||'').trim();
         return Object.hasOwn(selectedRecordings,key) ? selectedRecordings[key] : null;
@@ -30727,7 +30733,7 @@
           // Prefer an exact pre-generated voice-00 recording when this word has one.
           const localWordClip = selectedWordRecordings[String(entry.word).trim().toLowerCase()];
           if (localWordClip) {
-            playPronunciation(entry.word, 'en-US', 1, './media/voice/' + localWordClip + '.mp3',
+            playPronunciation(entry.word, 'en-US', 1, wordAudioUrl(entry.word, localWordClip),
               undefined, error => toastMessage(error.message), true, false);
             return;
           }
@@ -31358,7 +31364,7 @@
           if(!entry)continue;
           const wordClip=selectedWordRecordings[String(entry.word||'').trim().toLowerCase()];
           const exampleClip=recordingFor(entry.example);
-          if(wordClip)assets.add('./media/voice/'+wordClip+'.mp3');
+          if(wordClip)assets.add(wordAudioUrl(entry.word,wordClip));
           if(exampleClip)assets.add('./media/voice/'+exampleClip+'.mp3');
         }
         return [...assets];

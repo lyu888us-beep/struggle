@@ -10,7 +10,7 @@
 
 ## 部署与手机安装
 
-将本目录内容部署到支持 HTTPS 的静态托管。若 GitHub Pages 发布的是仓库根目录，本 PWA 位于 `https://lyu888us-beep.github.io/struggle/lexio-pwa-full/`。用 iPhone Safari 打开部署后的 HTTPS 地址，再选择「分享」→「添加到主屏幕」。首次联网启动并缓存词库后，可离线学习。
+仓库中的 GitHub Actions workflow 会把本目录内容发布到 GitHub Pages 项目站点。部署成功后的地址为 `https://lyu888us-beep.github.io/struggle/`，使用 GitHub 提供的 HTTPS 地址，无需自有域名。用 iPhone Safari 打开该地址，再选择「分享」→「添加到主屏幕」。首次联网启动并缓存词库后，可离线学习。
 
 ## 词库更新
 
@@ -52,7 +52,7 @@ npm test
 - 宣传页删除 GitHub 更新词条说明、团队版接入说法、价格来源说明与虚构成绩/评价；老师与学校合作改为“可以提供的服务”表述。
 - 词库基础数据：8,587 条夹带中文的“例句”已全部替换为纯英文；另有 3,399 条词典残句（如 `...the president's departure`）换成完整句子。现在 8,898 条来自 Tatoeba、14,457 条来自四六级/考研/雅思词典、693 条来自 WordNet，1,521 条为明确标注的英文练习提示句。
 - 仍有 998 条词典只提供短语（如 `a honeymoon suite`）。App 内标注为「词典短语」，不伪装成句子、不提供整句朗读——没有可信来源时不会自己编句子。
-- 已安装旧版本的用户会在下一次联网打开时自动迁移词库内容（`BUNDLED_CONTENT_VERSION = example-full-sentences-2026-11-v3`）。
+- 已安装旧版本的用户会在下一次联网打开时自动迁移词库内容（`BUNDLED_CONTENT_VERSION = school-grades-2026-11-v6`），包括将 `hi` 的两条错配例句替换为同一条带精确录音的问候句。
 
 运行测试：`npm test`（jsdom 导航/语音/进度/提醒/文案断言）。
 

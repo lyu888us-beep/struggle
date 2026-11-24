@@ -1226,7 +1226,7 @@ function animClean() {
       `before=${chineseBefore} after=${chineseAfter}`);
     const version = (pageHtml.match(/BUNDLED_CONTENT_VERSION\s*=\s*'([^']+)'/) || [])[1];
     check('内容版本号已递增，老客户端会触发这次迁移',
-      version === 'school-grades-2026-11-v5', String(version));
+      version === 'school-grades-2026-11-v6', String(version));
 
     const explicitMigrations = bundled.metadata.exampleTextMigrations || {};
     const migrationEntries = Object.entries(explicitMigrations);
@@ -1256,8 +1256,8 @@ function animClean() {
       migratedRewrite[index]?.id === id && migratedRewrite[index]?.example === migration.to &&
       migratedRewrite[index]?.exampleTranslation === (bundledById.get(id)?.exampleTranslation || '')
     );
-    check('731 条精确例句迁移按词条 ID 生效，并隐藏旧译文',
-      migrationEntries.length === 731 && everyRewriteMigrated && !!migrationPersisted,
+    check('733 条精确例句迁移按词条 ID 生效，并隐藏旧译文',
+      migrationEntries.length === 733 && everyRewriteMigrated && !!migrationPersisted,
       `entries=${migrationEntries.length} migrated=${migratedRewrite.filter((record,index)=>record?.id===migrationEntries[index]?.[0] && record?.example===migrationEntries[index]?.[1].to && record?.exampleTranslation===(bundledById.get(migrationEntries[index]?.[0])?.exampleTranslation||'')).length}`);
 
     const previouslyPublishedRewrites = migrationEntries.filter(([,migration])=>Array.isArray(migration.alsoFrom));

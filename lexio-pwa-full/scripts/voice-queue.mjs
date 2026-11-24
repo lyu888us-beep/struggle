@@ -7,8 +7,14 @@ const root=new URL('../',import.meta.url), read=p=>readFileSync(new URL(p,root),
 const html=read('index.html');
 const clips=JSON.parse(html.match(/const selectedRecordings = (\{[\s\S]*?\});/)[1]);
 const demo=vm.runInNewContext(html.match(/const SAMPLE_WORDS = (\[[\s\S]*?\n      \]);/)[1]);
-const books=JSON.parse(read('data/original-site-wordbank.json')).books;
+const wordbank=JSON.parse(read('data/original-site-wordbank.json'));
+const books=wordbank.books;
 const phrases=JSON.parse(read('data/daily-conversation.json')).phrases;
+const preservedMigrationTexts=new Set();
+for(const migration of Object.values(wordbank.metadata.exampleTextMigrations||{})){
+  const prior=Array.isArray(migration.from)?migration.from:[migration.from];
+  for(const text of [...prior,...(migration.alsoFrom||[])])if(typeof text==='string'&&text.trim())preservedMigrationTexts.add(text.trim());
+}
 const sentences=new Map(),dictionaryFragments=new Map();
 function add(target,text,source){
   text=text?.trim();if(!text||target.has(text))return;
@@ -27,7 +33,7 @@ for(const {id,words} of [...books,{id:'demo',words:demo}]){
 for(const p of phrases)add(sentences,p.en,`phrase:${p.id}`);
 const phraseOnly=[...dictionaryFragments].filter(([text])=>!sentences.has(text));
 for(const [text,clip] of Object.entries(clips)){
-  if(!sentences.has(text)&&!dictionaryFragments.has(text))throw Error(`Unmatched recording text: ${clip} (${text})`);
+  if(!sentences.has(text)&&!dictionaryFragments.has(text)&&!preservedMigrationTexts.has(text))throw Error(`Unmatched recording text: ${clip} (${text})`);
   if(!existsSync(new URL(`media/voice/${clip}.mp3`,root)))throw Error(`Missing recording file: ${clip} (${text})`);
 }
 const missing=[...sentences].filter(([text])=>!Object.hasOwn(clips,text));

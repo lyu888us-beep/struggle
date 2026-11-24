@@ -25,6 +25,20 @@ const dir=path.join(__dirname,'..');
     ['ielts::odds','The odds of rain are high this afternoon.','今天下午下雨的可能性很大。']
   ];
   const sourceRows=new Map(wordbank.books.flatMap(book=>book.words||[]).map(row=>[row.id,row]));
+  const greetingExample="Hi, how's your day going?";
+  const greetingTranslation='嗨，今天过得怎么样？';
+  for(const [id,oldExample] of [
+    ['cet4::hi','Sami said that Layla was his girlfriend'],
+    ['school-pep-7-1-3','His glasses are blue.'],
+  ]){
+    const row=sourceRows.get(id),migration=wordbank.metadata.exampleTextMigrations[id];
+    assert.equal(row.example,greetingExample,`${id} uses a greeting example for hi`);
+    assert.equal(row.exampleTranslation,greetingTranslation);
+    assert.equal(row.exampleSource,'Lexio · 日常口语');
+    assert.equal(migration.from,oldExample);
+    assert.equal(migration.to,greetingExample);
+    assert.equal(recordings[greetingExample],'daily-1','corrected greeting example uses its exact existing voice clip');
+  }
   for(const [id,text,translation] of revisedEntries){
     const row=sourceRows.get(id),migration=wordbank.metadata.exampleTextMigrations[id];
     assert.equal(row.example,text);
@@ -33,7 +47,7 @@ const dir=path.join(__dirname,'..');
     assert.ok(Array.isArray(migration.alsoFrom)&&migration.alsoFrom.length>0,`${id} retains prior published text for migration`);
   }
   assert.ok(revisedEntries.every(([,text])=>Object.hasOwn(recordings,text)),'all safely revised examples have exact published audio');
-  assert.equal(wordbank.metadata.stats.withExampleTranslation,26735);
+  assert.equal(wordbank.metadata.stats.withExampleTranslation,26736);
   const migrationTargets=new Set(Object.values(wordbank.metadata.exampleTextMigrations||{}).map(row=>row.to));
   const exactTargets=[
     'Take a slow breath before you begin speaking.',
@@ -57,9 +71,10 @@ const dir=path.join(__dirname,'..');
   ];
   const mappedTargets=[...migrationTargets].filter(text=>Object.hasOwn(recordings,text));
   assert.ok(exactTargets.every(text=>mappedTargets.includes(text)),'known exact migration targets stay mapped');
+  assert.ok(mappedTargets.includes(greetingExample),'corrected greeting reuses its exact daily-conversation recording');
   const manifestForMigratedTargets=JSON.parse(fs.readFileSync(path.join(dir,'media/voice/sentence-audio-manifest.json')));
   const generatedSentenceTexts=new Set(manifestForMigratedTargets.generatedBatches.flatMap(batch=>batch.items.map(item=>item.text)));
-  for(const text of mappedTargets.filter(text=>!exactTargets.includes(text)))assert.ok(generatedSentenceTexts.has(text),`unexpected migrated target map without a generated exact clip: ${text}`);
+  for(const text of mappedTargets.filter(text=>!exactTargets.includes(text)&&text!==greetingExample))assert.ok(generatedSentenceTexts.has(text),`unexpected migrated target map without a generated exact clip: ${text}`);
   for(const text of exactTargets){
     const id='s-'+require('node:crypto').createHash('sha256').update(text).digest('hex').slice(0,16);
     assert.equal(recordings[text],id);
@@ -73,6 +88,14 @@ const dir=path.join(__dirname,'..');
   assert.equal(recordings[correctedExample],'s-'+require('node:crypto').createHash('sha256').update(correctedExample).digest('hex').slice(0,16));
   const wordManifest=JSON.parse(fs.readFileSync(path.join(dir,'media/voice/word-audio-manifest.json')));
   assert.equal(wordManifest.voice_id,'voice-00');
+  const reviewedThe=(wordManifest.humanReviewedWordClips||[]).find(item=>item.word==='the');
+  assert.ok(reviewedThe&&reviewedThe.userConfirmed,'the crop has explicit user confirmation');
+  assert.equal(reviewedThe.clipId,wordManifest.clips.the);
+  assert.equal(reviewedThe.cacheRevision,'review-2026-11-20');
+  assert.equal(reviewedThe.cropStartSeconds,133.172);
+  assert.equal(reviewedThe.cropEndSeconds,134.2);
+  assert.ok(html.includes("const selectedWordAudioRevisions = { the: 'review-2026-11-20' };"));
+  assert.ok(html.includes('wordAudioUrl(entry.word, localWordClip)'));
   const approvedWords=wordManifest.userApprovedSampleWords;
   const generatedBatchWords=wordManifest.generatedBatches.flatMap(batch=>batch.words);
   const partialBatch=wordManifest.generatedBatches.find(batch=>batch.id==='next-batch-002-safe-partial-groups-2-4-9');
@@ -183,12 +206,13 @@ const dir=path.join(__dirname,'..');
   }
   console.log(`✓ ${clips.length} 条所选录音均已纳入离线资源，支持媒体范围读取`);
   for(const [word,clip] of Object.entries(wordRecordings)){
-    const url=`./media/voice/${clip}.mp3`;
-    assert.ok(cached.includes(url),`${word} missing from offline resources`);
-    const mp3=fs.readFileSync(path.join(dir,url));
+    const fileUrl=`./media/voice/${clip}.mp3`;
+    const cacheUrl=word==='the'?`${fileUrl}?rev=${reviewedThe.cacheRevision}`:fileUrl;
+    assert.ok(cached.includes(cacheUrl),`${word} missing from offline resources`);
+    const mp3=fs.readFileSync(path.join(dir,fileUrl));
     assert.ok(mp3.length>1000,`${word} clip is missing or implausibly small`);
   }
-  console.log(`✓ ${Object.keys(wordRecordings).length} 个单词音频已纳入 en-US 播放和离线资源（5 个此前确认样音 + ${generatedBatchWords.length} 个累计生成）`);
+  console.log(`✓ ${Object.keys(wordRecordings).length} 个单词音频已纳入 en-US 播放和离线资源（5 个原始确认样音 + ${generatedBatchWords.length} 个生成片段；the 修复版另经用户确认）`);
   const sentenceManifest=JSON.parse(fs.readFileSync(path.join(dir,'media/voice/sentence-audio-manifest.json')));
   assert.equal(sentenceManifest.voice_id,'voice-00');
   assert.equal(sentenceManifest.language,'en-US');
@@ -561,12 +585,12 @@ const dir=path.join(__dirname,'..');
   const voiceQueue=spawnSync(process.execPath,['scripts/voice-queue.mjs'],{cwd:dir,encoding:'utf8'});
   assert.equal(voiceQueue.status,0,voiceQueue.stderr||voiceQueue.stdout);
   const queueSummary=JSON.parse(voiceQueue.stdout);
-  assert.equal(queueSummary.uniqueRecordableSentences,17573);
-  assert.equal(queueSummary.recordedRecordableSentences,17573);
+  assert.equal(queueSummary.uniqueRecordableSentences,17572);
+  assert.equal(queueSummary.recordedRecordableSentences,17572);
   assert.equal(queueSummary.pendingRecordableSentences,0);
   assert.equal(queueSummary.uniqueDictionaryPhrases,472);
   assert.equal(queueSummary.recordedDictionaryPhrases,472);
   assert.equal(queueSummary.pendingDictionaryPhrases,0);
   assert.equal(queueSummary.missingMappedAudioFiles,0);
-  console.log('✓ 句子与词典短语分开校验：17,573 条完整句和 472 个词典短语全部已录制，映射音频文件齐全');
+  console.log('✓ 句子与词典短语分开校验：17,572 条完整句和 472 个词典短语全部已录制，映射音频文件齐全');
 })().catch(e=>{console.error(e);process.exitCode=1;});
