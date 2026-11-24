@@ -15,6 +15,9 @@ for(const migration of Object.values(wordbank.metadata.exampleTextMigrations||{}
   const prior=Array.isArray(migration.from)?migration.from:[migration.from];
   for(const text of [...prior,...(migration.alsoFrom||[])])if(typeof text==='string'&&text.trim())preservedMigrationTexts.add(text.trim());
 }
+for(const retired of wordbank.metadata.retiredBundledWords||[]){
+  if(typeof retired.example==='string'&&retired.example.trim())preservedMigrationTexts.add(retired.example.trim());
+}
 const sentences=new Map(),dictionaryFragments=new Map();
 function add(target,text,source){
   text=text?.trim();if(!text||target.has(text))return;
@@ -24,6 +27,9 @@ function isDictionaryFragment(text){
   return text.startsWith('...')||(/^[a-z]/.test(text)&&!/[.!?]["'”)]?$/.test(text));
 }
 for(const {id,words} of [...books,{id:'demo',words:demo}]){
+  // US grade-pack usage examples have no bundled voice-00 recordings; the app
+  // accurately falls back to the device's en-US voice for these entries.
+  if(/^us-grade-[1-9]$/.test(id))continue;
   for(const {example,word} of words){const text=example?.trim();if(!text)continue;
     // Incomplete dictionary examples are retained as phrase clips, never queued
     // or counted as complete sentences.

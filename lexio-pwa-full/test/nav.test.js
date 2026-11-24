@@ -747,13 +747,36 @@ function animClean() {
     }));
     doc.querySelector('#gradeBack').click();
   }
+  const usGradeBooks = bundled.books.filter((book) => /^us-grade-[1-9]$/.test(book.id));
+  const usGradeWords = usGradeBooks.flatMap((book) => book.words || []);
+  const expectedUSCounts = [175,175,250,250,250,300,300,300,300];
   const missingExamples = bundledWords.filter((word) => !String(word.example || '').trim()).length;
+  const missingUSExamples = usGradeWords.filter((word) => !String(word.example || '').trim()).length;
+  const missingNonUSExamples = bundledWords.filter((word) => !String(word.example || '').trim() && !String(word.id || '').startsWith('school-us')).length;
   const missingMnemonics = bundledWords.filter((word) => !String(word.mnemonic || '').trim()).length;
   const cjkExamples = bundledWords.filter((word) => /[\u4e00-\u9fff]/.test(String(word.example || ''))).length;
   const realExamples = bundledWords.filter((word) => String(word.exampleSource || '').startsWith('dictionary:')).length;
-  check('每个词条的例句都是可朗读的英文，不含中文说明',
-    bundledWords.length === 28414 && missingExamples === 0 && cjkExamples === 0 && realExamples > 22000,
-    `total=${bundledWords.length} missing=${missingExamples} cjk=${cjkExamples} real=${realExamples}`);
+  check('美国 1–9 年级导入完整候选词包，并保留诚实的分级说明',
+    usGradeBooks.length === 9 && usGradeWords.length === 2300 &&
+    usGradeBooks.every((book,index)=>book.words.length===expectedUSCounts[index]) &&
+    new Set(usGradeWords.map(word=>word.id)).size===2300 &&
+    bundled.metadata.retiredBundledWords.length===90 &&
+    pageHtml.includes('1–6 年级为来源年级估计') && pageHtml.includes('7–9 年级按难度启发式分级'),
+    `books=${usGradeBooks.length} words=${usGradeWords.length} counts=${usGradeBooks.map(book=>book.words.length).join('/')}`);
+  check('每个已有例句都是可读英文；上游未提供用例的美国词条不编造例句',
+    bundledWords.length === 30624 && missingExamples === 358 && missingUSExamples === 358 &&
+    missingNonUSExamples === 0 && missingMnemonics === 0 && cjkExamples === 0 && realExamples > 22000,
+    `total=${bundledWords.length} missing=${missingExamples} (US=${missingUSExamples}) nonUS=${missingNonUSExamples} cjk=${cjkExamples} real=${realExamples}`);
+  check('词库总数说明与内置记录一致',
+    pageHtml.includes('30,624 条分类学习记录') && pageHtml.includes('新增中小学和美国分级词汇 5,600 条'));
+  const contentLicenses = fs.readFileSync(path.join(__dirname, '..', 'data', 'CONTENT-LICENSES.md'), 'utf8');
+  check('美国词包保留 CC BY-SA 4.0 署名、改动说明与相同方式共享要求',
+    contentLicenses.includes('Coderrob/spelling-bee-prep') && contentLicenses.includes('CC BY-SA 4.0') &&
+    contentLicenses.includes('Changes made:') && contentLicenses.includes('Share-alike:'));
+  check('美国分级练习卡不显示逐词来源标签',
+    pageHtml.includes("const hidePracticeSourceLabels = /^美国[1-9]年级$/.test(String(word.category || ''));" ) &&
+    pageHtml.includes("const sourceLabel = hidePracticeSourceLabels ? '' : exampleSource.startsWith('dictionary:')") &&
+    pageHtml.includes("const mnemonicLabel = hidePracticeSourceLabels ? '' : word.mnemonicSource.startsWith('dictionary:')"));
   {
     // Short dictionary fragments remain labelled as phrases and are not
     // promoted to full-sentence TTS; complete sentences may use device TTS.
@@ -1192,6 +1215,7 @@ function animClean() {
     const bundledRecords = bundled.books.flatMap((b) => (b.words || []).map((w) => ({ ...w, category: w.category || b.category || b.name })));
     const normalize = (item) => ({
       id: item.id || `${item.category || 'x'}-${item.word}`, word: item.word, category: item.category || 'x',
+      meaning: item.meaning || '', phonetic: item.phonetic || '', pos: item.pos || '',
       example: item.example || '', exampleSource: item.exampleSource || '',
       exampleTranslation: item.exampleTranslation || '', mnemonic: item.mnemonic || '',
       mnemonicSource: item.mnemonicSource || '',
@@ -1226,7 +1250,7 @@ function animClean() {
       `before=${chineseBefore} after=${chineseAfter}`);
     const version = (pageHtml.match(/BUNDLED_CONTENT_VERSION\s*=\s*'([^']+)'/) || [])[1];
     check('内容版本号已递增，老客户端会触发这次迁移',
-      version === 'school-grades-2026-11-v6', String(version));
+      version === 'school-grades-2026-11-v7', String(version));
 
     const explicitMigrations = bundled.metadata.exampleTextMigrations || {};
     const migrationEntries = Object.entries(explicitMigrations);
@@ -1303,14 +1327,30 @@ function animClean() {
       userEditedInstall[0].example === 'My own carefully edited sentence.' &&
       userEditedInstall[0].exampleTranslation === '保留的用户译文。');
 
+    const retiredUSPlaceholder = bundled.metadata.retiredBundledWords.find(row=>row.id==='school-us1-nest');
+    const legacyUSInstall = [normalize(retiredUSPlaceholder)];
+    await runner(async()=>({ok:true,json:async()=>bundled}),()=>bundledRecords,normalize,async()=>{},async()=>{},version,legacyUSInstall,
+      {isDemo:false,contentVersion:'school-grades-2026-11-v6'});
+    const legacyUSCount=legacyUSInstall.filter(row=>/^school-us[1-9]-/.test(row.id)).length;
+    const retiredUSRetained=legacyUSInstall.some(row=>row.id===retiredUSPlaceholder.id);
+    check('升级时按 ID 移除未编辑的美国占位词并载入完整 1–9 年级包',
+      !retiredUSRetained && legacyUSCount===2300,
+      `retiredRetained=${retiredUSRetained} usCount=${legacyUSCount} total=${legacyUSInstall.length}`);
+    const editedUSPlaceholder=normalize({...retiredUSPlaceholder,example:'A sentence I wrote myself.'});
+    const editedUSInstall=[editedUSPlaceholder];
+    await runner(async()=>({ok:true,json:async()=>bundled}),()=>bundledRecords,normalize,async()=>{},async()=>{},version,editedUSInstall,
+      {isDemo:false,contentVersion:'school-grades-2026-11-v6'});
+    check('美国占位词有用户自定义内容时按保护规则保留',
+      editedUSInstall.some(row=>row.id===retiredUSPlaceholder.id&&row.example==='A sentence I wrote myself.'));
+
     const installedExam = bundledRecords.filter(r => !r.id.startsWith('school-')).map(normalize);
     const migrate = rows => runner(async()=>({ok:true,json:async()=>bundled}),()=>bundledRecords,normalize,async()=>{},async()=>{},version,rows,{sourceFile:'原站内嵌词库 · original-site-wordbank.json'});
     await migrate(installedExam); await migrate(installedExam);
-    check('旧内置词库升级后 28,414 条，重复执行不增词', installedExam.length === 28414 && new Set(installedExam.map(r=>r.id)).size===28414);
+    check('旧内置词库升级后 30,624 条，重复执行不增词', installedExam.length === 30624 && new Set(installedExam.map(r=>r.id)).size===30624);
     const custom = normalize({id:'my-word',word:'my word',category:'自选'});
     const synced = [custom];
     await runner(async()=>({ok:true,json:async()=>bundled}),()=>bundledRecords,normalize,async()=>{},async()=>{},version,synced,{sourceFile:'网络同步'});
-    check('同步词库也补齐校园词条，并保留自选词', synced.length===3391 && synced[0]===custom);
+    check('同步词库也补齐校园词条，并保留自选词', synced.length===5601 && synced[0]===custom);
     // 上一版已经替换成英文、但仍是词典残句的记录也要升级成完整句子
     const fragmentInstall = [normalize({
       ...bundledRecords.find((r) => r.word === 'energetic'),
