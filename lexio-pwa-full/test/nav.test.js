@@ -1226,7 +1226,7 @@ function animClean() {
       `before=${chineseBefore} after=${chineseAfter}`);
     const version = (pageHtml.match(/BUNDLED_CONTENT_VERSION\s*=\s*'([^']+)'/) || [])[1];
     check('内容版本号已递增，老客户端会触发这次迁移',
-      version === 'school-grades-2026-11-v3', String(version));
+      version === 'school-grades-2026-11-v4', String(version));
 
     const explicitMigrations = bundled.metadata.exampleTextMigrations || {};
     const migrationEntries = Object.entries(explicitMigrations);
@@ -1254,11 +1254,34 @@ function animClean() {
     );
     const everyRewriteMigrated = migrationEntries.every(([id, migration], index) =>
       migratedRewrite[index]?.id === id && migratedRewrite[index]?.example === migration.to &&
-      migratedRewrite[index]?.exampleTranslation === ''
+      migratedRewrite[index]?.exampleTranslation === (bundledById.get(id)?.exampleTranslation || '')
     );
     check('731 条精确例句迁移按词条 ID 生效，并隐藏旧译文',
       migrationEntries.length === 731 && everyRewriteMigrated && !!migrationPersisted,
-      `entries=${migrationEntries.length} migrated=${migratedRewrite.filter((record,index)=>record?.example===migrationEntries[index]?.[1].to && record?.exampleTranslation==='').length}`);
+      `entries=${migrationEntries.length} migrated=${migratedRewrite.filter((record,index)=>record?.id===migrationEntries[index]?.[0] && record?.example===migrationEntries[index]?.[1].to && record?.exampleTranslation===(bundledById.get(migrationEntries[index]?.[0])?.exampleTranslation||'')).length}`);
+
+    const previouslyPublishedRewrites = migrationEntries.filter(([,migration])=>Array.isArray(migration.alsoFrom));
+    const previouslyPublishedInstall = previouslyPublishedRewrites.map(([id,migration]) => normalize({
+      ...bundledById.get(id), example:migration.alsoFrom[0], exampleSource:'dictionary:previous-bundle',
+      exampleTranslation:'旧版译文'
+    }));
+    const migratedPreviouslyPublished = await runner(
+      async () => ({ ok:true, json:async()=>bundled }),
+      () => bundledRecords,
+      normalize,
+      async () => {},
+      async () => {},
+      version,
+      previouslyPublishedInstall,
+      { isDemo:false, contentVersion:'school-grades-2026-11-v3' }
+    );
+    const everyPreviouslyPublishedRewriteMigrated = previouslyPublishedRewrites.every(([id,migration],index)=>
+      migratedPreviouslyPublished[index]?.id===id && migratedPreviouslyPublished[index]?.example===migration.to &&
+      migratedPreviouslyPublished[index]?.exampleTranslation===(bundledById.get(id)?.exampleTranslation||'')
+    );
+    check('已有版本中曾发布的四条例句也能迁移到安全改写',
+      previouslyPublishedRewrites.length===4 && everyPreviouslyPublishedRewriteMigrated,
+      `entries=${previouslyPublishedRewrites.length} migrated=${migratedPreviouslyPublished.filter((record,index)=>record?.example===previouslyPublishedRewrites[index]?.[1].to).length}`);
 
     const userEditedInstall = [normalize({
       ...migrationRecord,

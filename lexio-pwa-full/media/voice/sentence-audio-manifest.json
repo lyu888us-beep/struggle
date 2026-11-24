@@ -7862,6 +7862,274 @@
           "sourceEndSeconds": 3.193
         }
       ]
+    },
+    {
+      "id": "sentence-batch-009",
+      "itemsConsidered": 10,
+      "clipsPublished": 9,
+      "skippedAfterSafetyChecks": 0,
+      "deferredAfterGenerationFailure": 1,
+      "individuallyHumanListened": false,
+      "sourceAudioGroups": [
+        "isolated-019",
+        "isolated-028",
+        "isolated-036",
+        "isolated-054",
+        "isolated-058",
+        "isolated-068",
+        "isolated-069",
+        "isolated-073",
+        "isolated-079"
+      ],
+      "reviewedSourceGroups": [
+        "isolated-019",
+        "isolated-028",
+        "isolated-036",
+        "isolated-054",
+        "isolated-058",
+        "isolated-068",
+        "isolated-069",
+        "isolated-073",
+        "isolated-079",
+        "isolated-084"
+      ],
+      "isolatedReviewItemsPublished": 9,
+      "groupCount": 9,
+      "groupCutMethod": "Individual single-sentence WAVs; PocketSphinx exact transcript alignment; no inter-sentence cuts",
+      "automatedKeywordFlagsAreSafetyVerdicts": false,
+      "contextualReview": {
+        "method": "Item-by-item contextual review; automated keyword flags are screening cues only, not safety verdicts.",
+        "automatedKeywordFlagsAreSafetyVerdicts": false,
+        "items": [
+          {
+            "group": "isolated-019",
+            "source": "cet4:negro",
+            "decision": "eligible for generation after context review",
+            "rationale": "Replaced an outdated and offensive slur citation with a neutral usage advisory. The replacement does not pronounce the slur; the old text was not sent for generation."
+          },
+          {
+            "group": "isolated-028",
+            "source": "cet4:fantasize",
+            "decision": "eligible for generation after context review",
+            "rationale": "Replaced a gender-stereotyped example about an ideal wife with a neutral travel fantasy; the old text was not sent for generation."
+          },
+          {
+            "group": "isolated-036",
+            "source": "cet6:revenge",
+            "decision": "eligible for generation after context review",
+            "rationale": "The sentence explicitly favors kindness over revenge; no violent action is described or encouraged."
+          },
+          {
+            "group": "isolated-054",
+            "source": "cet6:pregnant",
+            "decision": "eligible for generation after context review",
+            "rationale": "Non-graphic, factual pregnancy-test context."
+          },
+          {
+            "group": "isolated-058",
+            "source": "kaoyan:cop",
+            "decision": "eligible for generation after context review",
+            "rationale": "Neutral police-report context: recording details of an accident, with no violence described."
+          },
+          {
+            "group": "isolated-068",
+            "source": "kaoyan:operation",
+            "decision": "eligible for generation after context review",
+            "rationale": "Routine hospital scheduling for a medical operation."
+          },
+          {
+            "group": "isolated-069",
+            "source": "kaoyan:shoot",
+            "decision": "eligible for generation after context review",
+            "rationale": "The verb “shoot” is explicitly used for studio photography."
+          },
+          {
+            "group": "isolated-073",
+            "source": "ielts:execution",
+            "decision": "eligible for generation after context review",
+            "rationale": "Computer-program execution, not physical harm."
+          },
+          {
+            "group": "isolated-079",
+            "source": "ielts:exterminate",
+            "decision": "eligible for generation after context review",
+            "rationale": "Gardening context about removing invasive weeds."
+          },
+          {
+            "group": "isolated-084",
+            "source": "ielts:capillary",
+            "decision": "eligible for generation after safe substitution",
+            "rationale": "The initial generation attempt for the original anatomy sentence failed. Do not retry it; use this non-blood botanical example of capillary action instead."
+          }
+        ]
+      },
+      "generationFailureReplacements": [
+        {
+          "group": "isolated-084",
+          "source": "ielts:capillary",
+          "originalText": "Blood flows through tiny capillary vessels.",
+          "replacementText": "Water rises through narrow capillary tubes in a plant stem.",
+          "originalRetried": false,
+          "reason": "Initial speech generation failed; replaced with a non-graphic botanical science sentence.",
+          "failure": "Initial speech generation failed; the original text was not retried.",
+          "replacementStatus": "Deferred because the per-turn speech-generation limit was reached."
+        }
+      ],
+      "items": [
+        {
+          "group": "isolated-019",
+          "index": 0,
+          "source": "cet4:negro",
+          "text": "This term is now considered outdated and offensive.",
+          "file": "s-a5cd79eff46e3eba.mp3",
+          "clip": "s-a5cd79eff46e3eba",
+          "bytes": 20828,
+          "sha256": "862ab8165363570c996a02dfda4ce43d8c30884c52d3fba458ed93e00ac653d0",
+          "alignment": "PocketSphinx exact token sequence",
+          "alignedTokens": 8,
+          "ffmpegDecoded": true,
+          "miniaudioDecoded": true,
+          "safe": true,
+          "sourceStartSeconds": 0.0,
+          "sourceEndSeconds": 3.367
+        },
+        {
+          "group": "isolated-028",
+          "index": 0,
+          "source": "cet4:fantasize",
+          "text": "She fantasized about traveling around the world.",
+          "file": "s-6bfd389026fde9e0.mp3",
+          "clip": "s-6bfd389026fde9e0",
+          "bytes": 18236,
+          "sha256": "0a0db349d462bc6f155c6ee6ad4cd04218c733eaca4e4c3c95716fd79e2e9e2c",
+          "alignment": "PocketSphinx exact token sequence",
+          "alignedTokens": 7,
+          "ffmpegDecoded": true,
+          "miniaudioDecoded": true,
+          "safe": true,
+          "sourceStartSeconds": 0.0,
+          "sourceEndSeconds": 2.937
+        },
+        {
+          "group": "isolated-036",
+          "index": 0,
+          "source": "cet6:revenge",
+          "text": "She chose kindness rather than revenge.",
+          "file": "s-4113588e30e0662e.mp3",
+          "clip": "s-4113588e30e0662e",
+          "bytes": 16652,
+          "sha256": "cedef0b8925c567083c06ec760f5a22e3c7cff4e5e5b09374bde756dd73fdf99",
+          "alignment": "PocketSphinx exact token sequence",
+          "alignedTokens": 6,
+          "ffmpegDecoded": true,
+          "miniaudioDecoded": true,
+          "safe": true,
+          "sourceStartSeconds": 0.0,
+          "sourceEndSeconds": 2.682
+        },
+        {
+          "group": "isolated-054",
+          "index": 0,
+          "source": "cet6:pregnant",
+          "text": "She did not know she was pregnant until the test.",
+          "file": "s-bca763714842eabf.mp3",
+          "clip": "s-bca763714842eabf",
+          "bytes": 20540,
+          "sha256": "8f0c0e7a00b0b3e105e78c5f1987d253f73d6ffd97cf019053d15cf9098ee983",
+          "alignment": "PocketSphinx exact token sequence",
+          "alignedTokens": 10,
+          "ffmpegDecoded": true,
+          "miniaudioDecoded": true,
+          "safe": true,
+          "sourceStartSeconds": 0.0,
+          "sourceEndSeconds": 3.32
+        },
+        {
+          "group": "isolated-058",
+          "index": 0,
+          "source": "kaoyan:cop",
+          "text": "The cop wrote down the details of the accident.",
+          "file": "s-4058aabd46dfc053.mp3",
+          "clip": "s-4058aabd46dfc053",
+          "bytes": 16940,
+          "sha256": "dc71cfaba95fe75f4ac971764ad58dceb61d5bb53538c7e06478b5b2fc1cc8b2",
+          "alignment": "PocketSphinx exact token sequence",
+          "alignedTokens": 9,
+          "ffmpegDecoded": true,
+          "miniaudioDecoded": true,
+          "safe": true,
+          "sourceStartSeconds": 0.0,
+          "sourceEndSeconds": 2.728
+        },
+        {
+          "group": "isolated-068",
+          "index": 0,
+          "source": "kaoyan:operation",
+          "text": "The hospital scheduled the operation for early morning.",
+          "file": "s-e6fe9adb8733a418.mp3",
+          "clip": "s-e6fe9adb8733a418",
+          "bytes": 18956,
+          "sha256": "647b958b21366c4b8c3b20ea02527b7e68e2d82597bf5caa2072011ed89eb399",
+          "alignment": "PocketSphinx exact token sequence",
+          "alignedTokens": 8,
+          "ffmpegDecoded": true,
+          "miniaudioDecoded": true,
+          "safe": true,
+          "sourceStartSeconds": 0.0,
+          "sourceEndSeconds": 3.065
+        },
+        {
+          "group": "isolated-069",
+          "index": 0,
+          "source": "kaoyan:shoot",
+          "text": "The studio will shoot a family portrait next weekend.",
+          "file": "s-4c34edc63c5fd6ed.mp3",
+          "clip": "s-4c34edc63c5fd6ed",
+          "bytes": 17804,
+          "sha256": "27ee20ab8b6f2b4e13117dc4ac47714fd079546f61edeab7cba9ac769ee908ce",
+          "alignment": "PocketSphinx exact token sequence",
+          "alignedTokens": 9,
+          "ffmpegDecoded": true,
+          "miniaudioDecoded": true,
+          "safe": true,
+          "sourceStartSeconds": 0.0,
+          "sourceEndSeconds": 2.856
+        },
+        {
+          "group": "isolated-073",
+          "index": 0,
+          "source": "ielts:execution",
+          "text": "The program's execution finished in a few seconds.",
+          "file": "s-7f87ad5384acddc3.mp3",
+          "clip": "s-7f87ad5384acddc3",
+          "bytes": 18524,
+          "sha256": "12722914b8a7dd3ca202f267937d8656700496dedba4ad8dcf3530aea9de864a",
+          "alignment": "PocketSphinx exact token sequence",
+          "alignedTokens": 8,
+          "ffmpegDecoded": true,
+          "miniaudioDecoded": true,
+          "safe": true,
+          "sourceStartSeconds": 0.0,
+          "sourceEndSeconds": 2.984
+        },
+        {
+          "group": "isolated-079",
+          "index": 0,
+          "source": "ielts:exterminate",
+          "text": "The gardeners worked to exterminate invasive weeds from the path.",
+          "file": "s-5c7c921e89fa76f8.mp3",
+          "clip": "s-5c7c921e89fa76f8",
+          "bytes": 21836,
+          "sha256": "fa464f2310dc4975561ce9be77eeb750011f97d7546f0d5d9e578ea6af925c1d",
+          "alignment": "PocketSphinx exact token sequence",
+          "alignedTokens": 10,
+          "ffmpegDecoded": true,
+          "miniaudioDecoded": true,
+          "safe": true,
+          "sourceStartSeconds": 0.0,
+          "sourceEndSeconds": 3.541
+        }
+      ]
     }
   ]
 }

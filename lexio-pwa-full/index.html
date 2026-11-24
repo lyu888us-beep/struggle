@@ -1868,7 +1868,7 @@
       const DB_WORDS = 'words';
       const DB_STAGING = 'stagingWords';
       const DB_META = 'meta';
-      const BUNDLED_CONTENT_VERSION = 'school-grades-2026-11-v3';
+      const BUNDLED_CONTENT_VERSION = 'school-grades-2026-11-v4';
       let db = null;
       let bankReady = false, bankMeta = null;
       let bank = SAMPLE_WORDS.map((w, i) => normalizeWord(w, i));
@@ -2031,8 +2031,12 @@
             const currentValue = String(current[field] || '').trim();
             const updateValue = String(update[field] || '').trim();
             const exampleMigration = field === 'example' ? exampleMigrations[update.id] : null;
+            const exampleMigrationFrom = exampleMigration ? [
+              ...(Array.isArray(exampleMigration.from) ? exampleMigration.from : [exampleMigration.from]),
+              ...(Array.isArray(exampleMigration.alsoFrom) ? exampleMigration.alsoFrom : [])
+            ].filter(Boolean) : [];
             const isExplicitExampleMigration = !!exampleMigration &&
-              currentValue === exampleMigration.from &&
+              exampleMigrationFrom.includes(currentValue) &&
               updateValue === exampleMigration.to;
             const replaceGenerated = sourceField && (
               oldSource.startsWith('generated-') ||
@@ -20805,7 +20809,16 @@
         "The suspenseful music created a sense of terror in the film.": "s-fbff9b4f6e7b2405",
         "The professor taught students to recognize propaganda in the media.": "s-8ed65c517aed01ed",
         "The class compared communism with other political systems.": "s-588b236fe58d87b7",
-        "The pharmacist explained how to take the drug safely.": "s-883bc6430353baa0"
+        "The pharmacist explained how to take the drug safely.": "s-883bc6430353baa0",
+        "This term is now considered outdated and offensive.": "s-a5cd79eff46e3eba",
+        "She fantasized about traveling around the world.": "s-6bfd389026fde9e0",
+        "She chose kindness rather than revenge.": "s-4113588e30e0662e",
+        "She did not know she was pregnant until the test.": "s-bca763714842eabf",
+        "The cop wrote down the details of the accident.": "s-4058aabd46dfc053",
+        "The hospital scheduled the operation for early morning.": "s-e6fe9adb8733a418",
+        "The studio will shoot a family portrait next weekend.": "s-4c34edc63c5fd6ed",
+        "The program's execution finished in a few seconds.": "s-7f87ad5384acddc3",
+        "The gardeners worked to exterminate invasive weeds from the path.": "s-5c7c921e89fa76f8"
       };
                               const selectedWordRecordings = {
         "(be) made of": "w-ab7c858a01729a92",

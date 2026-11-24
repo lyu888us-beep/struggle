@@ -10,6 +10,18 @@ const dir=path.join(__dirname,'..');
   const demo=vm.runInNewContext(html.match(/const SAMPLE_WORDS = (\[[\s\S]*?\n      \]);/)[1]);
   for(const w of demo)assert.ok(recordings[w.example],w.word);
   const wordbank=JSON.parse(fs.readFileSync(path.join(dir,'data/original-site-wordbank.json')));
+  const revisedEntries=[['cet4::negro','This term is now considered outdated and offensive.','这个词如今被认为过时且具有冒犯性。'],['kaoyan::negro','This term is now considered outdated and offensive.','这个词如今被认为过时且具有冒犯性。'],['cet4::fantasize','She fantasized about traveling around the world.','她幻想着环游世界。'],['ielts::capillary','Water rises through narrow capillary tubes in a plant stem.','水会沿着植物茎中的狭窄毛细管上升。']];
+  const sourceRows=new Map(wordbank.books.flatMap(book=>book.words||[]).map(row=>[row.id,row]));
+  for(const [id,text,translation] of revisedEntries){
+    const row=sourceRows.get(id),migration=wordbank.metadata.exampleTextMigrations[id];
+    assert.equal(row.example,text);
+    assert.equal(row.exampleTranslation,translation);
+    assert.equal(migration.to,text);
+    assert.ok(Array.isArray(migration.alsoFrom)&&migration.alsoFrom.length>0,`${id} retains prior published text for migration`);
+  }
+  assert.ok(Object.hasOwn(recordings,revisedEntries[0][1])&&Object.hasOwn(recordings,revisedEntries[2][1]),'published safe replacement examples have exact audio');
+  assert.ok(!Object.hasOwn(recordings,revisedEntries[3][1]),'deferred capillary replacement is not counted as published');
+  assert.equal(wordbank.metadata.stats.withExampleTranslation,26727);
   const migrationTargets=new Set(Object.values(wordbank.metadata.exampleTextMigrations||{}).map(row=>row.to));
   const exactTargets=[
     'Take a slow breath before you begin speaking.',
@@ -40,7 +52,7 @@ const dir=path.join(__dirname,'..');
     const id='s-'+require('node:crypto').createHash('sha256').update(text).digest('hex').slice(0,16);
     assert.equal(recordings[text],id);
   }
-  console.log('✓ 501 个改写目标不再依赖旧音频别名；已映射文本都能对应精确 voice-00 录音');
+  console.log(`✓ ${mappedTargets.length} 个改写目标不再依赖旧音频别名；已映射文本都能对应精确 voice-00 录音`);
   const correctedExample='The hikers stayed on the trail so they would not molest the nesting birds.';
   const correctedEntry=wordbank.books.find(book=>book.id==='ielts').words.find(row=>row.id==='ielts::molest');
   assert.equal(correctedEntry.example,correctedExample);
@@ -368,15 +380,50 @@ const dir=path.join(__dirname,'..');
     assert.ok(cached.includes(`./media/voice/${id}.mp3`));
   }
   console.log('✓ 句子补录批次 008：10 条隔离例句单独录制、精确对齐、双解码、哈希及离线映射通过（未人工听检）');
+  const sentenceBatch009=sentenceManifest.generatedBatches.find(batch=>batch.id==='sentence-batch-009');
+  assert.ok(sentenceBatch009,'context-reviewed and safely revised batch 009 is recorded');
+  assert.equal(sentenceBatch009.itemsConsidered,10);
+  assert.equal(sentenceBatch009.clipsPublished,9);
+  assert.equal(sentenceBatch009.skippedAfterSafetyChecks,0);
+  assert.equal(sentenceBatch009.deferredAfterGenerationFailure,1);
+  assert.equal(sentenceBatch009.individuallyHumanListened,false);
+  assert.equal(sentenceBatch009.isolatedReviewItemsPublished,9);
+  assert.equal(sentenceBatch009.automatedKeywordFlagsAreSafetyVerdicts,false);
+  assert.equal(sentenceBatch009.contextualReview.automatedKeywordFlagsAreSafetyVerdicts,false);
+  assert.equal(sentenceBatch009.contextualReview.items.length,10);
+  assert.deepEqual(sentenceBatch009.sourceAudioGroups,['isolated-019','isolated-028','isolated-036','isolated-054','isolated-058','isolated-068','isolated-069','isolated-073','isolated-079']);
+  assert.deepEqual(sentenceBatch009.reviewedSourceGroups,['isolated-019','isolated-028','isolated-036','isolated-054','isolated-058','isolated-068','isolated-069','isolated-073','isolated-079','isolated-084']);
+  assert.equal(sentenceBatch009.items.length,9);
+  assert.equal(new Set(sentenceBatch009.items.map(item=>item.text)).size,9);
+  const capillaryDeferred='Water rises through narrow capillary tubes in a plant stem.';
+  assert.equal(sentenceBatch009.generationFailureReplacements.length,1);
+  assert.equal(sentenceBatch009.generationFailureReplacements[0].source,'ielts:capillary');
+  assert.equal(sentenceBatch009.generationFailureReplacements[0].replacementText,capillaryDeferred);
+  assert.equal(sentenceBatch009.generationFailureReplacements[0].originalRetried,false);
+  assert.ok(!Object.hasOwn(recordings,capillaryDeferred),'deferred safe replacement is not counted as published');
+  for(const item of sentenceBatch009.items){
+    const id='s-'+require('node:crypto').createHash('sha256').update(item.text).digest('hex').slice(0,16);
+    assert.equal(item.clip,id);
+    assert.equal(item.safe,true);
+    assert.equal(recordings[item.text],id);
+    assert.equal(item.alignment,'PocketSphinx exact token sequence');
+    assert.equal(item.ffmpegDecoded,true);
+    assert.equal(item.miniaudioDecoded,true);
+    const bytes=fs.readFileSync(path.join(dir,'media/voice',`${id}.mp3`));
+    assert.equal(bytes.length,item.bytes);
+    assert.equal(require('node:crypto').createHash('sha256').update(bytes).digest('hex'),item.sha256);
+    assert.ok(cached.includes(`./media/voice/${id}.mp3`));
+  }
+  console.log('✓ 句子补录批次 009：9 条精确对齐和双解码发布；2 条例句改写并迁移，另 1 条安全替代音频因生成限额递延（原句未重试；未人工听检）');
   const voiceQueue=spawnSync(process.execPath,['scripts/voice-queue.mjs'],{cwd:dir,encoding:'utf8'});
   assert.equal(voiceQueue.status,0,voiceQueue.stderr||voiceQueue.stdout);
   const queueSummary=JSON.parse(voiceQueue.stdout);
   assert.equal(queueSummary.uniqueRecordableSentences,17573);
-  assert.equal(queueSummary.recordedRecordableSentences,17527);
-  assert.equal(queueSummary.pendingRecordableSentences,46);
+  assert.equal(queueSummary.recordedRecordableSentences,17536);
+  assert.equal(queueSummary.pendingRecordableSentences,37);
   assert.equal(queueSummary.uniqueDictionaryPhrases,472);
   assert.equal(queueSummary.recordedDictionaryPhrases,472);
   assert.equal(queueSummary.pendingDictionaryPhrases,0);
   assert.equal(queueSummary.missingMappedAudioFiles,0);
-  console.log('✓ 句子与词典短语分开校验：17,573 条完整句中 46 条待补；472 个词典短语均已录制，映射音频文件齐全');
+  console.log('✓ 句子与词典短语分开校验：17,573 条完整句中 37 条待补；472 个词典短语均已录制，映射音频文件齐全');
 })().catch(e=>{console.error(e);process.exitCode=1;});
