@@ -32,12 +32,15 @@ const dir=path.join(__dirname,'..');
     'She was fourteen when she joined the school orchestra.'
   ];
   const mappedTargets=[...migrationTargets].filter(text=>Object.hasOwn(recordings,text));
-  assert.deepEqual(mappedTargets.sort(),exactTargets.slice().sort());
+  assert.ok(exactTargets.every(text=>mappedTargets.includes(text)),'known exact migration targets stay mapped');
+  const manifestForMigratedTargets=JSON.parse(fs.readFileSync(path.join(dir,'media/voice/sentence-audio-manifest.json')));
+  const generatedSentenceTexts=new Set(manifestForMigratedTargets.generatedBatches.flatMap(batch=>batch.items.map(item=>item.text)));
+  for(const text of mappedTargets.filter(text=>!exactTargets.includes(text)))assert.ok(generatedSentenceTexts.has(text),`unexpected migrated target map without a generated exact clip: ${text}`);
   for(const text of exactTargets){
     const id='s-'+require('node:crypto').createHash('sha256').update(text).digest('hex').slice(0,16);
     assert.equal(recordings[text],id);
   }
-  console.log('✓ 501 个改写目标已移除旧音频别名，仅为 18 条已有精确 voice-00 录音保留映射');
+  console.log('✓ 501 个改写目标不再依赖旧音频别名；已映射文本都能对应精确 voice-00 录音');
   const correctedExample='The hikers stayed on the trail so they would not molest the nesting birds.';
   const correctedEntry=wordbank.books.find(book=>book.id==='ielts').words.find(row=>row.id==='ielts::molest');
   assert.equal(correctedEntry.example,correctedExample);
@@ -231,15 +234,38 @@ const dir=path.join(__dirname,'..');
     assert.ok(cached.includes(`./media/voice/${id}.mp3`));
   }
   console.log('✓ 句子补录批次 003：5 条逐词对齐、MP3 双解码、哈希及离线映射通过（未人工听检）');
+  const sentenceBatch004=sentenceManifest.generatedBatches.find(batch=>batch.id==='sentence-batch-004');
+  assert.ok(sentenceBatch004,'grouped exact-text sentence batch 004 is recorded');
+  assert.equal(sentenceBatch004.itemsConsidered,180);
+  assert.equal(sentenceBatch004.clipsPublished,180);
+  assert.equal(sentenceBatch004.skippedAfterSafetyChecks,0);
+  assert.equal(sentenceBatch004.individuallyHumanListened,false);
+  assert.deepEqual(sentenceBatch004.sourceAudioGroups,['safe-001','safe-002','safe-003','safe-004','safe-005','safe-006','safe-007','safe-008','safe-009','safe-010']);
+  assert.equal(sentenceBatch004.items.length,180);
+  assert.equal(new Set(sentenceBatch004.items.map(item=>item.text)).size,180);
+  for(const item of sentenceBatch004.items){
+    const id='s-'+require('node:crypto').createHash('sha256').update(item.text).digest('hex').slice(0,16);
+    assert.equal(item.clip,id);
+    assert.equal(item.safe,true);
+    assert.equal(recordings[item.text],id);
+    assert.equal(item.alignment,'PocketSphinx exact token sequence');
+    assert.equal(item.ffmpegDecoded,true);
+    assert.equal(item.miniaudioDecoded,true);
+    const bytes=fs.readFileSync(path.join(dir,'media/voice',`${id}.mp3`));
+    assert.equal(bytes.length,item.bytes);
+    assert.equal(require('node:crypto').createHash('sha256').update(bytes).digest('hex'),item.sha256);
+    assert.ok(cached.includes(`./media/voice/${id}.mp3`));
+  }
+  console.log('✓ 句子补录批次 004：180 条精确对齐、低能量切分、双解码、哈希及离线映射通过（未人工听检）');
   const voiceQueue=spawnSync(process.execPath,['scripts/voice-queue.mjs'],{cwd:dir,encoding:'utf8'});
   assert.equal(voiceQueue.status,0,voiceQueue.stderr||voiceQueue.stdout);
   const queueSummary=JSON.parse(voiceQueue.stdout);
   assert.equal(queueSummary.uniqueRecordableSentences,17573);
-  assert.equal(queueSummary.recordedRecordableSentences,17090);
-  assert.equal(queueSummary.pendingRecordableSentences,483);
+  assert.equal(queueSummary.recordedRecordableSentences,17270);
+  assert.equal(queueSummary.pendingRecordableSentences,303);
   assert.equal(queueSummary.uniqueDictionaryPhrases,472);
   assert.equal(queueSummary.recordedDictionaryPhrases,472);
   assert.equal(queueSummary.pendingDictionaryPhrases,0);
   assert.equal(queueSummary.missingMappedAudioFiles,0);
-  console.log('✓ 句子与词典短语分开校验：17,573 条完整句中 483 条待补；472 个词典短语均已录制，映射音频文件齐全');
+  console.log('✓ 句子与词典短语分开校验：17,573 条完整句中 303 条待补；472 个词典短语均已录制，映射音频文件齐全');
 })().catch(e=>{console.error(e);process.exitCode=1;});
