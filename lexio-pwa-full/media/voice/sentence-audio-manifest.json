@@ -7601,6 +7601,267 @@
           }
         ]
       }
+    },
+    {
+      "id": "sentence-batch-008",
+      "itemsConsidered": 10,
+      "clipsPublished": 10,
+      "skippedAfterSafetyChecks": 0,
+      "individuallyHumanListened": false,
+      "sourceAudioGroups": [
+        "isolated-041",
+        "isolated-050",
+        "isolated-052",
+        "isolated-056",
+        "isolated-057",
+        "isolated-060",
+        "isolated-063",
+        "isolated-064",
+        "isolated-066",
+        "isolated-067"
+      ],
+      "isolatedReviewItemsPublished": 10,
+      "groupCount": 10,
+      "groupCutMethod": "Individual single-sentence WAVs; PocketSphinx exact transcript alignment; no inter-sentence cuts",
+      "automatedKeywordFlagsAreSafetyVerdicts": false,
+      "contextualReview": {
+        "method": "Item-by-item contextual text review; automated keyword flags are screening cues only, not safety verdicts.",
+        "automatedKeywordFlagsAreSafetyVerdicts": false,
+        "items": [
+          {
+            "group": "isolated-041",
+            "source": "cet6:smuggle",
+            "decision": "eligible for generation after context review",
+            "rationale": "The sentence describes customs officers preventing illegal transport of protected plants; it does not instruct smuggling."
+          },
+          {
+            "group": "isolated-050",
+            "source": "cet6:torpedo",
+            "decision": "eligible for generation after context review",
+            "rationale": "A zoological description of a fish shape; no weapon use or instructions."
+          },
+          {
+            "group": "isolated-052",
+            "source": "cet6:slit",
+            "decision": "eligible for generation after context review",
+            "rationale": "Ordinary stationery use: opening an envelope with a letter opener."
+          },
+          {
+            "group": "isolated-056",
+            "source": "cet6:cretaceous",
+            "decision": "eligible for generation after context review",
+            "rationale": "Non-graphic earth-science reference to the Cretaceous period and an asteroid impact."
+          },
+          {
+            "group": "isolated-057",
+            "source": "cet6:imprint",
+            "decision": "eligible for generation after context review",
+            "rationale": "Historical and linguistic reference to Norman influence on English."
+          },
+          {
+            "group": "isolated-060",
+            "source": "kaoyan:malignant",
+            "decision": "eligible for generation after context review",
+            "rationale": "Non-graphic medical explanation about malignant cells; no diagnosis or treatment advice."
+          },
+          {
+            "group": "isolated-063",
+            "source": "kaoyan:terror",
+            "decision": "eligible for generation after context review",
+            "rationale": "Fictional film atmosphere and an emotional response to suspenseful music."
+          },
+          {
+            "group": "isolated-064",
+            "source": "kaoyan:propaganda",
+            "decision": "eligible for generation after context review",
+            "rationale": "Educational media-literacy instruction to recognize propaganda."
+          },
+          {
+            "group": "isolated-066",
+            "source": "kaoyan:communism",
+            "decision": "eligible for generation after context review",
+            "rationale": "Neutral classroom comparison of political systems."
+          },
+          {
+            "group": "isolated-067",
+            "source": "kaoyan:drug",
+            "decision": "eligible for generation after context review",
+            "rationale": "Pharmacist explaining safe use of medicine; no dosing instructions are supplied."
+          }
+        ]
+      },
+      "items": [
+        {
+          "group": "isolated-041",
+          "index": 0,
+          "source": "cet6:smuggle",
+          "text": "Customs officers help prevent people from trying to smuggle protected plants.",
+          "file": "s-d5b36a327ec274e5.mp3",
+          "clip": "s-d5b36a327ec274e5",
+          "bytes": 26156,
+          "sha256": "66781d8414cc7d1e72ce9713f814fce54582ccf2483b9a0f3b3ab1b509489fcc",
+          "alignment": "PocketSphinx exact token sequence",
+          "alignedTokens": 11,
+          "ffmpegDecoded": true,
+          "miniaudioDecoded": true,
+          "safe": true,
+          "sourceStartSeconds": 0.0,
+          "sourceEndSeconds": 4.261
+        },
+        {
+          "group": "isolated-050",
+          "index": 0,
+          "source": "cet6:torpedo",
+          "text": "A torpedo-shaped fish darted through the water.",
+          "file": "s-a3c44353aeb6cf00.mp3",
+          "clip": "s-a3c44353aeb6cf00",
+          "bytes": 19532,
+          "sha256": "ecde02de363309cdaa247f76826ac97a796ea5fc564eef7689b2e38759d7298e",
+          "alignment": "PocketSphinx exact token sequence",
+          "alignedTokens": 8,
+          "ffmpegDecoded": true,
+          "miniaudioDecoded": true,
+          "safe": true,
+          "sourceStartSeconds": 0.0,
+          "sourceEndSeconds": 3.146
+        },
+        {
+          "group": "isolated-052",
+          "index": 0,
+          "source": "cet6:slit",
+          "text": "She slit the envelope open with a letter opener.",
+          "file": "s-24787277e2249b3a.mp3",
+          "clip": "s-24787277e2249b3a",
+          "bytes": 17804,
+          "sha256": "40ef0565a074cb92549efe7df2a527962ea604114c85711e04e429fa6aac118d",
+          "alignment": "PocketSphinx exact token sequence",
+          "alignedTokens": 9,
+          "ffmpegDecoded": true,
+          "miniaudioDecoded": true,
+          "safe": true,
+          "sourceStartSeconds": 0.0,
+          "sourceEndSeconds": 2.856
+        },
+        {
+          "group": "isolated-056",
+          "index": 0,
+          "source": "cet6:cretaceous",
+          "text": "The cretaceous period ended with a giant asteroid impact.",
+          "file": "s-be32be79a4c72397.mp3",
+          "clip": "s-be32be79a4c72397",
+          "bytes": 23132,
+          "sha256": "a0730856de4f6cebf20789f64a491fbc9e198cb007bdf61fed159092e53b964e",
+          "alignment": "PocketSphinx exact token sequence",
+          "alignedTokens": 9,
+          "ffmpegDecoded": true,
+          "miniaudioDecoded": true,
+          "safe": true,
+          "sourceStartSeconds": 0.0,
+          "sourceEndSeconds": 3.75
+        },
+        {
+          "group": "isolated-057",
+          "index": 0,
+          "source": "cet6:imprint",
+          "text": "English still bears the imprint of the Norman invasion.",
+          "file": "s-2a4cbf6e7f8e5f7d.mp3",
+          "clip": "s-2a4cbf6e7f8e5f7d",
+          "bytes": 20828,
+          "sha256": "26aeb3f94f9b0bcb043e99385f8243764daf545d19fc0bf81c86645801e36fef",
+          "alignment": "PocketSphinx exact token sequence",
+          "alignedTokens": 9,
+          "ffmpegDecoded": true,
+          "miniaudioDecoded": true,
+          "safe": true,
+          "sourceStartSeconds": 0.0,
+          "sourceEndSeconds": 3.367
+        },
+        {
+          "group": "isolated-060",
+          "index": 0,
+          "source": "kaoyan:malignant",
+          "text": "The doctor explained that malignant cells can spread.",
+          "file": "s-61c991602b7a86bf.mp3",
+          "clip": "s-61c991602b7a86bf",
+          "bytes": 20540,
+          "sha256": "0825f7232c2f747e76b35f1eb55980b695e5f0dbaaab9c6bbd84644f4d5e4542",
+          "alignment": "PocketSphinx exact token sequence",
+          "alignedTokens": 8,
+          "ffmpegDecoded": true,
+          "miniaudioDecoded": true,
+          "safe": true,
+          "sourceStartSeconds": 0.0,
+          "sourceEndSeconds": 3.32
+        },
+        {
+          "group": "isolated-063",
+          "index": 0,
+          "source": "kaoyan:terror",
+          "text": "The suspenseful music created a sense of terror in the film.",
+          "file": "s-fbff9b4f6e7b2405.mp3",
+          "clip": "s-fbff9b4f6e7b2405",
+          "bytes": 24284,
+          "sha256": "ac94858b3cc898aea73c05453225e2a8621c5d8ab3b00b1fe2cf72f6a09c24e7",
+          "alignment": "PocketSphinx exact token sequence",
+          "alignedTokens": 11,
+          "ffmpegDecoded": true,
+          "miniaudioDecoded": true,
+          "safe": true,
+          "sourceStartSeconds": 0.0,
+          "sourceEndSeconds": 3.959
+        },
+        {
+          "group": "isolated-064",
+          "index": 0,
+          "source": "kaoyan:propaganda",
+          "text": "The professor taught students to recognize propaganda in the media.",
+          "file": "s-8ed65c517aed01ed.mp3",
+          "clip": "s-8ed65c517aed01ed",
+          "bytes": 22556,
+          "sha256": "f0d3a3f509eb7a47b066a7f18aacb0c36992d4e23a403eb7db69e717370fa9ac",
+          "alignment": "PocketSphinx exact token sequence",
+          "alignedTokens": 10,
+          "ffmpegDecoded": true,
+          "miniaudioDecoded": true,
+          "safe": true,
+          "sourceStartSeconds": 0.0,
+          "sourceEndSeconds": 3.669
+        },
+        {
+          "group": "isolated-066",
+          "index": 0,
+          "source": "kaoyan:communism",
+          "text": "The class compared communism with other political systems.",
+          "file": "s-588b236fe58d87b7.mp3",
+          "clip": "s-588b236fe58d87b7",
+          "bytes": 20828,
+          "sha256": "5a9c1c442b1b570d38c8a33c7ff2938a94e64ade416a077627d06c390ababc11",
+          "alignment": "PocketSphinx exact token sequence",
+          "alignedTokens": 8,
+          "ffmpegDecoded": true,
+          "miniaudioDecoded": true,
+          "safe": true,
+          "sourceStartSeconds": 0.0,
+          "sourceEndSeconds": 3.367
+        },
+        {
+          "group": "isolated-067",
+          "index": 0,
+          "source": "kaoyan:drug",
+          "text": "The pharmacist explained how to take the drug safely.",
+          "file": "s-883bc6430353baa0.mp3",
+          "clip": "s-883bc6430353baa0",
+          "bytes": 19820,
+          "sha256": "19f4e25d864da32d5506714c0a753eb2f8468c14f99b37161ac077fbe9580325",
+          "alignment": "PocketSphinx exact token sequence",
+          "alignedTokens": 9,
+          "ffmpegDecoded": true,
+          "miniaudioDecoded": true,
+          "safe": true,
+          "sourceStartSeconds": 0.0,
+          "sourceEndSeconds": 3.193
+        }
+      ]
     }
   ]
 }
