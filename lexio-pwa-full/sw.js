@@ -1,4 +1,4 @@
-/* Keep the compatible v124 store during the progressive-cache rollout so already downloaded MP3s survive the service-worker update. */
+/* Keep the compatible v124 store so downloaded MP3s survive. Touch this script with app-shell releases: install refreshes SHELL_URLS in the same cache, then controllerchange reloads open clients without purging voice files. */
 const CACHE_NAME = 'lexio-shell-v124-word-audio-batch-008';
 const SHELL_URLS = [
   './',

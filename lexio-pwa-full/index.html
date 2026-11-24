@@ -1241,10 +1241,28 @@
     .record-shell h1 { font-size:clamp(28px,5vw,42px); letter-spacing:-.045em; margin:6px 0; }
     .record-shell p { color:#605d52; line-height:1.65; }
     .record-metrics { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
-    .record-metrics>div,.record-card { padding:16px; border:1px solid #e4ddcd; border-radius:18px; background:white; }
-    .record-metrics>div:nth-child(1) { background:#eaf5e8; } .record-metrics>div:nth-child(2) { background:#fcf0df; } .record-metrics>div:nth-child(3) { background:#e9f0fa; }
-    .record-metrics strong { display:block; font-size:22px; } .record-card { margin-top:14px; }
+    .record-metrics>.record-metric,.record-card { padding:16px; border:1px solid #e4ddcd; border-radius:18px; background:white; }
+    .record-metric { position:relative; display:flex; flex-direction:column; align-items:flex-start; gap:3px; width:100%; min-width:0; color:#233b32; font:inherit; text-align:left; text-decoration:none; cursor:pointer; pointer-events:auto; touch-action:manipulation; -webkit-tap-highlight-color:rgba(37,111,83,.14); -webkit-appearance:none; appearance:none; transition:transform .18s ease,filter .18s ease; }
+    .record-metric small { color:#53675a; font-size:11px; font-weight:700; }
+    .record-metric strong { display:block; font-size:22px; line-height:1.25; }
+    .record-metric-hint { margin-top:3px; color:#53675a; font-size:10px; font-weight:650; }
+    .record-metric:hover { transform:translateY(-2px); filter:saturate(1.06); }
+    .record-metric:active { transform:translateY(1px) scale(.985); }
+    .record-metric:focus-visible,.record-word-close:focus-visible { outline:3px solid #287d6d; outline-offset:3px; }
+    .record-metric[aria-expanded="true"] { filter:saturate(1.18); }
+    .record-card { margin-top:14px; }
     .record-card h2 { margin:0; font-size:19px; } .record-card p { font-size:14px; }
+    .record-word-panel { scroll-margin-top:calc(66px + env(safe-area-inset-top)); }
+    .record-word-panel-head { display:flex; align-items:flex-start; justify-content:space-between; gap:14px; }
+    .record-word-panel-head p { margin:5px 0 12px; color:#718077; font-size:12px; }
+    .record-word-close { flex:none; padding:7px 12px; border:1px solid #dce5dc; border-radius:999px; background:#f7faf6; color:#345c4a; font:inherit; font-size:12px; cursor:pointer; }
+    .record-word-list { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; list-style:none; margin:0; padding:0; }
+    .record-word-list li { min-width:0; padding:10px 12px; border:1px solid #e5ebe3; border-radius:12px; background:#fbfcf9; }
+    .record-word-list strong,.record-word-list small { display:block; overflow-wrap:anywhere; }
+    .record-word-list strong { color:#263d32; font-size:14px; }
+    .record-word-list small { margin-top:3px; color:#758078; font-size:11px; line-height:1.5; }
+    .record-word-empty { margin:0; padding:12px; border-radius:12px; background:#f6f8f5; color:#65736a; }
+    @media(max-width:520px){.record-word-list{grid-template-columns:1fr;}}
     #recordDays { list-style:none; padding:0; display:grid; gap:8px; }
     #recordDays li { display:grid; grid-template-columns:4em 1fr 4em; align-items:center; font-size:13px; } #recordDays meter { width:100%; } #recordDays b { text-align:right; }
     body[data-app-view="progress"] .site-header { display:none; }
@@ -1303,7 +1321,7 @@
        needs an accented frame. No decoration attached to scrollports. */
     #library .library-panel { border:0; background:#f4f7f7; box-shadow:none; }
     #study .study-app, #study .study-scroll { border:0; background:#f5f7f3; box-shadow:none; }
-    .study-stat, .progress-stats div, .record-metrics>div { border:0; min-width:0; }
+    .study-stat, .progress-stats div, .record-metrics>.record-metric { border:0; min-width:0; }
     .study-stat { background:transparent; }
     .study-word-main>div, .word-tile-head>div { min-width:0; flex:1; }
     .word-tile-head button { flex:none; }
@@ -1336,7 +1354,7 @@
     .record-card { padding:clamp(16px,3vw,24px); }
     .record-card h2 { line-height:1.4; }
     .record-metrics { grid-template-columns:repeat(3,minmax(0,1fr)); }
-    .record-metrics>div { padding:clamp(10px,3vw,16px); }
+    .record-metrics>.record-metric { padding:clamp(10px,3vw,16px); }
     #recordDays li { grid-template-columns:3.2em minmax(0,1fr) auto; column-gap:10px; }
     #recordDays meter { width:100%; min-width:0; }
     #gradeChoices .shelf-link { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:2px 8px; }
@@ -1363,7 +1381,7 @@
 
     /* Paint the rails in the border box. The wash fades to paper before
        the label; neither layer is an overlay or an absolutely placed node. */
-    .shelf, .word-tile, .phrase-item, .record-card, .record-metrics>div,
+    .shelf, .word-tile, .phrase-item, .record-card, .record-metrics>.record-metric,
     .feature-card, .exam-card, .menu-card:not(.primary) {
       --edge-ink:var(--edge,var(--rail-top));
       --paper-tint:var(--tint,#fff);
@@ -1371,13 +1389,14 @@
       background:linear-gradient(var(--paper-tint),var(--paper-tint)) padding-box,
         linear-gradient(160deg,color-mix(in srgb,var(--edge-ink) 55%,white),#ebeee4,var(--rail-bottom)) border-box;
     }
-    .record-metrics>div:nth-child(1){--paper-tint:#eaf5e8;}
-    .record-metrics>div:nth-child(2){--paper-tint:#fcf0df;}
-    .record-metrics>div:nth-child(3){--paper-tint:#e9f0fa;}
+    .record-metrics>.record-metric:nth-child(1){--paper-tint:#eaf5e8;}
+    .record-metrics>.record-metric:nth-child(2){--paper-tint:#fcf0df;}
+    .record-metrics>.record-metric:nth-child(3){--paper-tint:#e9f0fa;}
     .catalog .shelf {background:linear-gradient(115deg,var(--tint),#fdfefd) padding-box,
       linear-gradient(165deg,var(--edge),#e6eeeb,var(--tint)) border-box;}
-    body[data-app-view] :is(.demo-tab,.library-mode-tab,.catalog .shelf-link,.menu-card) {
+    body[data-app-view] :is(.demo-tab,.library-mode-tab,.catalog .shelf-link,.menu-card,.record-metric) {
       --glow:#68a799; --glow-end:#accb80; --face:#fcfefb; --wash:#edf6ef;
+      --lamp-halo:rgba(60,164,132,.36);
       border:1px solid transparent; border-inline-width:2px; color:#173f36;
       background:linear-gradient(90deg,var(--wash),var(--face) 28%,var(--face) 72%,var(--wash)) padding-box,
         linear-gradient(140deg,var(--glow),#d9e9de,var(--glow-end),var(--glow)) border-box;
@@ -1390,6 +1409,10 @@
     body[data-app-view] .menu-card:nth-child(2){--wash:#e5eff7;--glow:#76a7c3;}
     body[data-app-view] .menu-card:nth-child(3){--wash:#fbf0df;--glow:#c49a64;}
     body[data-app-view] .menu-card:nth-child(4){--wash:#eee9f6;--glow:#a78bb8;}
+    body[data-app-view] #progress .record-metric:nth-child(1){--wash:#eaf5e8;--face:#fbfefa;--glow:#55a56c;--glow-end:#bedf9f;--lamp-halo:rgba(71,160,96,.38);}
+    body[data-app-view] #progress .record-metric:nth-child(2){--wash:#fcf0df;--face:#fffdf8;--glow:#c7904d;--glow-end:#efd18d;--lamp-halo:rgba(201,144,77,.38);}
+    body[data-app-view] #progress .record-metric:nth-child(3){--wash:#e9f0fa;--face:#fbfdff;--glow:#638bb9;--glow-end:#b9d5ed;--lamp-halo:rgba(99,139,185,.38);}
+    body[data-app-view] #progress .record-metric::after {content:'';position:absolute;top:14px;right:14px;width:8px;height:8px;border-radius:50%;background:var(--glow);box-shadow:0 0 4px 1px var(--lamp-halo);pointer-events:none;}
     /* Glow the edge and its pilot light, never the text or the whole control. */
     body[data-app-view] :is(.demo-tab,.library-mode-tab){
       --lamp:#16bb98; --lamp-halo:rgba(21,187,147,.55); --glow:#159d83; --glow-end:#acde53;
@@ -1407,8 +1430,12 @@
     }
     @keyframes pilotBreath {0%,100%{opacity:.55;transform:scale(.75);}50%{opacity:1;transform:scale(1.15);box-shadow:0 0 7px 2px var(--lamp-halo);}}
     @media(prefers-reduced-motion:no-preference){
-      body[data-app-view] :is(.demo-tab,.library-mode-tab,.catalog .shelf-link,.menu-card){animation:edgeBreath 2.6s ease-in-out infinite;}
+      body[data-app-view] :is(.demo-tab,.library-mode-tab,.catalog .shelf-link,.menu-card,.record-metric){animation:edgeBreath 2.6s ease-in-out infinite;}
       body[data-app-view] :is(.demo-tab,.library-mode-tab)::before {animation:pilotBreath 2.6s ease-in-out infinite;}
+      body[data-app-view] #progress .record-metric::after {animation:pilotBreath 2.6s ease-in-out infinite;}
+    }
+    @media(prefers-reduced-motion:reduce){
+      body[data-app-view] #progress .record-metric {box-shadow:0 0 0 1px var(--glow),0 0 10px 2px var(--lamp-halo);}
     }
     /* The large frame breathes only around the perimeter. Keep text, scroll
        geometry and the swipe transform independent of the animation. */
@@ -1508,11 +1535,22 @@
     <section id="progress" data-app-view="progress" aria-labelledby="recordTitle">
       <div class="record-shell">
         <header><svg class="pocket-art" aria-hidden="true" viewBox="0 0 60 56"><path d="M30 36Q31 22 39 10M31 30Q20 25 16 18" fill="none" stroke="#476e55" stroke-width="3"/><path d="M33 22Q32 4 51 4Q53 21 33 22" fill="#61ad7c"/><path d="M24 27Q8 29 7 13Q22 11 24 27" fill="#98c889"/><path d="M16 33H44L40 50H20Z" fill="#ebac81"/><rect x="14" y="31" width="32" height="6" rx="3" fill="#ca845f"/><path d="M25 41Q30 46 35 41" fill="none" stroke="#83533b" stroke-width="2"/></svg><span class="eyebrow">LEARNING JOURNAL</span><h1 id="recordTitle">本机学习记录</h1><p>看看这段时间记住了什么，以及哪些词还需要练习。</p></header>
-        <div class="record-metrics">
-          <div><small>累计已记住</small><strong id="recordKnown">0</strong></div>
-          <div><small>待巩固</small><strong id="recordWeak">0</strong></div>
-          <div><small>连续学习</small><strong id="recordStreak">0 天</strong></div>
+        <div class="record-metrics" aria-label="本机学习指标">
+          <button class="record-metric" type="button" data-record-filter="known" aria-controls="recordWordPanel" aria-expanded="false">
+            <small>累计已记住</small><strong id="recordKnown">0</strong><span class="record-metric-hint">查看已掌握单词 →</span>
+          </button>
+          <button class="record-metric" type="button" data-record-filter="weak" aria-controls="recordWordPanel" aria-expanded="false">
+            <small>待巩固</small><strong id="recordWeak">0</strong><span class="record-metric-hint">查看待巩固单词 →</span>
+          </button>
+          <a class="record-metric" href="#study" data-open-memory aria-label="打开学习页的记忆引擎面板">
+            <small>连续学习</small><strong id="recordStreak">0 天</strong><span class="record-metric-hint">打开记忆引擎 →</span>
+          </a>
         </div>
+        <article class="record-card record-word-panel" id="recordWordPanel" hidden tabindex="-1" aria-labelledby="recordWordListTitle" aria-live="polite">
+          <header class="record-word-panel-head"><div><h2 id="recordWordListTitle">学习单词</h2><p id="recordWordListSummary">仅显示这台设备上的学习记录。</p></div><button class="record-word-close" type="button" data-close-record-list aria-label="关闭单词列表">关闭</button></header>
+          <p class="record-word-empty" id="recordWordEmpty" hidden></p>
+          <ul class="record-word-list" id="recordWordList"></ul>
+        </article>
         <article class="record-card"><h2>近七天</h2><p>每天在词卡上标记「记住了」和「还不熟悉」的次数</p><ol id="recordDays"></ol></article>
         <article class="record-card"><h2>最近记住的词</h2><p id="recordWords"></p><a class="card-link" href="#study">继续学习 →</a></article>
       </div>
@@ -1868,7 +1906,7 @@
       const DB_WORDS = 'words';
       const DB_STAGING = 'stagingWords';
       const DB_META = 'meta';
-      const BUNDLED_CONTENT_VERSION = 'school-grades-2026-11-v7';
+      const BUNDLED_CONTENT_VERSION = 'school-grades-2026-11-v9';
       let db = null;
       let bankReady = false, bankMeta = null;
       let bank = SAMPLE_WORDS.map((w, i) => normalizeWord(w, i));
@@ -1915,6 +1953,7 @@
           order: Number.isFinite(Number(rawOrder)) && rawOrder !== '' ? Number(rawOrder) : index,
           word,
           phonetic: phonetic || '',
+          phoneticSource: get('phoneticSource','phonetic_source') || '',
           ukPhonetic,
           usPhonetic,
           pos: get('pos','partOfSpeech','part_of_speech','wordClass') || '',
@@ -2012,7 +2051,9 @@
         }
         const byId = new Map(bank.map(word=>[word.id,word]));
         const byKey = new Map(bank.map(word=>[`${word.category.toLowerCase()}\u0000${word.word.toLowerCase()}`,word]));
+        const incomingById = new Map(incoming.map(word=>[word.id,word]));
         const exampleMigrations = payload.metadata && payload.metadata.exampleTextMigrations || {};
+        const wordFieldMigrations = payload.metadata && payload.metadata.wordFieldMigrations || {};
         for (const update of incoming) {
           const current = byId.get(update.id) || byKey.get(`${update.category.toLowerCase()}\u0000${update.word.toLowerCase()}`);
           if (!current) {
@@ -2020,6 +2061,15 @@
               bank.push(update); changed = true;
             }
             continue;
+          }
+          // Supply newly bundled pronunciation data to installed cards only
+          // when that field is still empty; learner-edited IPA stays intact.
+          const currentPhonetic = String(current.phonetic || '').trim();
+          const bundledPhonetic = String(update.phonetic || '').trim();
+          if (!currentPhonetic && bundledPhonetic) {
+            current.phonetic = update.phonetic;
+            if (update.phoneticSource) current.phoneticSource = update.phoneticSource;
+            changed = true;
           }
           const pairs = [
             ['example','exampleSource'],
@@ -2071,6 +2121,24 @@
               }
               changed = true;
             }
+          }
+        }
+        /* Correct bundled headwords and definitions only when the stored
+           value is still one of our known old versions. This keeps personal
+           edits intact while migrating confirmed spelling/POS fixes. */
+        const migratableWordFields = new Set(['word','meaning','pos','mnemonic']);
+        for (const [id,fields] of Object.entries(wordFieldMigrations)) {
+          const current = byId.get(id), update = incomingById.get(id);
+          if (!current || !update || !fields || typeof fields !== 'object') continue;
+          for (const [field,migration] of Object.entries(fields)) {
+            if (!migratableWordFields.has(field) || !migration || typeof migration !== 'object') continue;
+            const fromValues = Array.isArray(migration.from) ? migration.from : [migration.from];
+            const oldValue = String(current[field] ?? '');
+            const targetValue = String(update[field] ?? '');
+            if (targetValue !== String(migration.to ?? '') || !fromValues.some(value => String(value ?? '') === oldValue)) continue;
+            if (oldValue === targetValue) continue;
+            current[field] = update[field];
+            changed = true;
           }
         }
         if (changed) {
@@ -2231,7 +2299,9 @@
         if (resetPage) gridShown = 0;
         const query = ($('#wordSearch').value || '').trim().toLowerCase();
         const filtered = bank.filter(word => categoryMatches(word, activeFilter) && (!query || `${word.word} ${word.meaning} ${word.category} ${word.phonetic} ${word.ukPhonetic} ${word.usPhonetic}`.toLowerCase().includes(query)));
-        if (!gridShown) gridShown = Math.min(GRID_PAGE_SIZE, filtered.length);
+        // Selecting a US grade should expose its entire roster without a second “load more” action.
+        const showWholeUSGrade = /^美国[1-9]年级$/.test(activeFilter);
+        if (!gridShown) gridShown = showWholeUSGrade ? filtered.length : Math.min(GRID_PAGE_SIZE, filtered.length);
         const shown = filtered.slice(0, gridShown);
         const grid = $('#wordGrid');
         if (!shown.length) { grid.innerHTML = '<div class="empty-state">没有找到匹配词条。试试更短的关键词，或切换考试分类。</div>'; return; }
@@ -2493,6 +2563,7 @@
         }
         return streak;
       }
+      let activeRecordFilter = null;
       let progressRendering = false;
       function updateProgressUI() {
         if (progressRendering) return;
@@ -2522,6 +2593,7 @@
         $('#recordWeak').textContent = weak.toLocaleString();
         $('#recordStreak').textContent = studyStreak() + ' 天';
         $('#recordWords').textContent = masteredWords().slice(-20).reverse().join(' · ') || '还没有记录。在学习页左滑词卡或点「记住了」，第一个词就会出现在这里。';
+        if (activeRecordFilter) renderRecordWordList(activeRecordFilter);
         if (bars) {
           const history = readJSONArray(HISTORY_KEY);
           const byDay = new Map(history.map(row => [row && row.day, (Number(row && row.known) || 0) + (Number(row && row.again) || 0)]));
@@ -2558,6 +2630,54 @@
             ? '标记「记住了」或「还不熟悉」后，这里会显示这台设备上的真实进度。'
             : `已记住 ${mastered.toLocaleString()} 词，待巩固 ${weak.toLocaleString()} 词；只统计你实际标记过的单词。`;
         }
+      }
+      function renderRecordWordList(filter) {
+        if (filter !== 'known' && filter !== 'weak') return;
+        const records = filter === 'known' ? masteredWords()
+          : (window.__lexioWeak && typeof window.__lexioWeak.list === 'function' ? window.__lexioWeak.list() : readJSONArray('lexio.weakWords'));
+        const title = $('#recordWordListTitle');
+        const summary = $('#recordWordListSummary');
+        const empty = $('#recordWordEmpty');
+        const list = $('#recordWordList');
+        if (!title || !summary || !empty || !list) return;
+        const label = filter === 'known' ? '已掌握单词' : '待巩固单词';
+        title.textContent = label;
+        summary.textContent = `${records.length.toLocaleString()} 个单词 · 仅显示这台设备上的学习记录`;
+        empty.hidden = records.length > 0;
+        empty.textContent = filter === 'known' ? '还没有已掌握的单词。学习时点「记住了」后，单词会出现在这里。'
+          : '目前没有待巩固的单词。遇到还不熟悉的词后，它会出现在这里。';
+        list.innerHTML = records.map(word => {
+          const entry = bank.find(item => item && item.word === word);
+          const detail = entry ? [entry.category || '', entry.meaning || ''].filter(Boolean).join(' · ')
+            : '保存在这台设备上的学习记录';
+          return `<li><strong>${escapeHTML(word)}</strong><small>${escapeHTML(detail)}</small></li>`;
+        }).join('');
+      }
+      function toggleRecordWordList(filter) {
+        const panel = $('#recordWordPanel');
+        if (!panel || (filter !== 'known' && filter !== 'weak')) return;
+        const closing = !panel.hidden && activeRecordFilter === filter;
+        activeRecordFilter = closing ? null : filter;
+        panel.hidden = closing;
+        $$('[data-record-filter]').forEach(button => {
+          const expanded = !closing && button.dataset.recordFilter === filter;
+          button.setAttribute('aria-expanded', String(expanded));
+          button.classList.toggle('is-selected', expanded);
+        });
+        if (!closing) {
+          renderRecordWordList(filter);
+          try { panel.focus({ preventScroll:true }); } catch(_) {}
+          if (typeof panel.scrollIntoView === 'function') panel.scrollIntoView({ behavior:'smooth', block:'start' });
+        }
+      }
+      function closeRecordWordList() {
+        activeRecordFilter = null;
+        const panel = $('#recordWordPanel');
+        if (panel) panel.hidden = true;
+        $$('[data-record-filter]').forEach(button => {
+          button.setAttribute('aria-expanded', 'false');
+          button.classList.remove('is-selected');
+        });
       }
       window.__lexioProgress = {
         mastered: () => masteredWords().slice(),
@@ -2602,7 +2722,7 @@
            suite") and no full sentence exists in any licensed source. That is
            shown and labelled as a phrase, never padded into a fake sentence. */
         const exampleText = String(word.example || '').trim();
-        const exampleIsPhrase = isDictionaryPhrase(exampleText);
+        const exampleIsPhrase = !hidePracticeSourceLabels && isDictionaryPhrase(exampleText);
         const sourceLabel = hidePracticeSourceLabels ? '' : exampleSource.startsWith('dictionary:')
           ? (exampleIsPhrase ? `词典短语 · ${exampleSource.slice('dictionary:'.length)}` : `词典原句 · ${exampleSource.slice('dictionary:'.length)}`)
           : exampleSource.startsWith('generated-practice')
@@ -2629,7 +2749,7 @@
         if (exSpeakBtn) {
           const exampleClip = recordingFor(word.example);
           const moderationExcluded = isModerationExcludedText(exampleText);
-          const canUseDeviceVoice = !exampleIsPhrase && !moderationExcluded;
+          const canUseDeviceVoice = !moderationExcluded && (!exampleIsPhrase || hidePracticeSourceLabels);
           exSpeakBtn.hidden = !word.example;
           exSpeakBtn.disabled = moderationExcluded || (!exampleClip && !canUseDeviceVoice);
           exSpeakBtn.title = moderationExcluded
@@ -2637,16 +2757,16 @@
             : exampleClip
               ? (exampleIsPhrase ? '播放已录制的词典短语' : '播放已录制的完整例句')
               : canUseDeviceVoice
-                ? '使用设备 en-US 系统语音朗读；不是 voice-00 录音'
-                : '这个词典短语暂无录音';
+                ? (exampleIsPhrase ? '使用设备 en-US 系统语音朗读词典短语；不是 voice-00 录音' : '使用设备 en-US 系统语音朗读例句；不是 voice-00 录音')
+                : '这个词条暂无可播放语音';
           exSpeakBtn.textContent = moderationExcluded
             ? '暂不提供朗读'
             : exampleClip
               ? (exampleIsPhrase ? '🔊 朗读短语' : '🔊 朗读例句')
               : canUseDeviceVoice
-                ? '🔊 设备语音朗读例句'
-                : '短语待配音';
-          exSpeakBtn.setAttribute('aria-label',moderationExcluded?'该内容暂不提供语音播放':exampleClip?(exampleIsPhrase?'播放录制的词典短语':'播放录制的例句'):canUseDeviceVoice?'使用设备 en-US 语音朗读例句（不是 voice-00 录音）':'词典短语待配音');
+                ? (exampleIsPhrase ? '🔊 设备语音朗读短语' : '🔊 设备语音朗读例句')
+                : '暂无可播放语音';
+          exSpeakBtn.setAttribute('aria-label',moderationExcluded?'该内容暂不提供语音播放':exampleClip?(exampleIsPhrase?'播放录制的词典短语':'播放录制的例句'):canUseDeviceVoice?(exampleIsPhrase?'使用设备 en-US 语音朗读词典短语（不是 voice-00 录音）':'使用设备 en-US 语音朗读例句（不是 voice-00 录音）'):'该词条暂无可播放语音');
           exSpeakBtn.dataset.idleText=exSpeakBtn.textContent;
           exSpeakBtn.dataset.idleTitle=exSpeakBtn.title;
           exSpeakBtn.dataset.idleAriaLabel=exSpeakBtn.getAttribute('aria-label')||'朗读例句';
@@ -31013,7 +31133,7 @@
       async function openWords(key,label){
         activeFilter=key;$('#wordBankMode').classList.add('in-list');
         $('[data-up="wordBankMode"]').textContent=currentStage?'‹ 返回年级':'‹ 词库目录';
-        $('#wordCrumb').textContent=label;$('#wordSearch').value='';renderWordGrid(true);$('#wordGrid').scrollTop=0;
+        $('#wordCrumb').textContent=gradeCounts[key]?`${label} · ${gradeCounts[key]} 条`:label;$('#wordSearch').value='';renderWordGrid(true);$('#wordGrid').scrollTop=0;
         if(key!=='all'&&!gradeCounts[key])return;
         await bankInit;
         if(activeFilter!==key)return;
@@ -31208,6 +31328,8 @@
       });
       window.__lexioBattle = { start: () => $('#battleStart').click(), nextName: pickFoeName, foe: () => battle.foe, question: () => { const item=battle.q[battle.i]; return item ? {word:item.word,meaning:item.meaning} : null; }, stats: () => ({ questionIndex: battle.i, answered: battle.answered, total: battle.q.length, over: battle.over }) };
       renderWeakList();
+      $$('[data-record-filter]').forEach(button => button.addEventListener('click', () => toggleRecordWordList(button.dataset.recordFilter)));
+      $$('[data-close-record-list]').forEach(button => button.addEventListener('click', closeRecordWordList));
       $$('[data-demo-tab]').forEach(button=>button.addEventListener('click',()=>selectShowcaseTab(button.dataset.demoTab)));
       $('#directSubscribe').addEventListener('click',openPayment);
             $('#studySpeak').addEventListener('click',()=>{const word=bank[studyIndex];if(word)speakEntry(word,activeAccent);});
@@ -31270,7 +31392,9 @@
           btn.title='正在使用设备 en-US 系统语音，不是 voice-00 录音';
           btn.setAttribute('aria-label','正在使用设备英语语音朗读例句（不是 voice-00 录音），点按停止');
         };
-        speakExample(word.example, resetButton, error=>{ resetButton(); toastMessage(error.message || '例句朗读失败，请检查设备音量。'); }, !isDictionaryPhrase(word.example), markDeviceVoice);
+        const isUSGradeExample = /^美国[1-9]年级$/.test(String(word.category || ''));
+        const allowDeviceVoiceFallback = isUSGradeExample || !isDictionaryPhrase(word.example);
+        speakExample(word.example, resetButton, error=>{ resetButton(); toastMessage(error.message || '例句朗读失败，请检查设备音量。'); }, allowDeviceVoiceFallback, markDeviceVoice);
       });
 
       /* “例句来源” card: open the study view on a random word that really
@@ -31308,7 +31432,10 @@
       $$('[data-open-memory]').forEach(link => link.addEventListener('click', event => {
         event.preventDefault();
         selectShowcaseTab('memory');
-        if (window.__lexioShow) window.__lexioShow('study', 'study');
+        if (window.__lexioShow) {
+          if (location.hash !== '#study') history.pushState(null,'','#study');
+          window.__lexioShow('study', 'study');
+        } else location.hash='#study';
       }));
       window.__lexioOpenRandomExample = openRandomExample;
       $('#returnLibraryBtn').addEventListener('click',returnToLibrary);

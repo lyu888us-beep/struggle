@@ -376,7 +376,7 @@ function animClean() {
     pageHtml.includes("speak(sentence,'en-US',finish,fail,1)") &&
     pageHtml.includes('isModerationExcludedText(sentence)') && pageHtml.includes('onDeviceFallback?.()'));
   check('例句按钮区分录音与设备语音回退，不把合成声称作 voice-00',
-    pageHtml.includes('使用设备 en-US 系统语音朗读；不是 voice-00 录音') &&
+    pageHtml.includes('使用设备 en-US 系统语音朗读例句；不是 voice-00 录音') &&
     pageHtml.includes('⏸ 设备语音 · 停止') && !pageHtml.includes('正在播放美式例句'));
   check('页面移除原站跳转及外部 Arena 联系链接',
     !pageHtml.includes('原站入口') && !pageHtml.includes('arena.site') && !doc.querySelector('a[href^="https://"]'));
@@ -750,6 +750,67 @@ function animClean() {
   const usGradeBooks = bundled.books.filter((book) => /^us-grade-[1-9]$/.test(book.id));
   const usGradeWords = usGradeBooks.flatMap((book) => book.words || []);
   const expectedUSCounts = [175,175,250,250,250,300,300,300,300];
+  const completeUSGradeBank = usGradeBooks.flatMap((book) => (book.words || []).map((word,index) => ({ ...word, category:book.category, order:index })));
+  const gradeVC = new VirtualConsole();
+  gradeVC.on('jsdomError', () => {});
+  gradeVC.on('error', () => {});
+  gradeVC.on('warn', () => {});
+  const gradeDom = new JSDOM(html, {
+    url:'http://localhost/',
+    runScripts:'dangerously',
+    pretendToBeVisual:true,
+    virtualConsole:gradeVC,
+    beforeParse(gradeWindow) {
+      gradeWindow.localStorage.setItem('lexio.fallbackBank', JSON.stringify(completeUSGradeBank));
+      gradeWindow.Audio = function () { this.addEventListener=()=>{};this.play=()=>Promise.resolve();this.pause=()=>{}; };
+      gradeWindow.fetch = (url) => {
+        if (String(url).includes('daily-conversation.json')) {
+          const phrases = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'daily-conversation.json'), 'utf8'));
+          return Promise.resolve({ ok:true, json:()=>Promise.resolve(phrases) });
+        }
+        return Promise.reject(new Error('Network disabled in grade-list regression test'));
+      };
+      gradeWindow.SpeechSynthesisUtterance = function (text) { this.text=text;this.lang='';this.rate=1;gradeWindow.__lastGradeUtterance=this; };
+      gradeWindow.speechSynthesis = { speaking:false,pending:false,paused:false,getVoices:()=>[{lang:'en-US'}],addEventListener(){},resume(){},cancel(){},speak(){} };
+    },
+  });
+  const gradeDoc = gradeDom.window.document;
+  for(let attempt=0;attempt<50 && !gradeDoc.getElementById('bankCountLabel').textContent.includes('2,300');attempt++) await sleep(20);
+  check('美国年级运行时回归测试已载入 2,300 条本机词库',
+    gradeDoc.getElementById('bankCountLabel').textContent.includes('2,300'),
+    gradeDoc.getElementById('bankCountLabel').textContent);
+  gradeDoc.getElementById('wordLibraryTab').click();
+  gradeDoc.querySelector('[data-stage="美国"]').click();
+  for(let grade=1;grade<=9;grade++){
+    if(grade>1) gradeDoc.querySelector('[data-up="wordBankMode"]').click();
+    gradeDoc.querySelector(`[data-grade="美国${grade}年级"]`).click();
+    await sleep(25);
+    const grid=gradeDoc.getElementById('wordGrid');
+    const rendered=grid.querySelectorAll('.word-tile').length;
+    const expected=expectedUSCounts[grade-1];
+    const missingTileIPA=[...grid.querySelectorAll('.word-tile .phonetic')].filter(el=>!el.textContent.trim()||el.textContent.includes('音标待补充')).length;
+    const summary=[...grid.querySelectorAll('.empty-state')].at(-1)?.textContent||'';
+    const crumb=gradeDoc.getElementById('wordCrumb').textContent;
+    check(`选择美国${grade}年级后完整呈现 ${expected} 条词条`,
+      rendered===expected && summary===`共 ${expected.toLocaleString()} 条` && crumb.endsWith(`${expected} 条`) && !grid.querySelector('.word-load-more'),
+      `tiles=${rendered} crumb=${crumb} summary=${summary} loadMore=${!!grid.querySelector('.word-load-more')}`);
+    check(`美国${grade}年级每张词库卡正面都显示音标`,missingTileIPA===0,`missing=${missingTileIPA}`);
+  }
+  const shortPhraseIndex = usGradeWords.findIndex(word => word.word==='tell');
+  const shortPhraseWord = usGradeWords[shortPhraseIndex];
+  gradeDom.window.__lexioStudy.goTo(shortPhraseIndex);
+  const shortPhraseButton = gradeDoc.getElementById('exampleSpeak');
+  check('美国背面例句卡仍显示词头IPA，且小写例句有可用朗读按钮',
+    shortPhraseIndex>=0 && shortPhraseWord.example==='tell me a story' && !shortPhraseButton.disabled &&
+    shortPhraseButton.textContent.includes('设备语音朗读例句') &&
+    gradeDoc.getElementById('studyPhonetic').textContent.includes(shortPhraseWord.phonetic));
+  shortPhraseButton.click();
+  check('例句按钮实际调用 en-US 设备语音，而不借用不匹配录音',
+    gradeDom.window.__lastGradeUtterance?.text===shortPhraseWord.example &&
+    gradeDom.window.__lastGradeUtterance?.lang==='en-US' &&
+    shortPhraseButton.textContent.includes('设备语音'));
+  gradeDom.window.__lastGradeUtterance?.onend?.();
+  gradeDom.window.close();
   const missingExamples = bundledWords.filter((word) => !String(word.example || '').trim()).length;
   const missingUSExamples = usGradeWords.filter((word) => !String(word.example || '').trim()).length;
   const missingNonUSExamples = bundledWords.filter((word) => !String(word.example || '').trim() && !String(word.id || '').startsWith('school-us')).length;
@@ -763,6 +824,15 @@ function animClean() {
     bundled.metadata.retiredBundledWords.length===90 &&
     pageHtml.includes('1–6 年级为来源年级估计') && pageHtml.includes('7–9 年级按难度启发式分级'),
     `books=${usGradeBooks.length} words=${usGradeWords.length} counts=${usGradeBooks.map(book=>book.words.length).join('/')}`);
+  const missingUSPhonetics = usGradeWords.filter(word=>!String(word.phonetic||word.ipa||'').trim());
+  const phoneticMetadata = bundled.metadata.phoneticEnrichment || {};
+  const cmuPhoneticCount = usGradeWords.filter(word=>String(word.phoneticSource||'').startsWith('CMUdict 1.1.3')).length;
+  const manualPhoneticCount = usGradeWords.filter(word=>word.phoneticSource==='manual broad en-US IPA').length;
+  check('美国1–9年级2,300张词卡均有美式IPA，保留既有音标并标注补充来源',
+    missingUSPhonetics.length===0 && cmuPhoneticCount===1468 && manualPhoneticCount===33 &&
+    phoneticMetadata.coverage===2300 && phoneticMetadata.preexistingEntriesPreserved===799 &&
+    phoneticMetadata.cmudictMissingWords?.length===32 && phoneticMetadata.manualCorrections?.includes('scythe'),
+    `missing=${missingUSPhonetics.length} CMU=${cmuPhoneticCount} manual=${manualPhoneticCount}`);
   check('每个已有例句都是可读英文；上游未提供用例的美国词条不编造例句',
     bundledWords.length === 30624 && missingExamples === 358 && missingUSExamples === 358 &&
     missingNonUSExamples === 0 && missingMnemonics === 0 && cjkExamples === 0 && realExamples > 22000,
@@ -778,16 +848,17 @@ function animClean() {
     pageHtml.includes("const sourceLabel = hidePracticeSourceLabels ? '' : exampleSource.startsWith('dictionary:')") &&
     pageHtml.includes("const mnemonicLabel = hidePracticeSourceLabels ? '' : word.mnemonicSource.startsWith('dictionary:')"));
   {
-    // Short dictionary fragments remain labelled as phrases and are not
-    // promoted to full-sentence TTS; complete sentences may use device TTS.
+    // Non-US dictionary fragments remain phrase-only, while every US grade-pack
+    // usage example (including lowercase text) may use clearly labelled device TTS.
     const phraseWord = doc.querySelector('#studyExampleSource');
     check('例句来源标签区分「词典原句」与「词典短语」',
       pageHtml.includes('词典短语 · ') && pageHtml.includes('isDictionaryPhrase(exampleText)'));
-    check('词典短语只播放已有片段，未录时不伪装成整句',
+    check('非美国词库的未录词典短语仍不伪装成整句，美式年级用例可使用设备语音',
       pageHtml.includes('const exampleClip = recordingFor(word.example);') &&
-      pageHtml.includes('const canUseDeviceVoice = !exampleIsPhrase && !moderationExcluded;') &&
+      pageHtml.includes('const canUseDeviceVoice = !moderationExcluded && (!exampleIsPhrase || hidePracticeSourceLabels);') &&
       pageHtml.includes('exSpeakBtn.disabled = moderationExcluded || (!exampleClip && !canUseDeviceVoice);') &&
-      pageHtml.includes('🔊 朗读短语') && pageHtml.includes('短语待配音'));
+      pageHtml.includes('const allowDeviceVoiceFallback = isUSGradeExample || !isDictionaryPhrase(word.example);') &&
+      pageHtml.includes('🔊 朗读短语') && pageHtml.includes('暂无可播放语音'));
     check('审核阻止文本被明确排除在系统语音兜底之外',
       pageHtml.includes("MODERATION_EXCLUDED_SPEECH_TEXTS = ['men who molest young boys']") &&
       pageHtml.includes('if(isModerationExcludedText(sentence))'));
@@ -1121,6 +1192,51 @@ function animClean() {
   check('最近 7 天柱状图按本机记录渲染 7 根柱子',
     doc.querySelectorAll('#memoryBars > div').length === 7);
 
+  // Learning-journal metric cards must navigate to the actual local records,
+  // not just animate or display a decorative count.
+  doc.querySelector('#appTabbar a[data-tab="progress"]').click();
+  await sleep(600);
+  check('底部“记录”选项卡实际进入学习记录页',
+    doc.body.dataset.appView==='progress' && doc.querySelectorAll('#progress .record-metric').length===3);
+  const knownMetric = doc.querySelector('[data-record-filter="known"]');
+  const weakMetric = doc.querySelector('[data-record-filter="weak"]');
+  const recordPanel = doc.getElementById('recordWordPanel');
+  const expectedKnownWords = progressApi.mastered();
+  knownMetric.click();
+  const renderedKnownWords = [...doc.querySelectorAll('#recordWordList li strong')].map(el=>el.textContent);
+  check('点击累计已记住显示完整本机已掌握单词列表',
+    !recordPanel.hidden && doc.getElementById('recordWordListTitle').textContent==='已掌握单词' &&
+    Number(doc.getElementById('recordWordListSummary').textContent.split(' ')[0].replace(/,/g,''))===expectedKnownWords.length &&
+    expectedKnownWords.every(word=>renderedKnownWords.includes(word)) && knownMetric.getAttribute('aria-expanded')==='true' &&
+    recordPanel.tabIndex===-1 && doc.activeElement===recordPanel,
+    `rendered=${renderedKnownWords.length} expected=${expectedKnownWords.length}`);
+  const expectedWeakWords = window.__lexioWeak.list();
+  weakMetric.click();
+  const renderedWeakWords = [...doc.querySelectorAll('#recordWordList li strong')].map(el=>el.textContent);
+  check('点击待巩固显示本机未掌握单词列表',
+    !recordPanel.hidden && doc.getElementById('recordWordListTitle').textContent==='待巩固单词' &&
+    Number(doc.getElementById('recordWordListSummary').textContent.split(' ')[0].replace(/,/g,''))===expectedWeakWords.length &&
+    expectedWeakWords.every(word=>renderedWeakWords.includes(word)) && weakMetric.getAttribute('aria-expanded')==='true' && knownMetric.getAttribute('aria-expanded')==='false',
+    `rendered=${renderedWeakWords.length} expected=${expectedWeakWords.length}`);
+  doc.querySelector('[data-close-record-list]').click();
+  check('单词列表关闭按钮恢复折叠状态', recordPanel.hidden && weakMetric.getAttribute('aria-expanded')==='false');
+  const memoryMetric=doc.getElementById('recordStreak').closest('[data-open-memory]');
+  check('三张记录卡都是可操作的整卡控件',
+    knownMetric.tagName==='BUTTON' && weakMetric.tagName==='BUTTON' && !knownMetric.disabled && !weakMetric.disabled &&
+    memoryMetric.tagName==='A' && memoryMetric.getAttribute('href')==='#study');
+  check('三张真实指标卡有呼吸灯与明确的触控反馈',
+    doc.querySelectorAll('#progress .record-metrics>.record-metric').length===3 &&
+    cssText.includes('record-metric::after') && cssText.includes('animation:edgeBreath 2.6s ease-in-out infinite') &&
+    cssText.includes('prefers-reduced-motion:no-preference') && cssText.includes('prefers-reduced-motion:reduce') &&
+    cssText.includes('touch-action:manipulation') && cssText.includes('pointer-events:auto') && cssText.includes('.record-metric:active'));
+  memoryMetric.click();
+  await sleep(80);
+  check('点击连续学习实际跳到记忆引擎并更新导航地址',
+    doc.body.dataset.appView==='study' && window.location.hash==='#study' &&
+    doc.querySelector('[data-study-panel="memory"]').classList.contains('is-active') &&
+    doc.querySelector('[data-demo-tab="memory"]').getAttribute('aria-selected')==='true');
+  await setHashSettled('#progress');
+
   // 11) 到期前 14 / 7 / 1 天本机提醒
   const shownDay = new Date();
   const startAt = Date.now() - 6 * 86400000 - 3600000; // 距到期约 23 小时
@@ -1250,17 +1366,32 @@ function animClean() {
       `before=${chineseBefore} after=${chineseAfter}`);
     const version = (pageHtml.match(/BUNDLED_CONTENT_VERSION\s*=\s*'([^']+)'/) || [])[1];
     check('内容版本号已递增，老客户端会触发这次迁移',
-      version === 'school-grades-2026-11-v7', String(version));
+      version === 'school-grades-2026-11-v9', String(version));
 
     const explicitMigrations = bundled.metadata.exampleTextMigrations || {};
     const migrationEntries = Object.entries(explicitMigrations);
     const bundledById = new Map(bundledRecords.map(record => [record.id, record]));
+    const ipaBundleRow=bundledById.get('school-us4-duvet');
+    const oldIpaInstall=[normalize({...ipaBundleRow,phonetic:''})];
+    const migratedIpaInstall=await runner(
+      async()=>({ok:true,json:async()=>bundled}),()=>bundledRecords,normalize,async()=>{},async()=>{},version,
+      oldIpaInstall,{isDemo:false,contentVersion:'school-grades-2026-11-v8'}
+    );
+    const customIpaInstall=[normalize({...ipaBundleRow,phonetic:'user-custom-ipa'})];
+    const preservedCustomIpa=await runner(
+      async()=>({ok:true,json:async()=>bundled}),()=>bundledRecords,normalize,async()=>{},async()=>{},version,
+      customIpaInstall,{isDemo:false,contentVersion:'school-grades-2026-11-v8'}
+    );
+    check('v9 内容迁移为旧美国词卡补上缺失 IPA，同时保留用户自定义音标',
+      migratedIpaInstall[0]?.phonetic===ipaBundleRow.phonetic && preservedCustomIpa[0]?.phonetic==='user-custom-ipa',
+      `added=${migratedIpaInstall[0]?.phonetic} custom=${preservedCustomIpa[0]?.phonetic}`);
     const migrationRecord = bundledById.get(migrationEntries[0]?.[0]);
     const rewrittenInstall = migrationEntries.map(([id, migration]) => {
       const record = bundledById.get(id);
+      const oldExample = Array.isArray(migration.from) ? migration.from[0] : migration.from;
       return normalize({
         ...record,
-        example: migration.from,
+        example: oldExample,
         exampleSource: 'dictionary:old-source',
         exampleTranslation: '这条旧译文应在改写同步时隐藏。',
       });
@@ -1280,9 +1411,49 @@ function animClean() {
       migratedRewrite[index]?.id === id && migratedRewrite[index]?.example === migration.to &&
       migratedRewrite[index]?.exampleTranslation === (bundledById.get(id)?.exampleTranslation || '')
     );
-    check('733 条精确例句迁移按词条 ID 生效，并隐藏旧译文',
-      migrationEntries.length === 733 && everyRewriteMigrated && !!migrationPersisted,
+    check('785 条精确例句迁移按词条 ID 生效，并隐藏旧译文',
+      migrationEntries.length === 785 && everyRewriteMigrated && !!migrationPersisted,
       `entries=${migrationEntries.length} migrated=${migratedRewrite.filter((record,index)=>record?.id===migrationEntries[index]?.[0] && record?.example===migrationEntries[index]?.[1].to && record?.exampleTranslation===(bundledById.get(migrationEntries[index]?.[0])?.exampleTranslation||'')).length}`);
+
+    const explicitWordFieldMigrations = bundled.metadata.wordFieldMigrations || {};
+    const wordFieldMigrationEntries = Object.entries(explicitWordFieldMigrations);
+    const wordFieldMigrationCount = wordFieldMigrationEntries.reduce((count,[,fields])=>count+Object.keys(fields).length,0);
+    const oldWordFieldInstall = wordFieldMigrationEntries.map(([id,fields]) => normalize({
+      ...bundledById.get(id),
+      ...Object.fromEntries(Object.entries(fields).map(([field,migration]) => [
+        field, Array.isArray(migration.from) ? migration.from[0] : migration.from
+      ])),
+    }));
+    const migratedWordFields = await runner(
+      async () => ({ok:true,json:async()=>bundled}),
+      () => bundledRecords,
+      normalize,
+      async () => {},
+      async () => {},
+      version,
+      oldWordFieldInstall,
+      {isDemo:false,contentVersion:'school-grades-2026-11-v3'}
+    );
+    const everyWordFieldMigrated = wordFieldMigrationEntries.every(([id,fields],index) =>
+      Object.keys(fields).every(field => migratedWordFields[index]?.[field] === bundledById.get(id)?.[field])
+    );
+    check('5 组、12 项已确认的词条字段修复能迁移到旧安装',
+      wordFieldMigrationEntries.length === 5 && wordFieldMigrationCount === 12 && everyWordFieldMigrated,
+      `records=${wordFieldMigrationEntries.length} fields=${wordFieldMigrationCount} migrated=${migratedWordFields.filter((record,index)=>record?.id===wordFieldMigrationEntries[index]?.[0] && Object.keys(wordFieldMigrationEntries[index]?.[1]||{}).every(field=>record[field]===bundledById.get(record.id)?.[field])).length}`);
+
+    const customHeadwordInstall = [normalize({...bundledById.get('school-pep-7-1-203'),word:'my personal headword'})];
+    const migratedCustomHeadword = await runner(
+      async () => ({ok:true,json:async()=>bundled}),
+      () => bundledRecords,
+      normalize,
+      async () => {},
+      async () => {},
+      version,
+      customHeadwordInstall,
+      {isDemo:false,contentVersion:'school-grades-2026-11-v3'}
+    );
+    check('词条字段迁移不会覆盖用户自行编辑的词头',
+      migratedCustomHeadword[0]?.word === 'my personal headword', String(migratedCustomHeadword[0]?.word));
 
     const previouslyPublishedRewrites = migrationEntries.filter(([,migration])=>Array.isArray(migration.alsoFrom));
     const previouslyPublishedInstall = previouslyPublishedRewrites.map(([id,migration]) => normalize({

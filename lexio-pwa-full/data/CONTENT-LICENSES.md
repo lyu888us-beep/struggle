@@ -10,3 +10,7 @@ This work contains adapted material from the Grade 1–9 English-US word packs i
 - **Share-alike:** the adapted US Grade 1–9 word-pack content is made available under CC BY-SA 4.0. Redistributed adaptations must retain attribution, identify changes, link the license, and be shared under the same license.
 
 The exercise interface intentionally omits per-entry source labels. This legal notice preserves the required attribution and licensing information. The bundled wordbank is a mixed-source collection; this CC BY-SA 4.0 notice applies to the adapted US Grade 1–9 word-pack subset, not automatically to every other record in `original-site-wordbank.json`. The application code remains governed by its applicable software license.
+
+## US Grade 1–9 phonetic transcriptions
+
+The existing non-empty source phonetics were preserved. Missing transcriptions were filled from the **Carnegie Mellon Pronouncing Dictionary (CMUdict) 1.1.3**, using its US English ARPAbet pronunciations converted to broad General American IPA. Entries absent from CMUdict were supplied as explicit broad US IPA exceptions; the wordbank metadata records the coverage and source counts. The CMUdict data copyright, BSD-style redistribution terms, and disclaimer are reproduced in [`CMUDICT-LICENSE.txt`](CMUDICT-LICENSE.txt). The conversion is reproducible with `requirements-phonetics.txt` and `scripts/enrich_us_grade_phonetics.py`.

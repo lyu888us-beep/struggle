@@ -47,7 +47,38 @@ const dir=path.join(__dirname,'..');
     assert.ok(Array.isArray(migration.alsoFrom)&&migration.alsoFrom.length>0,`${id} retains prior published text for migration`);
   }
   assert.ok(revisedEntries.every(([,text])=>Object.hasOwn(recordings,text)),'all safely revised examples have exact published audio');
-  assert.equal(wordbank.metadata.stats.withExampleTranslation,26736);
+  assert.equal(wordbank.metadata.stats.withExampleTranslation,26762);
+  const auditedKeywordRows=[
+    ['gaokao::wag',/\bwag(?:s|ged|ging)?\b/i],
+    ['gaokao::goods',/\bgoods\b/i],
+    ['gaokao::mop',/\bmop\b/i],
+    ['gaokao::get',/\bget\b/i],
+    ['school-us4-dioxide',/\bdioxide\b/i],
+    ['cet4::plan',/\bplan\b/i],
+    ['cet4::unit',/\bunit\b/i],
+    ['cet4::comparative',/\bcomparative\b/i],
+    ['cet4::ensure',/\bensure\b/i],
+    ['cet4::outwards',/\boutward(?:s)?\b/i],
+    ['cet4::be',/\bbe\b/i],
+    ['cet4::and',/\band\b/i],
+    ['cet6::composite',/\bcomposite\b/i],
+    ['cet6::aggregate',/\baggregate\b/i],
+    ['cet6::fir',/\bfir\b/i],
+    ['cet6::ton',/\btons?\b/i],
+    ['kaoyan::fin',/\bfin\b/i],
+    ['kaoyan::to',/\bto\b/i],
+    ['kaoyan::goodby',/\bgoodbye\b/i],
+    ['ielts::steppe',/\bsteppe\b/i],
+    ['school-pep-4-1-60',/\bknife\b/i],
+    ['school-pep-4-2-91',/\bcheap\b/i],
+    ['school-pep-7-2-74',/\beither\b[\s\S]*\bor\b/i],
+    ['school-pep-9-1-413',/\bneither\b[\s\S]*\bnor\b/i],
+  ];
+  for(const [id,pattern] of auditedKeywordRows){const row=sourceRows.get(id);assert.ok(row,`missing audited row ${id}`);assert.match(row.example,pattern,`${id} example should contain its learning keyword`);}
+  const exactAuditedAudioRows=['gaokao::wag','gaokao::goods','gaokao::mop','cet4::plan','cet4::unit','cet4::comparative','cet4::ensure','cet4::outwards','cet4::be','kaoyan::goodby','school-pep-4-1-60','school-pep-4-2-91','school-pep-7-2-74'];
+  for(const id of exactAuditedAudioRows){const row=sourceRows.get(id);assert.ok(Object.hasOwn(recordings,row.example),`${id} correction should use the exact mapped sentence clip`);}
+  const deviceVoiceFallbackExamples=['Plants absorb carbon dioxide during photosynthesis.','The author builds up a useful composite picture of contemporary consumer culture.','The aggregate production rose by ten percent last year.','Her disappointment was manifest in the silence that followed.','The fir tree stood beside the cabin.','The aggregate of these figures is 250.','Wild horses roamed across the vast steppe.',"The stallion's get was prized for its speed.",'The analyst offered a Freudian reading of the dream.'];
+  for(const text of deviceVoiceFallbackExamples){assert.ok(!Object.hasOwn(recordings,text),`new example should not point to a mismatched clip: ${text}`);assert.ok(Object.values(wordbank.metadata.exampleTextMigrations||{}).some(migration=>migration.to===text),`fallback example is explicitly migrated: ${text}`);}
   const migrationTargets=new Set(Object.values(wordbank.metadata.exampleTextMigrations||{}).map(row=>row.to));
   const exactTargets=[
     'Take a slow breath before you begin speaking.',
@@ -69,6 +100,44 @@ const dir=path.join(__dirname,'..');
     "I've noticed that having fun doesn't interfere at all with your studies.",
     'She was fourteen when she joined the school orchestra.'
   ];
+  exactTargets.push(
+    'The puppy was wagging its tail',
+    "When you're done sweeping, I'll mop",
+    'The governor gave only a vague outline of his tax plan.',
+    'He was now the proud owner of a bright red sports car.',
+    'The goods arrived in good condition.',
+    'She is a well-known singer',
+    'I study comparative religion in the arts faculty of the University of Turku.',
+    'Show me red.',
+    'The basic unit of society is the family.',
+    'I can dance and sing',
+    'This truck has a maximum load of 5 tons',
+    'Without a fin, a shark can no longer swim.',
+    'I was late to school',
+    'The group meets weekly.',
+    'The meal was amazingly cheap.',
+    'How are you feeling this morning?',
+    'How old are your parents?',
+    'Have you already been to the Korean Peninsula?',
+    'I was out of town on vacation',
+    'The government divides asylum seekers into economic migrants and genuine refugees.',
+    'The more self-knowledge we have, the more control we can exert over our feelings and behaviour.',
+    'Neither Tom nor Mary has found anything valuable',
+    'You can vote either in person or by proxy.',
+    'When will the test results be ready?'
+  );
+  exactTargets.push(
+    'Am I correct in thinking thus?',
+    'My daughter-in-law said that I was interfering, but I was only trying to help.',
+    'It seems the banks always profit from farmers’ misfortunes.',
+    'Ensure the guard is in place before operating the machine.',
+    'The top door opened outward.',
+    'I need to say goodbye before I leave.',
+    'Strictly speaking, this sentence is grammatically incorrect',
+    'Life is indeed a good thing',
+    'Do you have a knife?',
+    'Everything in the house was neat and tidy.'
+  );
   const mappedTargets=[...migrationTargets].filter(text=>Object.hasOwn(recordings,text));
   assert.ok(exactTargets.every(text=>mappedTargets.includes(text)),'known exact migration targets stay mapped');
   assert.ok(mappedTargets.includes(greetingExample),'corrected greeting reuses its exact daily-conversation recording');
@@ -199,6 +268,19 @@ const dir=path.join(__dirname,'..');
   assert.equal(phrases.length,1100);for(const p of phrases)assert.ok(recordings[p.en],p.en);
   console.log('✓ 24 张演示词卡和 11 个口语场景全部 1,100 句均有对应录音');
   const cached=vm.runInNewContext('bulkAssets',ctx);
+  const usGradeBooks=wordbank.books.filter(book=>/^us-grade-[1-9]$/.test(book.id));
+  const usGradeWords=usGradeBooks.flatMap(book=>book.words||[]);
+  const usExamples=usGradeWords.filter(word=>String(word.example||'').trim());
+  const reusedUSExamples=usExamples.filter(word=>Object.hasOwn(recordings,word.example));
+  assert.equal(usGradeWords.length,2300);
+  assert.equal(usExamples.length,1942);
+  assert.deepEqual(reusedUSExamples.map(word=>word.example).sort(),['I feel warm.','The meal was amazingly cheap.'].sort());
+  for(const word of reusedUSExamples){
+    const clip=recordings[word.example],url=`./media/voice/${clip}.mp3`;
+    assert.ok(cached.includes(url),`reused US example is not listed for offline playback: ${word.example}`);
+    assert.ok(fs.readFileSync(path.join(dir,url)).length>1000,`reused US example clip is missing: ${word.example}`);
+  }
+  console.log('✓ 1,942 条美国年级例句中，2 条精确复用现有 MP3；其余不借用错误录音');
   for(const clip of clips){const url=`./media/voice/${clip}.mp3`;assert.ok(cached.includes(url));const mp3=fs.readFileSync(path.join(dir,url));assert.ok(mp3.length>1000);
     const buf=mp3.buffer.slice(mp3.byteOffset,mp3.byteOffset+mp3.length);
     for(const [range,status,size] of [['bytes=0-1',206,2],['bytes=-9',206,9],[`bytes=${buf.byteLength}-`,416,0],[null,200,buf.byteLength]]){
@@ -586,12 +668,12 @@ const dir=path.join(__dirname,'..');
   const voiceQueue=spawnSync(process.execPath,['scripts/voice-queue.mjs'],{cwd:dir,encoding:'utf8'});
   assert.equal(voiceQueue.status,0,voiceQueue.stderr||voiceQueue.stdout);
   const queueSummary=JSON.parse(voiceQueue.stdout);
-  assert.equal(queueSummary.uniqueRecordableSentences,17482);
-  assert.equal(queueSummary.recordedRecordableSentences,17482);
-  assert.equal(queueSummary.pendingRecordableSentences,0);
-  assert.equal(queueSummary.uniqueDictionaryPhrases,472);
-  assert.equal(queueSummary.recordedDictionaryPhrases,472);
+  assert.equal(queueSummary.uniqueRecordableSentences,17437);
+  assert.equal(queueSummary.recordedRecordableSentences,17428);
+  assert.equal(queueSummary.pendingRecordableSentences,9);
+  assert.equal(queueSummary.uniqueDictionaryPhrases,471);
+  assert.equal(queueSummary.recordedDictionaryPhrases,471);
   assert.equal(queueSummary.pendingDictionaryPhrases,0);
   assert.equal(queueSummary.missingMappedAudioFiles,0);
-  console.log('✓ 句子与词典短语分开校验：17,482 条完整句和 472 个词典短语全部已录制，映射音频文件齐全');
+  console.log('✓ 17,437 条完整句中 17,428 条有 voice-00 录音，9 条明确使用设备英语兜底；471 个词典短语均有映射');
 })().catch(e=>{console.error(e);process.exitCode=1;});

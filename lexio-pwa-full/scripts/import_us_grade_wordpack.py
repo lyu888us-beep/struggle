@@ -70,6 +70,9 @@ def read_source_books(source_repo: Path) -> list[dict[str, Any]]:
             phonetic = item.get("phonetic")
             if isinstance(phonetic, str) and phonetic.strip():
                 record["phonetic"] = phonetic.strip()
+            phonetic_source = item.get("phoneticSource")
+            if isinstance(phonetic_source, str) and phonetic_source.strip():
+                record["phoneticSource"] = phonetic_source.strip()
 
             usage_example = item.get("usageExample")
             if isinstance(usage_example, str) and usage_example.strip():
@@ -124,6 +127,27 @@ def update_wordbank(wordbank_path: Path, source_books: list[dict[str, Any]]) -> 
             record = retired_record(row, str(book.get("category", "")))
             retired_by_id.setdefault(record["id"], record)
     metadata["retiredBundledWords"] = list(retired_by_id.values())
+
+    # The upstream spelling list may still omit pronunciations supplied by
+    # Lexio's phonetic-enrichment pass. Keep those stable-ID values on later
+    # imports unless the upstream record provides its own non-empty phonetic.
+    old_us_by_id = {
+        str(row.get("id", "")): row
+        for book in old_us_books
+        for row in book.get("words", [])
+        if row.get("id")
+    }
+    for book in source_books:
+        for row in book.get("words", []):
+            previous = old_us_by_id.get(str(row.get("id", "")))
+            if not previous or (isinstance(row.get("phonetic"), str) and row["phonetic"].strip()):
+                continue
+            old_phonetic = previous.get("phonetic")
+            if isinstance(old_phonetic, str) and old_phonetic.strip():
+                row["phonetic"] = old_phonetic
+                old_source = previous.get("phoneticSource")
+                if isinstance(old_source, str) and old_source.strip():
+                    row["phoneticSource"] = old_source
 
     inserted = False
     books: list[dict[str, Any]] = []

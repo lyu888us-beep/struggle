@@ -27,8 +27,8 @@ function isDictionaryFragment(text){
   return text.startsWith('...')||(/^[a-z]/.test(text)&&!/[.!?]["'”)]?$/.test(text));
 }
 for(const {id,words} of [...books,{id:'demo',words:demo}]){
-  // US grade-pack usage examples have no bundled voice-00 recordings; the app
-  // accurately falls back to the device's en-US voice for these entries.
+  // US grade-pack examples are served by device en-US speech unless an exact
+  // existing clip mapping is available; do not enqueue the whole pack for voice-00.
   if(/^us-grade-[1-9]$/.test(id))continue;
   for(const {example,word} of words){const text=example?.trim();if(!text)continue;
     // Incomplete dictionary examples are retained as phrase clips, never queued
