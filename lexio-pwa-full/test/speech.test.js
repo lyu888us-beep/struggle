@@ -10,7 +10,20 @@ const dir=path.join(__dirname,'..');
   const demo=vm.runInNewContext(html.match(/const SAMPLE_WORDS = (\[[\s\S]*?\n      \]);/)[1]);
   for(const w of demo)assert.ok(recordings[w.example],w.word);
   const wordbank=JSON.parse(fs.readFileSync(path.join(dir,'data/original-site-wordbank.json')));
-  const revisedEntries=[['cet4::negro','This term is now considered outdated and offensive.','这个词如今被认为过时且具有冒犯性。'],['kaoyan::negro','This term is now considered outdated and offensive.','这个词如今被认为过时且具有冒犯性。'],['cet4::fantasize','She fantasized about traveling around the world.','她幻想着环游世界。'],['ielts::capillary','Water rises through narrow capillary tubes in a plant stem.','水会沿着植物茎中的狭窄毛细管上升。']];
+  const revisedEntries=[
+    ['cet4::negro','This term is now considered outdated and offensive.','这个词如今被认为过时且具有冒犯性。'],
+    ['kaoyan::negro','This term is now considered outdated and offensive.','这个词如今被认为过时且具有冒犯性。'],
+    ['cet4::fantasize','She fantasized about traveling around the world.','她幻想着环游世界。'],
+    ['ielts::capillary','Water rises through narrow capillary tubes in a plant stem.','水会沿着植物茎中的狭窄毛细管上升。'],
+    ['gaokao::underwear','She packed a clean pair of underwear for the trip.','她为旅行准备了一套干净的内衣。'],
+    ['cet4::cripple','This word can be offensive when used to refer to people with disabilities.','这个词用于指称残障人士时可能具有冒犯性。'],
+    ['kaoyan::gay','A gay couple opened a bookstore near the park.','一对同性伴侣在公园附近开了一家书店。'],
+    ['cet6::odds','The odds of rain are high this afternoon.','今天下午下雨的可能性很大。'],
+    ['cet6::cripple','This word can be offensive when used to refer to people with disabilities.','这个词用于指称残障人士时可能具有冒犯性。'],
+    ['kaoyan::cripple','This word can be offensive when used to refer to people with disabilities.','这个词用于指称残障人士时可能具有冒犯性。'],
+    ['ielts::cripple','This word can be offensive when used to refer to people with disabilities.','这个词用于指称残障人士时可能具有冒犯性。'],
+    ['ielts::odds','The odds of rain are high this afternoon.','今天下午下雨的可能性很大。']
+  ];
   const sourceRows=new Map(wordbank.books.flatMap(book=>book.words||[]).map(row=>[row.id,row]));
   for(const [id,text,translation] of revisedEntries){
     const row=sourceRows.get(id),migration=wordbank.metadata.exampleTextMigrations[id];
@@ -19,9 +32,8 @@ const dir=path.join(__dirname,'..');
     assert.equal(migration.to,text);
     assert.ok(Array.isArray(migration.alsoFrom)&&migration.alsoFrom.length>0,`${id} retains prior published text for migration`);
   }
-  assert.ok(Object.hasOwn(recordings,revisedEntries[0][1])&&Object.hasOwn(recordings,revisedEntries[2][1]),'published safe replacement examples have exact audio');
-  assert.ok(Object.hasOwn(recordings,revisedEntries[3][1]),'capillary botanical replacement is published only after its own recording was generated and verified');
-  assert.equal(wordbank.metadata.stats.withExampleTranslation,26727);
+  assert.ok(revisedEntries.every(([,text])=>Object.hasOwn(recordings,text)),'all safely revised examples have exact published audio');
+  assert.equal(wordbank.metadata.stats.withExampleTranslation,26735);
   const migrationTargets=new Set(Object.values(wordbank.metadata.exampleTextMigrations||{}).map(row=>row.to));
   const exactTargets=[
     'Take a slow breath before you begin speaking.',
@@ -491,15 +503,44 @@ const dir=path.join(__dirname,'..');
     assert.ok(cached.includes(`./media/voice/${id}.mp3`));
   }
   console.log('✓ 句子补录批次 012：10 条逐项语境复核、精确对齐、双解码及离线资源验证通过（未人工听检）');
+  const sentenceBatch013=sentenceManifest.generatedBatches.find(batch=>batch.id==='sentence-batch-013');
+  assert.ok(sentenceBatch013,'context-reviewed and revised example batch 013 is recorded');
+  assert.equal(sentenceBatch013.itemsConsidered,10);
+  assert.equal(sentenceBatch013.clipsPublished,10);
+  assert.equal(sentenceBatch013.skippedAfterSafetyChecks,0);
+  assert.equal(sentenceBatch013.individuallyHumanListened,false);
+  assert.equal(sentenceBatch013.automatedKeywordFlagsAreSafetyVerdicts,false);
+  assert.equal(sentenceBatch013.contextualReview.automatedKeywordFlagsAreSafetyVerdicts,false);
+  assert.equal(sentenceBatch013.contextualReview.items.length,10);
+  assert.equal(sentenceBatch013.safeExampleRevisions.length,8);
+  assert.ok(sentenceBatch013.safeExampleRevisions.every(row=>row.originalRetried===false));
+  assert.deepEqual(sentenceBatch013.sourceAudioGroups,['isolated-next-020','isolated-next-021','isolated-next-022','isolated-next-023','isolated-next-024','isolated-next-025','isolated-next-026','isolated-next-027','isolated-next-028','isolated-next-029']);
+  assert.equal(sentenceBatch013.items.length,10);
+  assert.equal(new Set(sentenceBatch013.items.map(item=>item.text)).size,10);
+  for(const item of sentenceBatch013.items){
+    const id='s-'+require('node:crypto').createHash('sha256').update(item.text).digest('hex').slice(0,16);
+    assert.equal(item.clip,id);
+    assert.equal(item.safe,true);
+    assert.equal(recordings[item.text],id);
+    assert.equal(item.alignment,'PocketSphinx exact token sequence');
+    assert.equal(item.ffmpegDecoded,true);
+    assert.equal(item.miniaudioDecoded,true);
+    const bytes=fs.readFileSync(path.join(dir,'media/voice',`${id}.mp3`));
+    assert.equal(bytes.length,item.bytes);
+    assert.equal(require('node:crypto').createHash('sha256').update(bytes).digest('hex'),item.sha256);
+    assert.ok(cached.includes(`./media/voice/${id}.mp3`));
+  }
+  for(const revision of sentenceBatch013.safeExampleRevisions)assert.ok(!Object.hasOwn(recordings,revision.previousText),`retired wording has no stale audio alias: ${revision.source}`);
+  console.log('✓ 句子补录批次 013：10 条逐项复核、8 条多词库安全例句迁移、精确对齐、双解码及离线资源验证通过（未人工听检）');
   const voiceQueue=spawnSync(process.execPath,['scripts/voice-queue.mjs'],{cwd:dir,encoding:'utf8'});
   assert.equal(voiceQueue.status,0,voiceQueue.stderr||voiceQueue.stdout);
   const queueSummary=JSON.parse(voiceQueue.stdout);
   assert.equal(queueSummary.uniqueRecordableSentences,17573);
-  assert.equal(queueSummary.recordedRecordableSentences,17556);
-  assert.equal(queueSummary.pendingRecordableSentences,17);
+  assert.equal(queueSummary.recordedRecordableSentences,17566);
+  assert.equal(queueSummary.pendingRecordableSentences,7);
   assert.equal(queueSummary.uniqueDictionaryPhrases,472);
   assert.equal(queueSummary.recordedDictionaryPhrases,472);
   assert.equal(queueSummary.pendingDictionaryPhrases,0);
   assert.equal(queueSummary.missingMappedAudioFiles,0);
-  console.log('✓ 句子与词典短语分开校验：17,573 条完整句中 17 条待补；472 个词典短语均已录制，映射音频文件齐全');
+  console.log('✓ 句子与词典短语分开校验：17,573 条完整句中 7 条待补；472 个词典短语均已录制，映射音频文件齐全');
 })().catch(e=>{console.error(e);process.exitCode=1;});

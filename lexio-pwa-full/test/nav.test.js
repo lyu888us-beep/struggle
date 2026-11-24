@@ -1226,7 +1226,7 @@ function animClean() {
       `before=${chineseBefore} after=${chineseAfter}`);
     const version = (pageHtml.match(/BUNDLED_CONTENT_VERSION\s*=\s*'([^']+)'/) || [])[1];
     check('内容版本号已递增，老客户端会触发这次迁移',
-      version === 'school-grades-2026-11-v4', String(version));
+      version === 'school-grades-2026-11-v5', String(version));
 
     const explicitMigrations = bundled.metadata.exampleTextMigrations || {};
     const migrationEntries = Object.entries(explicitMigrations);
@@ -1279,8 +1279,8 @@ function animClean() {
       migratedPreviouslyPublished[index]?.id===id && migratedPreviouslyPublished[index]?.example===migration.to &&
       migratedPreviouslyPublished[index]?.exampleTranslation===(bundledById.get(id)?.exampleTranslation||'')
     );
-    check('已有版本中曾发布的四条例句也能迁移到安全改写',
-      previouslyPublishedRewrites.length===4 && everyPreviouslyPublishedRewriteMigrated,
+    check('已有版本中曾发布的十二条例句也能迁移到安全改写',
+      previouslyPublishedRewrites.length===12 && everyPreviouslyPublishedRewriteMigrated,
       `entries=${previouslyPublishedRewrites.length} migrated=${migratedPreviouslyPublished.filter((record,index)=>record?.example===previouslyPublishedRewrites[index]?.[1].to).length}`);
 
     const userEditedInstall = [normalize({

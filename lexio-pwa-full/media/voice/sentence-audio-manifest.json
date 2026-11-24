@@ -8769,6 +8769,368 @@
           "sourceEndSeconds": 3.111
         }
       ]
+    },
+    {
+      "id": "sentence-batch-013",
+      "itemsConsidered": 10,
+      "clipsPublished": 10,
+      "skippedAfterSafetyChecks": 0,
+      "individuallyHumanListened": false,
+      "sourceAudioGroups": [
+        "isolated-next-020",
+        "isolated-next-021",
+        "isolated-next-022",
+        "isolated-next-023",
+        "isolated-next-024",
+        "isolated-next-025",
+        "isolated-next-026",
+        "isolated-next-027",
+        "isolated-next-028",
+        "isolated-next-029"
+      ],
+      "reviewedSourceGroups": [
+        "isolated-next-020",
+        "isolated-next-021",
+        "isolated-next-022",
+        "isolated-next-023",
+        "isolated-next-024",
+        "isolated-next-025",
+        "isolated-next-026",
+        "isolated-next-027",
+        "isolated-next-028",
+        "isolated-next-029"
+      ],
+      "isolatedReviewItemsPublished": 10,
+      "groupCount": 10,
+      "groupCutMethod": "One standalone WAV per complete sentence; PocketSphinx exact token alignment; no inter-sentence cutting.",
+      "automatedKeywordFlagsAreSafetyVerdicts": false,
+      "contextualReview": {
+        "method": "Every item reviewed in context; keyword flags are screening signals only, not safety verdicts.",
+        "automatedKeywordFlagsAreSafetyVerdicts": false,
+        "items": [
+          {
+            "group": "isolated-next-020",
+            "source": "gaokao:underwear",
+            "decision": "eligible for generation after safer example revision",
+            "rationale": "Removed the unnecessary spouse-focused framing; use a neutral travel-packing example.",
+            "screeningFlags": [
+              "underwear"
+            ]
+          },
+          {
+            "group": "isolated-next-021",
+            "source": "cet4:cripple",
+            "decision": "eligible for generation after safer example revision",
+            "rationale": "Avoids using a disability-related term as a metaphor and provides a concise usage caution.",
+            "screeningFlags": [
+              "cripple"
+            ]
+          },
+          {
+            "group": "isolated-next-022",
+            "source": "kaoyan:gay",
+            "decision": "eligible for generation after safer example revision",
+            "rationale": "Removes the occupation stereotype and uses an ordinary, respectful community context.",
+            "screeningFlags": [
+              "gay"
+            ]
+          },
+          {
+            "group": "isolated-next-023",
+            "source": "cet6:odds",
+            "decision": "eligible for generation after safer example revision",
+            "rationale": "Replaces an unsupported recidivism assumption with a neutral weather-probability example.",
+            "screeningFlags": [
+              "odds"
+            ]
+          },
+          {
+            "group": "isolated-next-024",
+            "source": "cet4:suicide",
+            "decision": "eligible for generation after context review",
+            "rationale": "Supportive prevention and help-seeking context; no method, encouragement, or graphic detail.",
+            "screeningFlags": [
+              "suicide"
+            ]
+          },
+          {
+            "group": "isolated-next-025",
+            "source": "cet6:cocaine",
+            "decision": "eligible for generation after context review",
+            "rationale": "Health education discouraging harm; no procurement, use, or preparation instructions.",
+            "screeningFlags": [
+              "cocaine"
+            ]
+          },
+          {
+            "group": "isolated-next-026",
+            "source": "cet6:acutely",
+            "decision": "eligible for generation after context review",
+            "rationale": "Non-graphic public-health description of illness, with no treatment or outbreak instructions.",
+            "screeningFlags": [
+              "virus",
+              "debilitating"
+            ]
+          },
+          {
+            "group": "isolated-next-027",
+            "source": "cet6:cock",
+            "decision": "eligible for generation after context review",
+            "rationale": "The farmyard sentence explicitly uses the word for a male chicken; no sexual sense is present.",
+            "screeningFlags": [
+              "cock"
+            ]
+          },
+          {
+            "group": "isolated-next-028",
+            "source": "kaoyan:gun",
+            "decision": "eligible for generation after context review",
+            "rationale": "Historical museum display, with no use, access, or operating instructions.",
+            "screeningFlags": [
+              "guns"
+            ]
+          },
+          {
+            "group": "isolated-next-029",
+            "source": "pep-9-1:World War II",
+            "decision": "eligible for generation after context review",
+            "rationale": "The sentence concerns a history exhibit about everyday life, without battle or graphic content.",
+            "screeningFlags": [
+              "World War Two"
+            ]
+          }
+        ]
+      },
+      "safeExampleRevisions": [
+        {
+          "source": "gaokao:underwear",
+          "previousText": "My wife's underwear is all old; I want to buy her some new ones online.",
+          "replacementText": "She packed a clean pair of underwear for the trip.",
+          "originalRetried": false,
+          "rationale": "Removed the unnecessary spouse-focused framing; use a neutral travel-packing example."
+        },
+        {
+          "source": "cet4:cripple",
+          "previousText": "Heavy traffic can cripple the city's public transit system.",
+          "replacementText": "This word can be offensive when used to refer to people with disabilities.",
+          "originalRetried": false,
+          "rationale": "Avoids using a disability-related term as a metaphor and provides a concise usage caution."
+        },
+        {
+          "source": "kaoyan:gay",
+          "previousText": "A gay hairdresser opened a studio near the park.",
+          "replacementText": "A gay couple opened a bookstore near the park.",
+          "originalRetried": false,
+          "rationale": "Removes the occupation stereotype and uses an ordinary, respectful community context."
+        },
+        {
+          "source": "cet6:odds",
+          "previousText": "The odds are that he will commit the same crime again.",
+          "replacementText": "The odds of rain are high this afternoon.",
+          "originalRetried": false,
+          "rationale": "Replaces an unsupported recidivism assumption with a neutral weather-probability example."
+        },
+        {
+          "source": "cet6:cripple",
+          "previousText": "Heavy traffic can cripple the city's public transit system.",
+          "replacementText": "This word can be offensive when used to refer to people with disabilities.",
+          "originalRetried": false,
+          "rationale": "Use the same disability-language caution across duplicate word lists and avoid retaining the ableist metaphor."
+        },
+        {
+          "source": "kaoyan:cripple",
+          "previousText": "Heavy traffic can cripple the city's public transit system.",
+          "replacementText": "This word can be offensive when used to refer to people with disabilities.",
+          "originalRetried": false,
+          "rationale": "Use the same disability-language caution across duplicate word lists and avoid retaining the ableist metaphor."
+        },
+        {
+          "source": "ielts:cripple",
+          "previousText": "Heavy traffic can cripple the city's public transit system.",
+          "replacementText": "This word can be offensive when used to refer to people with disabilities.",
+          "originalRetried": false,
+          "rationale": "Use the same disability-language caution across duplicate word lists and avoid retaining the ableist metaphor."
+        },
+        {
+          "source": "ielts:odds",
+          "previousText": "The odds are that he will commit the same crime again.",
+          "replacementText": "The odds of rain are high this afternoon.",
+          "originalRetried": false,
+          "rationale": "Use the neutral weather-probability example across duplicate word lists rather than an unsupported recidivism assumption."
+        }
+      ],
+      "items": [
+        {
+          "group": "isolated-next-020",
+          "index": 0,
+          "source": "gaokao:underwear",
+          "text": "She packed a clean pair of underwear for the trip.",
+          "file": "s-c8723341caf1481d.mp3",
+          "clip": "s-c8723341caf1481d",
+          "bytes": 17228,
+          "sha256": "c7340355279a31bf75fc0ea3c6dcb96730f4eea69b3d30ccf9d4e1e345285dd7",
+          "alignment": "PocketSphinx exact token sequence",
+          "alignedTokens": 10,
+          "ffmpegDecoded": true,
+          "miniaudioDecoded": true,
+          "safe": true,
+          "sourceStartSeconds": 0.0,
+          "sourceEndSeconds": 2.763
+        },
+        {
+          "group": "isolated-next-021",
+          "index": 0,
+          "source": "cet4:cripple",
+          "text": "This word can be offensive when used to refer to people with disabilities.",
+          "file": "s-f6bc513d1dce84bd.mp3",
+          "clip": "s-f6bc513d1dce84bd",
+          "bytes": 23132,
+          "sha256": "95d9f92c0a059e4a919117dcae32249966d341273d3e73050a4e67124ab4b022",
+          "alignment": "PocketSphinx exact token sequence",
+          "alignedTokens": 13,
+          "ffmpegDecoded": true,
+          "miniaudioDecoded": true,
+          "safe": true,
+          "sourceStartSeconds": 0.0,
+          "sourceEndSeconds": 3.75
+        },
+        {
+          "group": "isolated-next-022",
+          "index": 0,
+          "source": "kaoyan:gay",
+          "text": "A gay couple opened a bookstore near the park.",
+          "file": "s-dcd2bdad99ed2820.mp3",
+          "clip": "s-dcd2bdad99ed2820",
+          "bytes": 16364,
+          "sha256": "83cd4cd340ea8631415673ea0b1af9112439f3b82ae827308e2aa8c304efb41c",
+          "alignment": "PocketSphinx exact token sequence",
+          "alignedTokens": 9,
+          "ffmpegDecoded": true,
+          "miniaudioDecoded": true,
+          "safe": true,
+          "sourceStartSeconds": 0.0,
+          "sourceEndSeconds": 2.635
+        },
+        {
+          "group": "isolated-next-023",
+          "index": 0,
+          "source": "cet6:odds",
+          "text": "The odds of rain are high this afternoon.",
+          "file": "s-751c11680d0fe475.mp3",
+          "clip": "s-751c11680d0fe475",
+          "bytes": 16220,
+          "sha256": "6a435278cf3fa9b0064afc3aeb4b6ad4caf074420d7aff90f80cf3de269bd0e9",
+          "alignment": "PocketSphinx exact token sequence",
+          "alignedTokens": 8,
+          "ffmpegDecoded": true,
+          "miniaudioDecoded": true,
+          "safe": true,
+          "sourceStartSeconds": 0.0,
+          "sourceEndSeconds": 2.601
+        },
+        {
+          "group": "isolated-next-024",
+          "index": 0,
+          "source": "cet4:suicide",
+          "text": "Suicide prevention services offer confidential support to people in crisis.",
+          "file": "s-8ba65d199e373a8a.mp3",
+          "clip": "s-8ba65d199e373a8a",
+          "bytes": 28028,
+          "sha256": "54192772a9f1a13c4d3f7be4e552bfbb8b513c90ffd05e9bef3384993616ff1f",
+          "alignment": "PocketSphinx exact token sequence",
+          "alignedTokens": 10,
+          "ffmpegDecoded": true,
+          "miniaudioDecoded": true,
+          "safe": true,
+          "sourceStartSeconds": 0.0,
+          "sourceEndSeconds": 4.563
+        },
+        {
+          "group": "isolated-next-025",
+          "index": 0,
+          "source": "cet6:cocaine",
+          "text": "The health class discussed how cocaine can harm the brain.",
+          "file": "s-21d6e617422a6332.mp3",
+          "clip": "s-21d6e617422a6332",
+          "bytes": 19532,
+          "sha256": "3a8158fc0e84fea8a53cae3a59684795a9dd78745d9861887b27379383163dce",
+          "alignment": "PocketSphinx exact token sequence",
+          "alignedTokens": 10,
+          "ffmpegDecoded": true,
+          "miniaudioDecoded": true,
+          "safe": true,
+          "sourceStartSeconds": 0.0,
+          "sourceEndSeconds": 3.146
+        },
+        {
+          "group": "isolated-next-026",
+          "index": 0,
+          "source": "cet6:acutely",
+          "text": "An acutely debilitating virus swept through the camp.",
+          "file": "s-236484b1ddc9650f.mp3",
+          "clip": "s-236484b1ddc9650f",
+          "bytes": 20252,
+          "sha256": "482d7e5bf261e507b755f573bd96a33ec84618aa827e5f4d86169c2420df7270",
+          "alignment": "PocketSphinx exact token sequence",
+          "alignedTokens": 8,
+          "ffmpegDecoded": true,
+          "miniaudioDecoded": true,
+          "safe": true,
+          "sourceStartSeconds": 0.0,
+          "sourceEndSeconds": 3.274
+        },
+        {
+          "group": "isolated-next-027",
+          "index": 0,
+          "source": "cet6:cock",
+          "text": "The cock strutted around the farmyard.",
+          "file": "s-6294aeca622b89c7.mp3",
+          "clip": "s-6294aeca622b89c7",
+          "bytes": 15212,
+          "sha256": "b967d190a040eec6b579393078500f58e3408fb81fd25b35fa212bd49f05f587",
+          "alignment": "PocketSphinx exact token sequence",
+          "alignedTokens": 6,
+          "ffmpegDecoded": true,
+          "miniaudioDecoded": true,
+          "safe": true,
+          "sourceStartSeconds": 0.0,
+          "sourceEndSeconds": 2.426
+        },
+        {
+          "group": "isolated-next-028",
+          "index": 0,
+          "source": "kaoyan:gun",
+          "text": "The museum displayed antique guns in a glass case.",
+          "file": "s-f2b1c32825fe765d.mp3",
+          "clip": "s-f2b1c32825fe765d",
+          "bytes": 19964,
+          "sha256": "faea0822e0f37579cc234515f68fff6e3ddf816dcc099c6a5980c83fe40782c0",
+          "alignment": "PocketSphinx exact token sequence",
+          "alignedTokens": 9,
+          "ffmpegDecoded": true,
+          "miniaudioDecoded": true,
+          "safe": true,
+          "sourceStartSeconds": 0.0,
+          "sourceEndSeconds": 3.239
+        },
+        {
+          "group": "isolated-next-029",
+          "index": 0,
+          "source": "pep-9-1:World War II",
+          "text": "The museum exhibit describes daily life during World War Two.",
+          "file": "s-d421d177ad245f48.mp3",
+          "clip": "s-d421d177ad245f48",
+          "bytes": 23564,
+          "sha256": "e91d128113aef62bd0139fc98eaaba3c849c697e9994cc8b513f4d1ecaaf8c67",
+          "alignment": "PocketSphinx exact token sequence",
+          "alignedTokens": 10,
+          "ffmpegDecoded": true,
+          "miniaudioDecoded": true,
+          "safe": true,
+          "sourceStartSeconds": 0.0,
+          "sourceEndSeconds": 3.831
+        }
+      ]
     }
   ]
 }
