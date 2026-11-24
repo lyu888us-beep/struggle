@@ -8130,6 +8130,341 @@
           "sourceEndSeconds": 3.541
         }
       ]
+    },
+    {
+      "id": "sentence-batch-010",
+      "itemsConsidered": 1,
+      "clipsPublished": 1,
+      "skippedAfterSafetyChecks": 0,
+      "individuallyHumanListened": false,
+      "sourceAudioGroups": [
+        "isolated-084-replacement"
+      ],
+      "reviewedSourceGroups": [
+        "isolated-084-replacement"
+      ],
+      "isolatedReviewItemsPublished": 1,
+      "groupCount": 1,
+      "groupCutMethod": "One standalone WAV; PocketSphinx exact token alignment; no inter-sentence cutting.",
+      "automatedKeywordFlagsAreSafetyVerdicts": false,
+      "contextualReview": {
+        "method": "Individual context review; automated keyword flags are screening cues only, not safety verdicts.",
+        "automatedKeywordFlagsAreSafetyVerdicts": false,
+        "items": [
+          {
+            "group": "isolated-084-replacement",
+            "source": "ielts:capillary",
+            "decision": "eligible for generation after safe substitution",
+            "rationale": "The sentence describes water moving through plant stem capillaries, a neutral botany example of capillary action. It contains no blood or graphic medical detail. The failed original was not retried."
+          }
+        ]
+      },
+      "resolvesDeferredReplacementFrom": "sentence-batch-009 / isolated-084",
+      "generationFailureReplacements": [
+        {
+          "group": "isolated-084",
+          "source": "ielts:capillary",
+          "originalText": "Blood flows through tiny capillary vessels.",
+          "replacementText": "Water rises through narrow capillary tubes in a plant stem.",
+          "originalRetried": false,
+          "reason": "Initial speech generation failed; replaced with a non-graphic botanical science sentence.",
+          "replacementStatus": "Generated, exactly aligned, decoded, mapped, and added to offline resources in sentence-batch-010."
+        }
+      ],
+      "items": [
+        {
+          "group": "isolated-084-replacement",
+          "index": 0,
+          "source": "ielts:capillary",
+          "text": "Water rises through narrow capillary tubes in a plant stem.",
+          "file": "s-e609cfe5dfa0a72c.mp3",
+          "clip": "s-e609cfe5dfa0a72c",
+          "bytes": 23852,
+          "sha256": "98bd4816632ca90ff4fd5bed49bb8bf6e83f101faad532142d201b4be78f8d7c",
+          "alignment": "PocketSphinx exact token sequence",
+          "alignedTokens": 10,
+          "ffmpegDecoded": true,
+          "miniaudioDecoded": true,
+          "safe": true,
+          "sourceStartSeconds": 0.0,
+          "sourceEndSeconds": 3.878
+        }
+      ]
+    },
+    {
+      "id": "sentence-batch-011",
+      "itemsConsidered": 9,
+      "clipsPublished": 9,
+      "skippedAfterSafetyChecks": 0,
+      "individuallyHumanListened": false,
+      "sourceAudioGroups": [
+        "isolated-next-001",
+        "isolated-next-002",
+        "isolated-next-003",
+        "isolated-next-004",
+        "isolated-next-005",
+        "isolated-next-006",
+        "isolated-next-007",
+        "isolated-next-008",
+        "isolated-next-009"
+      ],
+      "reviewedSourceGroups": [
+        "isolated-next-001",
+        "isolated-next-002",
+        "isolated-next-003",
+        "isolated-next-004",
+        "isolated-next-005",
+        "isolated-next-006",
+        "isolated-next-007",
+        "isolated-next-008",
+        "isolated-next-009"
+      ],
+      "isolatedReviewItemsPublished": 9,
+      "groupCount": 9,
+      "groupCutMethod": "One standalone WAV per complete sentence; PocketSphinx exact token alignment; no inter-sentence cutting.",
+      "automatedKeywordFlagsAreSafetyVerdicts": false,
+      "contextualReview": {
+        "method": "Each item reviewed in context. Keyword flags are screening signals only, not safety verdicts.",
+        "automatedKeywordFlagsAreSafetyVerdicts": false,
+        "items": [
+          {
+            "group": "isolated-next-001",
+            "source": "cet4:rifle",
+            "decision": "eligible for generation after context review",
+            "rationale": "The sentence concerns an antique rifle in a museum display behind glass. It is historical and non-instructional; no use or violence is described.",
+            "screeningFlags": [
+              "rifle"
+            ]
+          },
+          {
+            "group": "isolated-next-002",
+            "source": "cet4:cock",
+            "decision": "eligible for generation after context review",
+            "rationale": "The explicit farmyard and dawn-crowing context identifies a male chicken. There is no sexual meaning or sexual content.",
+            "screeningFlags": [
+              "cock"
+            ]
+          },
+          {
+            "group": "isolated-next-003",
+            "source": "cet4:gun",
+            "decision": "eligible for generation after context review",
+            "rationale": "This is a neutral historical museum display of an antique object; no use, instruction, or violence is described.",
+            "screeningFlags": [
+              "gun"
+            ]
+          },
+          {
+            "group": "isolated-next-004",
+            "source": "cet6:repression",
+            "decision": "eligible for generation after context review",
+            "rationale": "The sentence describes a political condition in a broad historical sense, without graphic harm or endorsement.",
+            "screeningFlags": [
+              "repression"
+            ]
+          },
+          {
+            "group": "isolated-next-005",
+            "source": "cet6:abolition",
+            "decision": "eligible for generation after context review",
+            "rationale": "This is a neutral public-policy context about abolishing a legal practice; it does not depict or encourage violence.",
+            "screeningFlags": [
+              "capital punishment"
+            ]
+          },
+          {
+            "group": "isolated-next-006",
+            "source": "ielts:propaganda",
+            "decision": "eligible for generation after context review",
+            "rationale": "This is educational media-literacy context analyzing propaganda, not promoting a message or ideology.",
+            "screeningFlags": [
+              "propaganda"
+            ]
+          },
+          {
+            "group": "isolated-next-007",
+            "source": "ielts:smother",
+            "decision": "eligible for generation after context review",
+            "rationale": "The verb refers to covering food with sauce. The cake context is explicit and non-violent.",
+            "screeningFlags": [
+              "smother"
+            ]
+          },
+          {
+            "group": "isolated-next-008",
+            "source": "ielts:purge",
+            "decision": "eligible for generation after context review",
+            "rationale": "The object is outdated records in an archive; purge means routine removal of files, not harm to people.",
+            "screeningFlags": [
+              "purge"
+            ]
+          },
+          {
+            "group": "isolated-next-009",
+            "source": "ielts:shoot",
+            "decision": "eligible for generation after context review",
+            "rationale": "The subject is a film crew and the object is a scene, so shoot means filming. No firearm use or violence is involved.",
+            "screeningFlags": [
+              "shoot"
+            ]
+          }
+        ]
+      },
+      "items": [
+        {
+          "group": "isolated-next-001",
+          "index": 0,
+          "source": "cet4:rifle",
+          "text": "The museum displayed an antique rifle behind glass.",
+          "file": "s-c47edf448e804ee5.mp3",
+          "clip": "s-c47edf448e804ee5",
+          "bytes": 21260,
+          "sha256": "563012faf654071dadd5301cd9a3e15801cc27ca95a2248ce282ed348bb13e22",
+          "alignment": "PocketSphinx exact token sequence",
+          "alignedTokens": 8,
+          "ffmpegDecoded": true,
+          "miniaudioDecoded": true,
+          "safe": true,
+          "sourceStartSeconds": 0.0,
+          "sourceEndSeconds": 3.448
+        },
+        {
+          "group": "isolated-next-002",
+          "index": 0,
+          "source": "cet4:cock",
+          "text": "The cock crowed at dawn in the farmyard.",
+          "file": "s-47a7b2c32648e620.mp3",
+          "clip": "s-47a7b2c32648e620",
+          "bytes": 15500,
+          "sha256": "3e6173e15db263ced933c69dec7341c3ade5e0465f7dc0edfec683dd78cbd48f",
+          "alignment": "PocketSphinx exact token sequence",
+          "alignedTokens": 8,
+          "ffmpegDecoded": true,
+          "miniaudioDecoded": true,
+          "safe": true,
+          "sourceStartSeconds": 0.0,
+          "sourceEndSeconds": 2.473
+        },
+        {
+          "group": "isolated-next-003",
+          "index": 0,
+          "source": "cet4:gun",
+          "text": "The museum displayed an antique gun from the nineteenth century.",
+          "file": "s-e7e5ede2d141ca8c.mp3",
+          "clip": "s-e7e5ede2d141ca8c",
+          "bytes": 21548,
+          "sha256": "46c9fa80411e83fb4fdeb2f2a6e1425160280991a09b67290cc1af100189475c",
+          "alignment": "PocketSphinx exact token sequence",
+          "alignedTokens": 10,
+          "ffmpegDecoded": true,
+          "miniaudioDecoded": true,
+          "safe": true,
+          "sourceStartSeconds": 0.0,
+          "sourceEndSeconds": 3.495
+        },
+        {
+          "group": "isolated-next-004",
+          "index": 0,
+          "source": "cet6:repression",
+          "text": "The people lived under political repression for many years.",
+          "file": "s-210b39ed19649028.mp3",
+          "clip": "s-210b39ed19649028",
+          "bytes": 21116,
+          "sha256": "1aa4867076c0dd224e37728700b73cd5860ddad1dc9138e664eebc17de84550f",
+          "alignment": "PocketSphinx exact token sequence",
+          "alignedTokens": 9,
+          "ffmpegDecoded": true,
+          "miniaudioDecoded": true,
+          "safe": true,
+          "sourceStartSeconds": 0.0,
+          "sourceEndSeconds": 3.413
+        },
+        {
+          "group": "isolated-next-005",
+          "index": 0,
+          "source": "cet6:abolition",
+          "text": "The abolition of capital punishment took years.",
+          "file": "s-409acb64b974db5e.mp3",
+          "clip": "s-409acb64b974db5e",
+          "bytes": 19820,
+          "sha256": "aba2b148e1c3ac055ec9f1ca093a31dff058102141705d8d86f71fa4de87a4b8",
+          "alignment": "PocketSphinx exact token sequence",
+          "alignedTokens": 7,
+          "ffmpegDecoded": true,
+          "miniaudioDecoded": true,
+          "safe": true,
+          "sourceStartSeconds": 0.0,
+          "sourceEndSeconds": 3.193
+        },
+        {
+          "group": "isolated-next-006",
+          "index": 0,
+          "source": "ielts:propaganda",
+          "text": "The class studied how propaganda can shape public opinion.",
+          "file": "s-3a8c0518ff70cb39.mp3",
+          "clip": "s-3a8c0518ff70cb39",
+          "bytes": 21836,
+          "sha256": "0bc293950b688f24d21c0f4d4ce1a304f6067adefb773703dbd0cb445963db3f",
+          "alignment": "PocketSphinx exact token sequence",
+          "alignedTokens": 9,
+          "ffmpegDecoded": true,
+          "miniaudioDecoded": true,
+          "safe": true,
+          "sourceStartSeconds": 0.0,
+          "sourceEndSeconds": 3.541
+        },
+        {
+          "group": "isolated-next-007",
+          "index": 0,
+          "source": "ielts:smother",
+          "text": "The child smothered the cake in chocolate sauce.",
+          "file": "s-4c71a50bb4babc02.mp3",
+          "clip": "s-4c71a50bb4babc02",
+          "bytes": 19244,
+          "sha256": "9d5bae968a962ae15202322a32bdd4ac011ad791138a1a5ab4aaaac0e4581058",
+          "alignment": "PocketSphinx exact token sequence",
+          "alignedTokens": 8,
+          "ffmpegDecoded": true,
+          "miniaudioDecoded": true,
+          "safe": true,
+          "sourceStartSeconds": 0.0,
+          "sourceEndSeconds": 3.111
+        },
+        {
+          "group": "isolated-next-008",
+          "index": 0,
+          "source": "ielts:purge",
+          "text": "The librarian will purge outdated records from the archive.",
+          "file": "s-8c4bba21bb1d6e8c.mp3",
+          "clip": "s-8c4bba21bb1d6e8c",
+          "bytes": 20828,
+          "sha256": "d8e4f77e752c1dce89e919d8b98f5feea432fe71bd804d8dffba94e0bcdccf03",
+          "alignment": "PocketSphinx exact token sequence",
+          "alignedTokens": 9,
+          "ffmpegDecoded": true,
+          "miniaudioDecoded": true,
+          "safe": true,
+          "sourceStartSeconds": 0.0,
+          "sourceEndSeconds": 3.367
+        },
+        {
+          "group": "isolated-next-009",
+          "index": 0,
+          "source": "ielts:shoot",
+          "text": "The film crew will shoot a short scene in the garden.",
+          "file": "s-f2122d852b14adfc.mp3",
+          "clip": "s-f2122d852b14adfc",
+          "bytes": 17516,
+          "sha256": "e248850e16529778214201f535f8c901f917c32df81e2ebc1afc85b8bec52234",
+          "alignment": "PocketSphinx exact token sequence",
+          "alignedTokens": 11,
+          "ffmpegDecoded": true,
+          "miniaudioDecoded": true,
+          "safe": true,
+          "sourceStartSeconds": 0.0,
+          "sourceEndSeconds": 2.81
+        }
+      ]
     }
   ]
 }
