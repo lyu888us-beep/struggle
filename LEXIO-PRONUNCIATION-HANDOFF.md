@@ -6,7 +6,7 @@
 
 - 仓库：`lyu888us-beep/struggle`。
 - 固定分支：`arena/749eb136-struggle`（active；不得切换、改名或推送到别的分支），分支基点 `acf72ed4b80c34f0ec92ef462f02155557fc8fe4`。
-- 本轮开始时 HEAD 为 `a5b6b17434e4ba2c9f8c0191238281970a6cb300`。该版本 Pages workflow run `45407407881` 成功；**本交接连同当前美国年级释义、严格 voice-00 播放逻辑、审计及测试改动需另外推送和部署**。推送后用 `gh run list --workflow deploy-lexio-pages.yml --limit 5` 核实最新 Pages run；不能把 Git push 成功当成部署成功。
+- 本轮开始时基线 HEAD 为 `a5b6b17434e4ba2c9f8c0191238281970a6cb300`（Pages run `45407407881` 成功）。本轮代码与本交接已提交为 `4826db74764492b2bc0640be210b2e625fbe7f86` 并推送；Pages run `45422436638` **成功**。该部署包含中文释义迁移、美式音标、美国年级 exact-only voice-00 逻辑、测试与审计，**没有新增美国年级 MP3**。后续每次推送后仍用 `gh run list --workflow deploy-lexio-pages.yml --limit 5` 核实部署结果；不能把 Git push 成功当成部署成功。
 - 自动部署工作流：`.github/workflows/deploy-lexio-pages.yml`。推送本分支中 `lexio-pwa-full/**` 的改动会触发 GitHub Pages 部署。
 - 上次完整测试命令：`cd lexio-pwa-full && npm test`，通过导航、语音、Service Worker 和美国年级语音审计。
 
