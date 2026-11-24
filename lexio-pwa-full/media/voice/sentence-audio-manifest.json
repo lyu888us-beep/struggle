@@ -8465,6 +8465,310 @@
           "sourceEndSeconds": 2.81
         }
       ]
+    },
+    {
+      "id": "sentence-batch-012",
+      "itemsConsidered": 10,
+      "clipsPublished": 10,
+      "skippedAfterSafetyChecks": 0,
+      "individuallyHumanListened": false,
+      "sourceAudioGroups": [
+        "isolated-next-010",
+        "isolated-next-011",
+        "isolated-next-012",
+        "isolated-next-013",
+        "isolated-next-014",
+        "isolated-next-015",
+        "isolated-next-016",
+        "isolated-next-017",
+        "isolated-next-018",
+        "isolated-next-019"
+      ],
+      "reviewedSourceGroups": [
+        "isolated-next-010",
+        "isolated-next-011",
+        "isolated-next-012",
+        "isolated-next-013",
+        "isolated-next-014",
+        "isolated-next-015",
+        "isolated-next-016",
+        "isolated-next-017",
+        "isolated-next-018",
+        "isolated-next-019"
+      ],
+      "isolatedReviewItemsPublished": 10,
+      "groupCount": 10,
+      "groupCutMethod": "One standalone WAV per complete sentence; PocketSphinx exact token alignment; no inter-sentence cutting.",
+      "automatedKeywordFlagsAreSafetyVerdicts": false,
+      "contextualReview": {
+        "method": "Each sentence reviewed in context; keyword flags are screening signals only, not safety verdicts.",
+        "automatedKeywordFlagsAreSafetyVerdicts": false,
+        "items": [
+          {
+            "group": "isolated-next-010",
+            "source": "cet6:hostage",
+            "decision": "eligible for generation after context review",
+            "rationale": "The sentence describes a successful rescue and family reunion, with no depiction of captivity, violence, or operational details.",
+            "screeningFlags": [
+              "hostage"
+            ]
+          },
+          {
+            "group": "isolated-next-011",
+            "source": "kaoyan:treason",
+            "decision": "eligible for generation after context review",
+            "rationale": "This is a neutral historical/legal setting; it describes a trial without endorsing treason or depicting violence.",
+            "screeningFlags": [
+              "treason"
+            ]
+          },
+          {
+            "group": "isolated-next-012",
+            "source": "kaoyan:kidnap",
+            "decision": "eligible for generation after context review",
+            "rationale": "The sentence explicitly describes prevention before harm occurred. It contains no instructions or depiction of abduction.",
+            "screeningFlags": [
+              "kidnap"
+            ]
+          },
+          {
+            "group": "isolated-next-013",
+            "source": "kaoyan:conspiracy",
+            "decision": "eligible for generation after context review",
+            "rationale": "The context is a fictional novel plot, not an assertion or promotion of a real-world conspiracy theory.",
+            "screeningFlags": [
+              "conspiracy"
+            ]
+          },
+          {
+            "group": "isolated-next-014",
+            "source": "cet6:coffin",
+            "decision": "eligible for generation after context review",
+            "rationale": "The sentence concerns an archaeological museum replica; it mentions no body or graphic detail.",
+            "screeningFlags": [
+              "coffin"
+            ]
+          },
+          {
+            "group": "isolated-next-015",
+            "source": "ielts:ransom",
+            "decision": "eligible for generation after context review",
+            "rationale": "The context is a fictional mystery novel and a clue, with no ransom demand or practical instructions.",
+            "screeningFlags": [
+              "ransom"
+            ]
+          },
+          {
+            "group": "isolated-next-016",
+            "source": "ielts:asylum",
+            "decision": "eligible for generation after context review",
+            "rationale": "The sentence presents seeking legal protection after an unsafe home situation in a supportive, non-graphic way.",
+            "screeningFlags": [
+              "asylum"
+            ]
+          },
+          {
+            "group": "isolated-next-017",
+            "source": "ielts:pregnant",
+            "decision": "eligible for generation after context review",
+            "rationale": "This is a routine, non-graphic clinic visit and contains no sexual detail.",
+            "screeningFlags": [
+              "pregnant"
+            ]
+          },
+          {
+            "group": "isolated-next-018",
+            "source": "ielts:transfuse",
+            "decision": "eligible for generation after context review",
+            "rationale": "This is a neutral medical-care statement about a treatment, without procedure details.",
+            "screeningFlags": [
+              "transfuse",
+              "blood"
+            ]
+          },
+          {
+            "group": "isolated-next-019",
+            "source": "ielts:punishment",
+            "decision": "eligible for generation after context review",
+            "rationale": "The sentence explicitly favors encouragement over punishment; it depicts no harsh discipline or violence.",
+            "screeningFlags": [
+              "punishment"
+            ]
+          }
+        ]
+      },
+      "items": [
+        {
+          "group": "isolated-next-010",
+          "index": 0,
+          "source": "cet6:hostage",
+          "text": "The rescued hostage was reunited with her family.",
+          "file": "s-b3aa726a7b63fead.mp3",
+          "clip": "s-b3aa726a7b63fead",
+          "bytes": 17948,
+          "sha256": "988269767d714b8c5e906ae0bfa42d8f9d0740502de04dcd4de3c280e4a9614a",
+          "alignment": "PocketSphinx exact token sequence",
+          "alignedTokens": 8,
+          "ffmpegDecoded": true,
+          "miniaudioDecoded": true,
+          "safe": true,
+          "sourceStartSeconds": 0.0,
+          "sourceEndSeconds": 2.891
+        },
+        {
+          "group": "isolated-next-011",
+          "index": 0,
+          "source": "kaoyan:treason",
+          "text": "The history book describes a trial for treason.",
+          "file": "s-aa4f05ef8b4b15dc.mp3",
+          "clip": "s-aa4f05ef8b4b15dc",
+          "bytes": 17804,
+          "sha256": "7568db2e307b046324f877c961da10a6cabb8c66a9caaaabefad141c3196e1ea",
+          "alignment": "PocketSphinx exact token sequence",
+          "alignedTokens": 8,
+          "ffmpegDecoded": true,
+          "miniaudioDecoded": true,
+          "safe": true,
+          "sourceStartSeconds": 0.0,
+          "sourceEndSeconds": 2.856
+        },
+        {
+          "group": "isolated-next-012",
+          "index": 0,
+          "source": "kaoyan:kidnap",
+          "text": "The police stopped the kidnap plot before anyone was harmed.",
+          "file": "s-0a1928b5d384b2cf.mp3",
+          "clip": "s-0a1928b5d384b2cf",
+          "bytes": 21260,
+          "sha256": "92cc5b1d9aec053e4bac92607d9874bbee876f3cfeaed9d92f8c06a92944c313",
+          "alignment": "PocketSphinx exact token sequence",
+          "alignedTokens": 10,
+          "ffmpegDecoded": true,
+          "miniaudioDecoded": true,
+          "safe": true,
+          "sourceStartSeconds": 0.0,
+          "sourceEndSeconds": 3.448
+        },
+        {
+          "group": "isolated-next-013",
+          "index": 0,
+          "source": "kaoyan:conspiracy",
+          "text": "The novel follows a conspiracy that reaches the highest levels of government.",
+          "file": "s-67d1f99c7c8e17ed.mp3",
+          "clip": "s-67d1f99c7c8e17ed",
+          "bytes": 26876,
+          "sha256": "b3ea1c57d7ee8a3c0b218dc58571df55e1aa5adea0d02745eedd7fe74dc5a8b6",
+          "alignment": "PocketSphinx exact token sequence",
+          "alignedTokens": 12,
+          "ffmpegDecoded": true,
+          "miniaudioDecoded": true,
+          "safe": true,
+          "sourceStartSeconds": 0.0,
+          "sourceEndSeconds": 4.389
+        },
+        {
+          "group": "isolated-next-014",
+          "index": 0,
+          "source": "cet6:coffin",
+          "text": "The museum displayed a replica of an ancient coffin.",
+          "file": "s-7ae6f7cfacdb8363.mp3",
+          "clip": "s-7ae6f7cfacdb8363",
+          "bytes": 20252,
+          "sha256": "db2ba94644b29156dff9d99fb21a3e49d4b89907e508857e746183c749cc8b4b",
+          "alignment": "PocketSphinx exact token sequence",
+          "alignedTokens": 9,
+          "ffmpegDecoded": true,
+          "miniaudioDecoded": true,
+          "safe": true,
+          "sourceStartSeconds": 0.0,
+          "sourceEndSeconds": 3.274
+        },
+        {
+          "group": "isolated-next-015",
+          "index": 0,
+          "source": "ielts:ransom",
+          "text": "The ransom note in the mystery novel revealed a hidden clue.",
+          "file": "s-f927a044d688674d.mp3",
+          "clip": "s-f927a044d688674d",
+          "bytes": 20828,
+          "sha256": "9366f68908296ef03cfe9b72d1b154b0147064e3d6c5f8acd8072dbbba4006a5",
+          "alignment": "PocketSphinx exact token sequence",
+          "alignedTokens": 11,
+          "ffmpegDecoded": true,
+          "miniaudioDecoded": true,
+          "safe": true,
+          "sourceStartSeconds": 0.0,
+          "sourceEndSeconds": 3.367
+        },
+        {
+          "group": "isolated-next-016",
+          "index": 0,
+          "source": "ielts:asylum",
+          "text": "She applied for asylum after leaving an unsafe situation at home.",
+          "file": "s-41ea3029883f8e83.mp3",
+          "clip": "s-41ea3029883f8e83",
+          "bytes": 25148,
+          "sha256": "b358dcbf160cc0079c9cf477834adcd3e718526439e5c0eb3e038e455f7c85f4",
+          "alignment": "PocketSphinx exact token sequence",
+          "alignedTokens": 11,
+          "ffmpegDecoded": true,
+          "miniaudioDecoded": true,
+          "safe": true,
+          "sourceStartSeconds": 0.0,
+          "sourceEndSeconds": 4.087
+        },
+        {
+          "group": "isolated-next-017",
+          "index": 0,
+          "source": "ielts:pregnant",
+          "text": "She visited the clinic after learning she was pregnant.",
+          "file": "s-0fcc980a8c125d2f.mp3",
+          "clip": "s-0fcc980a8c125d2f",
+          "bytes": 18956,
+          "sha256": "51f72997602c5326c95db97f6e2b637ca49f69e7e8ebf35d8fb3970feef9e9b2",
+          "alignment": "PocketSphinx exact token sequence",
+          "alignedTokens": 9,
+          "ffmpegDecoded": true,
+          "miniaudioDecoded": true,
+          "safe": true,
+          "sourceStartSeconds": 0.0,
+          "sourceEndSeconds": 3.065
+        },
+        {
+          "group": "isolated-next-018",
+          "index": 0,
+          "source": "ielts:transfuse",
+          "text": "Doctors may transfuse blood when a patient needs it.",
+          "file": "s-276189793daa4292.mp3",
+          "clip": "s-276189793daa4292",
+          "bytes": 17948,
+          "sha256": "059e05e4a159d414f906dbc6b75581fa7a2112a329db93848a2a00eac096e6db",
+          "alignment": "PocketSphinx exact token sequence",
+          "alignedTokens": 9,
+          "ffmpegDecoded": true,
+          "miniaudioDecoded": true,
+          "safe": true,
+          "sourceStartSeconds": 0.0,
+          "sourceEndSeconds": 2.891
+        },
+        {
+          "group": "isolated-next-019",
+          "index": 0,
+          "source": "ielts:punishment",
+          "text": "The coach chose encouragement instead of punishment.",
+          "file": "s-e8728ee67a702576.mp3",
+          "clip": "s-e8728ee67a702576",
+          "bytes": 19244,
+          "sha256": "888305c98c0489861f73780269e72855e650a5c54160dcf91fbfcc7d561f7771",
+          "alignment": "PocketSphinx exact token sequence",
+          "alignedTokens": 7,
+          "ffmpegDecoded": true,
+          "miniaudioDecoded": true,
+          "safe": true,
+          "sourceStartSeconds": 0.0,
+          "sourceEndSeconds": 3.111
+        }
+      ]
     }
   ]
 }
