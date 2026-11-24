@@ -20351,5 +20351,19 @@
       "alignmentFailedGroups": [],
       "individuallyHumanListened": false
     }
+  ],
+  "humanReviewedWordClips": [
+    {
+      "word": "the",
+      "clipId": "w-b9776d7ddf459c9a",
+      "cacheRevision": "review-2026-11-20",
+      "userConfirmed": true,
+      "reviewedOn": "2026-11-20",
+      "sourceGroup": 62,
+      "cropStartSeconds": 133.172,
+      "cropEndSeconds": 134.2,
+      "previousAudioSha256": "5fff7cba420cc83554f80bdb7bb06f9af46301153d67d08d34c9be10495fbbf4",
+      "currentAudioSha256": "c1a2f73f1ad9e8950d48ea22983574da73974aaecc5dd3b1b2a88555067b0dc5"
+    }
   ]
 }
