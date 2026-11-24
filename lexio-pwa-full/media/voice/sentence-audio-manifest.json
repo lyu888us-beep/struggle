@@ -9131,6 +9131,227 @@
           "sourceEndSeconds": 3.831
         }
       ]
+    },
+    {
+      "id": "sentence-batch-014",
+      "itemsConsidered": 7,
+      "clipsPublished": 7,
+      "skippedAfterSafetyChecks": 0,
+      "individuallyHumanListened": false,
+      "sourceAudioGroups": [
+        "isolated-next-030",
+        "isolated-next-031",
+        "isolated-next-032",
+        "isolated-next-033",
+        "isolated-next-034",
+        "isolated-next-035",
+        "isolated-next-036"
+      ],
+      "reviewedSourceGroups": [
+        "isolated-next-030",
+        "isolated-next-031",
+        "isolated-next-032",
+        "isolated-next-033",
+        "isolated-next-034",
+        "isolated-next-035",
+        "isolated-next-036"
+      ],
+      "isolatedReviewItemsPublished": 7,
+      "groupCount": 7,
+      "groupCutMethod": "One standalone WAV per complete sentence; PocketSphinx exact token alignment; no inter-sentence cutting.",
+      "automatedKeywordFlagsAreSafetyVerdicts": false,
+      "contextualReview": {
+        "method": "Each sentence reviewed in context; keyword flags are screening signals only, not safety verdicts.",
+        "automatedKeywordFlagsAreSafetyVerdicts": false,
+        "items": [
+          {
+            "group": "isolated-next-030",
+            "source": "cet6:assassination",
+            "decision": "eligible for generation after context review",
+            "rationale": "Fictional historical plot that notes the attempt failed; no operational detail, graphic harm, or endorsement.",
+            "screeningFlags": [
+              "assassination"
+            ]
+          },
+          {
+            "group": "isolated-next-031",
+            "source": "cet6:massacre",
+            "decision": "eligible for generation after context review",
+            "rationale": "A respectful memorial context that honors victims, with no graphic description or glorification.",
+            "screeningFlags": [
+              "massacre"
+            ]
+          },
+          {
+            "group": "isolated-next-032",
+            "source": "cet6:rape",
+            "decision": "eligible for generation after context review",
+            "rationale": "A concise formal legal statement that condemns the crime; it contains no sexual detail, victim description, or sensational language.",
+            "screeningFlags": [
+              "rape"
+            ]
+          },
+          {
+            "group": "isolated-next-033",
+            "source": "cet6:martyr",
+            "decision": "eligible for generation after context review",
+            "rationale": "A historical/ethical summary with no call to self-sacrifice, political violence, or graphic description.",
+            "screeningFlags": [
+              "martyr"
+            ]
+          },
+          {
+            "group": "isolated-next-034",
+            "source": "kaoyan:deadly",
+            "decision": "eligible for generation after context review",
+            "rationale": "A safety warning intended to prevent ingestion; it provides no harmful-use instructions.",
+            "screeningFlags": [
+              "deadly",
+              "chemical"
+            ]
+          },
+          {
+            "group": "isolated-next-035",
+            "source": "ielts:maim",
+            "decision": "eligible for generation after context review",
+            "rationale": "A workplace-safety prevention sentence; no graphic injury detail or instructions.",
+            "screeningFlags": [
+              "maiming"
+            ]
+          },
+          {
+            "group": "isolated-next-036",
+            "source": "ielts:deadly",
+            "decision": "eligible for generation after context review",
+            "rationale": "A plain safety warning about avoiding accidental ingestion, with no instructions for using poison.",
+            "screeningFlags": [
+              "deadly",
+              "poison"
+            ]
+          }
+        ]
+      },
+      "items": [
+        {
+          "group": "isolated-next-030",
+          "index": 0,
+          "source": "cet6:assassination",
+          "text": "The historical novel explores a failed assassination attempt.",
+          "file": "s-82443deac3d54567.mp3",
+          "clip": "s-82443deac3d54567",
+          "bytes": 23132,
+          "sha256": "ce5d1e08bed4ee67a83ecd7e112817ea6ea999520ce7f8d7bc2308ae71414d9d",
+          "alignment": "PocketSphinx exact token sequence",
+          "alignedTokens": 8,
+          "ffmpegDecoded": true,
+          "miniaudioDecoded": true,
+          "safe": true,
+          "sourceStartSeconds": 0.0,
+          "sourceEndSeconds": 3.75
+        },
+        {
+          "group": "isolated-next-031",
+          "index": 0,
+          "source": "cet6:massacre",
+          "text": "The museum exhibit honors those lost in a historical massacre.",
+          "file": "s-2efadaa2b3849476.mp3",
+          "clip": "s-2efadaa2b3849476",
+          "bytes": 23420,
+          "sha256": "1d1da8ab9c9bd73bd4c62812a9a2e1466d5303ddd5c2dd0cfc44f0da943d6cf3",
+          "alignment": "PocketSphinx exact token sequence",
+          "alignedTokens": 10,
+          "ffmpegDecoded": true,
+          "miniaudioDecoded": true,
+          "safe": true,
+          "sourceStartSeconds": 0.0,
+          "sourceEndSeconds": 3.796
+        },
+        {
+          "group": "isolated-next-032",
+          "index": 0,
+          "source": "cet6:rape",
+          "text": "Rape is a serious crime punished by the law.",
+          "file": "s-a99747ff107c8c39.mp3",
+          "clip": "s-a99747ff107c8c39",
+          "bytes": 18956,
+          "sha256": "29ab459ce979e4602226fe3f44656bc39e1a0fb5cec4dc1f44cf5bb12a5d6b44",
+          "alignment": "PocketSphinx exact token sequence",
+          "alignedTokens": 9,
+          "ffmpegDecoded": true,
+          "miniaudioDecoded": true,
+          "safe": true,
+          "sourceStartSeconds": 0.0,
+          "sourceEndSeconds": 3.065
+        },
+        {
+          "group": "isolated-next-033",
+          "index": 0,
+          "source": "cet6:martyr",
+          "text": "The history book describes a martyr who stood up for justice.",
+          "file": "s-77e57c7268369010.mp3",
+          "clip": "s-77e57c7268369010",
+          "bytes": 22844,
+          "sha256": "ee87572f20b489d5ebedfcc8f3cef9d1b86b06e87fbade9890bf915768989e0c",
+          "alignment": "PocketSphinx exact token sequence",
+          "alignedTokens": 11,
+          "ffmpegDecoded": true,
+          "miniaudioDecoded": true,
+          "safe": true,
+          "sourceStartSeconds": 0.0,
+          "sourceEndSeconds": 3.704
+        },
+        {
+          "group": "isolated-next-034",
+          "index": 0,
+          "source": "kaoyan:deadly",
+          "text": "The warning label said the chemical could be deadly if swallowed.",
+          "file": "s-89f93f6346ac8e7e.mp3",
+          "clip": "s-89f93f6346ac8e7e",
+          "bytes": 21260,
+          "sha256": "56b73bc14c312e37072e8a90b7594fd4fb87ed21126334be5b0f5b77ab6fe5d2",
+          "alignment": "PocketSphinx exact token sequence",
+          "alignedTokens": 11,
+          "ffmpegDecoded": true,
+          "miniaudioDecoded": true,
+          "safe": true,
+          "sourceStartSeconds": 0.0,
+          "sourceEndSeconds": 3.448
+        },
+        {
+          "group": "isolated-next-035",
+          "index": 0,
+          "source": "ielts:maim",
+          "text": "Protective gear can prevent accidents from maiming workers.",
+          "file": "s-ff3ce97f4520362a.mp3",
+          "clip": "s-ff3ce97f4520362a",
+          "bytes": 20828,
+          "sha256": "f7b55a971818c87b2c2b34cb008651e3fdea176d1e8065be96bb064b31e49beb",
+          "alignment": "PocketSphinx exact token sequence",
+          "alignedTokens": 8,
+          "ffmpegDecoded": true,
+          "miniaudioDecoded": true,
+          "safe": true,
+          "sourceStartSeconds": 0.0,
+          "sourceEndSeconds": 3.367
+        },
+        {
+          "group": "isolated-next-036",
+          "index": 0,
+          "source": "ielts:deadly",
+          "text": "The warning label says the poison is deadly if swallowed.",
+          "file": "s-1a0b1c3769958fa6.mp3",
+          "clip": "s-1a0b1c3769958fa6",
+          "bytes": 21260,
+          "sha256": "37054718b7b0627f80e017ed48e1e838b7414c46b8fa08501b0626a87a3b8445",
+          "alignment": "PocketSphinx exact token sequence",
+          "alignedTokens": 10,
+          "ffmpegDecoded": true,
+          "miniaudioDecoded": true,
+          "safe": true,
+          "sourceStartSeconds": 0.0,
+          "sourceEndSeconds": 3.448
+        }
+      ]
     }
   ]
 }
