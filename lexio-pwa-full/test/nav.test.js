@@ -750,6 +750,17 @@ function animClean() {
   const usGradeBooks = bundled.books.filter((book) => /^us-grade-[1-9]$/.test(book.id));
   const usGradeWords = usGradeBooks.flatMap((book) => book.words || []);
   const expectedUSCounts = [175,175,250,250,250,300,300,300,300];
+  const gradeWordRecordings = JSON.parse(html.match(/const selectedWordRecordings = (\{[\s\S]*?\});/)[1]);
+  const gradeSentenceRecordings = JSON.parse(html.match(/const selectedRecordings = (\{[\s\S]*?\});/)[1]);
+  const gradeMeaningMigrations = bundled.metadata.wordFieldMigrations || {};
+  const gradeMeaningMigrationErrors = usGradeWords.filter(word=>{
+    const migration=gradeMeaningMigrations[word.id]?.meaning;
+    const fromValues=Array.isArray(migration?.from)?migration.from:[migration?.from];
+    return !/[\u3400-\u9fff]/.test(word.meaning||'') || !String(word.meaningEn||'').trim() ||
+      !String(word.meaningSource||'').trim() || migration?.to!==word.meaning || !fromValues.includes(word.meaningEn);
+  });
+  check('美国1—9年级全部2300条释义均为中文，保留英文原释义并有精确迁移记录',
+    usGradeWords.length===2300 && gradeMeaningMigrationErrors.length===0,`errors=${gradeMeaningMigrationErrors.length}`);
   const completeUSGradeBank = usGradeBooks.flatMap((book) => (book.words || []).map((word,index) => ({ ...word, category:book.category, order:index })));
   const gradeVC = new VirtualConsole();
   gradeVC.on('jsdomError', () => {});
@@ -762,7 +773,14 @@ function animClean() {
     virtualConsole:gradeVC,
     beforeParse(gradeWindow) {
       gradeWindow.localStorage.setItem('lexio.fallbackBank', JSON.stringify(completeUSGradeBank));
-      gradeWindow.Audio = function () { this.addEventListener=()=>{};this.play=()=>Promise.resolve();this.pause=()=>{}; };
+      gradeWindow.__gradeAudioInstances=[];
+      gradeWindow.Audio = function (src) {
+        this.src=src;this.listeners={};
+        this.addEventListener=(type,callback)=>{(this.listeners[type]||=[]).push(callback);};
+        this.play=()=>Promise.resolve();this.pause=()=>{};
+        this.emit=type=>(this.listeners[type]||[]).forEach(callback=>callback({type}));
+        gradeWindow.__gradeAudioInstances.push(this);
+      };
       gradeWindow.fetch = (url) => {
         if (String(url).includes('daily-conversation.json')) {
           const phrases = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'daily-conversation.json'), 'utf8'));
@@ -771,7 +789,11 @@ function animClean() {
         return Promise.reject(new Error('Network disabled in grade-list regression test'));
       };
       gradeWindow.SpeechSynthesisUtterance = function (text) { this.text=text;this.lang='';this.rate=1;gradeWindow.__lastGradeUtterance=this; };
-      gradeWindow.speechSynthesis = { speaking:false,pending:false,paused:false,getVoices:()=>[{lang:'en-US'}],addEventListener(){},resume(){},cancel(){},speak(){} };
+      gradeWindow.__gradeSpeechCalls=0;
+      gradeWindow.speechSynthesis = {
+        speaking:false,pending:false,paused:false,getVoices:()=>[{lang:'en-US'}],addEventListener(){},resume(){},cancel(){},
+        speak(utterance){gradeWindow.__gradeSpeechCalls++;gradeWindow.__lastGradeUtterance=utterance;}
+      };
     },
   });
   const gradeDoc = gradeDom.window.document;
@@ -796,20 +818,70 @@ function animClean() {
       `tiles=${rendered} crumb=${crumb} summary=${summary} loadMore=${!!grid.querySelector('.word-load-more')}`);
     check(`美国${grade}年级每张词库卡正面都显示音标`,missingTileIPA===0,`missing=${missingTileIPA}`);
   }
+  const mappedGradeWordIndex=usGradeWords.findIndex(word=>gradeWordRecordings[String(word.word).trim().toLowerCase()]);
+  const mappedGradeWord=usGradeWords[mappedGradeWordIndex];
+  gradeDom.window.__lexioStudy.goTo(mappedGradeWordIndex);
+  const gradeWordButton=gradeDoc.getElementById('studySpeak');
+  const gradeAudioBeforeWord=(gradeDom.window.__gradeAudioInstances||[]).length;
+  const gradeSpeechBeforeWord=gradeDom.window.__gradeSpeechCalls;
+  gradeWordButton.click();
+  const gradeWordAudio=gradeDom.window.__gradeAudioInstances.at(-1);
+  check('美国年级单词只播放精确匹配的 voice-00 美式录音',
+    mappedGradeWordIndex>=0 && !gradeWordButton.disabled && gradeWordAudio?.src.includes(`/media/voice/${gradeWordRecordings[mappedGradeWord.word.toLowerCase()]}.mp3`) &&
+    gradeDom.window.__gradeAudioInstances.length===gradeAudioBeforeWord+1 && gradeDom.window.__gradeSpeechCalls===gradeSpeechBeforeWord);
+  check('美国年级卡锁定美式音标与 voice-00，不提供英式替代入口',
+    gradeDoc.getElementById('studyPhonetic').textContent.includes(mappedGradeWord.usPhonetic||mappedGradeWord.phonetic) &&
+    gradeDoc.querySelector('[data-accent="en-GB"]').disabled && gradeDoc.querySelector('[data-accent="en-US"]').classList.contains('active'));
+  gradeWordAudio?.emit('error');
+  await sleep(20);
+  check('voice-00 单词录音播放失败也不会回退到设备语音',gradeDom.window.__gradeSpeechCalls===gradeSpeechBeforeWord);
+
+  const missingGradeWordIndex=usGradeWords.findIndex(word=>!gradeWordRecordings[String(word.word).trim().toLowerCase()]);
+  gradeDom.window.__lexioStudy.goTo(missingGradeWordIndex);
+  const missingWordButton=gradeDoc.getElementById('studySpeak');
+  const missingWordInitiallyDisabled=missingWordButton.disabled;
+  const audioBeforeMissingWord=(gradeDom.window.__gradeAudioInstances||[]).length;
+  const speechBeforeMissingWord=gradeDom.window.__gradeSpeechCalls;
+  missingWordButton.disabled=false; // Exercise the defensive handler, not just the disabled control.
+  missingWordButton.click();
+  check('无精确 voice-00 单词录音时按钮禁用且绝不改用设备语音或词典源',
+    missingGradeWordIndex>=0 && missingWordInitiallyDisabled && missingWordButton.title.includes('不会使用设备语音') &&
+    (gradeDom.window.__gradeAudioInstances||[]).length===audioBeforeMissingWord &&
+    gradeDom.window.__gradeSpeechCalls===speechBeforeMissingWord);
+
+  const mappedExampleIndex=usGradeWords.findIndex(word=>word.example&&Object.hasOwn(gradeSentenceRecordings,word.example));
+  const mappedExampleWord=usGradeWords[mappedExampleIndex];
+  gradeDom.window.__lexioStudy.goTo(mappedExampleIndex);
+  const mappedExampleButton=gradeDoc.getElementById('exampleSpeak');
+  const audioBeforeExample=(gradeDom.window.__gradeAudioInstances||[]).length;
+  const speechBeforeExample=gradeDom.window.__gradeSpeechCalls;
+  mappedExampleButton.click();
+  const gradeExampleAudio=gradeDom.window.__gradeAudioInstances.at(-1);
+  check('美国年级已录例句只播放与原文精确匹配的 voice-00 音频',
+    mappedExampleIndex>=0 && !mappedExampleButton.disabled &&
+    gradeExampleAudio?.src.includes(`/media/voice/${gradeSentenceRecordings[mappedExampleWord.example]}.mp3`) &&
+    gradeDom.window.__gradeAudioInstances.length===audioBeforeExample+1 &&
+    gradeDom.window.__gradeSpeechCalls===speechBeforeExample);
+  gradeExampleAudio?.emit('error');
+  await sleep(20);
+  check('voice-00 例句播放失败也不会回退到设备语音',gradeDom.window.__gradeSpeechCalls===speechBeforeExample);
+
   const shortPhraseIndex = usGradeWords.findIndex(word => word.word==='tell');
   const shortPhraseWord = usGradeWords[shortPhraseIndex];
   gradeDom.window.__lexioStudy.goTo(shortPhraseIndex);
   const shortPhraseButton = gradeDoc.getElementById('exampleSpeak');
-  check('美国背面例句卡仍显示词头IPA，且小写例句有可用朗读按钮',
-    shortPhraseIndex>=0 && shortPhraseWord.example==='tell me a story' && !shortPhraseButton.disabled &&
-    shortPhraseButton.textContent.includes('设备语音朗读例句') &&
-    gradeDoc.getElementById('studyPhonetic').textContent.includes(shortPhraseWord.phonetic));
+  const shortPhraseInitiallyDisabled=shortPhraseButton.disabled;
+  const audioBeforeUnmappedExample=(gradeDom.window.__gradeAudioInstances||[]).length;
+  const speechBeforeUnmappedExample=gradeDom.window.__gradeSpeechCalls;
+  shortPhraseButton.disabled=false; // Exercise the defensive handler for a missing recording.
   shortPhraseButton.click();
-  check('例句按钮实际调用 en-US 设备语音，而不借用不匹配录音',
-    gradeDom.window.__lastGradeUtterance?.text===shortPhraseWord.example &&
-    gradeDom.window.__lastGradeUtterance?.lang==='en-US' &&
-    shortPhraseButton.textContent.includes('设备语音'));
-  gradeDom.window.__lastGradeUtterance?.onend?.();
+  check('没有精确 voice-00 例句时明确禁用且不借用设备语音或其他录音',
+    shortPhraseIndex>=0 && shortPhraseWord.example==='tell me a story' && shortPhraseInitiallyDisabled &&
+    shortPhraseButton.title.includes('不会使用设备语音') &&
+    gradeDoc.getElementById('tryVoicedCard').hidden &&
+    (gradeDom.window.__gradeAudioInstances||[]).length===audioBeforeUnmappedExample &&
+    gradeDom.window.__gradeSpeechCalls===speechBeforeUnmappedExample &&
+    gradeDoc.getElementById('studyPhonetic').textContent.includes(shortPhraseWord.phonetic));
   gradeDom.window.close();
   const missingExamples = bundledWords.filter((word) => !String(word.example || '').trim()).length;
   const missingUSExamples = usGradeWords.filter((word) => !String(word.example || '').trim()).length;
@@ -844,20 +916,20 @@ function animClean() {
     contentLicenses.includes('Coderrob/spelling-bee-prep') && contentLicenses.includes('CC BY-SA 4.0') &&
     contentLicenses.includes('Changes made:') && contentLicenses.includes('Share-alike:'));
   check('美国分级练习卡不显示逐词来源标签',
-    pageHtml.includes("const hidePracticeSourceLabels = /^美国[1-9]年级$/.test(String(word.category || ''));" ) &&
+    pageHtml.includes('const hidePracticeSourceLabels = isUSGrade;') &&
     pageHtml.includes("const sourceLabel = hidePracticeSourceLabels ? '' : exampleSource.startsWith('dictionary:')") &&
     pageHtml.includes("const mnemonicLabel = hidePracticeSourceLabels ? '' : word.mnemonicSource.startsWith('dictionary:')"));
   {
-    // Non-US dictionary fragments remain phrase-only, while every US grade-pack
-    // usage example (including lowercase text) may use clearly labelled device TTS.
+    // Non-US dictionary fragments remain phrase-only; US grade cards must never use device TTS.
     const phraseWord = doc.querySelector('#studyExampleSource');
     check('例句来源标签区分「词典原句」与「词典短语」',
       pageHtml.includes('词典短语 · ') && pageHtml.includes('isDictionaryPhrase(exampleText)'));
-    check('非美国词库的未录词典短语仍不伪装成整句，美式年级用例可使用设备语音',
+    check('非美国词库保留既有回退；美国年级未录短语禁用设备语音与错配录音',
       pageHtml.includes('const exampleClip = recordingFor(word.example);') &&
-      pageHtml.includes('const canUseDeviceVoice = !moderationExcluded && (!exampleIsPhrase || hidePracticeSourceLabels);') &&
+      pageHtml.includes('const canUseDeviceVoice = !isUSGrade && !moderationExcluded && !exampleIsPhrase;') &&
       pageHtml.includes('exSpeakBtn.disabled = moderationExcluded || (!exampleClip && !canUseDeviceVoice);') &&
-      pageHtml.includes('const allowDeviceVoiceFallback = isUSGradeExample || !isDictionaryPhrase(word.example);') &&
+      pageHtml.includes('const allowDeviceVoiceFallback = !isUSGradeExample && !isDictionaryPhrase(word.example);') &&
+      pageHtml.includes('该美国年级例句暂无精确匹配的 voice-00 录音；不会使用设备语音替代') &&
       pageHtml.includes('🔊 朗读短语') && pageHtml.includes('暂无可播放语音'));
     check('审核阻止文本被明确排除在系统语音兜底之外',
       pageHtml.includes("MODERATION_EXCLUDED_SPEECH_TEXTS = ['men who molest young boys']") &&
@@ -1366,11 +1438,27 @@ function animClean() {
       `before=${chineseBefore} after=${chineseAfter}`);
     const version = (pageHtml.match(/BUNDLED_CONTENT_VERSION\s*=\s*'([^']+)'/) || [])[1];
     check('内容版本号已递增，老客户端会触发这次迁移',
-      version === 'school-grades-2026-11-v9', String(version));
+      version === 'school-grades-2026-11-v10', String(version));
 
     const explicitMigrations = bundled.metadata.exampleTextMigrations || {};
     const migrationEntries = Object.entries(explicitMigrations);
     const bundledById = new Map(bundledRecords.map(record => [record.id, record]));
+    const gradeBundleRow=bundledById.get(usGradeWords[0].id);
+    const oldEnglishMeaningInstall=[normalize({...gradeBundleRow,meaning:gradeBundleRow.meaningEn})];
+    let meaningMigrationPersisted=null;
+    const migratedGradeMeaning=await runner(
+      async()=>({ok:true,json:async()=>bundled}),()=>bundledRecords,normalize,
+      async(records)=>{meaningMigrationPersisted=records;},async()=>{},version,
+      oldEnglishMeaningInstall,{isDemo:false,contentVersion:'school-grades-2026-11-v9'}
+    );
+    check('已安装美国年级词库的旧英文释义按词条ID精确迁移为中文',
+      migratedGradeMeaning[0].meaning===gradeBundleRow.meaning && !!meaningMigrationPersisted);
+    const customMeaningInstall=[normalize({...gradeBundleRow,meaning:'学习者自定义释义'})];
+    const keptCustomMeaning=await runner(
+      async()=>({ok:true,json:async()=>bundled}),()=>bundledRecords,normalize,async()=>{},async()=>{},version,
+      customMeaningInstall,{isDemo:false,contentVersion:'school-grades-2026-11-v9'}
+    );
+    check('释义迁移保留与旧版英文值不匹配的用户自定义释义',keptCustomMeaning[0].meaning==='学习者自定义释义');
     const ipaBundleRow=bundledById.get('school-us4-duvet');
     const oldIpaInstall=[normalize({...ipaBundleRow,phonetic:''})];
     const migratedIpaInstall=await runner(
@@ -1416,7 +1504,11 @@ function animClean() {
       `entries=${migrationEntries.length} migrated=${migratedRewrite.filter((record,index)=>record?.id===migrationEntries[index]?.[0] && record?.example===migrationEntries[index]?.[1].to && record?.exampleTranslation===(bundledById.get(migrationEntries[index]?.[0])?.exampleTranslation||'')).length}`);
 
     const explicitWordFieldMigrations = bundled.metadata.wordFieldMigrations || {};
-    const wordFieldMigrationEntries = Object.entries(explicitWordFieldMigrations);
+    const allWordFieldMigrationEntries = Object.entries(explicitWordFieldMigrations);
+    const bundledUSGradeIds=new Set(usGradeWords.map(word=>word.id));
+    const wordFieldMigrationEntries = allWordFieldMigrationEntries.filter(([id,fields])=>
+      !(bundledUSGradeIds.has(id) && Object.keys(fields).every(field=>field==='meaning'))
+    );
     const wordFieldMigrationCount = wordFieldMigrationEntries.reduce((count,[,fields])=>count+Object.keys(fields).length,0);
     const oldWordFieldInstall = wordFieldMigrationEntries.map(([id,fields]) => normalize({
       ...bundledById.get(id),

@@ -1819,7 +1819,7 @@
           <details><summary>7 天试用结束后会怎样？</summary><p>这一版只在本机记录试用开始日期，并在到期前 14 天、7 天、1 天打开 App 时弹出提醒，不发短信、不发邮件。当前版本没有接入收银服务，不会自动扣款；付款前会明确显示续费日期、金额和取消方式。</p></details>
           <details><summary>支持哪些支付方式？</summary><p>支持多种方式支付，具体方式以正式结账页面为准。当前演示尚未接入真实收银服务，不会产生扣款。</p></details>
           <details><summary>它可以离线使用、添加到主屏幕吗？</summary><p>可以。用手机浏览器打开后，按页面里的「安装」引导添加到主屏幕，就能像普通 App 一样全屏打开；首次联网载入后，词库与学习记录可离线使用，音频则在点播或主动下载后可离线播放。</p></details>
-          <details><summary>原站的发音、例句和学习进度也能保留吗？</summary><p>已迁移英 / 美音标、词性、中文释义与考试分类。精讲内容保留原有资料；另有匹配到词典的真实句例/记忆法，以及明确标注的释义提示和通用复习提示。单词优先播放本地 voice-00 发音；已有例句录音优先播放精确匹配的 MP3，缺录完整句或录音失败时使用设备英语语音兜底（不是 voice-00），词典短语不伪装成整句。审核阻止的文本不走该回退。公开 HTML 未包含个人学习进度，迁移进度仍需原站账号数据导出。</p></details>
+          <details><summary>原站的发音、例句和学习进度也能保留吗？</summary><p>已迁移英 / 美音标、词性、中文释义与考试分类。精讲内容保留原有资料；另有匹配到词典的真实句例/记忆法，以及明确标注的释义提示和通用复习提示。美国 1—9 年级词卡只播放与词头或例句精确匹配的 voice-00 美式录音；没有匹配录音或播放失败时不会使用设备语音替代。其他词库的单词优先播放本地录音，未录制的完整例句或录音失败时仍可使用设备英语语音兜底（不是 voice-00）；词典短语不伪装成整句。审核阻止的文本不走该回退。公开 HTML 未包含个人学习进度，迁移进度仍需原站账号数据导出。</p></details>
           <details><summary>需要联网吗？能离线用吗？</summary><p>词库与日常口语句库会缓存到本机，断网也能查询和学习。未缓存音频首次点播需要网络，之后可离线播放；也可在词库里主动准备全库离线读音，建议使用 Wi-Fi 并预留存储空间。</p></details>
         </div>
       </div>
@@ -1906,7 +1906,7 @@
       const DB_WORDS = 'words';
       const DB_STAGING = 'stagingWords';
       const DB_META = 'meta';
-      const BUNDLED_CONTENT_VERSION = 'school-grades-2026-11-v9';
+      const BUNDLED_CONTENT_VERSION = 'school-grades-2026-11-v10';
       let db = null;
       let bankReady = false, bankMeta = null;
       let bank = SAMPLE_WORDS.map((w, i) => normalizeWord(w, i));
@@ -2211,7 +2211,12 @@
         };
         return (aliases[filter] || [filter.toLowerCase()]).some(alias => category.includes(alias));
       }
+      function isUSGradeEntry(word) {
+        return /^美国[1-9]年级$/.test(String(word && word.category || '')) ||
+          /^school-us[1-9](?:-|$)/i.test(String(word && word.id || ''));
+      }
       function displayedPhonetic(word) {
+        if (isUSGradeEntry(word)) return word.usPhonetic || word.phonetic || word.ukPhonetic || '';
         const preferred = activeAccent === 'en-US' ? word.usPhonetic : word.ukPhonetic;
         const other = activeAccent === 'en-US' ? word.ukPhonetic : word.usPhonetic;
         return preferred || word.phonetic || other || '';
@@ -2705,9 +2710,27 @@
         if(activeAudio || activeUtterance) stopSpeech();
         studyIndex = ((studyIndex % bank.length) + bank.length) % bank.length;
         const word = bank[studyIndex];
+        const isUSGrade = isUSGradeEntry(word);
         $('#studyWord').textContent = word.word;
         try { if(localStorage.getItem('lexio.studyStarted')==='1') localStorage.setItem('lexio.lastStudyWordId', word.id); } catch(_) {}
         $('#studyPhonetic').textContent = `${displayedPhonetic(word) || '音标待补充'}${word.pos ? ' · '+word.pos : ''}`;
+        const wordSpeakBtn = $('#studySpeak');
+        if (wordSpeakBtn) {
+          const wordClip = selectedWordRecordings[String(word.word || '').trim().toLowerCase()];
+          wordSpeakBtn.disabled = isUSGrade && !wordClip;
+          wordSpeakBtn.title = isUSGrade
+            ? wordClip ? '播放该美国年级词头精确匹配的 voice-00 美式录音' : '该美国年级词头暂无精确匹配的 voice-00 录音；不会使用设备语音'
+            : '播放单词发音';
+          wordSpeakBtn.setAttribute('aria-label',isUSGrade
+            ? wordClip ? `播放 voice-00 单词录音：${word.word}` : `该词暂无 voice-00 录音：${word.word}`
+            : `播放单词发音：${word.word}`);
+        }
+        const visibleAccent = isUSGrade ? 'en-US' : activeAccent;
+        $$('.accent-toggle button').forEach(button => {
+          button.classList.toggle('active',button.dataset.accent===visibleAccent);
+          button.disabled = isUSGrade && button.dataset.accent === 'en-GB';
+          button.title = isUSGrade && button.dataset.accent === 'en-GB' ? '美国年级词卡仅使用 voice-00 美式录音' : '';
+        });
         $('#studyCategory').textContent = `${(word.category || 'TODAY’S WORD').toUpperCase()} · WORD`;
         $('#studyPosition').textContent = `${String(studyIndex+1).padStart(2,'0')} / ${String(bank.length).padStart(2,'0')}`;
         $('#studyMeaning').textContent = word.meaning;
@@ -2717,7 +2740,7 @@
         $('#studyExample').textContent = word.example ? `“${word.example}”` : '本词暂无例句。先在正面自测回忆，想不起再翻回来对照。';
         const exampleSource = word.exampleSource || '';
         /* US grade-pack cards omit per-entry source labels; attribution stays in the legal/data notices. */
-        const hidePracticeSourceLabels = /^美国[1-9]年级$/.test(String(word.category || ''));
+        const hidePracticeSourceLabels = isUSGrade;
         /* Some exam dictionaries only ship a usage phrase ("a honeymoon
            suite") and no full sentence exists in any licensed source. That is
            shown and labelled as a phrase, never padded into a fake sentence. */
@@ -2749,29 +2772,41 @@
         if (exSpeakBtn) {
           const exampleClip = recordingFor(word.example);
           const moderationExcluded = isModerationExcludedText(exampleText);
-          const canUseDeviceVoice = !moderationExcluded && (!exampleIsPhrase || hidePracticeSourceLabels);
+          const canUseDeviceVoice = !isUSGrade && !moderationExcluded && !exampleIsPhrase;
           exSpeakBtn.hidden = !word.example;
           exSpeakBtn.disabled = moderationExcluded || (!exampleClip && !canUseDeviceVoice);
           exSpeakBtn.title = moderationExcluded
             ? '这段内容暂不提供语音播放'
             : exampleClip
-              ? (exampleIsPhrase ? '播放已录制的词典短语' : '播放已录制的完整例句')
-              : canUseDeviceVoice
-                ? (exampleIsPhrase ? '使用设备 en-US 系统语音朗读词典短语；不是 voice-00 录音' : '使用设备 en-US 系统语音朗读例句；不是 voice-00 录音')
-                : '这个词条暂无可播放语音';
+              ? (isUSGrade ? '播放与本例句精确匹配的 voice-00 录音' : (exampleIsPhrase ? '播放已录制的词典短语' : '播放已录制的完整例句'))
+              : isUSGrade
+                ? '该美国年级例句暂无精确匹配的 voice-00 录音；不会使用设备语音替代'
+                : canUseDeviceVoice
+                  ? (exampleIsPhrase ? '使用设备 en-US 系统语音朗读词典短语；不是 voice-00 录音' : '使用设备 en-US 系统语音朗读例句；不是 voice-00 录音')
+                  : '这个词条暂无可播放语音';
           exSpeakBtn.textContent = moderationExcluded
             ? '暂不提供朗读'
             : exampleClip
-              ? (exampleIsPhrase ? '🔊 朗读短语' : '🔊 朗读例句')
-              : canUseDeviceVoice
-                ? (exampleIsPhrase ? '🔊 设备语音朗读短语' : '🔊 设备语音朗读例句')
-                : '暂无可播放语音';
-          exSpeakBtn.setAttribute('aria-label',moderationExcluded?'该内容暂不提供语音播放':exampleClip?(exampleIsPhrase?'播放录制的词典短语':'播放录制的例句'):canUseDeviceVoice?(exampleIsPhrase?'使用设备 en-US 语音朗读词典短语（不是 voice-00 录音）':'使用设备 en-US 语音朗读例句（不是 voice-00 录音）'):'该词条暂无可播放语音');
+              ? (isUSGrade ? '🔊 播放 voice-00 例句' : (exampleIsPhrase ? '🔊 朗读短语' : '🔊 朗读例句'))
+              : isUSGrade
+                ? '暂无 voice-00 录音'
+                : canUseDeviceVoice
+                  ? (exampleIsPhrase ? '🔊 设备语音朗读短语' : '🔊 设备语音朗读例句')
+                  : '暂无可播放语音';
+          exSpeakBtn.setAttribute('aria-label',moderationExcluded
+            ? '该内容暂不提供语音播放'
+            : exampleClip
+              ? (isUSGrade ? `播放 voice-00 例句录音：${exampleText}` : (exampleIsPhrase ? '播放录制的词典短语' : '播放录制的例句'))
+              : isUSGrade
+                ? `该美国年级例句暂无 voice-00 录音；不会使用设备语音：${exampleText}`
+                : canUseDeviceVoice
+                  ? (exampleIsPhrase ? '使用设备 en-US 语音朗读词典短语（不是 voice-00 录音）' : '使用设备 en-US 语音朗读例句（不是 voice-00 录音）')
+                  : '该词条暂无可播放语音');
           exSpeakBtn.dataset.idleText=exSpeakBtn.textContent;
           exSpeakBtn.dataset.idleTitle=exSpeakBtn.title;
           exSpeakBtn.dataset.idleAriaLabel=exSpeakBtn.getAttribute('aria-label')||'朗读例句';
           exSpeakBtn.dataset.speaking = '0';
-          $('#tryVoicedCard').hidden = !word.example || (!!exampleClip && !moderationExcluded);
+          $('#tryVoicedCard').hidden = !word.example || isUSGrade || (!!exampleClip && !moderationExcluded);
         }
         updateProgressUI();
         $('#studyDate').textContent = `今日学习 · ${new Intl.DateTimeFormat('zh-CN',{month:'long',day:'numeric'}).format(new Date())}`;
@@ -30867,10 +30902,19 @@
       }
       function speakEntry(entry, lang=activeAccent) {
         if (!entry || !entry.word) return;
+        const localWordClip = selectedWordRecordings[String(entry.word).trim().toLowerCase()];
+        if (isUSGradeEntry(entry)) {
+          if (!localWordClip) {
+            toastMessage('该美国年级词头暂无精确匹配的 voice-00 录音；不会使用设备语音替代。');
+            return;
+          }
+          playPronunciation(entry.word, 'en-US', 1, wordAudioUrl(entry.word, localWordClip),
+            undefined, error => toastMessage(error.message), true, false);
+          return;
+        }
         const accent = lang === 'en-GB' ? 'en-GB' : 'en-US';
         if (accent === 'en-US') {
           // Prefer an exact pre-generated voice-00 recording when this word has one.
-          const localWordClip = selectedWordRecordings[String(entry.word).trim().toLowerCase()];
           if (localWordClip) {
             playPronunciation(entry.word, 'en-US', 1, wordAudioUrl(entry.word, localWordClip),
               undefined, error => toastMessage(error.message), true, false);
@@ -31392,8 +31436,8 @@
           btn.title='正在使用设备 en-US 系统语音，不是 voice-00 录音';
           btn.setAttribute('aria-label','正在使用设备英语语音朗读例句（不是 voice-00 录音），点按停止');
         };
-        const isUSGradeExample = /^美国[1-9]年级$/.test(String(word.category || ''));
-        const allowDeviceVoiceFallback = isUSGradeExample || !isDictionaryPhrase(word.example);
+        const isUSGradeExample = isUSGradeEntry(word);
+        const allowDeviceVoiceFallback = !isUSGradeExample && !isDictionaryPhrase(word.example);
         speakExample(word.example, resetButton, error=>{ resetButton(); toastMessage(error.message || '例句朗读失败，请检查设备音量。'); }, allowDeviceVoiceFallback, markDeviceVoice);
       });
 

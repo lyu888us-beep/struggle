@@ -27,13 +27,12 @@ function isDictionaryFragment(text){
   return text.startsWith('...')||(/^[a-z]/.test(text)&&!/[.!?]["'”)]?$/.test(text));
 }
 for(const {id,words} of [...books,{id:'demo',words:demo}]){
-  // US grade-pack examples are served by device en-US speech unless an exact
-  // existing clip mapping is available; do not enqueue the whole pack for voice-00.
-  if(/^us-grade-[1-9]$/.test(id))continue;
+  const isUSGrade=/^us-grade-[1-9]$/.test(id);
   for(const {example,word} of words){const text=example?.trim();if(!text)continue;
-    // Incomplete dictionary examples are retained as phrase clips, never queued
-    // or counted as complete sentences.
-    add(isDictionaryFragment(text)?dictionaryFragments:sentences,text,`${id}:${word}`);
+    // Every existing US grade-pack example or usage phrase is queued for an
+    // exact-text voice-00 recording; grade cards must never fall back to device TTS.
+    // For other books, incomplete dictionary snippets stay phrase-only.
+    add(!isUSGrade&&isDictionaryFragment(text)?dictionaryFragments:sentences,text,`${id}:${word}`);
   }
 }
 for(const p of phrases)add(sentences,p.en,`phrase:${p.id}`);
