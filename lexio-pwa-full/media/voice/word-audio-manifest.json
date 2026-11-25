@@ -1,7 +1,7 @@
 {
   "voice_id": "voice-00",
   "language": "en-US",
-  "count": 9830,
+  "count": 9840,
   "clips": {
     "(be) made of": "w-ab7c858a01729a92",
     "(be) on time": "w-d5d25747bf51b63e",
@@ -9832,7 +9832,17 @@
     "woof": "w-1811bdd29f2cfe95",
     "wool": "w-feb672a2e6ea299d",
     "younger": "w-153096a54e34e7e8",
-    "youngster": "w-dbc9a3eeab8fb9d6"
+    "youngster": "w-dbc9a3eeab8fb9d6",
+    "eyes": "w-d8fe183f5b8e7324",
+    "times": "w-2bf61a3bc850596a",
+    "known": "w-7117fff2d0fd2944",
+    "needs": "w-266d1c70a4cbe7cd",
+    "died": "w-5ddf61f4d52f2559",
+    "gonna": "w-a59a8418c2be921e",
+    "terms": "w-51d2361f4faea3bc",
+    "words": "w-dba36bffa5cab0f9",
+    "boys": "w-6e0b5b262cf4b523",
+    "comes": "w-10882c27c47753f2"
   },
   "userApprovedSampleWords": [
     "comfortable",
@@ -20350,6 +20360,121 @@
       "skippedWords": [],
       "alignmentFailedGroups": [],
       "individuallyHumanListened": false
+    },
+    {
+      "id": "us-grade-1-voice00-standalone-001",
+      "sourcePack": "us-grade-1",
+      "voice_id": "voice-00",
+      "language": "en-US",
+      "rowsConsidered": 10,
+      "generatedClips": 10,
+      "decodedClips": 10,
+      "generationMethod": "one standalone TTS output per exact pending headword; no concatenation, alignment, or forced cutting",
+      "individuallyHumanListened": false,
+      "items": [
+        {
+          "text": "eyes",
+          "wordId": "school-us1-eyes",
+          "bookId": "us-grade-1",
+          "clip": "w-d8fe183f5b8e7324",
+          "bytes": 7332,
+          "sha256": "56d1deecbfed3af89d866ddc8278169b192e1f331d878433c27d0a409ec00956",
+          "ffmpegDecoded": true
+        },
+        {
+          "text": "times",
+          "wordId": "school-us1-times",
+          "bookId": "us-grade-1",
+          "clip": "w-2bf61a3bc850596a",
+          "bytes": 6914,
+          "sha256": "8789b62167e462cc21ee0371c2a13c26cf34742dbdb057369af9eb3b4dda0fe6",
+          "ffmpegDecoded": true
+        },
+        {
+          "text": "known",
+          "wordId": "school-us1-known",
+          "bookId": "us-grade-1",
+          "clip": "w-7117fff2d0fd2944",
+          "bytes": 8377,
+          "sha256": "a3e8bab3473cdc78d753237efa7ab197bbd278e9e1c38934cd085e7e83fb04fd",
+          "ffmpegDecoded": true
+        },
+        {
+          "text": "needs",
+          "wordId": "school-us1-needs",
+          "bookId": "us-grade-1",
+          "clip": "w-266d1c70a4cbe7cd",
+          "bytes": 7332,
+          "sha256": "26fcda323f7c183e8b9d4707ede792cc84e84dec56eb25b1ddf04073d949ec7d",
+          "ffmpegDecoded": true
+        },
+        {
+          "text": "died",
+          "wordId": "school-us1-died",
+          "bookId": "us-grade-1",
+          "clip": "w-5ddf61f4d52f2559",
+          "bytes": 6914,
+          "sha256": "afe4ba4e268ffd740fd8959c8019d0e3ffdf0cedc85b32866c394ccb845277ac",
+          "ffmpegDecoded": true
+        },
+        {
+          "text": "gonna",
+          "wordId": "school-us1-gonna",
+          "bookId": "us-grade-1",
+          "clip": "w-a59a8418c2be921e",
+          "bytes": 6914,
+          "sha256": "1d99cf81d18123dc007efd81cb9a2f93885edce36500371aac88ea2cd0f2de81",
+          "ffmpegDecoded": true
+        },
+        {
+          "text": "terms",
+          "wordId": "school-us1-terms",
+          "bookId": "us-grade-1",
+          "clip": "w-51d2361f4faea3bc",
+          "bytes": 7959,
+          "sha256": "e154751699c3ee169f3816b63e4bf7f6bc8aa1ff394d216e445504aedec21821",
+          "ffmpegDecoded": true
+        },
+        {
+          "text": "words",
+          "wordId": "school-us1-words",
+          "bookId": "us-grade-1",
+          "clip": "w-dba36bffa5cab0f9",
+          "bytes": 7959,
+          "sha256": "2df8d4064366a1824a52586b213c9bca10b5ae8d7e1999d1123ab61b69029026",
+          "ffmpegDecoded": true
+        },
+        {
+          "text": "boys",
+          "wordId": "school-us1-boys",
+          "bookId": "us-grade-1",
+          "clip": "w-6e0b5b262cf4b523",
+          "bytes": 7332,
+          "sha256": "ae5e6ae6d392725988de92da534248e79654b3ffcfb6e4e885e0e2c5139fa948",
+          "ffmpegDecoded": true
+        },
+        {
+          "text": "comes",
+          "wordId": "school-us1-comes",
+          "bookId": "us-grade-1",
+          "clip": "w-10882c27c47753f2",
+          "bytes": 7959,
+          "sha256": "2ba784c9747e69ac158205a3934a44cf7f99f41658edc125956e5cfb8e94f114",
+          "ffmpegDecoded": true
+        }
+      ],
+      "words": [
+        "eyes",
+        "times",
+        "known",
+        "needs",
+        "died",
+        "gonna",
+        "terms",
+        "words",
+        "boys",
+        "comes"
+      ]
     }
   ],
   "humanReviewedWordClips": [
